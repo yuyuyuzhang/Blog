@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block">a<span>b</span><b>d</b></div>
+
+
+<script>
+const div = document.getElementById('block');
+const nodes = div.childNodes; 
+console.log(nodes) //NodeList {0: #text, 1: span, 2: b, length: 3}
+
+for(const i of nodes.values()){
+  console.log(i); 
+}
+
+
+
+</script>
+</body>
+</html>

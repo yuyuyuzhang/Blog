@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+
+const str = 'heello';
+const reg1 = /(?=l)/g;
+const reg2 = /e(?=l)/g;
+const reg3 = /(?!l)/g;
+const reg4 = /e(?!l)/g;
+
+console.log(reg1[Symbol.replace](str, '#')); //'hee#l#lo'
+console.log(reg2[Symbol.replace](str, '#')); //'he#llo'
+console.log(reg3[Symbol.replace](str, '#')); //'#h#e#ell#o#'
+console.log(reg4[Symbol.replace](str, '#')); //'h#ello'
+
+</script>
+</body>
+</html>

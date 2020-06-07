@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<input type="text" value="我是小可爱">
+
+
+<script>
+document.addEventListener('copy', addLink);
+function addLink(e){
+  const text = document.getSelection().toString();
+  const info = "原文出自【张钰的个人博客】";
+  const clip = e.clipboardData;
+  clip.setData("text/plain", text + info);
+
+  //阻止浏览器默认行为,使setData()添加信息成功
+  e.preventDefault();
+}
+
+</script>
+</body>
+</html>

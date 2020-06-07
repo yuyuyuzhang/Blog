@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>debounce</title>
+  <style>
+    html,
+    body,
+    .container {
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    button {
+      position: absolute;
+      width: 100px;
+      height: 40px;
+      font-size: 14px;
+    }
+
+    #btn {
+      top: 50px;
+    }
+
+    #cancelBtn {
+      top: 100px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container"></div>
+<button id="btn">按钮</button>
+<button id="cancelBtn">取消防抖</button>
+
+<script>
+//防抖：尽管持续触发事件,但一定在事件触发n秒后执行,如果在一个事件触发的n秒内又触发了事件,则以新事件的时间为准,n秒后再执行
+
+
+//情况1：缺陷——f中this指向Window, 事件对象event指向undefined
+function debounce(f, wait){
+  var timeout;
+  return function(){
+    clearTimeout(timeout);
+    timeout = setTimeout(f, wait);
+  }
+}
+
+//情况2：修复this和event
+function debounce(f, wait){
+  var timeout;
+  return function(){
+    var context = this;   //修复this
+    var args = arguments; //修复event
+    clearTimeout(timeout);
+    timeout = setTimeout(function(){
+      f.apply(context, args);
+    }, wait);
+  }
+}
+
+//情况3：实现立即执行,停止触发n秒后,再重新触发执行
+function debounce(f, wait, immediate){
+  var timeout;
+  var doNow = true;
+  return function(){
+    var context = this;
+    var args = arguments;
+    clearTimeout(timeout);
+    if(immediate){
+      if(doNow){
+        f.apply(context, args);
+        doNow = false;
+      }
+      timeout = setTimeout(function(){
+        doNow = true;
+      }, wait);
+    } else{
+      timeout = setTimeout(function(){
+        f.apply(context, args);
+      }, wait);
+    }
+  }
+}   
+
+//情况4：实现返回值
+function debounce(f, wait, immediate){
+  var timeout; 
+  var doNow = true;
+  var result;
+  return function(){
+    var context = this;
+    var args = arguments;
+    clearTimeout(timeout);
+    if(immediate){
+      if(doNow){
+        result = f.apply(context, args);
+        doNow = false;
+      }
+      timeout = setTimeout(function(){
+        doNow = true;
+      }, wait);
+    } else{
+      //定时器回调函数中f设置返回值,则返回undefined
+      timeout = setTimeout(function(){
+        f.apply(context, args);
+      }, wait);
+    }
+    return result;
+  }
+}
+
+//情况5：实现取消防抖
+function debounce(f, wait, immediate){
+  var timeout;
+  var doNow = true;
+  var result;
+  var debounced = function(){
+    var context = this;
+    var args = arguments;
+    clearTimeout(timeout);
+    if(immediate){
+      if(doNow){
+        result = f.apply(context, args);
+        doNow = false;
+      }
+      timeout = setTimeout(function(){
+        doNow = true;
+      }, wait);
+    } else{
+      timeout = setTimeout(function(){
+        f.apply(context, args);
+      }, wait);
+    }
+    return result;
+  };
+
+  debounced.cancel = function() {
+    clearTimeout(timeout);
+    timeout = null;
+  };
+
+  return debounced;
+}
+
+
+var btn = document.querySelector('#btn');
+var cancelBtn = document.querySelector('#cancelBtn');
+var container = document.querySelector('.container');
+var count = 0;
+function show(e){
+  console.log(this);
+  console.log(e);
+  container.innerHTML = count++;
+  return count;
+}
+var handler = debounce(show, 1000, true);
+btn.addEventListener('click', handler);
+cancelBtn.addEventListener('click', function(){
+  handler.cancel();
+});
+// btn.addEventListener('click', show); 
+</script>
+</body>
+</html>

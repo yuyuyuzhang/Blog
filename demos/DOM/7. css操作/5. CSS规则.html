@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style id="myStyle">
+    .red {
+      color: red;
+    }
+    @media screen and (min-width: 900px) {
+      .big {
+      font-weight: bold;
+      }
+    }
+    </style>
+</head>
+<body>
+
+
+
+<script>
+const styleNode = document.getElementById('myStyle');
+const sheet = styleNode.sheet;
+const rules = sheet.cssRules;
+const rule1 = rules[0];
+const rule2 = rules[1]
+const rule21 = rule2.cssRules[0];
+
+console.log(rule1.type);         //1
+console.log(rule1.cssText);      //".red {color: red;}"
+console.log(rule1.selectorText); //".red"
+console.log(rule1.style);        //CSS2Properties {color→"red"}
+
+console.log(rule2.type);         //4
+console.log(rule2.cssText);      //"@media......"
+console.log(rule2.selectorText); //undefined 
+console.log(rule2.style);        //undefined
+
+console.log(rule21.cssText);              //".big {font-weight: bold;}"
+console.log(rule21.parentRule === rule2); //true
+console.log(rule21.parentStyleSheet);     //StyleSheet #myStyle
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn">重载</button>
+
+
+<script>
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function handleReload(){        
+  location.reload(); //默认从缓存中重载
+})
+
+
+</script>
+</body>
+</html>

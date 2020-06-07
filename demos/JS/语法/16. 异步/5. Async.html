@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>async</title>
+</head>
+<body>
+<script>
+
+async function f(){
+  console.log(2);
+  await console.log(3); //情况1：同步操作
+  await Promise.resolve(3).then(val => console.log(val)); //情况2：异步操作
+  console.log(4)
+}
+
+console.log(1);
+f();
+console.log(5);
+
+//输出：1 2 3 5 4
+//     1 2 5 3 4
+
+
+
+</script>
+</body>
+</html>

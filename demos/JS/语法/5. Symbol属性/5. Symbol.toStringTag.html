@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+//情况1
+const arr = [1, 2];
+console.log(Object.prototype.toString(arr)); //'[object, Object]'
+
+
+//情况2
+arr[Symbol.toStringTag] = 'aaa';
+console.log(Object.prototype.toString.call(arr)); //'[object, aaa]'
+
+
+</script>
+</body>
+</html>

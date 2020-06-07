@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn">点击</button>
+
+
+<script>
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(e){
+  console.log(e.eventPhase);
+}, false);
+document.body.addEventListener('click', function(e){
+  console.log(e.eventPhase);
+}, true);
+document.body.addEventListener('click', function(e){
+  console.log(e.eventPhase);
+}, false);
+//输出：1 2 3
+
+</script>
+</body>
+</html>

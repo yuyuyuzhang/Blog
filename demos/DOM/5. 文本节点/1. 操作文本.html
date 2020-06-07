@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block">abc</div>
+
+
+<script>
+const text = document.getElementById('block').firstChild;
+text.appendData('!');                  //text "abc!"
+text.insertData(2, 'haha');            //text "abhahac!"
+text.replaceData(5, 3, 'heihei');      //text "abhahheihei"
+text.deleteData(3, 2);                 //text "abhheihei"
+console.log(text.substringData(6, 3)); //text "abhheihei"  "hei"
+console.log(text.splitText(7));        //text "abhheih"    "ei"
+
+
+
+</script>
+</body>
+</html>

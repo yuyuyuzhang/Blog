@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block" class="one"></div>
+
+
+<script>
+const div = document.getElementById("block");
+const classList = div.classList;
+
+classList.add('two', 'three');
+classList.remove('two');
+classList.toggle('three');
+console.log(classList.contains('three')); //false
+console.log(classList.toString());        //"one"
+
+
+</script>
+</body>
+</html>

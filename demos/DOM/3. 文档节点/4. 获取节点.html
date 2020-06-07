@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<ul id="ul">
+  <li class="red first">haha</li>
+  <li class="red">hehe</li>
+</ul>
+
+
+<script>
+console.log(document.querySelector('#ul'))     //<ul id="ul">
+console.log(document.querySelector('.red'))    //<li class="red first">
+console.log(document.querySelectorAll('.red')) //NodeList [li.red.first, li.red]
+
+//根据坐标获取节点
+//<div id="block">哈哈</div>
+console.log(document.elementFromPoint(10, 20))       //<ul id="ul">
+console.log(document.elementsFromPoint(10, 20))      //Array [ul#ul, body, html]
+
+
+</script>
+</body>
+</html>

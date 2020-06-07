@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block"></div>
+
+
+<script>
+const div = document.getElementById('block');
+const text1 = document.createTextNode("abc");
+const text2 = document.createTextNode("ABC");
+div.append(text1, text2);
+console.log(div.childNodes.length); //2
+div.normalize();
+console.log(div.childNodes.length); //1
+
+
+
+</script>
+</body>
+</html>

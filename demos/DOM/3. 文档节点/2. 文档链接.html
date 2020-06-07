@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="back">返回</button>
+
+
+<script>
+const back = document.querySelector('#back');
+if(!document.referrer){
+  back.style.display = 'none';
+}
+back.addEventListener('click', function(e){
+  history.back();
+})
+
+
+
+</script>
+</body>
+</html>

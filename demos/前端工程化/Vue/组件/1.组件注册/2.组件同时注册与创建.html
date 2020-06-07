@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app1">
+    <my-component></my-component>
+  </div>
+  <div id="app2">
+    <my-component2></my-component2>
+  </div>
+</body>
+<script>
+  // 1.全局
+  Vue.component('my-component',{
+    template:"<div>this is my component</div>"
+  })
+  var vm1=new Vue({
+    el:"#app1",
+  })
+
+  // 2.局部
+  var vm2 = new Vue({
+	el: '#app2',
+	components: {
+		'My-component2': {
+			template: '<div>This is the second component!</div>'
+		},
+	}
+})
+</script>
+</html>

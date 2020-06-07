@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+class Person{
+  #birth = 2000;
+
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+  getBirth(){
+    console.log(this.#birth);
+  }
+}
+const person = new Person('张三', ['王五']);
+
+//私有属性不定义在任何地方,只能内部访问,外部不能访问
+person.getBirth();                    //2000
+console.log(person.#birth);           //SyntaxError: Private field '#birth' must be declared in an enclosing class
+console.log(Person.prototype.#birth); //SyntaxError: Private field '#birth' must be declared in an enclosing class
+console.log(Person.#birth);           //SyntaxError: Private field '#birth' must be declared in an enclosing class
+
+//私有属性不可枚举
+Object.keys(person);                          //Array ['name', 'friends']
+Object.getOwnPropertyNames(person);           //Array ['name', 'friends']
+Object.keys(Person.prototype);                //Array []
+Object.getOwnPropertyNames(Person.prototype); //Array ['constructor', 'getBirth']
+Object.keys(Person);                          //Array []
+Object.getOwnPropertyNames(Person);           //Array ['prototype', 'name', 'legnth']
+
+</script>
+</body>
+</html>

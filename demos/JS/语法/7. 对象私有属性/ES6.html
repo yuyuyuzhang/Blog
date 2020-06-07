@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Internal attributes</title>
+</head>
+<body>
+<script>
+//使用Proxy在对象上架设一层拦截
+
+const obj = {
+  name: '张三',
+  _age: 20,
+  [Symbol.for('salary')]: 8000
+};
+const handler = {
+  get(obj, prop){
+    if(prop[0] === '_'){
+      throw new Error('property ' + prop + ' cannot be accessed');
+    }
+    return Reflect.get(obj, prop);
+  },
+  set(obj, prop, val, receiver){
+    if(prop[0] === '_'){
+      throw new Error('property ' + prop + ' cannot be set');
+    } 
+    Reflect.set(obj, prop, val);
+  },
+};
+const proxy = new Proxy(obj, handler);
+
+//情况1
+Reflect.set(proxy, 'name', '李四');
+Reflect.get(proxy, 'name');     //'李四'
+
+//情况2
+Reflect.set(proxy, '_age', 22); 
+Reflect.get(proxy, '_age');     //Error: property _age cannot be accessed
+
+</script>
+</body>
+</html>

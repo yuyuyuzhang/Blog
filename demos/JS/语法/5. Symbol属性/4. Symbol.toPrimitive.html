@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+
+//Symbol.toPrimitive属性接受一个字符串参数,表示当前场合该对象被转换为何种基本数据类型值
+const obj = {
+  [Symbol.toPrimitive](mode){
+  	switch(mode){
+  	  case 'number': 
+  	    return 123
+  	    break;
+  	  case 'string':
+  	    return 'str'
+  	    break;
+  	  case 'default':
+  	    return 'default'
+  	    break;
+  	  default:
+  	    throw new Error();
+  	}
+  }
+};
+
+console.log(2 * obj);     //246
+console.log(2 + obj);     //'2default',既可以是数字相加,也可以是字符串拼接
+console.log(String(obj)); //'str'
+
+
+
+</script>
+</body>
+</html>

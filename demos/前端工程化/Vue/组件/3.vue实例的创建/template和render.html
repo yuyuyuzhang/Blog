@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app1">
+    <div>我是原来的内容1</div>
+  </div>
+  <div id="app2">
+    <h1>我是原来的内容2</h1>
+  </div>
+  <script>
+    // template将会替换挂载的元素
+    var app1 = new Vue({
+      el:'#app1',
+      template:'<div>我是template1的内容</div>'
+    })
+    // render 函数若存在，不会从template或el指定的挂载元素中提取html模板编译渲染函数
+    var app2 = new Vue({
+      el:'#app2',
+      template:'<div>我是template2的内容</div>',
+      render:h=> {
+        return h('div', {}, [])
+      }
+    })
+  </script>
+</body>
+<style>
+</style>

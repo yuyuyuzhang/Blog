@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<ul id="ul">
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+</ul>
+
+
+<script>
+const ul = document.getElementById('ul');
+ul.addEventListener('click', function(e){
+  console.log(e.target);        //<li>,触发事件的节点
+  console.log(e.currentTarget); //<ul>,注册事件处理程序的节点
+  console.log(this);            //<ul>,注册事件处理程序的节点/事件传播到的节点(传播到父节点)
+});
+
+</script>
+</body>
+</html>

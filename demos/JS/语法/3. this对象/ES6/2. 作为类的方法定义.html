@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+class Person{
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+  getFriends2 = () => console.log(this.friends);
+}
+const person = new Person("张三", ["王五"]);
+
+const getFriends = person.getFriends; 
+getFriends();        //Array ['王五']
+person.getFriends(); //Array ['王五']
+
+
+
+</script>
+</body>
+</html>

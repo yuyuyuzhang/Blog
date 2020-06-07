@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block" class="red yellow"></div>
+
+
+<script>
+const div = document.getElementById('block');
+const attrs = div.attributes;
+console.log(div.id);         //"block"
+console.log(div.className);  //"red yellow"
+
+//情况1
+div.setAttribute('style', 'color:red');
+div.removeAttribute('class');
+console.log(attrs); //NamedNodeMap {0: id="block", 1: style="color:red", length: 2}
+
+//情况2
+const attr = document.createAttribute('title');
+attr.nodeValue = 'ha';
+attrs.setNamedItem(attr);
+attrs.removeNamedItem('style');
+console.log(attrs); //NamedNodeMap {0: id="block", 1: title="ha", length: 2}
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<script>
+function Person(name, friends){ 
+  this.name = name;
+  this.friends = friends;
+
+  if(typeof this.getName !== 'function'){
+    Person.prototype.getName = function(){
+      return this.name;
+    };
+  }
+}
+function Student(name, friends, id){
+  Person.call(this, name, friends); //借用构造函数继承,先创建子类的this,再将父类的全部实例属性添加到this
+  this.id = id;
+
+  if(typeof this.getName !== 'function'){
+    Student.prototype.getName = function(){
+      return this.name;
+    }
+  }
+}
+var stu1 = new Student("张三", ["王五"], "001");
+var stu2 = new Student("李四", ["赵六"], "002");
+
+
+</script>
+</body>
+</html>

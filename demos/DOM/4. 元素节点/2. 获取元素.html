@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<ul id="ul">
+  <li class="red first">haha</li>
+  <li class="red second">
+    <li class="red third">hehe</li>
+  </li>
+</ul>
+
+
+<script>
+const ul = document.querySelector('#ul');
+const li = ul.querySelector('.third');
+console.log(ul.querySelector('.red'));    //<li class="red first">
+console.log(ul.querySelectorAll('.red')); //NodeList {0: li.red.first, 1: li.red.second, 2: li.red.third, length: 3}
+console.log(li.closest('.red'));          //<li class="red third">
+console.log(ul.matches('.red'));          //false
+
+
+
+</script>
+</body>
+</html>

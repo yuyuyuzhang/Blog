@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+class Person{
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+  getFriends1(){
+    console.log(this.friends);
+  }
+  getFriends2 = () => console.log(this.friends);
+}
+const person = new Person("张三", ["王五"]);
+
+//普通function函数定义在类的原型上,普通箭头函数定义在类的实例上
+person.getFriends1();           //Array ['王五']
+person.getFriends2();           //Array ['王五']
+Person.prototype.getFriends1(); //undefined
+Person.prototype.getFriends2(); //TypeError: Person.prototype.getFriends2 is not a function
+
+//普通function函数的this指向function函数运行时所在的执行上下文,普通箭头函数的this指向箭头函数定义时所在的执行上下文
+const getFriends1 = person.getFriends1;
+const getFriends2 = person.getFriends2;
+getFriends1(); //TypeError: Cannot read property 'friends' of undefined
+getFriends2(); //Array ['王五']
+
+//普通function函数不可枚举,普通箭头函数可枚举
+Object.keys(person);                          //Array ['name', 'friends', 'getFriends2']
+Object.getOwnPropertyNames(person);           //Array ['name', 'friends', 'getFriends2']
+Object.keys(Person.prototype);                //Array []
+Object.getOwnPropertyNames(Person.prototype); //Array ['constructor', 'getFriends1']
+
+</script>
+</body>
+</html>

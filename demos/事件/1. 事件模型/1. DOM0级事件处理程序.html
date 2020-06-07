@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn">点击</button>
+
+
+<script>
+const btn = document.querySelector('#btn');
+btn.onclick = function(e){ 
+  console.log(this.id);
+  btn.onclick = null; //移除事件处理程序
+}
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+
+<script>
+document.addEventListener('copy', forbidClip);
+document.addEventListener('cut', forbidClip);
+document.addEventListener('paste', forbidClip);
+function forbidClip(e){
+  e.preventDefault();
+}
+
+</script>
+</body>
+</html>

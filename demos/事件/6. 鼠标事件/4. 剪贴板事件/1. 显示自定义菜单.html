@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block">右键单击显示自定义菜单</div>
+<ul id="menu" style="position:absolute;background-color:#666;visibility:hidden;">
+  <li><a href="http://www.baidu.com"></a>百度</li>
+  <li><a href="http://www.sina.com"></a>新浪</li>
+  <li><a href="http://www.qq.com"></a>腾讯</li>
+</ul>
+
+
+<script>
+const div = document.querySelector('#block');
+div.addEventListener('contextmenu', function(e){
+  //取消浏览器默认行为,不显示浏览器默认菜单
+  e.preventDefault();
+
+  const menu = document.querySelector('#menu');
+  menu.style.top = e.clientY + 'px';
+  menu.style.left = e.clientX + 'px';
+  menu.style.visibility = 'visible';
+});
+
+document.addEventListener('click', function(e){
+  const menu = document.querySelector('#menu');
+  menu.style.left = '0px';
+  menu.style.top = '0px';
+  menu.style.visibility = 'hidden';
+});
+
+</script>
+</body>
+</html>

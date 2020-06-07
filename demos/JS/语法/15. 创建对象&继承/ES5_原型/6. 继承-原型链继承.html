@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<script>
+function Person(){
+  this.name = "吴大";
+  this.friends = ["王五"];
+
+  if(typeof this.getName !== 'function'){
+    Person.prototype.getName = function(){
+      return this.name;
+    };
+  }
+}
+function Student(name, id){
+  this.name = name;
+  this.id = id;
+}
+Student.prototype = new Person(); //原型链继承,父类的实例作为子类的原型
+
+var stu1 = new Student("张三", "001");
+var stu2 = new Student("李四", "002");
+stu2.friends.push("赵六");
+stu1.friends;   //Array ["王五", "赵六"]
+stu2.friends;   //Array ["王五", "赵六"]
+stu1.getName(); //"张三"
+stu2.getName(); //"李四"
+delete stu2.name;
+stu2.getName(); //"吴大"
+
+
+</script>
+</body>
+</html>

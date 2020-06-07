@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+
+const str = 'candy';
+const reg1 = /(can|candy)/;
+const reg2 = /^(can|candy)$/;
+console.log(reg1[Symbol.match](str)); //Array ["can", "can"]  index: 0  input: 'candy'  groups: undefined
+console.log(reg2[Symbol.match](str)); //Array ["candy", "candy"]  index: 0  input: 'candy'  groups: undefined
+
+
+</script>
+</body>
+</html>

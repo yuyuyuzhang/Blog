@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn">浏览器显示通知</button>
+
+
+<script>
+const btn = document.getElementById('btn')  
+btn.addEventListener('click', function (e) {    
+  if (Notification.permission !== 'granted') {  
+    Notification.requestPermission()       
+  }
+  
+  const notify = new Notification('通知', { body: '我是小可爱' })
+  notify.onshow = function (e) {        
+    console.log('通知被显示')      
+  }      
+  notify.onclose = function (e) {        
+    console.log('通知被关闭')      
+  }      
+  notify.onclick = function (e) {        
+    console.log('通知被点击')      
+  }      
+  notify.onerror = function (e) {        
+    console.log('通知发生错误')     
+  }    
+})
+
+
+</script>
+</body>
+</html>

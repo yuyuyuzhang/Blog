@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+    .target {  
+      width: 100px;  
+      height: 100px;  
+      padding: 20px;  
+      border: 5px solid red;  
+      margin: 10px;
+      overflow: auto;
+      position: relative; //定位元素
+    }
+    .child {  
+      width: 200px;  
+      height: 200px;
+      padding: 10px;  
+      border: 5px solid green;  
+      margin: 10px;
+    }
+    </style>
+</head>
+<body>
+
+<div class="target">      
+  <div class="child"></div>    
+</div>
+
+
+<script>
+const target = document.querySelector(".target");
+console.log(target.clientHeight); //123 = 83 + 20*2
+console.log(target.offsetHeight); //150
+console.log(target.scrollHeight); //290 = (200 + 10_2 + 5_2 + 10_2) + 20_2
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn1">重定向</button>      
+<button id="btn2">重定向(替换)</button>
+
+
+<script>
+//先点击重定向,再点击后退按钮回到上一文档
+const btn1 = document.getElementById('btn1')
+btn1.addEventListener('click', function handleAssign(e){      
+  location.assign("https://wangdoc.com/javascript/bom/location.html#location-%E5%AF%B9%E8%B1%A1");      
+})
+
+//先点击替换,后退按钮变灰,无法点击
+const btn2 = document.getElementById('btn2')
+btn2.addEventListener('click', function handleReplace(e){      
+  location.replace("https://wangdoc.com/javascript/bom/location.html#location-%E5%AF%B9%E8%B1%A1");      
+})
+
+
+</script>
+</body>
+</html>

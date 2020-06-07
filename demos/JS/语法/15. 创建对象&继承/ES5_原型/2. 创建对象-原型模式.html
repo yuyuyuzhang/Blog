@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<script>
+function Person(){};
+Person.prototype = { 
+  name: "张三",
+  friends: ["王五"],
+  getName: function(){
+    return this.name;
+  }
+};
+Object.defineProperty(Person.prototype, 'constructor', {
+  value: Person,
+  enumerable: false
+});
+var person1 = new Person();
+var person2 = new Person();
+person2.name = '李四';
+person2.friends.push('赵六');
+
+
+</script>
+</body>
+</html>

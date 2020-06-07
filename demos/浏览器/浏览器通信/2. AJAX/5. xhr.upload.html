@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<progress min="0" max="100" value="0">0% complete</progress>
+
+
+<script>
+const xhr = new XMLHttpRequest()
+xhr.open('POST', 'http://example.com', true)
+
+//请求设置
+xhr.setRequestHeader('Content-Type', 'application/json')
+
+//事件监听必须在调用xhr.send()发送请求之前
+const progressBar = document.querySelector('progress');
+xhr.upload.onprogress = function(e){
+  if(e.lengthComputable){
+    progressBar.value = (e.loaded / e.total) * 100;
+    progressBar.textContent = progressBar.value; //兼容不支持<progress>元素的老式浏览器
+  }
+};
+
+
+xhr.send(file)
+
+
+</script>
+</body>
+</html>

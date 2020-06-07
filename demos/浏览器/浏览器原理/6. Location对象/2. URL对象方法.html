@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+
+<script>
+//通过文件流下载文件
+request({
+  url: LOAD_URL,
+  method: 'get',
+  responseType: 'blob',
+  params: params
+}).then(res => {
+  const fileName = decodeURI(res.headers.fileName)
+  const url = URL.createObjectURL(res.data)
+  const link = document.createElement('a')
+  document.body.append(link)
+  link.style.display = 'none'
+  link.href = url
+  link.setAttribute('download', fileName)
+  link.click()
+  URL.revokeObjectURL(url)
+  document.body.removeChild(link)
+})
+
+
+</script>
+</body>
+</html>

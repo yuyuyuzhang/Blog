@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn1">打开一个新窗口</button>
+<button id="btn2">当前窗口打开一个新文档</button>
+
+
+<script>
+const btn1 = document.getElementById("btn1");
+const btn2 = document.getElementById("btn2");
+btn1.addEventListener('click', function(){
+  window.open('', '', 'width=100,height=100');
+})
+btn2.addEventListener('click', function(){
+  var newDoc = document.open();
+  newDoc.write("hello world");
+})
+
+
+
+</script>
+</body>
+</html>

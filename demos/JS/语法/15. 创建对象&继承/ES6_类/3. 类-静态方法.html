@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+class Person{
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+  static getFriends1(){
+    console.log(this.friends);
+  }
+  static getFriends2 = () => console.log(this.friends);
+}
+const person = new Person('张三', ['王五']);
+
+//静态方法定义在类上
+person.getFriends1();           //TypeError: person.getFriends1 is not a function
+person.getFriends2();           //TypeError: person.getFriends2 is not a function
+Person.prototype.getFriends1(); //TypeError: Person.prototype.getFriends1 is not a function
+Person.prototype.getFriends2(); //TypeError: Person.prototype.getFriends2 is not a function
+Person.getFriends1();           //undefined,Person类上没有friends属性
+Person.getFriends2();           //undefined
+
+//静态function函数不可枚举,静态箭头函数可枚举
+Object.keys(person);                          //Array ['name', 'friends']
+Object.getOwnPropertyNames(person);           //Array ['name', 'friends']
+Object.keys(Person.prototype);                //Array []
+Object.getOwnPropertyNames(Person.prototype); //Array ['constructor']
+Object.keys(Person);                          //Array ['getFriends2']
+Object.getOwnPropertyNames(Person);           //Array ['prototype', 'name', 'length', 'getFriends1', 'getFriends2']
+
+
+//情况3：静态方法可以与非静态方法重名
+class Person{
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+  static getHi = () => this.sayHi()
+  static sayHi = () => console.log('static hi')
+  sayHi = () => console.log('hi')
+}
+Person.getHi(); //'static hi',静态函数内部的this指向Person类
+
+
+//情况4：父类的静态方法可以被子类继承
+class Person{
+  static sayHi = () => console.log('static hi')
+}
+class Student extends Person {}
+Student.sayHi(); //'static hi'
+
+
+//情况5：静态方法可以从super对象上调用
+class Person{
+  static sayHi = () => 'static hi'
+}
+class Student extends Person {
+  static sayHi = () => super.sayHi() + ' Student'
+}
+Student.sayHi(); //'static hi Student'
+
+</script>
+</body>
+</html>

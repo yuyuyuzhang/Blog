@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<!-- 情况1 -->
+<p id="text">我是<b>小可爱</b></p>
+<button id='btn'>删除"小可爱"</button>
+
+<!-- 情况2 -->
+<p id="text">我是小可爱</p>
+<button id='btn'>删除"小可爱"</button>
+
+<!-- 情况3 -->
+<p id="text">我是<b>小可爱</b></p>
+<button id='btn'>删除"是小"</button>
+
+
+<script>
+//情况1
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const p = document.querySelector('#text');
+  const range = document.createRange();
+  range.setStart(p, 1);
+  range.setEnd(p, 2);
+  range.deleteContents();
+})
+
+
+//情况2
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const p = document.querySelector('#text');
+  const range = document.createRange();
+  range.setStart(p.firstChild, 2);
+  range.setEnd(p.firstChild, 5);
+  range.deleteContents();
+})
+
+
+//情况3
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const p = document.querySelector('#text');
+  const p1 = p.firstChild;
+  const p2 = p.lastChild.firstChild;
+  const range = document.createRange();
+  range.setStart(p1, 1);
+  range.setEnd(p2, 1);
+  range.deleteContents();
+})
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>memory</title>
+</head>
+<body>
+<script>
+//函数记忆：缓存上次的计算结果,下次调用时,若遇到相同参数,直接返回缓存中的数据
+//实现原理：将参数和对应的结果存到一个对象,调用时首先判断参数对应的数据是否存在
+//实现本质：牺牲算法的空间复杂度换取更优的时间复杂度
+
+
+const add = (a, b) => a + b;
+
+
+//情况1：
+const memoize = (f) => {
+  const cache = {};
+  return function(){
+    const key = arguments.length + Array.prototype.join.call(arguments, ",");
+    console.log(key);
+    if(key in cache){
+      return cache[key];
+    } else{
+      return cache[key] = f.apply(this, arguments);
+    }
+  }
+}
+
+
+
+
+console.log(memoize(add(1, 2)));
+</script>
+</body>
+</html>

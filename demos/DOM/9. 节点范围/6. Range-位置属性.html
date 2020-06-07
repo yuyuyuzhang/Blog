@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<!-- 情况1 -->
+<div><p>我是小可爱</p></div>
+<button id="btn">打印范围</button>
+
+<!-- 情况2 -->
+<div><p>我是小可爱</p><p>我是小可爱</p><p id="p3">我是小可爱</p><p>我是小可爱</p></div>
+<button id="btn">打印范围</button>
+
+
+<script>
+//情况1
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const sel = document.getSelection();    
+  const range = sel.getRangeAt(0);
+});
+
+
+//情况2
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const range = document.createRange();
+  const p3 = document.querySelector('#p3');
+  range.selectNode(p3);
+});
+
+</script>
+</body>
+</html>

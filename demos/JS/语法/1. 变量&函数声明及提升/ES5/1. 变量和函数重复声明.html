@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>declare</title>
+</head>
+<body>
+<script>
+//情况1
+function f(){
+  console.log(1);
+}
+function f(){
+  console.log(2);
+}
+f(); //2
+
+
+//情况2
+var f;
+function f(){}
+console.log(f); //function f(){}
+
+
+</script>
+</body>
+</html>

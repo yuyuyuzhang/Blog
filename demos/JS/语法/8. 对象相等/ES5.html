@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>equal</title>
+</head>
+<body>
+<script>
+//浅相等：
+//NaN === NaN
+//+0 === +0
+//-0 === -0
+//+0 !== -0
+
+//深相等：
+//基本包装对象：与对应的基本类型值相等
+//Object：键值对相同,无论所属构造函数是否相同,均相等
+
+
+
+function equal(val1, val2){
+  var type1 = Object.prototype.toString.call(val1);
+  var type2 = Object.prototype.toString.call(val2);
+
+  if(type1 !== type2){
+    return false;
+  } else if((typeof val1 === 'object' && type1 !== '[object Null]') || typeof val1 === 'function'){
+  	return deepEqual(val1, val2, type1);
+  } 
+
+  //NaN === NaN
+  if(val1 !== val1){
+    return true;
+  }
+  //+0 !== -0
+  return val1 === 0 ? 1/val1 === 1/val2 : val1 === val2;
+}
+function deepEqual(val1, val2, type, aStack, bStack){
+  //基本包装对象/Date/RegExp：隐式类型转换
+  switch(type){
+    case '[object Boolean]':
+    case '[object Date]':
+      return +val1 === +val2;
+    case '[object Number]':
+      //new Number(NaN)
+      if(+val1 !== +val1){
+        return true;
+      }
+      //new Number(0)、new Number(-0)
+      return +val1 === 0 ? 1/+val1 === 1/+val2 : +val1 === +val2;
+    case '[object String]':
+    case '[object RegExp]':
+      return ''+val1 === ''+val2;
+    case '[object Function]':
+      return val1.toString() === val2.toString();
+  }
+
+  //检查循环引用
+  aStack = aStack || [];
+  bStack = bStack || [];
+  var length = aStack.length;
+  while(length--){
+    if(aStack[length] === val1){
+      return bStack[length] === val2;
+    }
+  }
+  aStack.push(val1);
+  bStack.push(val2);
+
+  //对象
+  if(type === '[object Object]'){
+    var arr = Object.keys(val1);
+    var length = arr.length;
+    if(length !== Object.keys(val2).length){
+      return false;
+    }
+    while(length--){
+      var item = arr[length];
+      return !(val2.hasOwnProperty(item) && equal(val1[item], val2[item]));
+    }
+  }
+
+  //数组
+  if(type === '[object Array]'){
+    var length = val1.length;
+    if(length !== val2.length){
+      return false;
+    }
+    while(length--){
+      return !equal(val1[length], val2[length]);
+    }
+  }
+
+  aStack.pop();
+  bStack.pop();
+  return true;
+} 
+
+
+var arr1 = [undefined, null, true, NaN, +0, -0, +0, 'a'];
+var arr2 = [undefined, null, true, NaN, +0, -0, -0, 'a'];
+arr1.forEach(function(item, index){             
+  console.log(equal(arr1[index], arr2[index])); //true true true true true true false true
+});
+
+var arr3 = [new Boolean(true), new Number(NaN), new Number(0), new String('1'), new Date(), /1/g, function f(){}];
+var arr4 = [true, NaN, -0, '1', new Date(), /1/g, function f(){}];
+arr3.forEach(function(item, index){             
+  console.log(equal(arr3[index], arr4[index])); //true true false true true true true
+});
+
+var arr5 = [[1, 2, [3]], {a: {b: 1}}, [new Date(), /1/g, [function f(){}]]];
+var arr6 = [[1,   2, [3]], {a: {b: 1}}, [new Date(), /1/g, [function f(){}]]];
+arr5.forEach(function(item, index){
+  console.log(equal(arr5[index], arr6[index])); //true true true
+});
+
+</script>
+</body>
+</html>

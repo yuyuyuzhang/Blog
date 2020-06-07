@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<p id="text">我是<b>小可爱</b></p>
+<button id="btn">复制"小可爱"</button>
+
+
+<script>
+//情况1
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const p = document.querySelector('#text');
+  const range = document.createRange();
+  range.setStart(p, 1);
+  range.setEnd(p, 2);
+  const docFrag = range.cloneContents(); //复制当前范围的文档片段
+  p.parentNode.append(docFrag);
+})
+
+
+//情况2
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const p = document.querySelector('#text');
+  const range = document.createRange();
+  range.setStart(p, 1);
+  range.setEnd(p, 2);
+  const docFrag = range.extractContents(); //复制并移除当前范围的文档片段
+  p.parentNode.append(docFrag);
+})
+
+
+//情况3
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const p = document.querySelector('#text');
+  const range1 = document.createRange();
+  range1.setStart(p, 1);
+  range1.setEnd(p, 2);
+  const range2 = range1.cloneRange(); //复制当前范围
+  console.log(range2.toString());
+})
+
+
+
+</script>
+</body>
+</html>

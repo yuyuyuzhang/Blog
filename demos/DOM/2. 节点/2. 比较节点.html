@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+<script>
+const div1 = document.createElement('div');
+const div2 = document.createElement('div');
+div1.classList.add('red');
+div2.classList.add('red');
+console.log(div1.isSameNode(div1));  //true
+console.log(div1.isSameNode(div2));  //false
+console.log(div1.isEqualNode(div2)); //true
+
+</script>
+</body>
+</html>

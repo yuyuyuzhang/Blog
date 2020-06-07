@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WeakMap</title>
+</head>
+<body>
+
+<button id="btn">点击</button>
+
+<script>
+//WeakMap对键名对象持有弱引用,只要键名对象的所有强引用都被清除,垃圾回收机制就会回收该对象,释放该对象占用的内存
+
+
+//DOM节点上保存相关数据
+//将DOM节点作为WeakMap的键名,就可以在DOM节点上保存一些数据
+//比如将事件处理程序的监听函数作为WeakMap的键名,一旦DOM节点消失,与其绑定的监听函数也自动消失,不会造成内存泄漏
+const btn = document.querySelector('#btn');
+const listener = new WeakMap();
+const handler = (e) => console.log(e.target);
+listener.set(btn, handler);
+btn.addEventListener('click', listener.get(btn));
+
+
+//数据缓存
+//需要关联对象和数据,而又不想管理这些数据的死活时,适合使用WeakMap
+//比如在不修改原有对象的情况下储存某些属性或者根据对象储存一些计算的值等
+const cache = new WeakMap();
+function attrLength(obj){
+  if(cache.has(obj)){
+    return cache.get(obj);
+  } else{
+    const count = Object.keys(obj).length;
+    cache.set(obj, count);
+    return count;
+  }
+}
+attrLength({a: 1, b: 2}); //2
+
+
+</script>
+</body>
+</html>

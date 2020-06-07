@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block">haha</div>
+
+
+<script>
+const div = document.getElementById("block");
+
+//情况1：克隆节点
+const clone1 = div.cloneNode(true);
+const clone2 = div.cloneNode(false);
+console.log(clone1.childNodes); //NodeList [#text "haha"]
+console.log(clone2.childNodes); //NodeList []
+
+
+//情况2：添加节点
+const span = document.createElement("span");
+const txt = document.createTextNode("hehe");
+div.append(span, txt);
+console.log(div.childNodes); //NodeList [#text "haha", span, #text "hehe"]
+
+
+//情况3：替换节点
+const b = document.createElement('b');
+const text = document.createTextNode('wawa');
+span.replaceWith(b);
+div.replaceChild(text, txt);
+console.log(div.childNodes); //NodeList [#text "haha", b, #text "wawa"]
+
+
+//情况4：删除节点
+b.remove();
+div.removeChild(text);
+console.log(div.childNodes); //NodeList [#text "haha"]
+
+
+</script>
+</body>
+</html>

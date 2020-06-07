@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<textarea id="text">哈哈</textarea>
+
+
+<script>
+const text = document.querySelector('#text');
+text.addEventListener('compositionstart', function(e){
+  console.log(e.data); //"哈哈"
+});
+text.addEventListener('compositionupdate', function(e){
+  console.log(e.data); //如下图
+});
+text.addEventListener('compositionend', function(e){
+  console.log(e.data); //"小可爱"
+});
+
+</script>
+</body>
+</html>

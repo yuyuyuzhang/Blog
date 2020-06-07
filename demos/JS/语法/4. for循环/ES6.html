@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for</title>
+</head>
+<body>
+<script>
+//ES6中const、let变量具有块级作用域,for循环参数会形成一个单独的块级作用域,
+//是for循环体这个块级作用域的父作用域
+
+//情况1
+for(let i=0; i<5; i++){
+  let i = 4;
+  console.log(i); //4 4 4 4 4 
+}
+
+//情况2
+for(let i=0; i<5; i++){
+  let i = 3;
+  console.log(i); //3 3 3 3 3
+}
+
+//情况3
+for(let i=0; i<5; i++){
+  var i = 2;
+  console.log(i); //SyntaxError,使用var声明的i不具备块级作用域,let声明的i具有暂时性死区
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="target" style="width:200px;height:200px;border:1px solid red;"></div>
+
+
+<script>
+const target = document.getElementById("target");      
+target.addEventListener("dragenter", function(e) {        
+  e.preventDefault(); // 目标节点默认不允许放下拖动节点,阻止默认行为        
+  e.dataTransfer.dropEffect = "copy"; // 拖动节点允许的放置效果      
+});      
+target.addEventListener("dragover", function(e) {        
+  e.preventDefault(); // 目标节点默认不允许放下拖动节点,阻止默认行为        
+  e.dataTransfer.dropEffect = "copy"; // 拖动节点允许的放置效果      
+});      
+target.addEventListener("drop", function(e) {        
+  e.preventDefault(); // 浏览器默认打开文件,阻止默认行为
+
+  //显示文件名
+  const files = e.dataTransfer.files;        
+  for (let file of files) {          
+    e.target.append(file.name);        
+  }      
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+
+<script>
+//History对象所有实例都需要在浏览器已打开的文档的控制台试验
+
+//当前文档URL：https://wangdoc.com/javascript/bom/history.html
+history.pushState(null, '', 'https://www.iconfont.cn/search/index');           //报错
+history.pushState(null, '', 'https://wangdoc.com/javascript/bom/window.html'); //浏览器地址栏立即变化,但是页面不会跳转
+//点击浏览器后退按钮,浏览器地址栏变成https://wangdoc.com/javascript/bom/history.html,页面不变化
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<p id="text">我是<b>小可爱</b></p>
+<button id="btn">插入"最可爱的"</button>
+
+
+<script>
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  const p = document.querySelector('#text');
+  const range = document.createRange();
+  range.setStart(p, 1);
+  range.setEnd(p, 2);
+
+  const span = document.createElement('span');
+  span.append('最可爱的');
+  span.style.color = 'red';
+  range.insertNode(span); //插入到范围起点
+})
+
+
+
+</script>
+</body>
+</html>

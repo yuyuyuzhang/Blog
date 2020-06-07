@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<iframe src="//www.runoob.com/html/html-tutorial.html" style="height:380px;width:520px;"></iframe>
+<button id="btn">点击</button>
+
+
+<script>
+//跨域导致出错
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function(e){
+  const iframe = document.getElementsByTagName("IFRAME")[0]
+  const iframeDoc = iframe.contentWindow.document
+  const oldNode = iframeDoc.getElementsByTagName("H1")[0];
+  const newNode = document.adoptNode(oldNode, true);
+  document.body.append(newNode)
+  console.log(oldNode.isEqualNode(newNode)); //true
+  console.log(oldNode.isSameNode(newNode));  //true
+})
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for</title>
+</head>
+<body>
+<script>
+//ES5没有块级作用域,for循环参数i和循环体内i都是同一个全局变量
+
+//情况1
+for(var i=0; i<5; i++){
+  console.log(i); //0 1 2 3 4
+}
+
+//情况2
+for(var i=0; i<5; i++){
+  var i = 4;
+  console.log(i); //4
+}
+
+//情况3
+for(var i=0; i<5; i++){
+  var i = 3;
+  console.log(i); //3...,无限循环,浏览器卡死
+}
+
+
+</script>
+</body>
+</html>

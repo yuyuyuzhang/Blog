@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flatten</title>
+</head>
+<body>
+<script>
+//情况1
+function flatten(arr){
+  var array = [];
+  for(var i = 0; i < arr.length; i++){
+    if(Array.isArray(arr[i])){
+      array = array.concat(flatten(arr[i]));
+    } else{
+      array.push(arr[i]);
+    }
+  }
+  return array;
+}
+
+//情况2
+function flatten(arr){
+  return arr.reduce(function(prev, cur){
+    return prev.concat(Array.isArray(cur) ? flatten(cur) : cur);
+  }, []);
+}
+
+
+var arr = [1, '2', [3, '4', [5]], 1];
+console.log(flatten(arr)); //Array [1, '2', 3, '4', 5, 1]
+
+
+</script>
+</body>
+</html>

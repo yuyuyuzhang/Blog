@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block" style="width:20px;">abc</div>
+
+
+<script>
+const callback = (records, observer) => {
+  records.map(record => {
+    console.log('record type: ' + record.type);
+    console.log('Previous value: ' + record.oldValue);
+  });
+}
+const observer = new MutationObserver(callback);
+
+const div = document.getElementById('block');
+const option = {
+  //观察目标节点的子元素节点
+  'childList': true,
+
+  //观察目标节点的所有属性
+  'attribute': true,
+  'attributeOldValue': true,
+
+  //观察目标节点的子文本节点&子元素节点
+  'characterData': true,
+  'characterDataOldValue': true,
+  'subtree': true
+};
+observer.observe(div, option);
+
+const span = document.createElement('span');
+div.append(span);                       //第1次输出,当前元素节点增加子元素节点
+span.append('我是小可爱');                //第2次输出,当前元素节点的子元素节点的变动
+div.style.setProperty('width', '30px'); //第3次输出,当前元素节点的属性值改变
+div.firstChild.appendData('haha');      //第4次输出,当前元素节点的子文本节点内容改变
+
+
+//第1次输出
+//"record type: childList"
+//"Previous value: null"
+
+//第2次输出
+//"record type: childList"
+//"Previous value: null"
+
+//第3次输出
+//"record type: attributes"
+//"Previous value: width:20px;"
+
+//第4次输出
+//"record type: characterData"
+//"Previous value: abc"
+
+
+
+</script>
+</body>
+</html>

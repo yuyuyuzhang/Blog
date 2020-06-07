@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+var person = {
+  name: '李四',
+  getName: function(){
+    var that = this;
+    (function(){
+      console.log(this.name);
+      console.log(that.name);
+    })();
+  }
+};
+person.getName(); //'李四'
+
+</script>
+</body>
+</html>

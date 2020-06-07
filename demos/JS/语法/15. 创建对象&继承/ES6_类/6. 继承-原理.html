@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+class Person {
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+}
+class Student extends Person {
+  constructor(name, friends, id){
+    super(name, friends);
+    this.id = id;
+  }
+}
+const stu = new Student('李四', ['赵六'], 1);
+
+//情况1：父类不存在继承
+console.log(Person.proto === Function.prototype); //true
+console.log(Person.constructor === Function); //true
+
+//情况2：子类存在继承
+console.log(Student.proto === Person); //true
+console.log(Student.constructor === Function); //true
+console.log(Student.prototype.proto === Person.prototype); //true
+console.log(Student.prototype.constructor === Student); //true
+
+console.log(stu.proto === Student.prototype);
+console.log(stu.constructor === Student)
+
+
+</script>
+</body>
+</html>

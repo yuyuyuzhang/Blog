@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn1">part1</button>      
+<button id="btn2">part2</button>
+<div id="part1" style="height:500px;border:1px solid red;">part1</div>    
+<div id="part2" style="height:500px;border:1px solid red;">part2</div>
+
+
+<script>
+function handleHashChange(part) {
+  location.hash = '#' + part;
+
+  window.addEventListener("hashchange", function(e) {        
+    console.log("oldURL: ", e.oldURL);        
+    console.log("newURL: ", e.newURL);      
+  });
+}
+const btn1 = document.getElementById('btn1')
+const btn2 = document.getElementById('btn2')
+btn1.addEventListener('click', function(e){
+  handleHashChange('part1')
+})
+btn2.addEventListener('click', function(e){
+  handleHashChange('part2')
+})
+
+
+</script>
+</body>
+</html>

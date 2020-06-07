@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+//API中引用
+const str = '2018-09-14';
+const reg1 = /(\d{4})-(\d{2})-(\d{2})/;
+const reg2 = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/;
+console.log(reg1[Symbol.replace](str, '$1/$2/$3'));                //'2018/09/14'
+console.log(reg2[Symbol.replace](str, '$<year>/$<month>/$<day>')); //'2018/09/14'
+
+const match = reg2[Symbol.match](str); 
+console.log(match.groups); //{year: "2018", month: "09", day: "14"}
+
+
+//正则中引用
+//情况1：引用不存在的分组
+const reg = /\1\2/;
+console.log(reg.test('\1\2'));  //true
+console.log(reg.test('abc12')); //false
+
+//情况2：分组后跟量词
+const reg = /(\d)+ \1/;
+console.log(reg.test("12345 1")); //false
+console.log(reg.test("12345 5")); //true
+
+//情况3：匹配三种格式的日期(要求前后分隔符一致):xxxx/xx/xx、xxxx.xx.xx、xxxx-xx-xx
+const reg1 = /\d{4}(-|\/|.)\d{2}\1\d{2}/; 
+const reg2 = /\d{4}(?<break>-|\/|.)\d{2}\k<break>\d{2}/;
+console.log(reg1.test('2018/09/14')); //true
+console.log(reg1.test('2018.09-14')); //false
+console.log(reg2.test('2018/09/14')); //true
+console.log(reg2.test('2018.09-14')); //false
+
+</script>
+</body>
+</html>

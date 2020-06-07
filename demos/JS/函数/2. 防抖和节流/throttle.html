@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>debounce</title>
+  <style>
+    html,
+    body,
+    .container {
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    button {
+      position: absolute;
+      width: 100px;
+      height: 40px;
+      font-size: 14px;
+    }
+
+    #btn {
+      top: 50px;
+    }
+
+    #cancelBtn {
+      top: 100px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container"></div>
+<button id="btn">按钮</button>
+<button id="cancelBtn">取消节流</button>
+
+<script>
+//节流：尽管持续触发事件,但在一个时间段内,只执行一次事件
+
+
+//情况1：使用时间戳——先执行,然后再等待规定的时间
+function throttle(f, wait){
+  var context, args;
+  var previous = 0;
+  return function(){
+    context = this;   //修复this
+    args = arguments; //修复event
+
+    //计算距离下次触发的剩余时间
+    var now = +new Date(); 
+    var remaining = wait - (now - previous);
+
+    //没有剩余时间或修改了系统时间
+    if(remaining <= 0 || remaining > wait){
+      f.apply(context, args);
+      previous = now;
+    }
+  }
+}
+
+//情况2：使用定时器——先等待规定的时间,然后再执行
+function throttle(f, wait){
+  var timeout;
+  return function(){
+    context = this;
+    args = arguments;
+
+    if(!timeout){
+      timeout = setTimeout(function(){
+        timeout = null;
+        f.apply(context, args);
+      }, wait);
+    }
+  }
+}
+
+//情况3：有头有尾——先执行,等待规定的时间后,再执行一次
+function throttle(f, wait){
+  var timeout, context, args, result;
+  var previous = 0;
+
+  //later函数未执行
+  var later = function(){
+    previous = +new Date(); //上一次执行时now变量
+    timeout = null;
+    f.apply(context, args);
+  };
+
+  var throttled = function(){
+    context = this;
+    args = arguments;
+
+    var now = +new Date();
+    var remaining = wait - (now - previous);
+
+    console.log(wait);
+    console.log(previous);
+    console.log(now);
+    console.log(remaining);
+
+    //没有剩余时间或修改了系统时间,立即执行
+    if(remaining <= 0 || remaining > wait){
+      if(timeout){
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now; //上一次执行时now变量
+      f.apply(context, args);
+    } else if(!timeout){
+      //有剩余时间,定时器结束后,执行later
+      timeout = setTimeout(later, remaining);
+    }
+  };
+  return throttled;
+}
+
+//情况4：有头无尾/有尾无头——leading:false禁用触发立即执行,trailing:false禁用停止触发再执行一次(两者不可同时为false)
+function throttle(f, wait, options){
+  var timeout, context, args, result;
+  var previous = 0;
+  if(!options){
+  	options = {}
+  }
+
+  //later函数未执行
+  var later = function(){
+    //未设置头执行,previous=0,否则,previous=上一次执行时now变量
+    previous = options.leading === false ? 0 : new Date().getTime();
+    timeout = null;
+    f.apply(context, args);
+    if(!timeout){
+      context = args = null
+    }
+  };
+
+  var throttled = function(){
+    context = this;
+    args = arguments;
+
+    //未设置头执行,且previous等于0
+    var now = new Date().getTime();
+    if(options.leading === false && !previous){
+      previous = now;
+    }
+    var remaining = wait - (now - previous);
+
+    //没有剩余时间或修改了系统时间,立即执行
+    if(remaining <= 0 || remaining > wait){
+      if(timeout){
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      f.apply(context, args);
+      if(!timeout){
+      	context = args = null
+      }
+    } else if(!timeout && options.trailing !== false){
+      //有剩余时间,且设置了尾执行,定时器结束后,执行later
+      timeout = setTimeout(later, remaining);
+    }
+  };
+  return throttled;
+}
+
+//情况5：实现取消节流
+function throttle(f, wait, options){
+  var timeout, context, args, result;
+  var previous = 0;
+  if(!options){
+  	options = {}
+  }
+
+  var later = function(){
+    previous = options.leading === false ? 0 : new Date().getTime();
+    timeout = null;
+    f.apply(context, args);
+    if(!timeout){
+      context = args = null
+    }
+  };
+  var throttled = function(){
+    context = this;
+    args = arguments;
+
+    var now = new Date().getTime();
+    if(!previous && options.leading === false){
+      previous = now
+    }
+    var remaining = wait - (now - previous);
+
+    if(remaining <= 0 || remaining > wait){
+      if(timeout){
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      f.apply(context, args);
+      if(!timeout){
+      	context = args = null
+      }
+    } else if(!timeout && options.trailing !== false){
+      timeout = setTimeout(later, remaining);
+    }
+  };
+
+  throttled.cancel = function(){
+    clearTimeout(timeout);
+    previous = 0;
+    timeout = null;
+  };
+
+  return throttled;
+}
+
+
+var btn = document.querySelector('#btn');
+var container = document.querySelector('.container');
+var count = 1;
+function show(e){
+  container.innerHTML = count++;
+}
+var handler = throttle(show, 1000);
+btn.addEventListener('click', handler);
+// btn.addEventListener('click', show); 
+</script>
+</body>
+</html>

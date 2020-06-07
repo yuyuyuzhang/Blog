@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>declare</title>
+</head>
+<body>
+<script>
+//情况1
+{
+  console.log(a); //ReferenceError
+  const a = 1; 
+}
+
+//情况2
+{
+  console.log(a); //ReferenceError
+  let a = 1;
+}
+</script>
+</body>
+</html>

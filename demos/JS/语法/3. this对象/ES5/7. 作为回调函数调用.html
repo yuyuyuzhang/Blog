@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+function get(){
+  console.log(this.name);
+}
+var name = '张三';
+var person = {
+  name: '李四',
+  getName: function(callback){
+    callback();
+    this.f = callback;
+    this.f();
+  }
+};
+person.getName(get); //'张三'  '李四'
+
+
+</script>
+</body>
+</html>

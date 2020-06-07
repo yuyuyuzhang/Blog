@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+
+const str = "a0b a1b a2b a3b";
+const reg1 = /a[12]b/g;
+const reg2 = /a[^12]b/g;
+console.log(reg1[Symbol.match](str)); //Array ["a1b", "a2b"]
+console.log(reg2[Symbol.match](str)); //Array ["a0b", "a3b"]
+
+
+</script>
+</body>
+</html>

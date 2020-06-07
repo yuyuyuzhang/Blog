@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+class Person{
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+  #getFriends1(){
+    console.log(this.friends);
+  }
+  #getFriends2 = () => console.log(this.friends);
+  sayFriends(){
+    this.#getFriends2();
+  }
+}
+const person = new Person('张三', ['王五']);
+
+//私有方法不定义在任何地方,只能内部访问,外部不能访问
+person.sayFriends();             //Array ['王五']
+person.#getFriends2();           //SyntaxError: Private field '#getFriends2' must be declared in an enclosing class
+Person.prototype.#getFriends2(); //SyntaxError: Private field '#getFriends2' must be declared in an enclosing class
+Person.#getFriends2();           //SyntaxError: Private field '#getFriends2' must be declared in an enclosing class
+
+//私有方法不可枚举,无法被任何属性遍历函数遍历到
+Object.keys(person);                          //Array ['name', 'friends']
+Object.getOwnPropertyNames(person);           //Array ['name', 'friends']
+Object.keys(Person.prototype);                //Array []
+Object.getOwnPropertyNames(Person.prototype); //Array ['constructor']
+Object.keys(Person);                          //Array []
+Object.getOwnPropertyNames(Person);           //Array ['prototype', 'name', 'legnth']
+
+
+//情况2
+class Person{
+  constructor(name, friends){
+    this.name = name;
+    this.friends = friends;
+  }
+  getFriends = () => this.friends
+  static sayHi = () => console.log(this.name + ' hi')
+  #sayHello = () => console.log(this.name + ' hello')
+}
+const person = new Person('张三', ['王五']);
+
+//私有方法外部不能访问
+person.#sayHello(); //SyntaxError: Private field '#sayHello' must be declared in an enclosing class
+
+//私有方法不可枚举,无法被任何属性遍历函数遍历到
+console.log(Object.keys(person));                          //Array ['name', 'friends', 'getFriends']
+console.log(Object.getOwnPropertyNames(person));           //Array ['name', 'friends', 'getFriends']
+console.log(Object.keys(Person.prototype));                //Array []
+console.log(Object.getOwnPropertyNames(Person.prototype)); //Array ['constructor']
+console.log(Object.keys(Person));                          //Array ['sayHi']
+console.log(Object.getOwnPropertyNames(Person));           //Array ['prototype', 'name', 'legnth', 'sayHi']
+
+
+</script>
+</body>
+</html>

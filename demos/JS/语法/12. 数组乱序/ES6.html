@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>disorder</title>
+</head>
+<body>
+<script>
+//情况1：ECMAScript只规定了arr.sort()函数的效果,不同浏览器对其的实现方式不一样
+function disorder(arr){
+  return arr.sort(() => Math.random() - 0.5);
+}
+
+
+//情况2：Fisher–Yates算法：遍历数组,交换当前元素与之后随机位置的元素
+function disorder(arr){
+  for(let i = arr.length; i; i--){
+  	//随机位置,i=5,4,3,2,1,Math.random()=0~1
+    let j = Math.floor(Math.random() * i);
+
+    //交换当前元素与之后随机位置的元素的值
+    [arr[i - 1], arr[j]] = [arr[j], arr[i - 1]];
+  }
+  return arr;
+}
+
+const arr = [1, 2, 3, 4, 5];
+console.log(disorder(arr));
+
+</script>
+</body>
+</html>

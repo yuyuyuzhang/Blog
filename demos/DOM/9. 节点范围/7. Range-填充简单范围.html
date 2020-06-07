@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div><p id="text">我是<b>小可爱</b></p></div>
+
+
+<script>
+const p = document.querySelector('#text'); 
+const range1 = document.createRange();
+const range2 = document.createRange();
+range1.selectNode(p);
+range2.selectNodeContents(p);
+
+
+
+</script>
+</body>
+</html>

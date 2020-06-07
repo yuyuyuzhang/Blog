@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<script>
+function Person(name, friends){ 
+  this.name = name;
+  this.friends = friends;
+
+  //getName()方法不存在的情况下,才将其添加到原型中,仅在初次调用构造函数时执行
+  if(typeof this.getName !== 'function'){
+    Person.prototype.getName = function(){
+      return this.name;
+    };
+  }
+}
+
+//情况1
+Object.keys(Person.prototype);                //Array []
+Object.getOwnPropertyNames(Person.prototype); //Array ['constructor']
+
+//情况2：初次调用Person构造函数后才会在原型上添加getName方法
+var person1 = new Person("张三", ["王五"]);
+var person2 = new Person("李四", ["赵六"]);
+Object.keys(Person.prototype);                //Array ['getName']
+Object.getOwnPropertyNames(Person.prototype); //Array ['constructor', 'getName']
+
+</script>
+</body>
+</html>

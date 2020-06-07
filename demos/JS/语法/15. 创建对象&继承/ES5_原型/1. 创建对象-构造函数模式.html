@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<script>
+function Person(name, friends){
+  this.name = name;
+  this.friends = friends;
+
+  this.getName = function(){ 
+    return this.name;
+  };
+}
+var person1 = new Person("张三", ["王五"]);
+var person2 = new Person("李四", ["赵六"]);
+
+
+</script>
+</body>
+</html>

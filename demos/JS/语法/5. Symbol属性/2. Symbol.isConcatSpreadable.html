@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+//情况1：数组默认可以展开,Symbol.isConcatSpreadable属性等于true或者undefined都可以
+const arr1 = ['a', 'b']	
+const arr2 = [1, 2].concat(arr1); //Array [1, 2, 'a', 'b']
+console.log(arr1[Symbol.isConcatSpreadable]); //undefined
+
+
+//情况2
+const arr1 = ['a', 'b']
+arr1[Symbol.isConcatSpreadable] = false
+const arr2 = [1, 2].concat(arr1); //Array [1, 2, ['a', 'b']]
+
+
+//情况3：类数组对象
+const arrLike = {
+  0: 'a',
+  1: 'b',
+  length: 2
+};
+arrLike[Symbol.isConcatSpreadable] = true;
+const arr2 = [1, 2].concat(arrLike); //Array [1, 2, 'a', 'b']
+
+
+//情况4：类
+class Arr extends Array {
+  constructor(args){
+  	super(args);
+  	this[Symbol.isConcatSpreadable] = false
+  }
+}
+const arr1 = new Arr();
+arr1[0] = 'a';
+arr1[1] = 'b';
+const arr2 = [1, 2].concat(arr1); //Array [1, 2, ['a', 'b']]
+
+</script>
+</body>
+</html>

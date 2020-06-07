@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<ul id="ul"></ul>
+
+
+<script>
+const ul = document.getElementById('ul');
+const docFrag = document.createDocumentFragment();
+[1, 2, 3, 4].forEach(item => {
+  const li = document.createElement('li');
+  li.textContent = item;
+  docFrag.append(li);
+});
+ul.append(docFrag); //将文档片段加入当前文档
+
+
+
+</script>
+</body>
+</html>

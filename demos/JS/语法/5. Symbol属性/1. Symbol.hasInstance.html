@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+//情况1
+class Person {
+  //普通function函数定义在实例上
+  [Symbol.hasInstance](obj){
+  	return obj instanceof Array
+  }
+}
+const person = new Person();
+console.log({a: 1} instanceof person); //false
+console.log([1, 2] instanceof person); //true
+
+
+//情况2
+class Even {
+  //静态方法定义在类上
+  static [Symbol.hasInstance](obj){
+  	return Number(obj) % 2 === 0;
+  }
+}
+console.log(1 instanceof Even); //false
+console.log(2 instanceof Even); //true
+
+</script>
+</body>
+</html>

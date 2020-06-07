@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>data bind</title>
+</head>
+<body>
+
+<button id="btn">点击+1</button>
+<span id="show">1</span>
+
+<script>
+//
+
+const btn = document.getElementById('btn');
+const show = document.getElementById('show');
+const obj = {value: 1};
+(function(){
+  function watch(target, f){
+    const proxy = new Proxy(target, {
+      get: function(target, prop){
+        return target[prop];
+      },
+      set: function(target, prop, value){
+        target[prop] = value;
+        f(prop, value);
+      }
+    });
+    return proxy;
+  }
+  this.watch = watch;
+})()
+const newObj = watch(obj, function(key, newValue){
+  if(key === 'value'){
+  	show.innerHTML = newValue;
+  }
+});
+btn.addEventListener("click", function(){
+  newObj.value += 1;
+});
+
+
+//情况2：Proxy实现双向数据绑定
+
+</script>
+</body>
+</html>

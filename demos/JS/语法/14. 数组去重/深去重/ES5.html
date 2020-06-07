@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deep repeat</title>
+</head>
+<body>
+<script>
+//注：
+// function f(item){
+//   console.log(item);
+//   console.log((typeof item) + item);
+//   console.log(typeof item + JSON.stringify(item));
+// }
+// f(1);
+// f('1');
+// f({a: 1});
+// f({a: 2});
+
+//情况1：对象属性名只能是字符串,则1和'1'相同
+function unique(arr){
+  var obj = {};
+  return arr.filter(function(item, index, arr){
+    return obj.hasOwnProperty(item) ? false : (obj[item] = true);
+  });
+}
+
+//情况2：typeof item + item,针对对象始终是object[object Object]
+function unique(arr){
+  var obj = {};
+  return arr.filter(function(item, index, arr){
+    return obj.hasOwnProperty((typeof item) + item) ? false : (obj[(typeof item) + item] = true);
+  });
+}
+
+//情况3：正则消失
+function unique(arr){
+  var obj = {};
+  return arr.filter(function(item, index, arr){
+    return obj.hasOwnProperty((typeof item) + JSON.stringify(item)) ? false : (obj[(typeof item) + JSON.stringify(item)] = true);
+  });
+}
+
+
+var arr2 = [{a: {b: 1}}, {a: {b: 1}}, [1, [2]], [1, [2]], new Date(), new Date(), /1/g, /1/g, function f(){}, function f(){}];
+console.log(unique(arr2)); //Array [{a: {b: 1}}, [1, [2]], Thu Oct 31 2019 19:05:56 GMT+0800 (中国标准时间), /1/g, function f(){}];
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flatten</title>
+</head>
+<body>
+<script>
+function flatten(arr){
+  while(arr.some(item => Array.isArray(item))){
+    arr = [].concat(...arr);
+  }
+  return arr;
+}
+
+
+const arr = [1, '2', [3, '4', [5]], 1];
+console.log(flatten(arr)); //Array [1, '2', 3, '4', 5, 1]
+
+
+</script>
+</body>
+</html>

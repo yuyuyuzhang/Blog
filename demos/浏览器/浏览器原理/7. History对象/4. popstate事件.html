@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+
+<script>
+//History对象所有实例都需要在浏览器已打开的文档的控制台试验
+
+//当前文档URL：https://wangdoc.com/javascript/bom/history.html
+window.addEventListener('popstate', function(e){
+  console.log('state');
+});
+history.pushState(null, '', 'https://wangdoc.com/javascript/bom/window.html'); //控制台无反应
+history.back(); //'state', 文档不变,history.html
+history.replaceState(null, '', 'https://wangdoc.com/javascript/bom/same-origin.html'); //控制台无反应
+history.go(); //控制台无反应, 文档变化,same-origin.html
+
+</script>
+</body>
+</html>

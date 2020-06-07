@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block">
+  <p>hello <b>world</b></p>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+</div>
+
+
+<script>
+//情况1
+const div = document.querySelector('#block');
+const filter = function(node){
+  return node.tagName.toLowerCase() === 'li' ? 
+    NodeFilter.FILTER_ACCEPT :
+    NodeFilter.FILTER_SKIP;
+};
+const nodeFilter = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, filter, false);
+let currNode = nodeFilter.nextNode();
+while(currNode !== null){
+  console.log(currNode.textContent); //"1" "2" "3"
+  currNode = nodeFilter.nextNode();
+}
+
+
+//情况2
+const div = document.querySelector('#block');
+const treeWalker = document.createTreeWalker(div, NodeFilter.SHOW_ELEMENT, null, false);
+treeWalker.firstChild();  //转到<p>
+treeWalker.nextSibling(); //转到<ul>
+let currNode = treeWalker.firstChild(); //转到<li>
+while(currNode !== null){
+  console.log(currNode.textContent); //"1" "2" "3"
+  currNode = treeWalker.nextSibling();
+}
+
+
+
+</script>
+</body>
+</html>

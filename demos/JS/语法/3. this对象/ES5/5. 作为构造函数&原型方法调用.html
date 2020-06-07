@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+//情况1
+var name = '张三';
+function Person(){
+  this.name = '李四';
+  console.log(this.name);
+}
+var person = new Person(); //'李四'
+
+
+//情况2
+var name = '张三';
+function Person(){
+  this.name = '李四';
+}
+Person.prototype.getName = function(){
+  console.log(this.name);
+}
+var person = new Person();
+person.getName(); //'李四'
+
+</script>
+</body>
+</html>

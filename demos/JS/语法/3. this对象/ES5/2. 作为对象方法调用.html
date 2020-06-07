@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+//情况1
+var name = '张三';
+var person = {
+  name: '李四',
+  getName: function(){
+    console.log(this.name);
+  }
+};
+person.getName(); //'李四'
+
+
+//情况2
+var name = '张三';
+var person = {
+  name: '李四',
+  getName: function(){
+    console.log(this.name);
+  }
+};
+var a = person.getName; //对象方法被赋值给全局变量,函数的this指向函数运行时所在的作用域
+a(); //'张三',对象方法在全局环境中被调用
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>closure</title>
+</head>
+<body>
+<script>
+//情况1
+var arr = [];
+for(var i=0; i<5; i++){
+  arr[i] = function(){
+    return function(){
+      return i;
+    };
+  };
+}
+console.log(arr[3]);     //function(){return function(){return i;};}
+console.log(arr[3]());   //function(){return i;}
+console.log(arr[3]()()); //5
+
+//情况2
+var arr = [];
+for(var i=0; i<5; i++){
+  arr[i] = (function(){
+    return function(){
+      return i;
+    };
+  })(i);
+}
+console.log(arr[3]);   //function(){return i;}
+console.log(arr[3]()); //5
+
+//情况3
+var arr = [];
+for(var i=0; i<5; i++){
+  arr[i] = (function(){
+    return (function(){
+      return i;
+    })(i);
+  })(i);
+}
+console.log(arr[3]); //3
+
+   
+</script>
+</body>
+</html>

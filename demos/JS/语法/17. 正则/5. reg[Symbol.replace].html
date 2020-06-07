@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+
+const str = 'cat,bat,sat';
+const reg1 = /(.)at/;
+const reg2 = /(.)at/g;
+
+//第二个参数为字符串
+console.log(reg1[Symbol.replace](str, 'hh')); //'hh,bat,sat'
+console.log(reg2[Symbol.replace](str, 'hh')); //'hh,hh,hh'
+console.log(reg2[Symbol.replace](str, '$'));  //'$,$,$'
+
+//第二个参数为函数
+reg2[Symbol.replace](str, function(match, $1, index, input){
+  console.log(match, $1, index, input); 
+});
+//输出：'cat' 'c' 0 'cat,bat,sat'    
+//     'bat' 'b' 4 'cat,bat,sat'    
+//     'sat' 's' 8 'cat,bat,sat'
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+//情况1
+const str = 'hlleeo';
+const reg1 = /(?<=l)/g;
+const reg2 = /(?<=l)e/g;
+const reg3 = /(?<!l)/g;
+const reg4 = /(?<!l)e/g;
+
+console.log(reg1[Symbol.replace](str, '#')); //'hl#l#eeo'
+console.log(reg2[Symbol.replace](str, '#')); //'hll#eo'
+console.log(reg3[Symbol.replace](str, '#')); //'#h#lle#e#o#'
+console.log(reg4[Symbol.replace](str, '#')); //'hlle#o'
+
+
+//情况2
+const str = '1053';
+const reg1 = /^(\d+)(\d+)$/;
+const reg2 = /(?<=(\d+)(\d+))$/;
+console.log(reg1.exec(str)); //Array ['1053', '105', '3']    index: 0    input: '1053'  groups: undefined
+console.log(reg2.exec(str)); //Array ['', '1', '053']        index: 4    input: '1053'  groups: undefined
+
+</script>
+</body>
+</html>

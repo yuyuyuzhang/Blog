@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+var name = '张三';
+var person = {
+  name: '李四',
+  getName: function(){
+    console.log(this.name);
+  }
+};
+function get(){
+  (person.getName)(); //'李四'
+  (a = person.getName)(); //'张三',变量a未使用var声明,属于全局变量
+}
+get(); 
+
+
+</script>
+</body>
+</html>

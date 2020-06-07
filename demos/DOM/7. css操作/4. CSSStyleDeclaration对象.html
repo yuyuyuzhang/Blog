@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+    #block {
+      width:20px;
+    }
+    </style>
+</head>
+<body>
+
+<div id="block" style="font-size:14px;color:red;">haha</div>
+
+
+<script>
+const div = document.querySelector('#block');
+const computedStyle = getComputedStyle(div);
+
+console.log(computedStyle.length); //280
+console.log(computedStyle.width);  //"20px"
+console.log(computedStyle.color);  //"rgb(255, 0, 0)"
+
+
+
+</script>
+</body>
+</html>

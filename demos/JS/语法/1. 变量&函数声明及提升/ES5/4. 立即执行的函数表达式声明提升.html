@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>declare</title>
+</head>
+<body>
+<script>
+//情况1
+var a = 1;
+function f(){
+  var a = 2;
+  (function f1(){
+    var a = 3;
+    console.log(a); //3,块级作用域
+  })();
+  console.log(a); //2,函数作用域
+}
+f();
+console.log(a); //1,全局作用域
+
+
+//情况2
+var a = 1;
+function f(){
+  var a = 2;
+  (function f1(){
+    a = 3;
+    console.log(a); //3
+    var a = 4;
+    console.log(a); //4
+  })();
+  console.log(a); //2
+}
+f();
+console.log(a); //1
+
+</script>
+</body>
+</html>

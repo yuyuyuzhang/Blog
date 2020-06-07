@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style id="myStyle">
+    .red {
+      color: red;
+    }
+    .big {
+      font-weight: bold;
+    }  
+    </style>
+</head>
+<body>
+
+
+
+<script>
+const style = document.getElementById('myStyle');
+const sheet = style.sheet;
+
+sheet.deleteRule(0);
+sheet.insertRule('.small{fontSize: 14px;}', 0);
+console.log(sheet.cssRules); //CSSRuleList {0: CSSStyleRule ".small", 1: CSSStyleRule ".big", length: 2}
+
+
+
+</script>
+</body>
+</html>

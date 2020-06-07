@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+//instanceof操作符检测指定构造函数的原型是否存在于实例的原型链中
+class Arr extends Array {
+  static get [Symbol.species](){
+  	return Array
+  }
+}
+
+//arr是Arr类生成的实例
+const arr = new Arr(1, 2, 3)
+console.log(arr instanceof Arr);   //true
+console.log(arr instanceof Array); //true
+
+//map是通过arr创建的实例,调用的是arr的Symbol.species属性返回的构造函数,即Array类
+const map = arr.map(item => item * item);
+console.log(map instanceof Arr);   //false
+console.log(map instanceof Array); //true
+
+</script>
+</body>
+</html>

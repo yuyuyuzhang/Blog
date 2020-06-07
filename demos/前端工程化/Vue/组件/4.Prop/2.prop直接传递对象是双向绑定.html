@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+</head>
+<body>
+  <div id="app1">
+    <div>parent data: {{num.data}}</div>
+    <button @click="deleteMessage">delete</button>
+    <input type="text" v-model="num.data">
+    <my-component :num="num" @change="change"></my-component>
+  </div>
+
+  <!-- 子组件 -->
+  <template id="myComponent">
+    <div>
+      <div>myComponent data: {{num.data}}</div>
+      <input type="text" v-model="num.data" @change="change">
+    </div>
+  </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+  var vm = new Vue({
+  el: '#app1',
+  data:{
+    num:{
+      data:1
+    }
+  },
+	components: {
+		'my-component':{
+      // template选项是一个id
+      template:'#myComponent',
+      props:['num'],
+      methods:{
+        change(){
+          this.$emit("change")
+        },
+      }
+    },
+  },
+  methods:{
+    change(){
+      console.log(this.num.data)
+    },
+    deleteMessage(){
+      this.num.data = 0
+    }
+  }
+})
+</script>
+</html>

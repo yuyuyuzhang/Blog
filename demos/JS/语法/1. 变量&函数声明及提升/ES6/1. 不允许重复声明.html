@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>declare</title>
+</head>
+<body>
+<script>
+//情况1
+{
+  const a = 1;
+  const a = 2; //SyntaxError
+}
+
+//情况2
+{
+  let a = 1;
+  let a = 2; //SyntaxError
+}
+
+//情况3
+{
+  const a = 1;
+  let a = 2; //SyntaxError
+}
+
+//情况4
+{
+  const a = 1;
+  var a = 2; //SyntaxError
+}
+
+//情况5
+function f(arg){
+  const arg = 1;
+}
+
+//情况6
+function f(arg){
+  let arg = 1;
+}
+</script>
+</body>
+</html>

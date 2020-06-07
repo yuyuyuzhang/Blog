@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="outer" style="width:200px;height:200px;border:1px solid red;">
+  <div id="inner" style="width:100px;height:100px;border:1px solid red;"></div>
+</div>
+
+
+<script>
+const outer = document.querySelector('#outer');
+outer.addEventListener('mouseenter', function(e){
+  console.log(1);
+});
+outer.addEventListener('mouseover', function(e){
+  console.log(2);
+});
+//输出：2 1 2 2	
+
+</script>
+</body>
+</html>

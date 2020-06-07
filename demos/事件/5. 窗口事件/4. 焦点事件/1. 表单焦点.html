@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<form>
+  <div>
+	<label>姓名：</label>
+	<input id="name" type="text" placeholder="请输入姓名" />
+  </div>
+  <div>
+	<label>备注：</label>
+	<input id="remark" type="text" placeholder="请输入备注" />
+  </div>
+</form>
+
+
+<script>
+const name = document.getElementById('name')
+name.addEventListener('keyup', function(e){
+  //用户输入姓名且按下Enter键,备注输入框自动获得焦点
+  if(e.target.value !== '' && e.key === 'Enter'){
+  	const remark = document.getElementById('remark')
+  	remark.focus()
+  }
+})
+
+
+
+</script>
+</body>
+</html>

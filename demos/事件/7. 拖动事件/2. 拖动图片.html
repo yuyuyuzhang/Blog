@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<img id="cat" src="cat.jpg" style="width:100px;height:100px;"></img>
+<div id="target" style="width:200px;height:200px;border:1px solid red;"></div>
+
+
+<script>
+// 拖动节点事件
+const drag = document.getElementById('cat')
+drag.addEventListener('dragstart', function(e){
+  e.dataTransfer.setData('id', e.target.id);
+});
+
+// 目标节点事件
+const target = document.getElementById("target");
+target.addEventListener("dragenter", function(e) {
+  e.preventDefault(); // 目标节点默认不允许放下拖动节点,阻止默认行为
+  e.dataTransfer.dropEffect = "move"; // 拖动节点允许的放置效果
+});
+target.addEventListener("dragover", function(e) {
+  e.preventDefault(); // 目标节点默认不允许放下拖动节点,阻止默认行为
+  e.dataTransfer.dropEffect = "move"; // 拖动节点允许的放置效果
+});
+target.addEventListener("drop", function(e) {
+  e.preventDefault(); // 浏览器默认打开文件,阻止默认行为
+
+  // 添加节点
+  const id = e.dataTransfer.getData('id');
+  e.target.append(document.getElementById(id));
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<script>
+
+const str = 'cat,bat,sat';
+const reg1 = /(.)at/;
+const reg2 = /(.)at/g;
+console.log(reg1[Symbol.match](str)); //Array ["cat", "c"]  index: 0  input: "cat,bat,sat"  groups: undefined
+console.log(reg2[Symbol.match](str)); //Array ["cat", "bat", "sat"]
+
+
+</script>
+</body>
+</html>

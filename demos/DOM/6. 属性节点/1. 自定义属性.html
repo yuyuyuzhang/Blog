@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block" data-a="a" data-b="b"></div>
+
+
+<script>
+const div = document.getElementById('block');
+
+//情况1
+div.dataset.a = "ha";
+delete div.dataset.b;
+console.log(div.dataset); //DOMStringMap {a → "ha"}
+
+
+//情况2
+div.setAttribute('data-b', 'he');
+div.removeAttribute('data-a');
+console.log(div.dataset); //DOMStringMap {b → "he"}
+
+
+
+</script>
+</body>
+</html>

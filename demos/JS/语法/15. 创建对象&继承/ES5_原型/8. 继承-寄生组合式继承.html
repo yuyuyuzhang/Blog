@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<script>
+//寄生组合式继承的基本模式
+function inheritPrototype(child, parent){
+  var prototype = Object.create(parent.prototype); //创建超类原型的实例
+  prototype.constructor = child; //弥补因重写子类原型而失去的constructor属性
+  child.prototype = prototype; //将超类原型的实例指定为子类原型
+}
+
+function Person(name, friends){ 
+  this.name = name;
+  this.friends = friends;
+
+  if(typeof this.getName !== 'function'){
+    Person.prototype.getName = function(){
+      return this.name;
+    };
+  }
+}
+function Student(name, friends, id){
+  Person.call(this, name, friends); //借用构造函数继承,继承父类的全部实例属性
+  this.id = id;
+}
+inheritPrototype(Student, Person); //寄生组合式继承,将父类原型的实例设置为子类的原型
+var stu1 = new Student("张三", ["王五"], "001");
+var stu2 = new Student("李四", ["赵六"], "002");
+
+
+</script>
+</body>
+</html>

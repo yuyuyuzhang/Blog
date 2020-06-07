@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+	
+<input id="text" type="text" value="我是小可爱111"/>
+
+
+<script>
+const text = document.querySelector('#text');
+text.addEventListener('paste', function(e){
+  const clip = e.clipboardData || window.clipboardData;
+  const text = clip.getData("text");
+
+  //剪贴板中的数据如果不是数字则不粘贴
+  if(!/^\d+$/.test(text)){
+      e.preventDefault();
+  }
+});
+
+</script>
+</body>
+</html>

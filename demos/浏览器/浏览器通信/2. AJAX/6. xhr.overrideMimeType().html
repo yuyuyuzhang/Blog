@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+
+<script>
+const xhr = new XMLHttpRequest()
+
+//事件监听必须在调用xhr.send()发送请求之前
+xhr.onreadystatechange = function(){
+  if(xhr.readyState === 4 && xhr.status === 200){
+  	console.log(xhr.response)
+  } else{
+  	console.error(xhr.statusText)
+  }
+}
+
+//请求设置
+xhr.open('POST', 'http://example.com', true)
+xhr.setRequestHeader('Content-Type', 'application/json')
+xhr.responseType = 'document';
+xhr.overrideMimeType('text/xml');
+const data = { name: '张三', age: 20 }
+xhr.send(JSON.stringify(data))
+
+
+
+</script>
+</body>
+</html>

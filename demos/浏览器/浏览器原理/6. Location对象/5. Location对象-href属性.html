@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<button id="btn">跳转</button>
+
+
+<script>
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function handleChangeURL(){
+  console.log(location.href); //'http://10.20.15.72:8080'
+  location.href = 'https://wangdoc.com/javascript/bom/location.html#location-%E5%AF%B9%E8%B1%A1';
+})
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<p id="text1">你是小可爱</p>
+<p id="text2">我是小可爱</p>
+<button id="btn">选中第二行文本</button>
+
+
+<script>
+const p1 = document.querySelector('#text1');
+const p2 = document.querySelector('#text2');
+
+const sel = document.getSelection();
+const range = document.createRange();
+range.selectNode(p1);
+sel.addRange(range);
+
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function(){
+  sel.selectAllChildren(p2);
+})
+
+
+
+</script>
+</body>
+</html>

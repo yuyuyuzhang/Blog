@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>declare</title>
+</head>
+<body>
+<script>
+//情况1
+var a = 1;
+function f(){
+  a = 2;
+  console.log(a); //2
+  var a = 3;
+  console.log(a); //2
+}
+f();
+
+
+//情况2
+console.log(a);
+var a =1;
+function a() {
+  a = 3;
+  console.log(a);
+  var a = 4;
+}
+console.log(a);
+a = 5;
+console.log(a);
+//等价于 
+function a(){
+  var a;
+  a = 3;
+  console.log(a);
+  a = 4;
+}
+var a; //同名变量重复声明被忽略
+console.log(a); //function a(){}
+a = 1;
+console.log(a); //1
+a = 5;
+console.log(a); //5
+
+</script>
+</body>
+</html>

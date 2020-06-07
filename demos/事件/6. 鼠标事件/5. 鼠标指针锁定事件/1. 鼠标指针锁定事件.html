@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<img id="img" src="cat.jpg" >
+
+
+<script>
+const img = document.getElementById('img')
+
+//点击图片,触发锁定
+img.addEventListener('click', function(e){  
+  img.requestPointerLock()
+})
+
+//点击页面,取消锁定
+document.addEventListener('click', function(e){  
+  if(document.pointerLockElement === img){    
+    document.exitPointerLock()  
+  }
+})
+
+//锁定成功/失败
+document.addEventListener('pointerlockchange', function(e){
+  if(document.pointerLockElement === img){
+    document.addEventListener('mousemove', rotate)
+  } else{
+    document.removeEventListener('mousemove', rotate)
+  }
+})
+
+//鼠标指针移动,图片变换
+let moveX = 0
+let moveY = 0
+const rotate = (e) => {
+  moveX = moveX + e.movementX
+  moveY = moveY + e.movementY
+  img.style.transform = 'rotateX(' + moveY + 'deg) rotateY(' + moveX + 'deg)'
+}
+
+</script>
+</body>
+</html>

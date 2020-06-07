@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block">haha</div>
+
+
+<script>
+const div = document.getElementById('block');
+const b = document.createElement('b');
+div.insertAdjacentElement('afterbegin', b);
+div.insertAdjacentHTML('afterbegin', '<span>hehe</span>');
+div.insertAdjacentText('afterbegin', 'hello');
+console.log(div.childNodes); //NodeList {0: #text "hello", 1: span, 2: b, 3: #text "haha", length: 4}
+
+
+
+
+</script>
+</body>
+</html>

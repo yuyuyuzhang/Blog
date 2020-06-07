@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+    .target {  
+      width: 100px;  
+      height: 100px;  
+      padding: 20px;  
+      border: 5px solid red;  
+      margin: 10px;
+      overflow: auto;
+      position: relative; //定位元素
+    }
+    .child {  
+      width: 200px;  
+      height: 200px;
+      padding: 10px;  
+      border: 5px solid green;  
+      margin: 10px;
+    }
+    </style>
+</head>
+<body>
+
+<div class="target">      
+  <div class="child"></div>    
+</div>
+
+
+<script>
+const child = document.querySelector(".child");      
+console.log(child.offsetParent); //DOM .target    
+console.log(child.offsetTop);    //30 = 10 + 20   
+console.log(child.offsetLeft);   //30 = 10 + 20
+
+
+//情况1：获取某个元素在文档中的垂直偏移量
+function getElemTop(elem){
+  let currNode = elem.offsetParent;
+  let currTop = elem.offsetTop;
+  while(currNode !== null){
+    currTop += currNode.offsetTop;
+    currNode = currNode.offsetParent;
+  }
+  return currTop;
+}
+
+
+//情况2：设置当前元素滚动状态
+function scrollToTop(elem){
+  if(elem.scrollTop !== 0){
+    elem.scrollTop = 0; //元素回滚到顶部
+  }
+}
+
+
+</script>
+</body>
+</html>

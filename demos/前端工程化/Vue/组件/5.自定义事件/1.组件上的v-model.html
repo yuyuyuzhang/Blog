@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+  <div id='app'>
+    <!-- 一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件 -->
+    <custom-input v-model='value'></custom-input>
+    <div>value:{{value}}</div>
+  </div>
+  <script>
+    Vue.component('custom-input',{
+      props:['value'],
+      template:`
+        <input
+          :value='value'
+          @input="$emit('input',$event.target.value)"
+        >
+      `
+    })
+    var vm=new Vue({
+      el:'#app',
+      component:['custom-input'],
+      data:{
+        value:''
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>object</title>
+</head>
+<body>
+<script>
+var person1 = {
+  name: "张三",
+  friends: ["王五"],
+};
+var person2 = Object.create(person1);
+person2.name = "李四";
+person2.friends.push("赵六");
+var person3 = Object.create(person1, {
+  friends: {
+    value: ["陈七"]
+  }
+});
+
+person2.name;    //"李四"
+person2.firends; //Array ["王五", "赵六"]
+person3.name;    //"张三"
+person3.friends; //Array ["陈七"]
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+const name = '张三';
+const person = {
+  name: '李四',
+  getName: function(){
+    document.addEventListener('click', (e) => {
+      console.log(this);      //person {...}
+      console.log(this.name); //'李四'
+    });
+  }
+}
+person.getName(); 
+
+
+</script>
+</body>
+</html>

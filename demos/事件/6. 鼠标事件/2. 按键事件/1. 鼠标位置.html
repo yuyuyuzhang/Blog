@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+
+<script>
+document.addEventListener('mouseup', function(e){
+  console.log('(' + e.clientX + ', ' + e.clientY + ')'); //"(111, 139)"
+  console.log('(' + e.pageX   + ', ' + e.pageY + ')');   //"(111, 410)"
+  console.log('(' + e.screenX + ', ' + e.screenY + ')'); //"(428, 400)"
+});
+
+</script>
+</body>
+</html>

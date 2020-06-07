@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回调函数</title>
+</head>
+<body>
+<script>
+
+function f1(callback){
+  console.log(2);
+  setTimeout(() => callback(), 0); //下轮事件循环执行
+  console.log(4)
+}
+function f2(){
+  console.log(3);
+}
+
+console.log(1);
+f1(f2);
+console.log(5);
+
+//输出：1 2 4 5 3
+
+
+
+</script>
+</body>
+</html>

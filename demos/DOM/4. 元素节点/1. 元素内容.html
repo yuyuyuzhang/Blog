@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+<div id="block"><span id="inline"></span></div>
+
+
+<script>
+const div = document.getElementById('block');
+console.log(div.innerHTML); //"<span id="inline"></span>"
+console.log(div.outerHTML); //"<div id="block"><span id="inline"></span></div>"
+
+
+</script>
+</body>
+</html>
