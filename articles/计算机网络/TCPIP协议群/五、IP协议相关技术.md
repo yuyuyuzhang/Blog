@@ -8,31 +8,74 @@
 
 ### (1) 主机名&域名
 
-单一主机名：为每台计算机赋予唯一的主机名，用来替换不便于用户记忆的IP 地址
+#### ① 单一主机名
 
-域名：为了识别主机名和组织机构名称的一种具有分层的名称
+单一主机名是为每台计算机赋予的唯一主机名 (实际上并不唯一)，用来替换不便于用户记忆的 IP 地址
 
-带域名的主机名：
+#### ② 域名
+
+* 域名是用于识别组织机构名称的一种具有分层的名称
+
+* 域名是分层管理的：`.` 三级域名 `.` 二级域名 `.` 一级域名
 
 ```javascript
-//新浪网：https://www.sina.com.cn
-console.log(url.hostname);    //"www.sina.com.cn" (服务器名：www)
-console.log(document.domain); //"sina.com.cn" 三级域名
-
-//新浪博客：http://blog.sina.com.cn
-console.log(url.hostname);    //"blog.sina.com.cn" (服务器名：blog)
-console.log(document.domain); //"sina.com.cn" 三级域名
+document.domain //返回/设置当前文档域名
 ```
 
-### (2) DNS
+#### ③ 带域名的主机名
 
-域名服务器 DNS (Domain Name Server)，
+带域名的主机名是互联网上某一台计算机或某一组计算机的名称，用于识别单一主机名和具有分层结构的组织机构名称，带域名的主机名互联网`唯一`
 
-各个域的分层上都设有各自的 DNS
+```javascript
+URL对象：
+url.origin   //协议、主机、端口
+url.protocol //协议
+url.host     //主机、端口
+url.hostname //主机
+url.port     //端口
+```
 
-从根 DNS 开始，各层 DNS 呈树状结构相互连接，每个 DNS 都了解该层下一层所有 DNS 的 IP 地址，所以若从根 DNS 开始追踪，可以访问世界上所有 DNS
+```javascript
+//新浪博客：http://blog.sina.com.cn
 
-①②③④⑤⑥⑦⑧⑨⑩
+单一主机名：blog
+域名：.sina.com.cn (.sina代表新浪 .com代表商业机构 .cn代表中国)
+带域名的主机名：blog.sina.com.cn
+```
+
+```javascript
+//百度网：https://www.baidu.com
+console.log(url.hostname);    //"www.baidu.com"
+console.log(document.domain); //"www.baidu.com"
+
+//新浪网：https://www.sina.com.cn
+console.log(url.hostname);    //"www.sina.com.cn"
+console.log(document.domain); //"sina.com.cn"
+
+//新浪博客：http://blog.sina.com.cn
+console.log(url.hostname);    //"blog.sina.com.cn"
+console.log(document.domain); //"sina.com.cn"
+```
+
+### (2) 域名服务器 DNS
+
+① 域名服务器 DNS (Domain Name Server) 是进行域名和与之对应的 IP 地址相互转换的服务器
+
+② 从根域名服务器开始，各层域名服务器呈树状结构相互连接，每个域名服务器都了解该层下一层所有域名服务器的 IP 地址，所以若从根域名服务器开始追踪，可以访问世界上所有域名服务器
+
+③ 所有域名服务器都必须注册根域名服务器的 IP 地址，因为根据 IP 地址进行检索时，需要从根域名服务器开始按顺进行
+
+![域名服务器](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/域名服务器.png)
+
+### (3) 域名检索
+
+以百度网为例：https://www.baidu.com
+
+① 用户在浏览器地址栏输入网址，浏览器先检测本地缓存中是否有之前的查询记录，有就直接读取结果，没有就则向本地 DNS 服务器发送查询请求，本地 DNS 服务器没有就需要向根服务器发送请求，根服务器管理所有顶级域名，再没有就依次向下级域名服务器发送请求
+
+② 用户在浏览器地址栏输入一个域名，浏览器向这个用户的`上网接入商`发出域名请求，接入商的域名服务器 DNS 查询域名数据库，找到该域名对应的 IP 地址，接入商的服务器去这个 IP 地址对应的服务器上抓取网页内容，然后传输给发出请求的浏览器
+
+![域名检索](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/域名检索.png)
 
 ## 2. ARP 协议
 
@@ -48,7 +91,7 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 ③ 每发送一个 IP 报文都要进行一次 ARP 请求会造成不必要的网络流量，通常的做法是将每次 ARP 请求获取到的 MAC 地址缓存到下一次 ARP 请求完成
 
-![ARP协议](../../images/计算机网络/IP协议相关技术/ARP协议.png)
+![ARP协议](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/ARP协议.png)
 
 ### (2) RARP 协议
 
@@ -58,7 +101,7 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 ② 先架设一台 RARP 服务器，在服务器上注册嵌入式设备的 MAC 地址和 IP 地址，再将嵌入式设备接入到网络，插电启动设备时，设备会向 RARP 服务器发送一条信息，表明自身的 MAC 地址，并且请求自身的 IP 地址，然后设备根据 RARP 服务器的返回结果设置自己的 IP 地址
 
-![RARP协议](../../images/计算机网络/IP协议相关技术/RARP协议.png)
+![RARP协议](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/RARP协议.png)
 
 ### (3) 代理 ARP
 
@@ -74,7 +117,7 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 ② 主机 A 向主机 B 发送 IP 报文，由于某种原因，途中的路由器 2 未能发现主机 B 的存在，那么路由器 2 就会向主机 A 发送一个 ICMPv4 包，说明发往主机 B 的 IP 报文未能成功，主机 A 分解 ICMPv4 包的首部和数据域得知发生问题的具体原因
 
-![ICMP协议](../../images/计算机网络/IP协议相关技术/ICMPv4协议.png)
+![ICMP协议](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/ICMPv4协议.png)
 
 ### (2) ICMPv6 协议
 
@@ -84,7 +127,7 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 ② 同一局域网/广播域/子网内的主机 A 需要向主机 D 发送 IP 报文，通过路由控制表主机 A 可以知道主机 D 的 IP 地址，主机 A 在子网内`多播`发送一个邻居请求消息，只有`支持 IPv6` 的路由器和主机才会收到这个多播消息，主机 D 通过邻居宣告消息告知主机 A 自己的 MAC 地址
 
-![ICMPv6协议](../../images/计算机网络/IP协议相关技术/ICMPv6协议.png)
+![ICMPv6协议](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/ICMPv6协议.png)
 
 ## 4. DHCP 协议
 
@@ -98,7 +141,7 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 ③ 为了避免 DHCP 服务器遇到故障，导致子网内所有主机都无法进行 TCP/IP 通信，通常会架设两台及以上的 DHCP 服务器，不过启动多个 DHCP 服务器，可能会导致分配的 IP 地址相互冲突
 
-![DHCP协议](../../images/计算机网络/IP协议相关技术/DHCP协议.png)
+![DHCP协议](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/DHCP协议.png)
 
 ### (2) DHCP 中继器
 
@@ -122,13 +165,13 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 ③ 私有 IP 结合 NAT 技术已经成为解决 IPv4 地址分配问题的主流方案，现在很多学校、公司内部正在采用每个主机配置私有 IP，路由器配置全局 IP 的方式
 
-![NAT技术](../../images/计算机网络/IP协议相关技术/NAT技术.png)
+![NAT技术](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/NAT技术.png)
 
 ### (2) NAPT
 
 **由来**：当私有网络中的多台主机都要连接互联网时，仅仅转换 IP 地址会担心全局 IP 是否够用的问题，因此产生了包含端口号一起转换的技术 NAPT，这样可以将私有网络中的私有 IP 都转换为同一个全局 IP，但是端口号不同
 
-![NAPT技术](../../images/计算机网络/IP协议相关技术/NAPT技术.png)
+![NAPT技术](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/NAPT技术.png)
 
 ## 6. IPv4 和 IPv6 通信
 
@@ -136,13 +179,13 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 **由来**：IPv4 报文首部和 IPv6 报文首部不同，那么 IPv4 地址的主机和 IPv6 地址的主机之间就无法相互通信，NAT-PT 正是将 IPv6 报文首部转换成 IPv4 报文首部的一种技术
 
-![NAT-PT技术](../../images/计算机网络/IP协议相关技术/NAT-PT技术.png)
+![NAT-PT技术](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/NAT-PT技术.png)
 
 ### (4) IP 隧道
 
 **由来**：IPv4 报文首部和 IPv6 报文首部不同，那么支持 IPv4 的子网和支持 IPv6 的子网之间就无法相互通信，IP 隧道正是将支持 IPv6 的子网发来的 IP 报文统合成一个数据，再追加一个 IPv4 报文首部之后转发给支持 IPv4 的子网的技术
 
-![IP隧道](../../images/计算机网络/IP协议相关技术/IP隧道.png)
+![IP隧道](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/IP隧道.png)
 
 ## 7. Mobile IP
 
@@ -156,4 +199,4 @@ console.log(document.domain); //"sina.com.cn" 三级域名
 
 ④ 外部代理：所有需要接入网络的移动设备都需要它
 
-![MobileIP](../../images/计算机网络/IP协议相关技术/MobileIP.png)
+![MobileIP](../../../images/计算机网络/TCPIP协议群/IP协议相关技术/MobileIP.png)

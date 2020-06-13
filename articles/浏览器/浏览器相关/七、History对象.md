@@ -25,7 +25,7 @@ History 对象保存了当前浏览器窗口浏览过的所有文档地址，由
 
 浏览器访问顺序：a.html -> b.html -> c.htmld
 
-![History栈](../../../images/浏览器/浏览器原理/History栈.png)
+![History栈](../../../images/浏览器/浏览器相关/History对象/History栈.png)
 
 ### (2) 状态方法
 
