@@ -3,29 +3,31 @@
 
 ## 进度
 
-DOM系列 11 篇已完结
+DOM 系列 11 篇已完结
 
 事件系列 8 篇已完结
 
-JS系列之E5S 9 篇已完结
+JS 系列之 E5S 9 篇已完结
 
-JS系列之ES6 11 篇已完结
+JS 系列之 ES6 11 篇已完结
 
-JS系列之函数式编程 进行中
+JS 系列之函数式编程 进行中......
 
-JS系列之设计模式 进行中
+JS 系列之设计模式 进行中......
 
-浏览器系列之浏览器原理 8 篇已完结
+计算机网络系列之 TCP/IP 协议群已完结
 
-浏览器系列之浏览器通信 进行中
+计算机网络系列之 HTTP 协议进行中......
 
-浏览器系列之浏览器存储 进行中
+计算机网络系列之网络安全进行中......
 
-浏览器系列之浏览器API 进行中
+浏览器系列之浏览器相关 进行中......
 
-计算机网络系列进行中
+浏览器系列之浏览器通信 进行中......
 
-## DOM系列
+浏览器系列之浏览器存储 进行中......
+
+## DOM 系列
 
 1. [DOM](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%B8%80%E3%80%81DOM.md)
 2. [节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%BA%8C%E3%80%81%E8%8A%82%E7%82%B9.md)
@@ -50,7 +52,7 @@ JS系列之设计模式 进行中
 7. [拖动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E4%B8%83%E3%80%81%E6%8B%96%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
 8. [键盘事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E5%85%AB%E3%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6.md)
 
-## JS系列之ES5
+## JS 系列之 ES5
 
 1. [语法](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B8%80%E3%80%81%E8%AF%AD%E6%B3%95.md)
 2. [错误处理机制](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%BA%8C%E3%80%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6.md)
@@ -62,7 +64,7 @@ JS系列之设计模式 进行中
 8. [元编程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E5%85%AB%E3%80%81%E5%85%83%E7%BC%96%E7%A8%8B.md)
 9. [原型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B9%9D%E3%80%81%E5%8E%9F%E5%9E%8B.md)
 
-## JS系列之ES6
+## JS 系列之 ES6
 
 1. [数据类型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
 2. [解构赋值](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%BA%8C%E3%80%81%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC.md)
@@ -76,37 +78,38 @@ JS系列之设计模式 进行中
 10. [异步](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E3%80%81%E5%BC%82%E6%AD%A5.md)
 11. [模块](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97.md)
 
-## JS系列之函数式编程
+## JS 系列之函数式编程
 
 1. [函数](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%80%E3%80%81%E5%87%BD%E6%95%B0.md)
 2. [定时器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%BA%8C%E3%80%81%E5%AE%9A%E6%97%B6%E5%99%A8.md)
 3. [递归](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%89%E3%80%81%E9%80%92%E5%BD%92.md)
 
-## JS系列之设计模式
+## JS 系列之设计模式
 
-## 计算机网络系列
+## 计算机网络系列之 TCP/IP 协议群
 
-1. [计算机网络的发展](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%8F%91%E5%B1%95.md)
-2. [TCP/IP协议群](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BA%8C%E3%80%81TCP%26IP%E5%8D%8F%E8%AE%AE%E7%BE%A4.md)
-3. [数据链路层协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E5%8D%8F%E8%AE%AE.md)
-4. [IP协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%9B%9B%E3%80%81IP%E5%8D%8F%E8%AE%AE.md)
-5. [IP协议相关技术](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BA%94%E3%80%81IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF.md)
-6. [TCP与UDP协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%85%AD%E3%80%81TCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE.md)
-7. [应用层协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%B8%83%E3%80%81%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE.md)
+1. [计算机网络的发展](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%8F%91%E5%B1%95.md)
+2. [TCP/IP协议群](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E4%BA%8C%E3%80%81TCP%26IP%E5%8D%8F%E8%AE%AE%E7%BE%A4.md)
+3. [数据链路层协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E5%8D%8F%E8%AE%AE.md)
+4. [IP协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E5%9B%9B%E3%80%81IP%E5%8D%8F%E8%AE%AE.md)
+5. [IP协议相关技术](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E4%BA%94%E3%80%81IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF.md)
+6. [TCP与UDP协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E5%85%AD%E3%80%81TCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE.md)
 
-## 浏览器系列之浏览器原理
+## 计算机网络系列之 HTTP 协议
 
-1. [浏览器组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90.md)
-2. [浏览器渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93.md)
-3. [Window对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E4%B8%89%E3%80%81Window%E5%AF%B9%E8%B1%A1.md)
-4. [Screen对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E5%9B%9B%E3%80%81Screen%E5%AF%B9%E8%B1%A1.md)
-5. [Navigator对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E4%BA%94%E3%80%81Navigator%E5%AF%B9%E8%B1%A1.md)
-6. [Location对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E5%85%AD%E3%80%81Location%E5%AF%B9%E8%B1%A1.md)
-7. [History对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E4%B8%83%E3%80%81History%E5%AF%B9%E8%B1%A1.md)
-8. [Notification对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/%E5%85%AB%E3%80%81Notification%E5%AF%B9%E8%B1%A1.md)
+## 计算机网络系列之网络安全
+
+## 浏览器系列之浏览器相关
+
+1. [浏览器组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90.md)
+2. [浏览器渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93.md)
+3. [Window对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%89%E3%80%81Window%E5%AF%B9%E8%B1%A1.md)
+4. [Screen对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%9B%9B%E3%80%81Screen%E5%AF%B9%E8%B1%A1.md)
+5. [Navigator对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%94%E3%80%81Navigator%E5%AF%B9%E8%B1%A1.md)
+6. [Location对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AD%E3%80%81Location%E5%AF%B9%E8%B1%A1.md)
+7. [History对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%83%E3%80%81History%E5%AF%B9%E8%B1%A1.md)
+8. [Notification对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AB%E3%80%81Notification%E5%AF%B9%E8%B1%A1.md)
 
 ## 浏览器系列之浏览器通信
 
 ## 浏览器系列之浏览器存储
-
-## 浏览器系列之浏览器API
