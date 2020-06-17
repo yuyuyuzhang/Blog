@@ -101,8 +101,8 @@ JS 系列之设计模式 进行中......
 2. [HTTP协议](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BA%8C%E3%80%81HTTP%20%E5%8D%8F%E8%AE%AE.md)
 3. [HTTP报文](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B8%89%E3%80%81HTTP%20%E6%8A%A5%E6%96%87.md)
 4. [HTTP报文首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%9B%9B%E3%80%81HTTP%20%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.md)
-5. [HTTP请求报文请求行](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BA%94%E3%80%81HTTP%20%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.md)
-6. [HTTP响应报文状态码](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%85%AD%E3%80%81HTTP%20%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.md)
+5. [HTTP请求报文请求行](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BA%94%E3%80%81HTTP%20%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E8%AF%B7%E6%B1%82%E8%A1%8C.md)
+6. [HTTP响应报文状态码](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%85%AD%E3%80%81HTTP%20%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81.md)
 
 ## 计算机网络系列之网络安全
 
