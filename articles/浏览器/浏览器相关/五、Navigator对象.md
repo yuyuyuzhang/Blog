@@ -55,7 +55,7 @@ for(let i=0; i<plugins.length; i++){
 
 ### (1) 能力检测
 
-测试当前浏览器是否支持要使用的JavaScript功能，尽量使用 `typeof` 进行能力检测
+测试当前浏览器是否支持要使用的 JavaScript 功能，尽量使用 `typeof` 进行能力检测
 
 ```javascript
 //检测是否存在sort()方法,然而任何包含sort属性的对象同样返回true
