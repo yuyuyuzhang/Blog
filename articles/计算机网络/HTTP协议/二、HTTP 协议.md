@@ -24,23 +24,46 @@
 
 **由来**：HTTP 协议是无状态协议，用户登陆 Web 页面后不会记录已登陆状态，那么每次跳转新页面都需要再次登陆，或者在每次的 HTTP 请求报文中附加参数来管理登陆状态，针对这种情况，引入了 Cookie 技术，Cookie 技术通过在 HTTP 请求报文中附加 Cookie 信息来控制客户端状态
 
-**注意**：与 Cookie 相关的报文首部字段有服务端的 Set-Cookie 字段和客户端的 Cookie 字段，这两个字段都没有写入 RFC 标准，属于 HTTP 报文首部的其他首部字段
+**删除**：一旦 Cookie 从服务器发送至客户端，服务器就无法显示删除 Cookie，但是可以通过覆盖已过期的 Cookie 实现实质性删除操作
 
-① 用户登陆 Web 页面时，客户端将用户 ID 和密码放入报文主体，然后将请求发送给服务器
+**安全性**：服务器收到客户端的 Cookie 时，可以校验 Cookie 的有效期，发送方的域、路径、协议等信息，因此正规发布的 Cookie 内的数据不会因来自其他 Web 站点和攻击者的攻击而泄露
 
-② 服务器验证客户端发送的登陆信息进行身份认证，验证通过后发放用以识别用户的 `Session ID`，然后将用户的认证状态和 Session ID 绑定后记录在服务器，服务器返回响应时，添加其他首部字段 Set-Cookie 记录 Session ID 值
+**标准化**：与 Cookie 相关的报文首部字段有服务端的 Set-Cookie 字段和客户端的 Cookie 字段，这两个字段都没有写入 RFC 标准，属于 HTTP 报文的其他首部字段
 
-③ 客户端收到服务器返回的 Set-Cookie 字段后，从中获取 Session ID 值，将其作为 Cookie 保存在本地，下次向服务器发送请求时，浏览器会自动发送 Cookie，服务器就可以通过验证 Session ID 识别用户及其认证状态
+* 用户登陆 Web 页面时，客户端将用户 ID 和密码放入报文主体，然后将请求发送给服务器
+
+* 服务器验证客户端发送的登陆信息进行身份认证，验证通过后发放用以识别用户的 `Session ID`，然后将用户的认证状态和 Session ID 绑定后记录在服务器，服务器返回响应时，添加其他首部字段 Set-Cookie 记录 Session ID 值
+
+* 客户端收到服务器返回的 Set-Cookie 字段后，从中获取 Session ID 值，将其作为 Cookie 保存在本地，下次向服务器发送请求时，浏览器会自动发送 Cookie，服务器就可以通过验证 Session ID 识别用户及其认证状态
 
 ![Cookie管理状态](../../../images/计算机网络/网络安全/身份认证技术/Cookie管理状态.png)
 
-#### ① Set-Cookie
+#### ① Set-Cookie 字段
 
 服务器的 Set-Cookie 字段用于告知客户端，服务器针对当前用户的认证信息
 
 ![Set-Cookie](../../../images/计算机网络/HTTP协议/HTTP协议/Set-Cookie.png)
 
-#### ② Cookie
+**expires 属性**
+
+* expires 属性指定浏览器可发送 Cookie 的有效期
+* expires 属性被省略时其有效期仅限于维持浏览器会话的时间段内，通常限于浏览器应用程序关闭之前
+
+**secure 属性**
+
+* secure 属性用于限制 Web 页面仅在 HTTPS 安全连接时，才
+可以发送 Cookie
+
+**HttpOnly 属性**
+
+* HttpOnly 属性用于限制 JS 脚本无法通过 document.cookie 获得 Cookie，主要目的是为了防止跨站脚本攻击 XSS (Cross-site
+scripting) 对 Cookie 的信息窃取
+
+```javascript
+Set-Cookie: name=value; secure; HttpOnly
+```
+
+#### ② Cookie 字段
 
 客户端的 Cookie 字段用于告知服务器，客户端的当前用户的认证信息
 

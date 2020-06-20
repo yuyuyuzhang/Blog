@@ -66,7 +66,7 @@
 
 ![From](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/From.png)
 
-### (10) Authorization
+### (10) Authorization (HTTP 的身份认证技术)
 
 客户端的 Authorization 字段用于客户端与服务器之间的身份认证
 
@@ -78,7 +78,7 @@
 
 ![DIGEST](../../../images/计算机网络/网络安全/身份认证技术/DIGEST.png)
 
-### (11) Proxy-Authorization
+### (11) Proxy-Authorization (HTTP 的身份认证技术)
 
 客户端的 Proxy-Authorization 字段用于客户端与代理服务器之间的认证，客户端收到代理服务器发来的认证质询时，通过 Proxy-Authorization 字段告知代理服务器认证信息
 
@@ -188,7 +188,7 @@
 
 服务器的 Retry-After 字段用于告知客户端，应该在多久之后再次发送请求，字段值可以是创建响应后的秒数，也可以是具体的日期时间
 
-### (8) WWW-Authenticate
+### (8) WWW-Authenticate (HTTP 的身份认证技术)
 
 服务器的 WWW-Authenticate 字段用于客户端与服务器之间的身份认证
 
@@ -200,7 +200,7 @@
 
 ![DIGEST](../../../images/计算机网络/网络安全/身份认证技术/DIGEST.png)
 
-### (9) Proxy-Authenticate
+### (9) Proxy-Authenticate (HTTP 的身份认证技术)
 
 服务器的 Proxy-Authenticate 字段用于客户端与代理服务器之间的认证，将代理服务器要求的认证信息发送给客户端
 
@@ -269,7 +269,9 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 ### (1) Allow
 
-服务器的 Allow 字段用于告知客户端，对于请求的资源，服务器支持的 HTTP 请求方法
+① 服务器的 Allow 字段用于告知客户端，对于请求的资源，服务器支持的 HTTP 请求方法
+
+② 当服务器收到不支持的 HTTP 方法请求时，返回状态码 `405 Method Not Allowed`，并且把所有支持的 HTTP 方法放入 Allow 字段
 
 ### (2) Content-Type
 
@@ -281,7 +283,9 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 ### (4) Content-Language
 
-服务器的 Content-Language 字段用于告知客户端，实体主体采用的自然语言
+① 服务器的 Content-Language 字段用于告知客户端，实体主体采用的自然语言
+
+② 对实体主体进行`内容编码`时，不能使用 Content-Length 字段
 
 ### (5) Content-Length
 
@@ -297,9 +301,9 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 服务器的 Content-Location 字段用于告知客户端，实体主体返回资源对应的 URI
 
-### (8) Content-MD5
+### (8) Content-MD5 (HTTP 的完整性保护)
 
-服务器的 Content-MD5 字段用于告知客户端，服务器对响应报文主体执行 MD5 算法后再通过 Base64 编码后生成的值，客户端在收到响应报文后，对响应报文主体执行相同的 MD5 算法后再通过 Base64 编码，得到的值与响应报文的 Content-MD5 字段值对比，用于确认响应报文主体在传输过程中是否保持完整，以及确认传输到达
+服务器的 Content-MD5 字段用于让客户端确认响应报文是否完整，Content-MD5 字段是服务器对响应报文主体执行 MD5 算法后再通过 Base64 编码得到的值，客户端在收到响应报文后，对响应报文主体执行相同的 MD5 算法后，得到的值与响应报文的 Content-MD5 字段解码后的值进行对比，用于确认响应报文主体在传输过程中是否保持完整，以及确认传输到达
 
 ![Content-MD5](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Content-MD5.png)
 
