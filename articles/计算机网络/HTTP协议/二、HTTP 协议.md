@@ -22,25 +22,27 @@
 
 ### (2) Cookie
 
-**由来**：假设要求登陆认证的 Web 页面本身无法进行状态管理 (不记录已登陆的状态)，那么每次跳转新页面都需要再次登陆，或者在每次的 HTTP 请求报文中附加参数来管理登陆状态，针对这种情况，引入了 Cookie 技术，Cookie 技术通过在 HTTP 请求和响应报文中写入 Cookie 信息来控制客户端状态
-
-**原理**：用户登陆时的请求，即第一次发送请求，没有 Cookie 状态信息，服务端会根据客户端请求在 HTTP 响应报文中添加 `Set-Cookie` 首部字段，客户端收到响应后会保存 Cookie 信息，下次再往服务端发送请求时，客户端会自动在 HTTP 请求报文中添加 `Cookie` 字段，服务端收到请求后，对比 HTTP 请求报文中的 Cookie 字段和服务端的记录，得到之前的状态信息
-
-![无Cookie的HTTP请求](../../../images/计算机网络/HTTP协议/HTTP协议/无Cookie的HTTP请求.png)
-
-![有Cookie的HTTP请求](../../../images/计算机网络/HTTP协议/HTTP协议/有Cookie的HTTP请求.png)
+**由来**：HTTP 协议是无状态协议，用户登陆 Web 页面后不会记录已登陆状态，那么每次跳转新页面都需要再次登陆，或者在每次的 HTTP 请求报文中附加参数来管理登陆状态，针对这种情况，引入了 Cookie 技术，Cookie 技术通过在 HTTP 请求报文中附加 Cookie 信息来控制客户端状态
 
 **注意**：与 Cookie 相关的报文首部字段有服务端的 Set-Cookie 字段和客户端的 Cookie 字段，这两个字段都没有写入 RFC 标准，属于 HTTP 报文首部的其他首部字段
 
+① 用户登陆 Web 页面时，客户端将用户 ID 和密码放入报文主体，然后将请求发送给服务器
+
+② 服务器验证客户端发送的登陆信息进行身份认证，验证通过后发放用以识别用户的 `Session ID`，然后将用户的认证状态和 Session ID 绑定后记录在服务器，服务器返回响应时，添加其他首部字段 Set-Cookie 记录 Session ID 值
+
+③ 客户端收到服务器返回的 Set-Cookie 字段后，从中获取 Session ID 值，将其作为 Cookie 保存在本地，下次向服务器发送请求时，浏览器会自动发送 Cookie，服务器就可以通过验证 Session ID 识别用户及其认证状态
+
+![Cookie管理状态](../../../images/计算机网络/网络安全/身份认证技术/Cookie管理状态.png)
+
 #### ① Set-Cookie
 
-服务器的 Set-Cookie 字段用于告知客户端，服务器针对当前客户端设置的 Cookie 信息
+服务器的 Set-Cookie 字段用于告知客户端，服务器针对当前用户的认证信息
 
-![Set-Cookie](../../../images/计算机网络/HTTP协议/HTTP报文/Set-Cookie.png)
+![Set-Cookie](../../../images/计算机网络/HTTP协议/HTTP协议/Set-Cookie.png)
 
 #### ② Cookie
 
-客户端的 Cookie 字段用于告知服务器，客户端的 Cookie 信息
+客户端的 Cookie 字段用于告知服务器，客户端的当前用户的认证信息
 
 ![Cookie](../../../images/计算机网络/HTTP协议/HTTP协议/Cookie.png)
 
@@ -60,9 +62,12 @@ HTTP 协议的初始版本中，每进行一次 HTTP 通信就要断开一次 TC
 
 ![持久连接](../../../images/计算机网络/HTTP协议/HTTP协议/持久连接.png)
 
-**③ 管理持久连接**：HTTP 报文的通用首部字段 `Connection` 用于管理持久连接，当服务器明确想断开连接时，会指定响应报文的 Connection 字段值为 close
+**③ 管理持久连接**：HTTP 报文的通用首部字段 `Connection` 用于管理持久连接
 
-![Connection管理持久连接](../../../images/计算机网络/HTTP协议/HTTP报文/Connection管理持久连接.png)
+* Connection 字段值为 `keep-alive` 表示服务器想建立持久连接
+* Connection 字段值为 `close` 表示服务器想断开连接
+
+![Connection管理持久连接](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Connection管理持久连接.png)
 
 ### (3) 管线化
 
