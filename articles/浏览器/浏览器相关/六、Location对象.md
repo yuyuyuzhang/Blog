@@ -51,14 +51,14 @@ URL 全称统一资源定位符，又称网页地址 ( 全球性 )，用于定�
 ```javascript
 定义：const url = new URL(urlStr);
 属性：url.href         //完整URL
-     url.origin       //协议、主机、端口(只读)
+     url.origin       //源(协议、主机、端口)
      url.protocol     //协议(包含:)
      url.host         //主机、端口
      url.hostname     //主机
      url.port         //端口
      url.pathname     //URL路径
      url.search       //查询字符串(从?开始)
-     url.hash         //片段字符串(从#开始)
+     url.hash         //片段识别符(从#开始)
      用户信息：
      url.username     //用户名
      url.password     //密码
@@ -180,11 +180,11 @@ for(let item of urlSearch.entries()){
 }
 ```
 
-## 3. 片段字符串
+## 3. 片段识别符
 
 ### (1) 原理
 
-片段字符串是 URL 的锚，代表文档中的一个位置，# 号后面的字符就是该位置的标识符，
+片段识别符是 URL 的锚，代表文档中的一个位置，# 号后面的字符就是该位置的标识符
 
 #### ① 为文档指定位置标识符
 
@@ -200,9 +200,9 @@ for(let item of urlSearch.entries()){
 
 #### ② hashchange 事件
 
-HTML5 新增 hashchange 事件，每当 URL 的片段字符串改变时，就会在 `window 对象`上触发这个事件
+HTML5 新增 hashchange 事件，每当 URL 的片段识别符改变时，就会在 `window 对象`上触发这个事件
 
-Event对象相关属性如下
+Event 对象相关属性如下
 
 ```javascript
 e.oldURL    //返回变化前的完整URL
@@ -211,30 +211,30 @@ e.newURL    //返回变化后的完整URL
 
 ### (3) 用途
 
-#### ① HTTP 请求不包括片段字符串
+#### ① HTTP 请求不包括片段识别符
 
-片段字符串对服务端完全无用，是用来`指导浏览器动作`的，浏览器读取到 URL 后，会自动根据 URL 的片段字符串滚动到文档指定位置
+片段识别符对服务端完全无用，是用来`指导浏览器动作`的，浏览器读取到 URL 后，会自动根据 URL 的片段识别符滚动到文档指定位置
 
-#### ② 改变片段字符串不触发文档重载
+#### ② 改变片段识别符不触发文档重载
 
-改变 URL 的片段字符串，浏览器只会滚动到文档指定位置，不会重新加载文档
+改变 URL 的片段识别符，浏览器只会滚动到文档指定位置，不会重新加载文档
 
-#### ③ 改变片段字符串会改变浏览器访问历史
+#### ③ 改变片段识别符会改变浏览器访问历史
 
-每次改变 URL 的片段字符串，都会在浏览器的 History 对象中新增一个浏览记录，点击后退按钮，可以回到文档的上一个位置
+每次改变 URL 的片段识别符，都会在浏览器的 History 对象中新增一个浏览记录，点击后退按钮，可以回到文档的上一个位置
 
 ```javascript
-//<button id="btn1">part1</button>      
+//<button id="btn1">part1</button>
 //<button id="btn2">part2</button>
-//<div id="part1" style="height:500px;border:1px solid red;">part1</div>    
+//<div id="part1" style="height:500px;border:1px solid red;">part1</div>
 //<div id="part2" style="height:500px;border:1px solid red;">part2</div>
 
 function handleHashChange(part) {
   location.hash = '#' + part;
 
-  window.addEventListener("hashchange", function(e) {        
-    console.log("oldURL: ", e.oldURL);        
-    console.log("newURL: ", e.newURL);      
+  window.addEventListener("hashchange", function(e) {
+    console.log("oldURL: ", e.oldURL);
+    console.log("newURL: ", e.newURL);
   });
 }
 const btn1 = document.getElementById('btn1')
@@ -254,14 +254,14 @@ Location 对象表示当前浏览器窗口加载的`文档地址`，
 ```javascript
 定义：window.location
 属性：location.href         //完整URL
-     location.origin       //协议、主机、端口(只读)
+     location.origin       //源(协议、主机、端口)
      location.protocol     //协议(包含:)
      location.host         //主机、端口
      location.hostname     //主机(服务器名+域名)
      location.port         //端口
      location.pathname     //URL路径
      location.search       //查询字符串(从?开始)
-     location.hash         //片段字符串(从#开始)
+     location.hash         //片段识别符(从#开始)
      用户信息：
      location.username     //用户名
      location.password     //密码
@@ -299,7 +299,7 @@ document.location.reload(false); //浏览器从本地缓存重载该文档,文�
 ```javascript
 //<button id="btn">重载</button>
 const btn = document.getElementById('btn')
-btn.addEventListener('click', function handleReload(){        
+btn.addEventListener('click', function handleReload(){
   location.reload(); //默认从缓存中重载
 })
 ```
@@ -313,18 +313,18 @@ document.location.replace('http://www.example.com'); //当前窗口立刻载入�
 ```
 
 ```javascript
-//<button id="btn1">重定向</button>      
+//<button id="btn1">重定向</button>
 //<button id="btn2">重定向(替换)</button>
 
 //先点击重定向,再点击后退按钮回到上一文档
 const btn1 = document.getElementById('btn1')
-btn1.addEventListener('click', function handleAssign(e){      
-  location.assign("https://wangdoc.com/javascript/bom/location.html#location-%E5%AF%B9%E8%B1%A1");      
+btn1.addEventListener('click', function handleAssign(e){
+  location.assign("https://wangdoc.com/javascript/bom/location.html#location-%E5%AF%B9%E8%B1%A1");
 })
 
 //先点击替换,后退按钮变灰,无法点击
 const btn2 = document.getElementById('btn2')
-btn2.addEventListener('click', function handleReplace(e){      
-  location.replace("https://wangdoc.com/javascript/bom/location.html#location-%E5%AF%B9%E8%B1%A1");      
+btn2.addEventListener('click', function handleReplace(e){
+  location.replace("https://wangdoc.com/javascript/bom/location.html#location-%E5%AF%B9%E8%B1%A1");
 })
 ```

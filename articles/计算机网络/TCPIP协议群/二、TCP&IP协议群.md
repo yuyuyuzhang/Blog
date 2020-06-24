@@ -158,8 +158,8 @@ IP 协议采用面向无连接的传输方式，在发送 IP 报文之前，无�
 #### ② 域名
 
 * 域名是用于识别组织机构名称的一种具有分层的名称
-
 * 域名是分层管理的：`.` 三级域名 `.` 二级域名 `.` 一级域名
+* 若服务器返回的 HTTP 响应报文中 `Set-Cookie 字段设置 HttpOnly`，则无法在 JS 脚本中通过 document.domain 获取 Cookie
 
 ```javascript
 document.domain //返回/设置当前文档域名

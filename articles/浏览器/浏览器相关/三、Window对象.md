@@ -35,11 +35,11 @@ window.formData         //指向FormData对象
 document.cookie         //指向cookie
 window.localStorage     //指向LocalStorage对象
 window.sessionStorage   //指向SessionStorage对象
+window.indexedDB        //指向IndexedDB对象
 状态信息属性：
 window.status           //返回浏览器状态栏的文本
 window.name             //返回字符串,表示当前窗口名字,主要用于配合超链接和表单的target属性使用
 window.closed           //返回布尔值,表示当前窗口是否关闭
-window.opener           //返回打开当前窗口的父窗口,没有则返回null
 window.isSecureContext  //返回布尔值,表示当前窗口是否处于加密环境,https协议则是加密,否则不是
 window.devicePixelRatio //返回数值,表示一个CSS像素由多少个物理像素组成,数值大表示用户正在使用高清屏幕
 窗口属性：
@@ -49,7 +49,8 @@ window.frameElement     //返回当前框架窗口所在的元素节点
 window.self             //返回当前框架窗口(只读)
 window.parent           //返回当前框架窗口的父窗口,没有则返回自身
 window.top              //返回当前框架窗口的顶层窗口
-位置大小属性：    
+window.opener           //返回打开当前窗口的父窗口,没有则返回null
+位置大小属性：
 window.innerWidth       //返回文档在当前窗口中可见部分的宽度(包括滚动条)
 window.innerHeight      //返回文档在当前窗口中可见部分的高度
 window.outerWidth       //返回当前窗口的宽度(包括浏览器菜单和边框)

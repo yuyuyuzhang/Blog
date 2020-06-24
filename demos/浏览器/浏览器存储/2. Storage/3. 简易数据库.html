@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div>
+  姓名：<input type="text" id="name"><br/>
+  手机：<input type="text" id="phone"><br/>
+  邮箱：<input type="text" id="email"><br/>
+  备注：<input type="text" id="remarks"><br/>
+  <button id="saveBtn" style="margin:10px 0 0 48px">保存</button>
+  <button id="clearBtn">清空</button>
+</div><hr/>
+<div>
+  姓名：<input type="text" id="findName">
+  <button id="findBtn">检索</button>
+</div>
+<p id="msg"></p>
+
+
+<script>
+
+const saveBtn = document.getElementById('saveBtn')
+saveBtn.addEventListener('click', function(e){
+  const person = {}
+  person.name = document.getElementById('name').value
+  person.phone = document.getElementById('phone').value
+  person.email = document.getElementById('email').value
+  person.remarks = document.getElementById('remarks').value
+  localStorage.setItem(person.name, JSON.stringify(person))
+})
+
+const clearBtn = document.getElementById('clearBtn')
+clearBtn.addEventListener('click', function(e){
+  localStorage.clear()
+})
+
+const findBtn = document.getElementById('findBtn')
+findBtn.addEventListener('click', function(e){
+  const findName = document.getElementById('findName').value
+  const person = JSON.parse(localStorage.getItem(findName))
+
+  let result = '检索的客户不存在'
+  if(person !== null){
+    result = '姓名：' + person.name + '<br/>' +
+      '手机：' + person.phone + '<br/>' +
+      '邮箱：' + person.email + '<br/>' +
+      '备注：' + person.remarks + '<br/>'
+  }
+  const p = document.getElementById('msg')
+  p.innerHTML = result
+})
+
+
+</script>
+</body>
+</html>
