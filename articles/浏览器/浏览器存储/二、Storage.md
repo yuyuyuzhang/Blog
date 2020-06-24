@@ -1,4 +1,4 @@
-# 二、Web Storage
+# 二、Storage
 
 [[_TOC_]]
 
