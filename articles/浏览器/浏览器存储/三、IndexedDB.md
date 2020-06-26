@@ -6,7 +6,7 @@
 
 ### (1) IndexedDB 的诞生
 
-① IndexedDB 是浏览器提供的 `NoSQL` 数据库，IndexedDB 数据库将数据存储在`客户端本地磁盘`
+① IndexedDB 是浏览器提供的 `NoSQL 数据库`，IndexedDB 数据库将数据存储在`客户端本地磁盘`
 
 ② IndexedDB 允许存储大量数据，提供查找接口，还能建立索引，IndexedDB 可以通过 `JS 脚本`创建和操作
 
