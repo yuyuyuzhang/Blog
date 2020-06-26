@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IndexedDB</title>
+</head>
+<body>
+
+<button id="createBtn">新建数据库和对象仓库</button>
+<button id="connectBtn">打开数据库连接</button>
+<button id="closeBtn">关闭数据库连接</button><hr/>
+
+<div>
+  姓名：<input type="text" id="name"><br/>
+  手机：<input type="text" id="phone"><br/>
+  邮箱：<input type="text" id="email"><br/>
+  备注：<input type="text" id="remarks">数组每项以逗号分割<br/>
+  <button id="saveBtn" style="margin:10px 0 0 48px">保存</button>
+</div><hr/>
+
+<div>
+  姓名：<input type="text" id="findName">
+  <button id="findNameBtn">检索</button>
+</div>
+<div>
+  备注：<input type="text" id="findRemarks">
+  <button id="findRemarksBtn">单一数组索引键检索</button>
+</div><hr/>
+
+<div>
+  姓名：<input type="text" id="findCdxName"><br/>
+  手机：<input type="text" id="findCdxPhone"><br/>
+  <button id="findCdxBtn" style="margin:10px 0 0 48px">复合索引键检索</button>
+</div><hr/>
+
+<button id="iteratorStoreBtn">主键循环遍历数据记录</button>
+<button id="iteratorIndexBtn">单一数组索引键循环遍历数据记录</button><hr/>
+
+<button id="cursorStoreBtn">主键指针遍历数据记录</button>
+<button id="cursorStoreKeyBtn">主键指针遍历主键</button><hr/>
+
+<button id="countBtn">统计数据记录数量</button><hr/>
+
+<p id="msg"></p>
+
+<script>
+
+let db
+
+const createBtn = document.getElementById('createBtn')
+const connectBtn = document.getElementById('connectBtn')
+const closeBtn = document.getElementById('closeBtn')
+const saveBtn = document.getElementById('saveBtn')
+const findNameBtn = document.getElementById('findNameBtn')
+const findRemarksBtn = document.getElementById('findRemarksBtn')
+const findCdxBtn = document.getElementById('findCdxBtn')
+const iteratorStoreBtn = document.getElementById('iteratorStoreBtn')
+const iteratorIndexBtn = document.getElementById('iteratorIndexBtn')
+const cursorStoreBtn = document.getElementById('cursorStoreBtn')
+const cursorStoreKeyBtn = document.getElementById('cursorStoreKeyBtn')
+const countBtn = document.getElementById('countBtn')
+
+createBtn.addEventListener('click', createDB)
+connectBtn.addEventListener('click', connectDB)
+closeBtn.addEventListener('click', closeDB)
+saveBtn.addEventListener('click', saveData)
+findNameBtn.addEventListener('click', findDataByName)
+findRemarksBtn.addEventListener('click', findDataByRemarks)
+findCdxBtn.addEventListener('click', findDataByCdx)
+iteratorStoreBtn.addEventListener('click', iteratorStore)
+iteratorIndexBtn.addEventListener('click', iteratorIndex)
+cursorStoreBtn.addEventListener('click', cursorStore)
+cursorStoreKeyBtn.addEventListener('click', cursorStoreKey)
+countBtn.addEventListener('click', count)
+
+function createDB(){
+  const dbRequest = window.indexedDB.open('demo', 1)
+  dbRequest.addEventListener('upgradeneeded', function(e){
+    console.log('数据库版本更新，当前版本为 ' + e.target.result.version)
+
+    //获取连接的数据库
+    db = e.target.result
+
+    //新建对象仓库
+    const personStore = db.createObjectStore('person', {keyPath: 'name'})
+
+    //新建单一索引,备注索引值为数组,可通过数组中任意值检索
+    personStore.createIndex('remarks', 'remarks', {multiEntry: true})
+
+    //新建复合索引
+    personStore.createIndex('cdx', ['name', 'phone'])
+  })
+}
+
+function connectDB(){
+  const dbRequest = window.indexedDB.open('demo')
+
+  dbRequest.addEventListener('success', function(e){
+    console.log('数据库连接成功')
+
+    //获取连接的数据库
+    db = e.target.result
+  })
+  dbRequest.addEventListener('error', function(e){
+    console.log('数据库连接失败')
+  })
+}
+
+function closeDB(){
+  db.close()
+  console.log('数据库连接已关闭')
+}
+
+function saveData(){
+  const person = {}
+  person.name = document.getElementById('name').value
+  person.phone = document.getElementById('phone').value
+  person.email = document.getElementById('email').value
+  person.remarks = document.getElementById('remarks').value.split('，')
+  console.log(person)
+
+  //新建一个读写事务
+  const addRequest = db.transaction(['person'], 'readwrite')
+    .objectStore('person')
+    .add(person)
+  addRequest.addEventListener('success', function(e){
+    console.log('数据保存成功')
+  })
+  addRequest.addEventListener('error', function(e){
+    console.log('数据保存失败')
+  })
+}
+
+function findDataByName(){
+  const findName = document.getElementById('findName').value
+
+  //新建一个只读事务
+  const getRequest = db.transaction(['person'])
+    .objectStore('person')
+    .get(findName)
+  getRequest.addEventListener('success', function(e){
+    console.log('检索数据成功')
+    if(e.target.result !== null && e.target.result !== undefined){
+      showMsg(e.target.result)
+    } else{
+      showKey('未检索到数据')
+    }
+  })
+  getRequest.addEventListener('error', function(e){
+    console.log('检索数据失败')
+  })
+}
+
+function findDataByRemarks(){
+  const findRemarks = document.getElementById('findRemarks').value
+
+  const getRequest = db.transaction(['person'])
+    .objectStore('person')
+    .index('remarks') //索引检索
+    .get(findRemarks)
+  getRequest.addEventListener('success', function(e){
+    console.log('检索数据成功')
+    if(e.target.result !== null && e.target.result !== undefined){
+      showMsg(e.target.result)
+    } else{
+      showKey('未检索到数据')
+    }
+  })
+  getRequest.addEventListener('error', function(e){
+    console.log('检索数据失败')
+  })
+}
+
+function findDataByCdx(){
+  const findName = document.getElementById('findCdxName').value
+  const findPhone = document.getElementById('findCdxPhone').value
+
+  //新建一个只读事务
+  const getRequest = db.transaction(['person'])
+    .objectStore('person')
+    .index('cdx')
+    .get([findName, findPhone])
+  getRequest.addEventListener('success', function(e){
+    console.log('检索数据成功')
+    if(e.target.result !== null && e.target.result !== undefined){
+      showMsg(e.target.result)
+    } else{
+      showKey('未检索到数据')
+    }
+  })
+  getRequest.addEventListener('error', function(e){
+    console.log('检索数据失败')
+  })
+}
+
+function iteratorStore(){
+  const iteratorRequest = db.transaction(['person'])
+    .objectStore('person')
+    .getAll()
+  iteratorRequest.addEventListener('success', function(e){
+    console.log('遍历对象仓库成功')
+    showAllMsg(e.target.result)
+  })
+}
+
+function iteratorIndex(){
+  const iteratorRequest = db.transaction(['person'])
+    .objectStore('person')
+    .index('remarks') //遍历索引
+    .getAll()
+  iteratorRequest.addEventListener('success', function(e){
+    console.log('遍历索引成功')
+    showAllMsg(e.target.result)
+  })
+}
+
+function cursorStore(){
+  //新建主键范围
+  const range = IDBKeyRange.bound('李四', '王五')
+
+  const cursorRequest = db.transaction(['person'])
+    .objectStore('person')
+    .openCursor(range, 'next')
+  cursorRequest.addEventListener('success', function(e){
+    console.log('获取主键指针成功')
+
+    //获取指针
+    const cursor = e.target.result
+    console.log(cursor)
+
+    //显示当前指针指向的数据记录
+    if(cursor){
+      showMsg(e.target.result.value)
+      cursor.continue()
+    } else{
+      console.log('指针遍历结束')
+    }
+  })
+  cursorRequest.addEventListener('error', function(e){
+    console.log('获取主键指针失败')
+  })
+}
+
+function cursorStoreKey(){
+  //新建主键范围
+  const range = IDBKeyRange.bound('李四', '王五')
+
+  const cursorRequest = db.transaction(['person'])
+    .objectStore('person')
+    .openKeyCursor(range, 'next')
+  cursorRequest.addEventListener('success', function(e){
+    console.log('获取主键指针成功')
+
+    //获取指针
+    const cursor = e.target.result
+    console.log(cursor)
+
+    //显示当前指针指向的数据记录
+    if(cursor){
+      showKey(e.target.result.key)
+      cursor.continue()
+    } else{
+      console.log('指针遍历结束')
+    }
+  })
+  cursorRequest.addEventListener('error', function(e){
+    console.log('获取主键指针失败')
+  })
+}
+
+function count(){
+  const countRequest = db.transaction(['person'])
+    .objectStore('person')
+    .count()
+  countRequest.addEventListener('success', function(e){
+    console.log('统计成功')
+    if(e.target.result !== null && e.target.result !== undefined){
+      showKey(e.target.result)
+    } else{
+      showKey(0)
+    }
+  })
+  countRequest.addEventListener('error', function(e){
+    console.log('统计失败')
+  })
+}
+
+function showAllMsg(arr){
+  let result = ''
+  for(let i=0; i< arr.length; i++){
+    result += '姓名：' + arr[i].name + '，' +
+    '手机：' + arr[i].phone + '，' +
+    '邮箱：' + arr[i].email + '，' +
+    '备注：' + arr[i].remarks + '<br/>'
+  }
+  const msg = document.getElementById('msg')
+  msg.innerHTML = result
+}
+
+function showMsg(person){
+  console.log(person)
+  const result = '姓名：' + person.name + '，' +
+    '手机：' + person.phone + '，' +
+    '邮箱：' + person.email + '，' +
+    '备注：' + person.remarks + '<br/>'
+  const msg = document.getElementById('msg')
+  msg.innerHTML = result
+}
+
+function showKey(key){
+  const msg = document.getElementById('msg')
+  msg.innerHTML = key
+}
+
+</script>
+</body>
+</html>
