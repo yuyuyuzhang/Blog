@@ -758,5 +758,3 @@ function showMsg(person){
 
 function showKey(key){
 ```
-
-①②③④⑤⑥⑦⑧⑨⑩
