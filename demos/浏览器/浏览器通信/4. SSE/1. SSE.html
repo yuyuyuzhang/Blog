@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE</title>
+</head>
+<body>
+
+<button id="connectBtn">建立连接</button>
+<button id="disconnectBtn">断开连接</button>
+
+显示接收数据：
+<p id="msg"></p>
+
+<script>
+
+let sse
+
+const msg = document.getElementById('msg')
+const connectBtn = document.getElementById('connectBtn')
+const disconnectBtn = document.getElementById('disconnectBtn')
+
+connectBtn.addEventListener('click', connect)
+disconnectBtn.addEventListener('click', disconnect)
+
+function connect (e){
+  sse = new EventSource(url, { withCredentials:false })
+
+  sse.addEventListener('open', function(e){
+    console.log('连接建立')
+  })
+  sse.addEventListener('error', function(e){
+    console.log('连接出错')
+  })
+
+  //服务器推送数据
+  sse.addEventListener('message', function(e){
+    const data = e.data
+    msg.innerHTML = data
+  })
+
+  //自定义事件
+  sse.addEventListener('f', function(e){
+    const data = e.data
+    msg.innerHTML = data
+  })
+}
+
+function disconnect (e){
+  sse.close()
+  msg.innerHTML = '连接关闭'
+}
+
+</script>
+</body>
+</html>

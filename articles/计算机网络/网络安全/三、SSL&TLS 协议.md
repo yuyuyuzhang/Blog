@@ -1,20 +1,28 @@
-# 八、HTTPS
+# 三、SSL/TLS
 
 [[_TOC_]]
 
-## 1. HTTPS 的诞生
+## 1. 明文通信的风险
 
-① HTTPS (HTTP Secure) 并非一种新的应用层协议，而是 HTTP 协议的通信接口部分用 SSL/TLS 协议代替，这样 HTTP 就拥有了 SSL/TLS 协议的加密技术、校验机制、身份认证等功能
+HTTP 通信是不加密的通信，所有信息明文传播，带来了三大风险，SSL/TLS 协议就是为了解决这三大风险而设计的，SSL/TLS 协议采用了加密技术、完整性校验、身份认证技术
 
-② HTTPS = HTTP + 加密技术 + 校验机制 + 身份认证技术
+### (1) 窃听风险 ( 加密技术 )
 
-![HTTPS](../../../images/计算机网络/HTTP协议/HTTPS/HTTPS.png)
+第三方可以获知通信内容
 
-## 2. HTTPS 的加密技术
+### (2) 篡改风险 ( 完整性校验 )
+
+第三方可以修改通信内容
+
+### (3) 冒充风险 ( 身份认证技术 )
+
+第三方可以冒充他人身份参与通信
+
+## 2. SSL/TLS 的加密技术
 
 ### (1) 混合加密方式
 
-HTTPS 采用`混合加密方式`，即客户端和服务器通过公开密钥加密方式发送共享密钥，然后通过共享密钥加密方式进行安全通信的方式
+SSL/TLS 采用`混合加密方式`，即客户端和服务器通过公开密钥加密方式发送共享密钥，然后通过共享密钥加密方式进行安全通信的方式
 
 ① 客户端生成一个共享密钥，服务器生成一对公钥私钥
 
@@ -36,11 +44,11 @@ HTTPS 采用`混合加密方式`，即客户端和服务器通过公开密钥加
 
 ![证书](../../../images/计算机网络/网络安全/加密技术/证书.png)
 
-## 3. HTTPS 的完整性校验
+## 3. SSL/TLS 的完整性校验
 
-HTTPS 使用加密技术，能够避免窃听风险、篡改风险，则无需完整性校验
+SSL/TLS 使用加密技术，能够避免窃听风险、篡改风险，则无需完整性校验
 
-## 4. HTTPS 的身份认证技术
+## 4. SSL/TLS 的身份认证技术
 
 ### (1) SSL 服务器认证
 
@@ -74,29 +82,11 @@ SSL 客户端认证是利用客户端证书完成认证的方式，服务器凭�
 
 ![SSL客户端认证](../../../images/计算机网络/网络安全/身份认证技术/SSL客户端认证.png)
 
-### (3) 双因素认证
+## 5. 面向有连接
 
-① HTTPS 的 SSL 客户端认证：认证客户端计算机
+SSL/TLS 协议是面向有连接的协议，使用 SSL/TLS 协议通信之前需要先建立 SSL/TLS 连接
 
-② 基于表单认证：认证用户本人
-
-双因素认证就是将 HTTPS 的 SSL 客户端认证和 HTTP 的基于表单认证结合起来的一种认证方式，通过双因素认证，就可以确认是用户本人正在使用匹配正确的计算机访问服务器
-
-## 5. HTTPS 的通信
-
-通常 HTTP 直接和 TCP 通信，而 HTTPS 则是 HTTP 先和 SSL 通信，再由 SSL 和 TCP 通信
-
-![HTTP和HTTPS对比](../../../images/计算机网络/HTTP协议/HTTPS/HTTP和HTTPS对比.png)
-
-### (1) TCP 连接
-
-TCP 连接三次握手和四次挥手
-
-![持久连接](../../../images/计算机网络/HTTP协议/HTTP协议/持久连接.png)
-
-### (2) SSL 连接
-
-SSL/TLS 连接只有握手阶段，没有挥手阶段
+![SSL握手](../../../images/计算机网络/HTTP协议/HTTPS/SSL握手.png)
 
 ① 客户端发送 ClientHello 报文
 
@@ -122,75 +112,6 @@ SSL/TLS 连接只有握手阶段，没有挥手阶段
 
 ⑧ 服务器发送 ChangeCipherSpec 报文，通知客户端自己已经获得共享密钥，此报文之后的通信都会采用共享密钥加密，服务器使用自己的私钥解密 ClientKeyExchange 报文获得共享密钥
 
-⑨ 服务器发送 Finished 报文，该报文使用共享密钥加密，客户端和服务器的 Finished 报文交换完毕，SSL 连接就算建立完成，从此处开始进行 HTTP 协议的通信
+⑨ 服务器发送 Finished 报文，该报文使用共享密钥加密，客户端和服务器的 Finished 报文交换完毕，SSL 连接就算建立完成
 
 ![SSL连接](../../../images/计算机网络/HTTP协议/HTTPS/SSL连接.png)
-
-### (3) HTTPS 的通信
-
-先建立 TCP 连接，再建立 SSL 连接，之后进行 HTTP 通信，然后再断开 TCP 连接
-
-![HTTPS通信](../../../images/计算机网络/HTTP协议/HTTPS/HTTPS通信.png)
-
-### (4) HTTPS 比 HTTP 慢
-
-使用 SSL 协议时，HTTPS 比 HTTP 慢 2 到 100 倍
-
-#### ① 通信慢
-
-HTTPS 比 HTTP 多了进行 `SSL 通信`的过程，整体上处理通信量会不可避免的增加，导致网络负载加大，通信变慢
-
-#### ② 处理速度慢
-
-SSL 必须进行加密处理，客户端和服务器都需要进行`加密和解密的运算处理`，因此 HTTPS 比 HTTP 会更多地消耗客户端和服务器的 CPU 和内存等硬件资源，导致硬件负载加强，处理速度变慢
-
-![HTTPS通信慢](../../../images/计算机网络/HTTP协议/HTTPS/HTTPS通信慢.png)
-
-## 6. HTTP 升级至 HTTPS
-
-### (1) 购买 SSL 证书
-
-① SSL 证书分为 DV、OV、EV 三种类型
-
-* **DV ( 域名型 SSL )**：个人站点、iOS应用分发站点、登陆等单纯 HTTPS 加密需求的链接
-* **OV ( 企业型 SSL )**：企业官网
-* **EV ( 增强型 SSL )**：对安全需求更强的企业官网、电商、互联网金融网站
-
-② SSL 证书的部署类型又分为了单域名、多域名、通配符三种类型
-
-* **单域名**：保护主域名
-* **多域名**：保护主域名下同一级的指定数量的子域名
-* **通配符**：保护主域名下同一级所有的子域名，例如 123.com 申请通配符证书时，csr 域名填写为 \*.123.com，* 可以是任何前缀
-
-### (2) 安装 SSL 证书
-
-SSL 证书购买完成后，下载证书文件，以 Nginx 服务器为例，说明如何在服务器上安装/配置 SSL 证书
-
-① 首先在 Nginx 的安装目录下创建 cert 目录，将下载的全部证书文件拷贝到 cert 目录
-
-② 打开 Nginx 安装目录下 conf 目录中的 nginx.conf 文件，找到 HTTPS server 部分，指定证书路径，如下示意并保存，然后重启 Nginx 就可以使用 HTTPS 访问
-
-```javascript
-server {
-  listen 443;
-  server_name 你网站的域名;
-  root html;
-  index index.html index.htm;
-
-  //SSL配置
-  ssl                       on; //开启SSL
-  ssl_certificate           cert/你的证书文件名.pem; //证书位置
-  ssl_certificate_key       cert/你的证书文件名.key; //私钥位置
-  ssl_session_timeout       5m;
-  ssl_ciphers               ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4; //加密方式
-  ssl_protocols             TLSv1 TLSv1.1 TLSv1.2; //SSL/TLS协议版本
-  ssl_prefer_server_ciphers on; //依赖SSLv3和TLSv1协议的服务器密码将优先于客户端密码
-
-  location / {
-    root html;
-    index index.html index.htm;
-  }
-
-  return 301 https://$server_name$request_uri; //HTTP重定向至HTTPS
-}
-```

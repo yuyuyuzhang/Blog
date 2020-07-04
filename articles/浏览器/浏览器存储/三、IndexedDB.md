@@ -1,4 +1,4 @@
-# 四、IndexedDB
+# 三、IndexedDB
 
 [[_TOC_]]
 

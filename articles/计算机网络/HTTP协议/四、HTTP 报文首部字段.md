@@ -40,7 +40,7 @@
 
 ### (5) Accept-Language
 
-客户端的 Accept-Language 字段用于通知服务器，客户端用户代理支持的自然语言集及优先级，写法与 Accept 字段相同
+客户端的 Accept-Language 字段用于通知服务器，客户端用户代理支持的自然语言及优先级，写法与 Accept 字段相同
 
 ### (6) TE
 
@@ -48,9 +48,103 @@
 
 ### (7) Referer
 
-客户端的 Referer 字段用于通知服务器，客户端请求的原始资源的 URI
+**引荐人**：谁引荐了你？，你从哪里知道了我？
+
+客户端的 Referer 字段用于通知服务器，客户端发送当前请求的引荐人
 
 ![Referer](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Referer.png)
+
+#### ① 发送 Referer 字段的场景
+
+以下三种场景，浏览器发送 HTTP 请求时，会将`当前网址`添加到请求首部字段 Referer，通知服务器当前请求的引荐人
+
+* 网页加载静态资源，比如请求图片、CSS 样式文件、JS 脚本
+  
+  ```html
+  <!-- 加载图片 -->
+  <img src="foo.jpg">
+
+  <!-- 加载样式 -->
+  <link rel="stylesheet" href="foo.css">
+
+  <!-- 加载脚本 -->
+  <script src="foo.js"></script>
+  ```
+
+* 用户点击网页上的链接
+  
+  ```html
+  <a href="..." target="_blank">xxx</a>
+  ```
+
+* 用户发送表单
+  
+  ```html
+  <form>
+    姓名：<input type="text" name="username" />
+    <button>提交</button>
+  </form>
+  ```
+
+#### ② Referer 字段的应用
+
+Referer 字段告知服务器当前请求的引荐人，这往往可以用来用户跟踪
+
+* 有些网站不允许自家的图片外链，只有自家网站才能显示图片，外部网站加载图片就会报错，其实现就是基于请求图片的 Referer 字段，如果是自家网站就放行
+* 有些网站无需登陆就可以访问，能直接完成密码重置、邮件退订等功能，这些网站一般不可以作为 Referer 字段
+  
+#### ③ rel 属性
+
+浏览器提供 rel 属性定制 `<a>`、`<form>`、`<area>` 元素的 Referer 行为，设置 `rel="noreferrer"`，这三个元素产生的 HTTP 请求就不会发送 Referer 字段
+
+```html
+<a href="..." target="_blank" rel="noreferrer">xxx</a>
+```
+
+#### ④ Referrer Policy
+
+浏览器提供 Referrer Policy 定制完整的 Referer 行为
+
+**同源网址**：协议、域名、端口相同
+
+**源信息**：协议、域名、端口
+
+|Referrer Policy|含义|
+|---------------|----|
+|no-referrer|不发送|
+|origin|一律只发送源信息|
+|unsafe-url|一律只发送源信息、路径、查询字符串，不包含片段字符串、用户名和密码|
+|no-referrer-when-downgrade|从 HTTPS 网址链接到 HTTP 网址不发送|
+|strict-origin|从 HTTPS 网址链接到 HTTP 网址不发送，否则只发送源信息|
+|same-origin|链接到同源网址发送，跨域不发送|
+|origin-when-cross-origin|链接到同源网址发送完整信息，跨域只发送源信息|
+|strict-origin-when-cross-origin|链接到同源网址发送完整信息，跨域时如果 HTTPS 网址链接到 HTTP 网址不发送，否则只发送源信息|
+
+Referrer Policy 有以下三种常用方法
+
+* HTTP 响应报文
+  
+  服务器返回网页时，通过响应报文的其他首部字段 Referrer-Policy 告知浏览器 Referer 行为
+
+  ```javascript
+  Referrer-Policy: origin
+  ```
+
+* `<meta>` 标签
+  
+  `<meta>` 标签，可以通过设置 content 属性定制 Referer 行为
+
+  ```html
+  <meta name="referrer" content="origin">
+  ```
+
+* referrerpolicy 属性
+  
+  `<img>`、`<link>`、`<a>`、`<area>`、`<iframe>` 标签，可以通过设置 referrerpolicy 属性定制 Referer 行为
+
+  ```html
+  <a href="..." target="_blank" referrerpolicy="origin">xxx</a>
+  ```
 
 ### (8) Host (必须)
 
@@ -144,7 +238,7 @@
 
 ### (1) Accept-Ranges
 
-服务器的 Accept-Ranges 字段用于告知客户端，服务器是否能够处理范围请求，bytes 代表可以处理范围请求，none 代表不能处理范围请求
+服务器的 Accept-Ranges 字段用于告知客户端，服务器是否能够处理范围请求，`bytes` 代表可以处理范围请求，`none` 代表不能处理范围请求
 
 ![Accept-Ranges](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Accept-Ranges.png)
 
@@ -261,7 +355,10 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 ## 4. 实体首部字段
 
-针对请求报文和响应报文的实体使用的首部字段，用于补充实体的更新时间等与实体相关的信息
+实体首部字段可用于请求报文和响应报文，补充实体的更新时间等与实体相关的信息
+
+* 请求报文：POST 请求中与`参数实体`相关的信息 (不常用)
+* 响应报文：与服务器返回的`资源实体`相关的信息 (常用)
 
 ![实体首部字段](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/实体首部字段.png)
 
@@ -281,13 +378,13 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 ### (4) Content-Language
 
-① 服务器的 Content-Language 字段用于告知客户端，实体主体采用的自然语言
-
-② 对实体主体进行`内容编码`时，不能使用 Content-Length 字段
+服务器的 Content-Language 字段用于告知客户端，实体主体采用的自然语言
 
 ### (5) Content-Length
 
-服务器的 Content-Length 字段用于告知客户端，实体主体部分的字节大小
+① 服务器的 Content-Length 字段用于告知客户端，实体主体部分的字节大小
+
+② 对实体主体进行`内容编码`时，不能使用 Content-Length 字段
 
 ### (6) Content-Range
 
@@ -313,9 +410,13 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 服务器的 Last-Modified 字段用于告知客户端，资源最后修改的日期时间
 
-## 5. Cookie 相关的其他首部字段
+## 5. 其他首部字段
 
-详见 HTTP 协议章节 - 无状态协议 - Cookie
+**① Cookie 相关的字段**：详见 HTTP 协议 - 无状态协议 - Cookie
+
+**② Referrer-Policy 字段**：用于服务器告知浏览器 Referer 行为
+
+**③ Last-Event-ID**：用于浏览器帮助服务器重建 SSE 连接
 
 ## 6. HTTP 首部字段转发次数
 

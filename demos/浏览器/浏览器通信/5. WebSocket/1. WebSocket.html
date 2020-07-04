@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket</title>
+</head>
+<body>
+
+<button id="connectBtn">建立连接</button>
+<button id="sendBtn">发送数据</button>
+<button id="disconnectBtn">断开连接</button>
+    
+发送数据：<input type="text" id="txt" >
+
+<script>
+
+let ws
+
+const connectBtn = document.getElementById('connectBtn')
+const sendBtn = document.getElementById('sendBtn')
+const disconnectBtn = document.getElementById('disconnectBtn')
+
+connectBtn.addEventListener('click', connect)
+sendBtn.addEventListener('click', send)
+disconnectBtn.addEventListener('click', disconnect)
+
+function connect (e){
+  ws = new WebSocket(url) 
+  ws.binaryType = 'arraybuffer' //指定服务器推送数据类型为二进制数组
+
+  ws.addEventListener('open', function(e){
+    console.log('连接建立')
+  })
+  ws.addEventListener('error', function(e){
+    console.log('连接出错', e.error)
+  })
+  ws.addEventListener('close', function(e){
+    console.log('连接关闭', e.error)
+  })
+
+  //服务器推送数据
+  ws.addEventListener('message', function(e){
+    const data = e.data
+  })
+}
+
+function send (e){
+  const value = document.getElementById('txt').value
+  if(value !== ''){
+    ws.send(value)
+  }
+}
+
+function disconnect (e){
+  ws.close()
+}
+
+
+
+
+</script>
+</body>
+</html>

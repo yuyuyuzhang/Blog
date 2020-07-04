@@ -33,8 +33,8 @@ window.fileReader       //指向FileReader对象
 window.formData         //指向FormData对象
 存储属性：
 document.cookie         //指向cookie
-window.localStorage     //指向LocalStorage对象
 window.sessionStorage   //指向SessionStorage对象
+window.localStorage     //指向LocalStorage对象
 window.indexedDB        //指向IndexedDB对象
 状态信息属性：
 window.status           //返回浏览器状态栏的文本
@@ -99,4 +99,6 @@ window.cancelAnimationFrame(n)                  //无返回值,取消callback的
 window.cancelIdleCallback(n)                    //无返回值,取消callback的执行,n为requestIdleCallback()返回值
 通信方法：
 window.postMessage(msg,targetOrigin,[transfer]) //无返回值,安全地实现跨域通信
+window.EventSource(url,config)                  //返回EventSource实例,浏览器与服务器建立SSE连接
+window.WebSocket(url)                           //返回WebSocket实例,浏览器与服务器建立WebSocket连接
 ```
