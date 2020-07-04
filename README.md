@@ -65,7 +65,7 @@ JS 系列之设计模式 进行中......
 1. [语法](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B8%80%E3%80%81%E8%AF%AD%E6%B3%95.md)
 2. [错误处理机制](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%BA%8C%E3%80%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6.md)
 3. [数据类型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
-4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md)
+<!-- 4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md) -->
 5. [变量](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%BA%94%E3%80%81%E5%8F%98%E9%87%8F.md)
 6. [函数](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E5%85%AD%E3%80%81%E5%87%BD%E6%95%B0.md)
 7. [正则](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B8%83%E3%80%81%E6%AD%A3%E5%88%99.md)
@@ -77,7 +77,7 @@ JS 系列之设计模式 进行中......
 1. [数据类型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
 2. [解构赋值](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%BA%8C%E3%80%81%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC.md)
 3. [遍历器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%89%E3%80%81%E9%81%8D%E5%8E%86%E5%99%A8.md)
-4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md)
+<!-- 4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md) -->
 5. [变量](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%BA%94%E3%80%81%E5%8F%98%E9%87%8F.md)
 6. [函数](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%85%AD%E3%80%81%E5%87%BD%E6%95%B0.md)
 7. [正则](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%83%E3%80%81%E6%AD%A3%E5%88%99.md)
@@ -113,7 +113,7 @@ JS 系列之设计模式 进行中......
 6. [HTTP响应报文状态码](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%85%AD%E3%80%81HTTP%20%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81.md)
 7. [HTTP1.1的风险](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B8%83%E3%80%81HTTP1.1%20%E7%9A%84%E9%A3%8E%E9%99%A9.md)
 8. [HTTPS](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%85%AB%E3%80%81HTTPS.md)
-9. [HTTP2](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B9%9D%E3%80%81HTTP2.md)
+<!-- 9. [HTTP2](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B9%9D%E3%80%81HTTP2.md) -->
 
 ## 计算机网络系列之 WebSocket 协议
 
@@ -125,8 +125,8 @@ JS 系列之设计模式 进行中......
 
 ## 浏览器系列之浏览器相关
 
-1. [浏览器组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90.md)
-2. [浏览器渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93.md)
+<!-- 1. [浏览器组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90.md) -->
+<!-- 2. [浏览器渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93.md) -->
 3. [Window对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%89%E3%80%81Window%E5%AF%B9%E8%B1%A1.md)
 4. [Screen对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%9B%9B%E3%80%81Screen%E5%AF%B9%E8%B1%A1.md)
 5. [Navigator对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%94%E3%80%81Navigator%E5%AF%B9%E8%B1%A1.md)
@@ -152,9 +152,9 @@ JS 系列之设计模式 进行中......
 
 ## 服务器系列之计算机
 
-1. [计算机组成]()
-2. [服务器]()
-3. [Web服务器]()
+1. [计算机组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.md)
+2. [服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%8C%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8.md)
+3. [Web服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%89%E3%80%81Web%20%E6%9C%8D%E5%8A%A1%E5%99%A8.md)
 
 ## 服务器系列之 node
 
@@ -163,4 +163,4 @@ JS 系列之设计模式 进行中......
 ## 数据库系列
 
 1. [数据库](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93.md)
-2. [SQL](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BA%8C%E3%80%81SQL.md)
+<!-- 2. [SQL](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BA%8C%E3%80%81SQL.md) -->
