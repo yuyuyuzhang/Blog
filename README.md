@@ -3,13 +3,13 @@
 
 ## 进度
 
-JS 系列之 DOM 11 篇已完结
+JS 系列之 DOM 已完结
 
-JS 系列之事件 8 篇已完结
+JS 系列之事件已完结
 
-JS 系列之 E5S 9 篇已完结
+JS 系列之 E5S 已完结
 
-JS 系列之 ES6 11 篇已完结
+JS 系列之 ES6 已完结
 
 JS 系列之函数式编程 进行中......
 
@@ -17,21 +17,17 @@ JS 系列之设计模式 进行中......
 
 计算机网络系列之 TCP/IP 协议群已完结
 
-计算机网络系列之 HTTP 协议已完成
+计算机网络系列之 HTTP 协议已完结
 
-计算机网络系列之网络安全已完成
+计算机网络系列之 WebSocket 协议 进行中......
+
+计算机网络系列之网络安全已完结
 
 浏览器系列之浏览器相关 进行中......
 
-浏览器系列之客户端存储 3 篇已完成
-
 浏览器系列之浏览器通信 进行中......
 
-服务器系列之计算机 进行中......
-
-服务器系列之 node 进行中......
-
-服务器系列之 deno 进行中......
+浏览器系列之客户端存储已完结
 
 数据库系列 进行中......
 
@@ -147,14 +143,13 @@ JS 系列之设计模式 进行中......
 3. [CORS](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E4%B8%89%E3%80%81CORS.md)
 4. [Server-Sent Events](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E5%9B%9B%E3%80%81Server%20Sent%20Events.md)
 5. [WebSocket](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E4%BA%94%E3%80%81WebSocket.md)
-<!-- 6. [HTTP2](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E5%85%AD%E3%80%81HTTP2.md)
-7. [WebRTC](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E4%B8%83%E3%80%81WebRTC.md) -->
+<!-- 6. [Nginx 代理服务器]() -->
+<!-- 7. [WebRTC]() -->
 
 ## 服务器系列之计算机
 
-1. [计算机组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.md)
-2. [服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%8C%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8.md)
-3. [Web服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%89%E3%80%81Web%20%E6%9C%8D%E5%8A%A1%E5%99%A8.md)
+<!-- 1. [计算机组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.md)
+2. [服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%8C%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8.md) -->
 
 ## 服务器系列之 node
 
@@ -163,4 +158,4 @@ JS 系列之设计模式 进行中......
 ## 数据库系列
 
 1. [数据库](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93.md)
-<!-- 2. [SQL](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BA%8C%E3%80%81SQL.md) -->
+<!-- 2. [SQL](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BA%8C%E3%80%81SQL.md)
