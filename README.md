@@ -15,6 +15,8 @@ JS 系列之函数式编程 进行中......
 
 JS 系列之设计模式 进行中......
 
+计算机系列 进行中......
+
 计算机网络系列之 TCP/IP 协议群已完结
 
 计算机网络系列之 HTTP 协议已完结
@@ -61,7 +63,7 @@ JS 系列之设计模式 进行中......
 1. [语法](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B8%80%E3%80%81%E8%AF%AD%E6%B3%95.md)
 2. [错误处理机制](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%BA%8C%E3%80%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6.md)
 3. [数据类型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
-<!-- 4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md) -->
+4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md)
 5. [变量](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%BA%94%E3%80%81%E5%8F%98%E9%87%8F.md)
 6. [函数](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E5%85%AD%E3%80%81%E5%87%BD%E6%95%B0.md)
 7. [正则](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES5/%E4%B8%83%E3%80%81%E6%AD%A3%E5%88%99.md)
@@ -73,13 +75,13 @@ JS 系列之设计模式 进行中......
 1. [数据类型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
 2. [解构赋值](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%BA%8C%E3%80%81%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC.md)
 3. [遍历器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%89%E3%80%81%E9%81%8D%E5%8E%86%E5%99%A8.md)
-<!-- 4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md) -->
+4. [内存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98.md)
 5. [变量](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%BA%94%E3%80%81%E5%8F%98%E9%87%8F.md)
 6. [函数](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%85%AD%E3%80%81%E5%87%BD%E6%95%B0.md)
 7. [正则](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%83%E3%80%81%E6%AD%A3%E5%88%99.md)
 8. [元编程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%85%AB%E3%80%81%E5%85%83%E7%BC%96%E7%A8%8B.md)
 9. [类](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B9%9D%E3%80%81%E7%B1%BB.md)
-10. [异步](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E3%80%81%E5%BC%82%E6%AD%A5.md)
+<!-- 10. [异步](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E3%80%81%E5%BC%82%E6%AD%A5.md) -->
 11. [模块](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97.md)
 
 ## JS 系列之函数式编程
@@ -89,6 +91,18 @@ JS 系列之设计模式 进行中......
 3. [递归](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%89%E3%80%81%E9%80%92%E5%BD%92.md)
 
 ## JS 系列之设计模式
+
+## 计算机系列
+
+1. [计算机组成]()
+2. [操作系统]()
+3. [CPU 管理]()
+4. [内存管理]()
+5. [IO 设备管理]()
+6. [文件管理]()
+7. [操作系统接口]()
+8. [应用程序]()
+9. [服务器]()
 
 ## 计算机网络系列之 TCP/IP 协议群
 
@@ -145,11 +159,6 @@ JS 系列之设计模式 进行中......
 5. [WebSocket](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E4%BA%94%E3%80%81WebSocket.md)
 <!-- 6. [Nginx 代理服务器]() -->
 <!-- 7. [WebRTC]() -->
-
-## 服务器系列之计算机
-
-<!-- 1. [计算机组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.md)
-2. [服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%9C%8D%E5%8A%A1%E5%99%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%8C%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8.md) -->
 
 ## 服务器系列之 node
 
