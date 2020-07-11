@@ -94,15 +94,15 @@ JS 系列之设计模式 进行中......
 
 ## 计算机系列
 
-1. [计算机组成]()
-2. [操作系统]()
-3. [CPU 管理]()
-4. [内存管理]()
-5. [IO 设备管理]()
-6. [文件管理]()
-7. [操作系统接口]()
-8. [应用程序]()
-9. [服务器]()
+1. [计算机组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.md)
+2. [操作系统](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%8C%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.md)
+3. [CPU 管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%89%E3%80%81CPU%20%E7%AE%A1%E7%90%86.md)
+4. [内存管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.md)
+5. [IO 设备管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%94%E3%80%81IO%20%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86.md)
+6. [文件管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%85%AD%E3%80%81%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86.md)
+7. [操作系统接口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%83%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%8E%A5%E5%8F%A3.md)
+<!-- 8. [应用程序](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%85%AB%E3%80%81%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.md)
+9. [服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B9%9D%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8.md) -->
 
 ## 计算机网络系列之 TCP/IP 协议群
 
