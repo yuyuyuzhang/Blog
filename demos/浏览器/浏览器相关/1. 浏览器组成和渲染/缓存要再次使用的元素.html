@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>缓存要再次使用的元素</title>
+</head>
+<body>
+
+<script>
+const times = 10000
+let html = ''
+for(let i=0; i<times; i++) {
+  html+= `<div>${i}</div>`
+}
+document.body.innerHTML += html
+
+//不缓存要再次使用的元素
+// for(let i = 0; i<document.querySelectorAll('div').length; i++){
+//   document.querySelectorAll(`div`)[i].innerText = '我是小可爱'
+// }
+
+//缓存要再次使用的元素
+const divs = document.querySelectorAll('div')
+for(let i = 0; i<divs.length; i++){
+  divs[i].innerText = '我是小可爱'
+}
+</script>
+</body>
+</html>

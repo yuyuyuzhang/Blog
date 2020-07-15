@@ -318,7 +318,7 @@ Trailer 字段事先说明在报文主体后记录了哪些首部字段
 
 Via 字段用于标记请求报文和响应报文转发过程中经过的所有代理服务器，避免请求回环的产生
 
-![代理](../../../images/计算机网络/HTTP协议/Web/代理.png)
+![代理](../../../images/计算机网络/HTTP协议/Web/代理服务器.png)
 
 ### (4) Cache-Control 和 Warning
 
@@ -339,7 +339,7 @@ Pragma: no-cache
 
 ### (6) Connection
 
-**① 控制逐跳首部字段**：在客户端发送的请求和服务器返回的响应内，使用 Connection 首部字段指明无需转发给代理的逐跳首部字段
+**① 控制逐跳首部字段**：在客户端发送的请求和服务器返回的响应内，使用 Connection 首部字段指明代理无需转发给源服务器的逐跳首部字段
 
 ![Connection控制逐跳首部字段](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Connection控制逐跳首部字段.png)
 
@@ -420,7 +420,7 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 ## 6. HTTP 首部字段转发次数
 
-HTTP 报文首部字段因`缓存代理`而是否可以被转发，分为逐跳首部字段 (Hop-by-hop Header) 和端到端首部字段 (End-to-end Header) 两类
+HTTP 报文首部字段因`代理是否可以转发给源服务器`，分为逐跳首部字段 (Hop-by-hop Header) 和端到端首部字段 (End-to-end Header) 两类
 
 ### (1) 逐跳首部字段
 

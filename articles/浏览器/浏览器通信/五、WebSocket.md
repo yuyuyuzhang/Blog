@@ -46,11 +46,9 @@ WebSocket 适用于多个客户端与同一个服务器需要实现实时通信�
 
 ## 2. WebSocket 原理
 
-### (1) 握手阶段
-
 WebSocket 协议建立在 HTTP1.1 协议的基础上，WebSocket 协议必须依赖 HTTP1.1 协议进行一次 `WebSocket 连接握手`，握手成功后，数据直接从 TCP 连接上传输，与 HTTP1.1 协议无关
 
-#### HTTP 请求报文
+### (1) HTTP 请求报文
 
 ```javascript
 GET /chat HTTP/1.1
@@ -62,7 +60,7 @@ Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
 Sec-WebSocket-Version: 13 //
 ```
 
-#### HTTP 响应报文
+### (2) HTTP 响应报文
 
 ```javascript
 HTTP/1.1 101 Switching Protocols
@@ -70,8 +68,6 @@ Upgrade: websocket
 Connection: Upgrade
 Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 ```
-
-### (2) 传输阶段
 
 ## 2. 客户端实现
 

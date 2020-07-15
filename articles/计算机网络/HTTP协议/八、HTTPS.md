@@ -173,7 +173,7 @@ SSL 证书购买完成后，下载证书文件，以 `Nginx 服务器`为例，�
 ```javascript
 server {
   listen 443;
-  server_name 你网站的域名;
+  server_name localhost;
   root html;
   index index.html index.htm;
 

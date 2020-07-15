@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>循环外批量操作元素</title>
+</head>
+<body>
+
+
+<script>
+//循环内单独操作元素
+// const times = 100000
+// for(let i=0;i<times;i++) {
+//   const div = document.createElement('div')
+//   div.innerHTML = i
+//   document.body.append(div)
+// }
+
+//循环外批量操作元素
+const times = 100000
+let html = ''
+for(let i=0;i<times;i++) {
+  html+= `<div>${i}</div>`
+}
+document.body.innerHTML += html
+</script>
+</body>
+</html>
