@@ -81,7 +81,7 @@ JS 系列之设计模式 进行中......
 7. [正则](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B8%83%E3%80%81%E6%AD%A3%E5%88%99.md)
 8. [元编程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%85%AB%E3%80%81%E5%85%83%E7%BC%96%E7%A8%8B.md)
 9. [类](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E4%B9%9D%E3%80%81%E7%B1%BB.md)
-<!-- 10. [异步](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E3%80%81%E5%BC%82%E6%AD%A5.md) -->
+10. [异步](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E3%80%81%E5%BC%82%E6%AD%A5.md)
 11. [模块](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97.md)
 
 ## JS 系列之函数式编程
