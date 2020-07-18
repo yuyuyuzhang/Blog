@@ -2,7 +2,7 @@
 
 [[_TOC_]]
 
-### 1. MutationObserver对象
+## 1. MutationObserver对象
 
 目前用于检测页面变化的事件已不再推荐使用，而是推荐使用 MutationObserver 对象，MutationObserver 对象用于`观察并处理 DOM 的变动`，
 
