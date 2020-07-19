@@ -15,7 +15,7 @@ JS 系列之函数式编程 进行中......
 
 JS 系列之设计模式 进行中......
 
-计算机系列 进行中......
+计算机和操作系统系列 已完结
 
 计算机网络系列之 TCP/IP 协议群已完结
 
@@ -86,9 +86,8 @@ JS 系列之设计模式 进行中......
 
 ## JS 系列之函数式编程
 
-1. [函数](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%80%E3%80%81%E5%87%BD%E6%95%B0.md)
-2. [定时器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%BA%8C%E3%80%81%E5%AE%9A%E6%97%B6%E5%99%A8.md)
-3. [递归](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%89%E3%80%81%E9%80%92%E5%BD%92.md)
+1. [定时器]()
+2. [递归]()
 
 ## JS 系列之设计模式
 
@@ -134,7 +133,7 @@ JS 系列之设计模式 进行中......
 
 ## 浏览器系列之浏览器相关
 
-1. [浏览器组成和渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90%E5%92%8C%E6%B8%B2%E6%9F%93.md)
+<!-- 1. [浏览器组成和渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90%E5%92%8C%E6%B8%B2%E6%9F%93.md) -->
 2. [Window对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81Window%E5%AF%B9%E8%B1%A1.md)
 3. [Screen对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%89%E3%80%81Screen%E5%AF%B9%E8%B1%A1.md)
 4. [Navigator对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%9B%9B%E3%80%81Navigator%E5%AF%B9%E8%B1%A1.md)
