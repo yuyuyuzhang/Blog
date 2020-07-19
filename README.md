@@ -86,8 +86,8 @@ JS 系列之设计模式 进行中......
 
 ## JS 系列之函数式编程
 
-1. [定时器]()
-2. [递归]()
+1. [定时器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%80%E3%80%81%E5%AE%9A%E6%97%B6%E5%99%A8.md)
+2. [递归](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%BA%8C%E3%80%81%E9%80%92%E5%BD%92.md)
 
 ## JS 系列之设计模式
 
