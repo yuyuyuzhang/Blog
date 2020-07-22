@@ -1,16 +1,14 @@
-# 十一、MutationObserver对象
+# 十一、MutationObserver API
 
 [[_TOC_]]
 
-## 1. MutationObserver对象
+## 1. MutationObserver 对象
 
-目前用于检测页面变化的事件已不再推荐使用，而是推荐使用 MutationObserver 对象，MutationObserver 对象用于`观察并处理 DOM 的变动`，
+目前用于检测页面变化的事件已不再推荐使用，而是推荐使用 MutationObserver 对象，MutationObserver 对象用于`观察并处理 DOM 的变动`
 
-① 元素节点的增减
-
-② 元素节点的属性变动
-
-③ 元素节点的文本内容变动
+* 元素节点的增减
+* 元素节点的属性变动
+* 元素节点的文本内容变动
 
 ### (1) 异步触发
 
@@ -18,13 +16,13 @@
 
 ### (2) 集中处理
 
-把 DOM 变动记录封装成一个`数组`集中进行处理 
+把 DOM 变动记录封装成一个`数组`集中进行处理
 
 ### (3) 多类型
 
-既可以观察 DOM 的所有类型变动，也可以指定只观察某一类变动 
+既可以观察 DOM 的所有类型变动，也可以指定只观察某一类变动
 
-## 2. 创建MutationObserver对象
+## 2. 创建 MutationObserver 对象
 
 MutationObserver 对象的构造函数接受一个回调函数作为参数，当检测到页面变化时执行这个回调函数
 
@@ -37,7 +35,7 @@ const callback = function(records, observer){
 const observer = new MutationObserver(callback);
 ```
 
-## 3. MutationObserver对象属性和方法
+## 3. MutationObserver 对象属性和方法
 
 potions 配置中的基本选项均默认 false，设置基本选项中某些为 true 的情况下，可以追加使用某些特殊选项
 
@@ -58,7 +56,7 @@ options配置：基本选项：
             characterDataOldValue   //characterData=true,是否记录目标节点变动前的子文本节点
 ```
 
-## 4. MutationRecord对象
+## 4. MutationRecord 对象
 
 MutationRecord 对象表示`变动记录`，包含与变动相关的所有信息
 

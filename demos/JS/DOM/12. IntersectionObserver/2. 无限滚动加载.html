@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无限滚动加载</title>
+
+    <style>
+      .image-lazy {
+        width: 680px;
+        height: 400px;
+        overflow-y: auto;
+        border: 1px solid red;
+      }
+      .image-lazy img {
+        width: 680px;
+        height: 500px;
+      }
+    </style>
+</head>
+<body>
+
+<div class="image-lazy">
+  <img src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg" />
+  <div class="footerScroll">底部栏</div>
+</div>
+
+<script>
+
+const container = document.querySelector('.image-lazy')
+const footer = document.querySelector('.footerScroll')
+const options = {
+  threshold: [0],
+  root: container
+}
+const observer = new IntersectionObserver(entries => {
+  //如果页尾栏不可见就退出
+  if (entries[0].intersectionRatio <= 0){
+    return
+  }
+  console.log('底部栏可见')
+
+  //添加图片到底部栏之前
+  const img = document.createElement('img')
+  img.src = 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
+  footer.insertAdjacentElement('beforebegin', img)
+}, options)
+observer.observe(footer)
+
+
+
+
+
+</script>
+</body>
+</html>
