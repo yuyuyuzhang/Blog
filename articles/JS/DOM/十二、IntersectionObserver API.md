@@ -44,18 +44,18 @@ IntersectionObserverEntry 对象表示`目标元素的信息`
 
 ```json
 {
-  target: element        //要观察的目标元素
+  target: element,       //要观察的目标元素
   isIntersecting: false, //目标元素是否可见
-  time: 3893.92,         //目标元素可见性发生变化的时间
+  time: 3893.93,         //目标元素可见性发生变化的时间
   rootBounds: ClientRect {
-    bottom: 920,
+    width: 920,
     height: 1024,
-    left: 0,
-    right: 1024,
     top: 0,
-    width: 920
+    bottom: 920,
+    left: 0,
+    right: 1024
   },
-  intersectionRatio: 0.54            //目标元素的可见比例(intersectionRect/boundingClientRect)
+  intersectionRatio: 0.54,           //目标元素的可见比例(intersectionRect/boundingClientRect)
   intersectionRect: ClientRect {},   //目标元素与视口的交叉区信息
   boundingClientRect: ClientRect {}, //目标元素的矩形区域信息
 }
