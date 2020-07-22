@@ -42,7 +42,7 @@ threshold: [0, 0.25, 0.5, 0.75, 1],  //目标元素 0%、25%、50%、75%、100% 
 
 IntersectionObserverEntry 对象表示`目标元素的信息`
 
-```json
+```html
 {
   target: element,       //要观察的目标元素
   isIntersecting: false, //目标元素是否可见
