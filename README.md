@@ -21,8 +21,6 @@ JS 系列之设计模式 进行中......
 
 计算机网络系列之 HTTP 协议已完结
 
-计算机网络系列之 WebSocket 协议 进行中......
-
 计算机网络系列之网络安全已完结
 
 浏览器系列之浏览器相关 进行中......
@@ -124,8 +122,6 @@ JS 系列之设计模式 进行中......
 8. [HTTPS](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%85%AB%E3%80%81HTTPS.md)
 9. [HTTP2](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B9%9D%E3%80%81HTTP2.md)
 
-## 计算机网络系列之 WebSocket 协议
-
 ## 计算机网络系列之网络安全
 
 1. [网络安全构成要素](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E4%B8%80%E3%80%81%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%9E%84%E6%88%90%E8%A6%81%E7%B4%A0.md)
@@ -142,12 +138,6 @@ JS 系列之设计模式 进行中......
 6. [History对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AD%E3%80%81History%E5%AF%B9%E8%B1%A1.md)
 7. [Notification对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%83%E3%80%81Notification%E5%AF%B9%E8%B1%A1.md)
 
-## 浏览器系列之客户端存储
-
-1. [Cookie](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%B8%80%E3%80%81Cookie.md)
-2. [Storage](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%BA%8C%E3%80%81Storage.md)
-3. [IndexedDB](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%B8%89%E3%80%81IndexedDB.md)
-
 ## 浏览器系列之浏览器通信
 
 1. [浏览器网络](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BD%91%E7%BB%9C.md)
@@ -158,6 +148,12 @@ JS 系列之设计模式 进行中......
 6. [WebSocket](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E5%85%AD%E3%80%81WebSocket.md)
 <!-- 7. [Nginx](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E4%B8%83%E3%80%81Nginx.md)
 8. [WebRTC](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E5%85%AB%E3%80%81WebRTC.md) -->
+
+## 浏览器系列之客户端存储
+
+1. [Cookie](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%B8%80%E3%80%81Cookie.md)
+2. [Storage](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%BA%8C%E3%80%81Storage.md)
+3. [IndexedDB](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%B8%89%E3%80%81IndexedDB.md)
 
 ## 服务器系列之 node
 
