@@ -122,7 +122,7 @@ JS 系列之设计模式 进行中......
 6. [HTTP响应报文状态码](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%85%AD%E3%80%81HTTP%20%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81.md)
 7. [HTTP1.1的风险](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B8%83%E3%80%81HTTP1.1%20%E7%9A%84%E9%A3%8E%E9%99%A9.md)
 8. [HTTPS](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%85%AB%E3%80%81HTTPS.md)
-<!-- 9. [HTTP2](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B9%9D%E3%80%81HTTP2.md) -->
+9. [HTTP2](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%B9%9D%E3%80%81HTTP2.md)
 
 ## 计算机网络系列之 WebSocket 协议
 
