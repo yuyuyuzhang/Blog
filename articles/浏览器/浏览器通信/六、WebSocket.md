@@ -1,4 +1,4 @@
-# 四、WebSocket
+# 六、WebSocket
 
 [[_TOC_]]
 
@@ -174,3 +174,7 @@ wss.on('connection', function(ws){
   });
 });
 ```
+
+## 4. HTTP & SSE & WebSocket 比较
+
+![网络API](../../../images/浏览器/浏览器通信/HTTP&SSE&WebSocket比较.png)
