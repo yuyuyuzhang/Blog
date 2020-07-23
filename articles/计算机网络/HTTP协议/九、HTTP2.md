@@ -311,11 +311,7 @@ listen 443 ssl http2;
 
 HTTP2 仅有服务器推送功能需要开发者手动配置，其他功能都是浏览器和服务器自动实现
 
-#### ① Nginx 服务器的实现
-
-其实就是最后多了两行 `http2_push` 命令，意思是如果用户请求根路径，服务器就推送 style.css、example.png
-
-服务器推送有一个很麻烦的问题，那就是如果服务器准备推送的资源，在浏览器已经有缓存，推送就是浪费带宽，一种解决办法是只对`第一次访问的用户`开启服务器推送，Nginx 服务器通过 Cookie 判断是否为第一次访问
+以 Nginx 服务器为例，其实就是最后多了两行 `http2_push` 命令，意思是如果用户请求根路径，服务器就推送 style.css、example.png
 
 ```javascript
 server {
@@ -335,31 +331,6 @@ server {
     index  index.html index.htm;
     http2_push /style.css;
     http2_push /example.png;
-  }
-}
-```
-
-#### ② 后端代码的实现
-
-后端应用程序产生 HTTP 响应的头信息 `Link` 命令，服务器发现这个头信息，就会进行服务器推送
-
-```javascript
-Link: </styles.css>; rel=preload; as=style, </example.png>; rel=preload; as=image
-```
-
-Nginx 服务器配置如下
-
-```javascript
-server {
-  listen 443 ssl http2;
-
-  # ...
-
-  root /var/www/html;
-
-  location = / {
-    proxy_pass http://upstream;
-    http2_push_preload on;
   }
 }
 ```
