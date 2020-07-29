@@ -33,29 +33,29 @@ JS 系列之设计模式 进行中......
 
 ## JS 系列之 DOM
 
-1. [DOM](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%B8%80%E3%80%81DOM.md)
-2. [节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%BA%8C%E3%80%81%E8%8A%82%E7%82%B9.md)
-3. [文档节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%B8%89%E3%80%81%E6%96%87%E6%A1%A3%E8%8A%82%E7%82%B9.md)
-4. [元素节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E5%9B%9B%E3%80%81%E5%85%83%E7%B4%A0%E8%8A%82%E7%82%B9.md)
-5. [文本节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%BA%94%E3%80%81%E6%96%87%E6%9C%AC%E8%8A%82%E7%82%B9.md)
-6. [属性节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E5%85%AD%E3%80%81%E5%B1%9E%E6%80%A7%E8%8A%82%E7%82%B9.md)
-7. [CSS操作](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%B8%83%E3%80%81CSS%E6%93%8D%E4%BD%9C.md)
-8. [节点集合](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E5%85%AB%E3%80%81%E8%8A%82%E7%82%B9%E9%9B%86%E5%90%88.md)
-9. [节点范围](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E4%B9%9D%E3%80%81%E8%8A%82%E7%82%B9%E8%8C%83%E5%9B%B4.md)
-10. [元素&文档&窗口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/DOM/%E5%8D%81%E3%80%81%E5%85%83%E7%B4%A0%26%E6%96%87%E6%A1%A3%26%E7%AA%97%E5%8F%A3.md)
+1. [DOM](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%B8%80%E3%80%81DOM.md)
+2. [节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%BA%8C%E3%80%81%E8%8A%82%E7%82%B9.md)
+3. [文档节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%B8%89%E3%80%81%E6%96%87%E6%A1%A3%E8%8A%82%E7%82%B9.md)
+4. [元素节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%9B%9B%E3%80%81%E5%85%83%E7%B4%A0%E8%8A%82%E7%82%B9.md)
+5. [文本节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%BA%94%E3%80%81%E6%96%87%E6%9C%AC%E8%8A%82%E7%82%B9.md)
+6. [属性节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%85%AD%E3%80%81%E5%B1%9E%E6%80%A7%E8%8A%82%E7%82%B9.md)
+7. [CSS操作](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%B8%83%E3%80%81CSS%E6%93%8D%E4%BD%9C.md)
+8. [节点集合](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%85%AB%E3%80%81%E8%8A%82%E7%82%B9%E9%9B%86%E5%90%88.md)
+9. [节点范围](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%B9%9D%E3%80%81%E8%8A%82%E7%82%B9%E8%8C%83%E5%9B%B4.md)
+10. [元素&文档&窗口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%8D%81%E3%80%81%E5%85%83%E7%B4%A0%26%E6%96%87%E6%A1%A3%26%E7%AA%97%E5%8F%A3.md)
 11. [MutationObserver API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%8D%81%E4%B8%80%E3%80%81MutationObserver%20API.md)
 12. [IntersectionObserver API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%8D%81%E4%BA%8C%E3%80%81IntersectionObserver%20API.md)
 
 ## JS 系列之事件
 
-1. [事件模型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E4%B8%80%E3%80%81%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B.md)
-2. [Event对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E4%BA%8C%E3%80%81Event%E5%AF%B9%E8%B1%A1.md)
-3. [进度事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E4%B8%89%E3%80%81%E8%BF%9B%E5%BA%A6%E4%BA%8B%E4%BB%B6.md)
-4. [文档事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E5%9B%9B%E3%80%81%E6%96%87%E6%A1%A3%E4%BA%8B%E4%BB%B6.md)
-5. [窗口事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E4%BA%94%E3%80%81%E7%AA%97%E5%8F%A3%E4%BA%8B%E4%BB%B6.md)
-6. [鼠标事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E5%85%AD%E3%80%81%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6.md)
-7. [拖动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E4%B8%83%E3%80%81%E6%8B%96%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
-8. [键盘事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%BA%8B%E4%BB%B6/%E5%85%AB%E3%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6.md)
+1. [事件模型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%80%E3%80%81%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B.md)
+2. [Event对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%BA%8C%E3%80%81Event%E5%AF%B9%E8%B1%A1.md)
+3. [进度事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%89%E3%80%81%E8%BF%9B%E5%BA%A6%E4%BA%8B%E4%BB%B6.md)
+4. [文档事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%9B%9B%E3%80%81%E6%96%87%E6%A1%A3%E4%BA%8B%E4%BB%B6.md)
+5. [窗口事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%BA%94%E3%80%81%E7%AA%97%E5%8F%A3%E4%BA%8B%E4%BB%B6.md)
+6. [鼠标事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AD%E3%80%81%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6.md)
+7. [拖动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%83%E3%80%81%E6%8B%96%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
+8. [键盘事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AB%E3%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6.md)
 
 ## JS 系列之 ES5
 
