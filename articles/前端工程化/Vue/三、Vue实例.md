@@ -109,18 +109,33 @@ const vm = new Vue({
 </script>
 ```
 
-## 3. Vue 全局配置
+## 3. Vue 全局 API
 
-### (1) 全局配置
+### (1) 资源 API
 
 ```javascript
-
+Vue.component(name,define)         //全局注册一个组件
+Vue.directive(name,define)         //全局注册一个指令
+Vue.filter(name,define)            //全局注册一个过滤器
+Vue.extend(options)                //全局注册一个扩展
+Vue.mixin(mixin)                   //全局注册一个混入
 ```
 
-### (2) 全局 API
+### (2) 数据 API
 
 ```javascript
+Vue.nextTick(cb)                   //下次DOM更新循环结束后执行回调cb
+Vue.set(target,propName/index,val) //向响应式对象target添加/修改propName/index
+Vue.delete(target,propName/index)  //向响应式对象target删除propName/index
+```
 
+### (3) 其他 API
+
+```javascript
+Vue.version                        //Vue安装版本号
+Vue.use(plugin)                    //安装插件plugin
+Vue.compile(template)              //编译字符串模板template为render函数
+Vue.observable(obj)                //令对象obj可响应
 ```
 
 ## 4. Vue 实例选项
@@ -143,13 +158,15 @@ renderError //render函数遭遇错误时错误作为第二个参数传递到ren
 
 ```javascript
 components //返回一个对象,包含当前组件引用的所有子组件
-directives //返回一个对象,包含当前组件引用的所有自定义指令,也可以直接注册局部自定义指令
-filters    //返回一个对象,包含当前组件引用的所有自定义过滤器,也可以直接注册局部自定义过滤器
+directives //返回一个对象,包含当前组件引用的所有自定义指令,也可以直接局部注册自定义指令
+filters    //返回一个对象,包含当前组件引用的所有自定义过滤器,也可以直接局部注册自定义过滤器
+extends    //
+mixins     //
 ```
 
 #### ① directives
 
-directives 选项可以在当前组件注册局部`自定义指令`
+directives 选项可以在当前组件局部注册`自定义指令`
 
 ```html
 <template>
@@ -180,7 +197,7 @@ export default {
 
 #### ② filters
 
-filters 选项可以在当前组件注册局部`自定义过滤器`
+filters 选项可以在当前组件局部注册`自定义过滤器`
 
 **过滤器**：过滤器可以用在`双花括号 {{}} 插值`和 `v-bind 表达式`，过滤器的作用一般是文本格式化
 
@@ -223,6 +240,12 @@ export default {
 ```
 
 ![filters](../../../images/前端工程化/Vue/filters.png)
+
+#### ③ extends
+
+#### ④ mixin
+
+①②③④⑤⑥⑦⑧⑨⑩
 
 ### (4) 数据选项
 
@@ -437,16 +460,7 @@ export default {
 </script>
 ```
 
-### (5) 混入选项
-
-```javascript
-extends        //
-mixins         //
-```
-
-①②③④⑤⑥⑦⑧⑨⑩
-
-### (6) 其他选项
+### (5) 其他选项
 
 ```javascript
 name         //当前组件的名字
@@ -577,8 +591,8 @@ export default {
 
 ```javascript
 this.$watch(target,cb,options)         //作用同 Vue组件的 watch选项相同
-this.$set(target,propName/index,value) //的
-this.$delete(target,propName/index)    //的
+this.$set(target,propName/index,value) //向当前组件的响应式对象target添加
+this.$delete(target,propName/index)    //向当前组件响应式对象target删除propName
 
 options: deep      //深度监听,可监听到对象属性和数组项的变化
          immediate //立即触发一次回调
