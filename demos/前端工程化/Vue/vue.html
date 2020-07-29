@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue</title>
+</head>
+<body>
+
+<div id="app">
+  <input v-model="data1" @keyup="handlePrint1" />
+
+  <input :value="data2" @keyup="handlePrint2" />
+  <input :value.sync="data3" @keyup="handlePrint3" />
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+<script>
+const vm = new Vue({
+  el: '#app',
+  data(){
+    return {
+      data1: 'aaa',
+      data2: 'bbb',
+      data3: 'ccc'
+    }
+  },
+  mounted(){
+
+  },
+  methods: {
+    handlePrint1(){
+      console.log(this.data1)
+    },
+    handlePrint2(){
+      console.log(this.data2)
+    },
+    handlePrint3(){
+      console.log(this.data3)
+    }
+  }
+})
+</script>
+</body>
+</html>
