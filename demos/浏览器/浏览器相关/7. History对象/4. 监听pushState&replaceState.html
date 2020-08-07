@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+
+
+
+<script>
+const _globalE = function(ename){
+  const orig = history[ename]
+  return function(){
+    const rv = orig.apply(this, arguments)
+    const e = new Event(ename)
+    e.arguments = arguments
+    window.dispatchEvent(e)
+    return rv
+  }
+}
+history.pushState = _globalE('pushState')
+history.replaceState = _globalE('replaceState')
+
+window.addEventListener('pushState', function(e){
+  console.log('pushState')
+})
+window.addEventListener('replaceState', function(e){
+  console.log('replaceState')
+})
+
+
+//History对象所有实例都需要在浏览器已打开的文档的控制台试验
+
+//当前文档URL：https://wangdoc.com/javascript/bom/history.html
+
+history.pushState(null, '', 'https://wangdoc.com/javascript/bom/window.html'); //'pushState'
+history.replaceState(null, '', 'https://wangdoc.com/javascript/bom/same-origin.html'); //'replaceState'
+
+</script>
+</body>
+</html>

@@ -1,10 +1,8 @@
-# 三、Vue 实例
+# 三、Vue API
 
 [[_TOC_]]
 
-## 1. Vue 实例创建
-
-## 2. Vue 实例生命周期
+## 1. Vue 组件生命周期
 
 ### (1) 生命周期方法
 
@@ -109,16 +107,412 @@ const vm = new Vue({
 </script>
 ```
 
-## 3. Vue 全局 API
+## 2. Vue 全局 API
 
 ### (1) 资源 API
 
+全局注册往往是不够理想的，因为如果使用 Webpack 构建系统，即使全局注册的内容不再被使用，也都会包含在最终的构建结果中，这会造成用户下载的 JS 代码的无谓增加
+
 ```javascript
-Vue.component(name,define)         //全局注册一个组件
-Vue.directive(name,define)         //全局注册一个指令
-Vue.filter(name,define)            //全局注册一个过滤器
-Vue.extend(options)                //全局注册一个扩展
-Vue.mixin(mixin)                   //全局注册一个混入
+Vue.extend(options)        //全局注册一个扩展,返回一个Vue子类
+Vue.component(name,define) //全局注册一个组件,父组件引用后使用
+Vue.mixin(mixin)           //全局注册一个混入,组件引用后使用
+Vue.filter(name,cb)        //全局注册一个过滤器,组件引用后使用
+Vue.directive(name,define) //全局注册一个指令,组件引用后使用
+```
+
+#### ① Vue.extend(options)
+
+Vue.extend 基于 Vue 基础实例构造器 ( new Vue )，生成一个 Vue 扩展实例构造器，参数是一个包含组件选项的对象
+
+Vue.component 的原理就是`自动调用`实例构造器生成组件实例，然后将组件实例挂载到`自定义元素`上
+
+Vue.extend 比起 Vue.component 的优势是用于实现某些特殊需求，组件实例并不一定必须要挂载到某个 DOM 元素上，Vue.extend 可以实现组件实例动态插入到文档中，例如 `document.body.appendChild(组件实例.$el)`
+
+* 扩展组件的生命周期钩子和组件的生命周期钩子将被合并为一个数组，因此都将被调用，但是扩展组件的生命周期钩子在组件`之前`调用
+* 扩展组件的其他选项将和组件的选项合并，发生同名冲突时`以组件优先`
+
+```html
+<template>
+  <div class="message" :class="type" v-show="isShow">
+    <i class="icon"></i>
+    <span class="text">{{ text }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Message'
+}
+</script>
+
+<style scoped>
+.info {
+  background-color: "#00aaee";
+}
+.success {
+  background-color: "#00ee6b";
+}
+.warning {
+  background-color: "#eea300";
+}
+.danger {
+  background-color: "#ee000c";
+}
+</style>
+```
+
+全局注册扩展
+
+```javascript
+import Vue from "vue";
+import Message from "@/views/Message";
+
+//子类VueMessage继承自Vue类
+const VueMessage = Vue.extend(Message);
+
+function showMessage({ type, text, isShow }) {
+  //新建子类VueMessage的组件实例
+  const messageDOM = new VueMessage({
+    data() {
+      return {
+        type: type,
+        text: text,
+        isShow: isShow
+      };
+    }
+  });
+  //将组件实例挂载的DOM添加到文档
+  document.body.appendChild(messageDOM.$mount().$el);
+}
+
+export default showMessage;
+```
+
+组件
+
+```html
+<template>
+  <div id="app">
+    App
+    <button @click="handleClick">点击</button>
+  </div>
+</template>
+
+<script>
+import Message from "@/api/extends/globalMessage";
+
+export default {
+  name: "App",
+  methods: {
+    handleClick() {
+      Message({ type: "error", text: "我是小可爱", isShow: true });
+    }
+  }
+};
+</script>
+```
+
+#### ② Vue.component(name.options)
+
+自定义组件
+
+```html
+<template>
+  <input v-model="value" />
+</template>
+
+<script>
+export default {
+  name: "Home",
+  data() {
+    return {
+      value: "我是小可爱"
+    };
+  }
+};
+</script>
+```
+
+全局注册子组件
+
+```javascript
+import Vue from "vue";
+import Home from "@/views/Home";
+
+Vue.component("Home", Home);
+```
+
+父组件
+
+```html
+<template>
+  <div id="app">
+    <Home></Home>
+  </div>
+</template>
+
+<script>
+import "@/api/components/globalComponent";
+
+export default {
+  name: "App",
+  data() {
+    return {};
+  }
+};
+</script>
+```
+
+#### ③ Vue.mixin(options)
+
+全局注册的混入，任意组件都可以引用后使用
+
+混入用来分发组件的可复用功能，混入可以包含任意组件选项，组件引用混入时，混入的所有选项将被混合进该组件本身的选项
+
+* 混入的生命周期钩子和组件的生命周期钩子将被合并为一个数组，因此都将被调用，但是混入的生命周期钩子在组件`之前`调用
+* 混入的其他选项将和组件的选项合并，发生同名冲突时`以组件优先`
+
+```javascript
+import Vue from "vue";
+import Home from "@/views/Home";
+
+Vue.mixin({
+  components: {
+    Home
+  },
+  data() {
+    return {
+      mixinTitle: "mixin"
+    };
+  },
+  computed: {
+    mixinComputed() {
+      return this.mixinTitle + " mixinComputed";
+    }
+  },
+  methods: {
+    init() {
+      console.log("mixin hello");
+    }
+  },
+  beforeCreate() {
+    console.log("mixin beforeCreate");
+  },
+  created() {
+    console.log("mixin created");
+  },
+  beforeMount() {
+    console.log("mixin beforeMount");
+  },
+  mounted() {
+    console.log("mixin mounted");
+  },
+  beforeUpdate() {
+    console.log("mixin beforeUpdate");
+  },
+  updated() {
+    console.log("mixin updated");
+  },
+  beforeDestroy() {
+    console.log("mixin beforeDestroy");
+  },
+  destroyed() {
+    console.log("mixin destroyed");
+  }
+});
+```
+
+组件
+
+```html
+<template>
+  <div class="about">
+    {{ new Date() }}
+    <Home></Home>
+  </div>
+</template>
+
+<script>
+import "@/api/mixins/overMixin";
+
+export default {
+  components: {},
+  data() {
+    return {
+      aboutTitle: "about"
+    };
+  },
+  computed: {
+    aboutComputed() {
+      return this.aboutTitle + " aboutComputed";
+    }
+  },
+  methods: {
+    init() {
+      console.log("about hello");
+      console.log(this.aboutTitle);
+      console.log(this.mixinTitle);
+      console.log(this.aboutComputed);
+      console.log(this.mixinComputed);
+    }
+  },
+  beforeCreate() {
+    console.log("about beforeCreate");
+  },
+  created() {
+    console.log("about created");
+  },
+  beforeMount() {
+    console.log("about beforeMount");
+  },
+  mounted() {
+    console.log("about mounted");
+    this.$nextTick(() => {
+      this.init();
+    });
+  },
+  beforeUpdate() {
+    console.log("about beforeUpdate");
+  },
+  updated() {
+    console.log("about updated");
+  },
+  beforeDestroy() {
+    console.log("about beforeDestroy");
+  },
+  destroyed() {
+    console.log("about destroyed");
+  }
+};
+</script>
+
+//输出：mixin beforeCreate
+//     about beforeCreate
+//     mixin created
+//     about created
+//     mixin beforeMount
+//     about beforeMount
+//     mixin mounted
+//     about mounted
+//     about hello
+//     about
+//     mixin
+//     about aboutComputed
+//     mixin mixinComputed
+```
+
+#### ④ Vue.filter(name,cb)
+
+全局注册的过滤器，任意组件都可以引用后使用
+
+过滤器可以用在`双花括号 {{}} 插值`和 `v-bind 表达式`，过滤器的作用一般是文本格式化
+
+```javascript
+import Vue from "vue";
+
+Vue.filter("formateDate", function(date) {
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  let second = date.getSeconds();
+
+  month = month < 10 ? "0" + month : month;
+  day = day < 10 ? "0" + day : day;
+  hour = hour < 10 ? "0" + hour : hour;
+  minute = minute < 10 ? "0" + minute : minute;
+  second = second < 10 ? "0" + second : second;
+
+  return (
+    year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
+  );
+});
+```
+
+组件
+
+```html
+<template>
+  <div id="app">
+    当前时间：{{ date | formateDate }}
+    <div :time="date | formateDate">aaa</div>
+  </div>
+</template>
+
+<script>
+import "@/api/utils/filters";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      date: new Date()
+    };
+  }
+};
+</script>
+```
+
+![filters](../../../images/前端工程化/Vue/filters.png)
+
+#### ⑤ Vue.directive(name,options)
+
+全局注册的自定义指令，任意组件都可以引用后使用
+
+```javascript
+import Vue from 'vue'
+
+Vue.directive("v-focus", {
+  //指令绑定到元素时
+  bind: function(el, binding, vnode) {
+    console.log(el);                 //指令绑定的元素
+    console.log(binding);            //指令的属性对象
+    console.log(binding.name);       //指令名
+    console.log(binding.expression); //指令表达式
+    console.log(binding.value);      //指令绑定的当前值
+    console.log(binding.oldValue);   //指令绑定的前一个值
+    console.log(binding.arg);        //指令参数
+    console.log(binding.modifiers);  //修饰符对象
+  },
+  //绑定元素插入父节点时(仅保证父节点存在,不一定插入文档)
+  inserted: function(el, binding, vnode) {
+    el.focus();
+  },
+  //所在组件的VNode更新时(可能发生在子VNode更新前)
+  update: function(el, binding, vnode, oldVnode) {
+    console.log(vnode);    //当前VNode
+    console.log(oldVnode); //上一个VNode
+  },
+  //所在组件的VNode及其子VNode全部更新时
+  componentUpdated: function(el, binding, vnode, oldVnode) {},
+  //指令与元素解绑时
+  unbind: function(el, binding, vnode) {}
+});
+```
+
+组件
+
+```html
+<template>
+  <div id="app">
+    <input v-focus v-model="value" />
+  </div>
+</template>
+
+<script>
+import "@/api/utils/directives"; //引入全局注册的自定义指令
+
+export default {
+  name: "App",
+  data() {
+    return {
+      value: "aaa"
+    };
+  }
+};
+</script>
 ```
 
 ### (2) 数据 API
@@ -132,13 +526,66 @@ Vue.delete(target,propName/index)  //向响应式对象target删除propName/inde
 ### (3) 其他 API
 
 ```javascript
-Vue.version                        //Vue安装版本号
-Vue.use(plugin)                    //安装插件plugin
-Vue.compile(template)              //编译字符串模板template为render函数
-Vue.observable(obj)                //令对象obj可响应
+Vue.version           //Vue安装版本号
+Vue.use(plugin)       //安装插件plugin
+Vue.observable(obj)   //令对象obj可响应(在Vuex中详解)
+Vue.compile(template) //将字符串模板template编译为render函数
 ```
 
-## 4. Vue 实例选项
+#### ① Vue.use
+
+Vue.use(plugin) 用于安装 Vue 插件，插件的 install 方法调用时，会将 Vue 作为参数传入
+
+* 如果插件是对象，必须提供 install 方法
+* 如果插件是函数，自身会被作为 install 方法
+
+```javascript
+//打印插件
+
+const Print = function(dom, options){
+ //...
+}
+Print.prototype = {
+  init(){},
+  getHtml(){},
+  //...
+}
+
+//插件定义
+const MyPlugin = {}
+MyPlugin.install = function(Vue, options){
+  Vue.prototyoe.$print = Print
+}
+export default MyPlugin
+```
+
+main.js
+
+```javascript
+import Vue from "vue";
+import axios from "axios";
+import "./plugins/element.js";
+
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+
+import Print from '@/api/utils/print'
+
+Vue.prototype.$axios = axios;
+Vue.config.productionTip = false;
+
+Vue.use(Print)
+
+new Vue({
+  el: "#app",
+  router,
+  store,
+  render: h => h(App)
+});
+```
+
+## 3. Vue 组件选项
 
 ### (1) DOM 选项
 
@@ -150,56 +597,225 @@ render      //渲染函数,用来代替字符串模板
 renderError //render函数遭遇错误时错误作为第二个参数传递到renderError(只在开发者环境下工作)
 ```
 
-详见 二、模板语法
-
 ### (2) 生命周期钩子选项
 
 ### (3) 资源选项
 
 ```javascript
-components //返回一个对象,包含当前组件引用的所有子组件
-directives //返回一个对象,包含当前组件引用的所有自定义指令,也可以直接局部注册自定义指令
-filters    //返回一个对象,包含当前组件引用的所有自定义过滤器,也可以直接局部注册自定义过滤器
-extends    //
-mixins     //
+extends    //当前组件局部注册引用的扩展(当前组件继承扩展组件)
+components //当前组件局部注册引用的所有子组件
+mixins     //当前组件局部注册引用的所有混入
+filters    //当前组件局部注册引用的所有过滤器
+directives //当前组件局部注册引用的所有指令
 ```
 
-#### ① directives
+#### ① extends
 
-directives 选项可以在当前组件局部注册`自定义指令`
+extends 选项可以在当前组件局部注册`扩展`，即当前组件`继承`扩展组件
+
+扩展组件
 
 ```html
 <template>
-  <div class="about">
-    <input v-focus v-model="txt" />
+  <div class="message" :class="type" v-show="isShow">
+    <i class="icon"></i>
+    <span class="text">{{ text }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  props: {},
+  name: "Message",
   data() {
-    return {
-      txt: ""
-    };
+    return {};
   },
-  directives: {
-    focus: {
-      //挂载元素插入到DOM后
-      inserted: function(el) {
-        el.focus();
-      }
+  methods: {
+    parentClick() {
+      console.log("parent");
+    }
+  }
+};
+</script>
+
+<style scoped>
+.info {
+  background-color: "#00aaee";
+}
+.success {
+  background-color: "#00ee6b";
+}
+.warning {
+  background-color: "#eea300";
+}
+.danger {
+  background-color: "#ee000c";
+}
+</style>
+```
+
+子组件
+
+```html
+<template>
+  <div id="app">
+    <button @click="handleClick">点击</button>
+  </div>
+</template>
+
+<script>
+import Message from "@/api/extends/Message";
+
+export default {
+  name: "App",
+  extends: Message, //当前组件继承扩展组件,
+  methods: {
+    childClick() {
+      console.log("child");
+    },
+    handleClick() {
+      this.parentClick(); //'parent'
     }
   }
 };
 </script>
 ```
 
-#### ② filters
+#### ② mixin
 
-filters 选项可以在当前组件局部注册`自定义过滤器`
+mixin 选项可以在当前组件局部注册`混入`
 
-**过滤器**：过滤器可以用在`双花括号 {{}} 插值`和 `v-bind 表达式`，过滤器的作用一般是文本格式化
+```javascript
+import Home from "@/views/Home";
+
+export default {
+  components: {
+    Home
+  },
+  data() {
+    return {
+      mixinTitle: "mixin"
+    };
+  },
+  computed: {
+    mixinComputed() {
+      return this.mixinTitle + " mixinComputed";
+    }
+  },
+  methods: {
+    init() {
+      console.log("mixin hello");
+    }
+  },
+  beforeCreate() {
+    console.log("mixin beforeCreate");
+  },
+  created() {
+    console.log("mixin created");
+  },
+  beforeMount() {
+    console.log("mixin beforeMount");
+  },
+  mounted() {
+    console.log("mixin mounted");
+  },
+  beforeUpdate() {
+    console.log("mixin beforeUpdate");
+  },
+  updated() {
+    console.log("mixin updated");
+  },
+  beforeDestroy() {
+    console.log("mixin beforeDestroy");
+  },
+  destroyed() {
+    console.log("mixin destroyed");
+  }
+};
+```
+
+组件
+
+```html
+<template>
+  <div class="about">
+    {{ new Date() }}
+    <Home></Home>
+  </div>
+</template>
+
+<script>
+import mixin from "@/api/mixins/mixin";
+
+export default {
+  components: {},
+  mixins: [mixin],
+  data() {
+    return {
+      aboutTitle: "about"
+    };
+  },
+  computed: {
+    aboutComputed() {
+      return this.aboutTitle + " aboutComputed";
+    }
+  },
+  methods: {
+    init() {
+      console.log("about hello");
+      console.log(this.aboutTitle);
+      console.log(this.mixinTitle);
+      console.log(this.aboutComputed);
+      console.log(this.mixinComputed);
+    }
+  },
+  beforeCreate() {
+    console.log("about beforeCreate");
+  },
+  created() {
+    console.log("about created");
+  },
+  beforeMount() {
+    console.log("about beforeMount");
+  },
+  mounted() {
+    console.log("about mounted");
+    this.$nextTick(() => {
+      this.init();
+    });
+  },
+  beforeUpdate() {
+    console.log("about beforeUpdate");
+  },
+  updated() {
+    console.log("about updated");
+  },
+  beforeDestroy() {
+    console.log("about beforeDestroy");
+  },
+  destroyed() {
+    console.log("about destroyed");
+  }
+};
+</script>
+
+//输出：mixin beforeCreate
+//     about beforeCreate
+//     mixin created
+//     about created
+//     mixin beforeMount
+//     about beforeMount
+//     mixin mounted
+//     about mounted
+//     about hello
+//     about
+//     mixin
+//     about aboutComputed
+//     mixin mixinComputed
+```
+
+#### ③ filters
+
+filters 选项可以在当前组件局部注册`过滤器`
 
 ```html
 <template>
@@ -239,13 +855,36 @@ export default {
 </script>
 ```
 
-![filters](../../../images/前端工程化/Vue/filters.png)
+#### ④ directives
 
-#### ③ extends
+directives 选项可以在当前组件局部注册`自定义指令`
 
-#### ④ mixin
+```html
+<template>
+  <div class="about">
+    <input v-focus v-model="txt" />
+  </div>
+</template>
 
-①②③④⑤⑥⑦⑧⑨⑩
+<script>
+export default {
+  props: {},
+  data() {
+    return {
+      txt: ""
+    };
+  },
+  directives: {
+    focus: {
+      //挂载元素插入到DOM后
+      inserted: function(el) {
+        el.focus();
+      }
+    }
+  }
+};
+</script>
+```
 
 ### (4) 数据选项
 
@@ -471,13 +1110,9 @@ model        //当前组件自定义v-model指令的prop、event,默认将表单
 functional   //当前组件作为函数式组件
 ```
 
-## 5. Vue 实例属性和方法
+## 4. Vue 组件属性和方法
 
-Vue 实例：单页面应用程序 SPA 中只有一个 Vue 实例，
-
-VueComponent 实例：Vue 组件是 VueComponent 实例，VueComponent 实例是 Vue 实例的扩展
-
-### (1) Vue 实例属性
+### (1) Vue 组件属性
 
 ```javascript
 this.$isServer    //返回布尔值,当前组件是否运行于服务器
@@ -494,8 +1129,6 @@ this.$attrs       //返回一个对象,包含父组件对当前组件的未作�
 this.$listeners   //返回一个对象,包含父组件对当前组件的事件监听
 
 this.$options     //返回一个对象,包含当前组件的初始化选项
-this.$slots       //
-this.$scopedSlots //
 ```
 
 父组件
@@ -583,7 +1216,7 @@ export default {
 </script>
 ```
 
-### (2) Vue 实例方法
+### (2) Vue 组件方法
 
 #### ① 生命周期方法
 
@@ -596,14 +1229,6 @@ this.$delete(target,propName/index)    //向当前组件响应式对象target删
 
 options: deep      //深度监听,可监听到对象属性和数组项的变化
          immediate //立即触发一次回调
-```
-
-this.$set(target,propName/index,value) 可以为当前组件的 data 选项动态绑定数据，但无法挂载响应式数据到 data 选项，因此建议所有可能在组件中被观察的对象都预先在 data 选项中声明，以便加入 Vue 响应式系统
-
-this.$delete(target,propName/index) 可以为当前组件的 data 选项动态删除数据
-
-```html
-
 ```
 
 #### ③ 事件方法

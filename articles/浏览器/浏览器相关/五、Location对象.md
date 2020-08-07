@@ -120,7 +120,7 @@ request({
 
 #### ② 用途
 
-显示动态页面结果。例如购物页面，添加了活动参数，就可以按照大小过滤产品，
+显示动态页面结果，例如购物页面，添加了活动参数，就可以按照大小过滤产品
 
 ```javascript
 //基本T恤页面
@@ -180,7 +180,7 @@ for(let item of urlSearch.entries()){
 }
 ```
 
-## 3. 片段识别符
+## 3. URL 片段识别符
 
 ### (1) 原理
 
@@ -190,17 +190,17 @@ for(let item of urlSearch.entries()){
 
 有两种方式，一是使用 id 属性，而是使用 a 标签的 name 属性
 
-```javascript
-//方式1
+```html
+<!-- 方式 1 -->
 <div id="part1">part1</div>
 
-//方式2
+<!-- 方式 2 -->
 <a name="part3">part2</a>
 ```
 
 #### ② hashchange 事件
 
-HTML5 新增 hashchange 事件，每当 URL 的片段识别符改变时，就会在 `window 对象`上触发这个事件
+HTML5 新增 hashchange 事件，每当 URL 的片段识别符改变时，就会在 `window 对象`上触发 hashchange 事件
 
 Event 对象相关属性如下
 
@@ -209,11 +209,23 @@ e.oldURL    //返回变化前的完整URL
 e.newURL    //返回变化后的完整URL
 ```
 
+#### ③ popstate 事件
+
+每当`同一个文档`的 history 对象变化时，就会在 `window` 对象上触发 popstate 事件，如果浏览历史的切换导致加载不同的文档，不会触发 popstate 事件
+
+由于改变片段识别符会改变 History 对象的浏览记录，因此会在 `window` 对象上触发 `popstate` 事件
+
+Event对象相关属性如下
+
+```javascript
+e.state //返回浏览器History对象当前记录的state对象
+```
+
 ### (3) 用途
 
 #### ① HTTP 请求不包括片段识别符
 
-片段识别符对服务器完全无用，是用来`指导浏览器动作`的，浏览器读取到 URL 后，会自动根据 URL 的片段识别符滚动到文档指定位置
+片段识别符不包含在 HTTP 请求 URL 中，对服务器完全无用，仅仅是用来`指导浏览器动作`的，浏览器读取到 URL 后，会自动根据 URL 的片段识别符滚动到文档指定位置
 
 #### ② 改变片段识别符不触发文档重载
 
@@ -223,33 +235,37 @@ e.newURL    //返回变化后的完整URL
 
 每次改变 URL 的片段识别符，都会在浏览器的 History 对象中新增一个浏览记录，点击后退按钮，可以回到文档的上一个位置
 
+由于改变片段识别符会改变 History 对象，因此会在 `window` 对象上触发 `popstate` 事件
+
+```html
+<button id="btn1">part1</button>
+<button id="btn2">part2</button>
+<div id="part1" style="height:500px;border:1px solid red;">part1</div>
+<div id="part2" style="height:500px;border:1px solid red;">part2</div>
+```
+
 ```javascript
-//<button id="btn1">part1</button>
-//<button id="btn2">part2</button>
-//<div id="part1" style="height:500px;border:1px solid red;">part1</div>
-//<div id="part2" style="height:500px;border:1px solid red;">part2</div>
+window.addEventListener('popstate', function(e){
+  console.log('state');
+});
+window.addEventListener("hashchange", function(e) {
+  console.log("oldURL: ", e.oldURL);
+  console.log("newURL: ", e.newURL);
+});
 
-function handleHashChange(part) {
-  location.hash = '#' + part;
-
-  window.addEventListener("hashchange", function(e) {
-    console.log("oldURL: ", e.oldURL);
-    console.log("newURL: ", e.newURL);
-  });
-}
 const btn1 = document.getElementById('btn1')
 const btn2 = document.getElementById('btn2')
 btn1.addEventListener('click', function(e){
-  handleHashChange('part1')
+  location.hash = '#part1';
 })
 btn2.addEventListener('click', function(e){
-  handleHashChange('part2')
+  location.hash = '#part2';
 })
 ```
 
 ## 4. Location 对象
 
-Location 对象表示当前浏览器窗口加载的`文档地址`，
+Location 对象表示当前浏览器窗口加载的`文档地址`
 
 ```javascript
 定义：window.location
@@ -278,8 +294,11 @@ Location 对象表示当前浏览器窗口加载的`文档地址`，
 
 location.href 是浏览器唯一允许`跨域`写入的属性，可以改写非同源的地址，location.href 改写后，浏览器会立即跳转到这个新地址
 
+```html
+<button id="btn">跳转</button>
+```
+
 ```javascript
-//<button id="btn">跳转</button>
 const btn = document.getElementById('btn')
 btn.addEventListener('click', function handleChangeURL(){
   console.log(location.href); //'http://10.20.15.72:8080'
@@ -296,8 +315,13 @@ document.location.reload(true);  //浏览器向服务器重新请求并重载该
 document.location.reload(false); //浏览器从本地缓存重载该文档,文档视口不变
 ```
 
+实例
+
+```html
+<button id="btn">重载</button>
+```
+
 ```javascript
-//<button id="btn">重载</button>
 const btn = document.getElementById('btn')
 btn.addEventListener('click', function handleReload(){
   location.reload(); //默认从缓存中重载
@@ -312,10 +336,14 @@ document.location.assign('http://www.example.com');  //当前窗口立刻载入�
 document.location.replace('http://www.example.com'); //当前窗口立刻载入新文档,在History对象中替换当前URL,故无法后退
 ```
 
-```javascript
-//<button id="btn1">重定向</button>
-//<button id="btn2">重定向(替换)</button>
+实例
 
+```html
+<button id="btn1">重定向</button>
+<button id="btn2">重定向(替换)</button>
+```
+
+```javascript
 //先点击重定向,再点击后退按钮回到上一文档
 const btn1 = document.getElementById('btn1')
 btn1.addEventListener('click', function handleAssign(e){
