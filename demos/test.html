@@ -6,17 +6,78 @@
 </head>
 <body>
 
-<ul>
-  <li><a onclick="home()">首页</a></li>
-  <li><a onclick="message()">消息</a></li>
-</ul>
-<div id="showContent" style="height:240px;width:200px;background-color:red">
-  home
-</div>
 
 <script>
 
+// ([
+//     (function fa(){
+//         var a = 1
+//         console.log(a)
+//     }),
+//     (function fb(){
+//         var b = 2
+//         console.log(b)
+//     })
+// ])
 
+
+// 结论
+// () 相当于 return，表达式执行后return，函数不执行直接return
+// 形成块级作用域
+
+// (a = 1)
+// console.log(a) //1
+
+// 整个圆括号是一个表达式，因此 fa 不再指向一个函数声明，无法直接调用
+// (function fa(){
+//   console.log(1)
+// })()
+// fa() //ReferenceError: fa is not defined
+
+// var fa = (function fa(){
+//   console.log(1)
+// })
+// fa() //1
+
+// (() => console.log(1))()
+
+// [1, 2, 3].map(item => {return {value: item}})
+// [1, 2, 3].map(item => ({value: item}))
+
+
+//逗号运算符：从左向右顺序执行，以最右边的值作为整个表达式的返回值
+// console.log((1,2,3)) //3
+
+//圆括号运算符：
+
+// function* f(){
+//   yield new Promise((resolve) => {
+//       console.log(1)
+//       resolve()
+//   }).then(val => console.log(2))
+//   console.log(3)
+// }
+
+// const ite = f()
+// console.log('start')
+// ite.next()
+// console.log('process')
+// ite.next()
+// console.log('end')
+
+// //start 1 process 3 end 2
+
+// async function g(){
+//   await new Promise((resolve) => {
+//       console.log(1)
+//       resolve()
+//   }).then(val => console.log(2))
+//   console.log(3)
+// }
+
+// console.log('start')
+// g()
+// console.log('end')
 
 </script>
 </body>

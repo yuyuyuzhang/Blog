@@ -6,19 +6,14 @@
 <body>
 </body>
 
+<!-- person在job之前引入 -->
 <script src="person.js"></script>
 <script src="job.js"></script>
-<script type="module">
-
-// modulePerson.person.name = '李四';
-// modulePerson.person.getName();        //'李四'
-// console.log(modulePerson.person.job); //'teacher'
-// console.log(moduleJob.person.job);    //'police'
-// console.log(moduleJob.jobs);          //undefined
-
-// console.log(modulePersonJob)
-console.log(moduleJob.jobs)
-modulePersonJob = moduleJob.jobs
+<script>
+modulePerson.person.name = '李四';
+modulePerson.person.getName();          //'李四'
+console.log(moduleJob.person.job);      //'police'
+console.log(moduleJob.person1.friends); //Array ['王五', '赵六']
 
 </script>
 </html>
