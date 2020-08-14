@@ -1,4 +1,5 @@
 # Blog
+
 我的博客，记录自己的学习历程
 
 ## 进度
@@ -27,6 +28,8 @@ JS 系列之 E5S 已完结
 
 JS 系列之 ES6 已完结
 
+JS 系列之 TS 进行中......
+
 JS 系列之函数式编程 进行中......
 
 JS 系列之设计模式 进行中......
@@ -35,7 +38,7 @@ JS 系列之设计模式 进行中......
 
 前端工程化系列之 React 进行中......
 
-前端工程化系列之 Webpack 进行中......
+前端模块化系列 进行中......
 
 [前端开发的发展历程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.md)
 
@@ -159,6 +162,8 @@ JS 系列之设计模式 进行中......
 10. [异步](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E3%80%81%E5%BC%82%E6%AD%A5.md)
 11. [模块](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97.md)
 
+## JS 系列之 TS
+
 ## JS 系列之函数式编程
 
 1. [定时器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%80%E3%80%81%E5%AE%9A%E6%97%B6%E5%99%A8.md)
@@ -178,4 +183,9 @@ JS 系列之设计模式 进行中......
 
 ## 前端工程化系列之 React
 
-## 前端工程化系列之 Webpack
+## 前端模块化系列
+
+1. [前端模块化](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96.md)
+<!-- 2. [Webpack](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%BA%8C%E3%80%81Webpack.md) -->
+3. [Rollup](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%B8%89%E3%80%81Rollup.md)
+4. [Parcel](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E5%9B%9B%E3%80%81Rarcel.md)
