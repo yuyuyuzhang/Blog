@@ -1,14 +1,14 @@
-# 七、CSS操作
+# 七、CSS 操作
 
 [[_TOC_]]
 
 ## 1. 样式表
 
-### (1) StyleSheetList对象
+### (1) StyleSheetList 对象
 
 StyleSheetList 对象表示`当前文档所有样式表的集合`，包含 link 元素的外部样式表和 style 元素的内联样式表
 
-### (2) StyleSheet对象
+### (2) StyleSheet 对象
 
 StyleSheet 对象表示`一张样式表`，可以是 link 元素的外部样式表或者 style 元素的内联样式表
 
@@ -47,9 +47,9 @@ sheet.insertRule('.small{fontSize: 14px;}', 0);
 console.log(sheet.cssRules); //CSSRuleList {0: CSSStyleRule ".small", 1: CSSStyleRule ".big", length: 2}
 ```
 
-## 2. classList对象
+## 2. classList 对象
 
-classList 对象操作`元素的class类`，可以给元素添加删除类
+classList 对象操作`元素的 class 类`，可以给元素添加删除类
 
 ```javascript
 定义：const classList = elem.classList
@@ -71,11 +71,11 @@ console.log(classList.contains('three')); //false
 console.log(classList.toString());        //"one"
 ```
 
-## 3. Style对象
+## 3. Style 对象
 
-### (1) Style对象
+### (1) Style 对象
 
-Style 对象表示`元素的style属性指定的所有内联样式`，但不包含与嵌入样式表或外部样式表层叠而来的样式，
+Style 对象表示`元素的 style 属性指定的所有内联样式`，但不包含与嵌入样式表或外部样式表层叠而来的样式
 
 ```javascript
 定义：const style = elem.style           
@@ -105,11 +105,11 @@ for(let i=0; i<style.length; i++){
 //     "color:blue"
 ```
 
-### (2) CSSStyleDeclaration对象
+### (2) CSSStyleDeclaration 对象
 
 CSSStyleDeclaration 对象表示`元素计算后的所有最终样式`，
 
-文档元素的最终样式是浏览器综合各种规则计算出来的，该对象是`动态`的，任何基于样式的修改都会`实时反映`，
+文档元素的最终样式是浏览器综合各种规则计算出来的，该对象是`动态`的，任何基于样式的修改都会`实时反映`
 
 ```javascript
 定义：const computedStyle = getComputedStyle(elem)   
@@ -131,15 +131,15 @@ console.log(computedStyle.width);  //"20px"
 console.log(computedStyle.color);  //"rgb(255, 0, 0)"
 ```
 
-## 4. CSS规则
+## 4. CSS 规则
 
-### (1) CSSRuleList对象
+### (1) CSSRuleList 对象
 
-CSSRuleList 对象表示`一组CSS规则`，成员都是 CSSRule 实例 
+CSSRuleList 对象表示`一组 CSS 规则`，成员都是 CSSRule 实例
 
-### (2) CSSRule对象
+### (2) CSSRule 对象
 
-CSSRule 对象表示`一条CSS规则`，而一条 CSS 规则包括两部分：CSS 选择器和样式声明
+CSSRule 对象表示`一条 CSS 规则`，而一条 CSS 规则包括两部分：CSS 选择器和样式声明
 
 ```javascript
 定义：const rules = sheet.cssRules
@@ -152,17 +152,20 @@ CSSRule 对象表示`一条CSS规则`，而一条 CSS 规则包括两部分：CS
      rule.style            //返回rule的样式声明文本(仅针对普通规则)
 ```
 
+```html
+<style id="myStyle">
+  .red {
+    color: red;
+  }
+  @media screen and (min-width: 900px) {
+    .big {
+      font-weight: bold;
+    }
+  }
+</style>
+```
+
 ```javascript
-//<style id="myStyle">
-//  .red {
-//    color: red;
-//  }
-//  @media screen and (min-width: 900px) {
-//    .big {
-//      font-weight: bold;
-//    }
-//  }
-//</style>
 const styleNode = document.getElementById('myStyle');
 const sheet = styleNode.sheet;
 const rules = sheet.cssRules;
@@ -177,7 +180,7 @@ console.log(rule1.style);        //CSS2Properties {color→"red"}
 
 console.log(rule2.type);         //4
 console.log(rule2.cssText);      //"@media......"
-console.log(rule2.selectorText); //undefined 
+console.log(rule2.selectorText); //undefined
 console.log(rule2.style);        //undefined
 
 console.log(rule21.cssText);              //".big {font-weight: bold;}"

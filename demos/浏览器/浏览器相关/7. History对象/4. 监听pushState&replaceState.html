@@ -13,10 +13,10 @@
 const _globalE = function(ename){
   const orig = history[ename]
   return function(){
-    const rv = orig.apply(this, arguments)
-    const e = new Event(ename)
+    const rv = orig.apply(this, arguments) //执行
+    const e = new Event(ename) //自定义事件
     e.arguments = arguments
-    window.dispatchEvent(e)
+    window.dispatchEvent(e) //触发自定义事件
     return rv
   }
 }
