@@ -1,5 +1,12 @@
+@font-face {
+  font-family: 'myFont';
+  src: url('TJS.ttf');
+}
+
 body {
   color: red;
+  background: url('../public/cat.jpg');
+  font-family: 'myFont'
 }
 textarea {
   color: green;
