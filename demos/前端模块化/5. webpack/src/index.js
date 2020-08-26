@@ -5,13 +5,13 @@ document.body.append(heading)
 // 导入其他类型资源 ( CSS、图片、字体 )
 import './style.css'
 
-// 导入其他类型资源 ( 音视频 )
+// 导入其他类型资源 ( 媒体 )
 const video = document.createElement('video')
 video.src = "./movie.mp4"
 document.body.append(video)
 
-// // 导入 .md 文件
-// import title from './title.md'
+// 导入 .md 文件
+import title from './title.md'
 
 // // 添加 textarea 输入框
 // const text = document.createElement('textarea')

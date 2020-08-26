@@ -79,8 +79,8 @@
 //   module: {
 //     rules: [
 //       {
-//         test: /\.css$/,   //正则匹配文件路径
-//         use: [            //指定具体的loader,一组链式loader按相反顺序执行
+//         test: /\.css$/, //正则匹配文件路径
+//         use: [ //指定具体的loader,一组链式loader按相反顺序执行
 //           'style-loader',
 //           'css-loader'
 //         ]
@@ -99,41 +99,41 @@
 // module.exports = config
 
 
-const path = require('path')
-const config = {
-  mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
-  entry: {
-    app: './src/index.js'
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, 'dist_url_loader_video')
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,   //正则匹配文件路径
-        use: [            //指定具体的loader,一组链式loader按相反顺序执行
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-        use: 'url-loader'
-      },
-      {
-        test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-        use: 'url-loader'
-      },
-      {
-        test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-        use: 'url-loader'
-      }
-    ]
-  }
-}
-module.exports = config
+// const path = require('path')
+// const config = {
+//   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
+//   entry: {
+//     app: './src/index.js'
+//   },
+//   output: {
+//     filename: 'bundle.js',
+//     path: path.join(__dirname, 'dist_url_loader_video')
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.css$/, //正则匹配文件路径
+//         use: [ //指定具体的loader,一组链式loader按相反顺序执行
+//           'style-loader',
+//           'css-loader'
+//         ]
+//       },
+//       {
+//         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       }
+//     ]
+//   }
+// }
+// module.exports = config
 
 
 // const path = require('path')
@@ -164,6 +164,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
@@ -171,6 +175,47 @@ module.exports = config
 //   }
 // }
 // module.exports = config
+
+
+const path = require('path')
+const config = {
+  mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
+  entry: {
+    app: './src/index.js'
+  },
+  output: {
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'dist_async_md_loader')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,   //正则匹配文件路径
+        use: [            //指定具体的loader,一组链式loader按相反顺序执行
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+        use: 'url-loader'
+      },
+      {
+        test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+        use: 'url-loader'
+      },
+      {
+        test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+        use: 'url-loader'
+      },
+      {
+        test: /\.md$/,
+        use: './async-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+      }
+    ]
+  }
+}
+module.exports = config
 
 
 // const path = require('path')
@@ -199,6 +244,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -241,6 +290,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -293,6 +346,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -362,6 +419,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
@@ -421,6 +482,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -496,6 +561,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       },
@@ -567,6 +636,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -645,6 +718,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -728,6 +805,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       },
@@ -808,6 +889,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       },
@@ -879,6 +964,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -959,6 +1048,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       },
@@ -1034,6 +1127,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -1116,6 +1213,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       },
@@ -1190,6 +1291,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -1270,6 +1375,10 @@ module.exports = config
 //         use: 'url-loader'
 //       },
 //       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+//         use: 'url-loader'
+//       },
+//       {
 //         test: /\.md$/,
 //         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       },
@@ -1344,6 +1453,10 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         use: 'url-loader'
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //         use: 'url-loader'
 //       },
 //       {
@@ -1430,6 +1543,10 @@ module.exports = config
 //         },
 //         {
 //           test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//           use: 'url-loader'
+//         },
+//         {
+//           test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
 //           use: 'url-loader'
 //         },
 //         {

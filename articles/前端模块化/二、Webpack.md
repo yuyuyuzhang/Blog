@@ -419,6 +419,17 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
 * src/index.js
   
   ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  const video = document.createElement('video')
+  video.src = "./movie.mp4"
+  document.append(video)
   ```
 
 * webpack.config.js
@@ -592,6 +603,10 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
           use: 'url-loader'
         },
         {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+          use: 'url-loader'
+        },
+        {
           test: /\.md$/,
           use: './sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
@@ -608,8 +623,13 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  const video = document.createElement('video')
+  video.src = "./movie.mp4"
+  document.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -627,14 +647,14 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 #### ② 异步 markdown-loader
 
-* markdown-loader.js
+* async-markdown-loader.js
   
   ```javascript
   // 导出一个处理函数
   module.exports = source => {
     console.log(source)
     // 必须返回 JS 代码
-    return "console.log('<h1>hello markdown-loader</h1>')"
+    return "console.log('<h1>hello async-markdown-loader</h1>')"
   }
   ```
 
@@ -649,7 +669,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_md_loader')
+      path: path.join(__dirname, 'dist_async_md_loader')
     },
     module: {
       rules: [
@@ -669,8 +689,12 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
           use: 'url-loader'
         },
         {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
+          use: 'url-loader'
+        },
+        {
           test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+          use: './async-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     }
@@ -680,13 +704,13 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * npx webpack
 
-  查看 dist_md_loader/bundle.js 文件
+  查看 dist_async_md_loader/bundle.js 文件
 
-  ![markdown-loader-bundle](../../images/前端模块化/webpack/markdown-loader-bundle.png)
+  ![async-markdown-loader-bundle](../../images/前端模块化/webpack/async-markdown-loader-bundle.png)
 
   浏览器查看效果
   
-  ![markdown-loader效果](../../images/前端模块化/webpack/markdown-loader效果.png)
+  ![async-markdown-loader效果](../../images/前端模块化/webpack/async-markdown-loader效果.png)
 
 ## 7. 插件 plugins
 
