@@ -8,37 +8,29 @@ Webpack 本质上是一个现代 JS 应用程序的静态模块打包器，Webpa
 
 ### (1) 模块化问题解决
 
-Webpack 以模块化思想为核心，帮助开发者更好的管理整个前端工程
+#### ① 模块化的问题
 
-* 对于有环境兼容性问题的代码，Webpack 可以在打包过程中通过 Loader 机制对其实现编译转换，然后再进行打包
+模块化可以更好地解决复杂项目开发过程中的代码组织问题，但随着模块化思想的引入，前端应用又产生了一些新的问题
+
+* ES6 Modules 模块系统本身存在环境兼容性问题，尽管主流浏览器的最新版本都支持，但是无法保证用户的浏览器使用情况
+* 模块化方式划分出来的模块文件过多，前端应用运行在浏览器中，每个模块文件都需要从服务器请求，零散的模块文件会导致浏览器频繁发送请求，影响应用的工作效率
+* 前端应用开发过程中，不仅仅 JS 文件需要模块化，HTML 和 CSS 这些资源文件也会面临模块化的问题
+
+#### ② Webpack 针对模块化问题的解决方式
+
+* 对于有环境兼容性问题的代码，Webpack 可以在打包过程中通过 babel-loader 对其实现编译转换，然后再进行打包
 * 对于零散的 JS 文件，Webpack 可以将其打包到一个 JS 文件中
-* 对于不同类型的前端模块，Webpack 支持在 JS 中以模块化的方式载入任意类型的资源文件，如在 JS 中载入 CSS 文件，被载入的 CSS 文件将会以 `<style>` 标签的方式工作
+* 对于不同类型的前端模块，Webpack 支持在 JS 文件中以模块化的方式载入任意类型的资源文件，如在 JS 文件中载入 CSS 文件，就是通过 css-loader、style-loader 将 CSS 文件转换成 `<style>` 标签加载到 JS 文件代码中
 
 ### (2) Webpack 打包原理
 
-Webpack 的工作模式可以理解为针对不同环境的几组预设配置，mode 指示 Webpack 使用相应模式的内置优化
-
-* none：原始模式，`不做任何额外处理`，运行最原始的打包
-* production ( 默认 )：生产模式，`自动优化打包结果`，启动内置优化插件，打包速度偏慢
-* development：开发模式，`自动优化打包速度`，添加一些调试过程中的辅助插件
-
-![mode](../../images/前端模块化/webpack/mode.png)
-
-将 mode 设置为 none，就是不做任何额外处理的原始打包，这种方式下打包出来的 JS 文件可以阅读源码，方便理解 Webpack 打包原理
-
-#### ① 项目结构
-
-项目目录如下
-
-![none](../../images/前端模块化/webpack/none.png)
-
-#### ② 打包
-
-* `npm i webpack webpack-cli --save-dev`
+* 项目结构
   
-  安装 webpack-cli，由此在根目录生成 node_modules 文件夹和 package-lock.json 文件
+  ![none](../../images/前端模块化/webpack/none.png)
 
-* webpack.config.js 文件
+* `npm install webpack webpack-cli --save-dev`
+
+* webpack.config.js
   
   项目根目录添加 `webpack.config.js` 文件，完成 Webpack 配置
 
@@ -63,21 +55,21 @@ Webpack 的工作模式可以理解为针对不同环境的几组预设配置，
 
   ![none打包](../../images/前端模块化/webpack/none打包.png)
 
-#### ③ bundle.js
-
-VSCode 中折叠代码的快捷键是 Ctrl + K，Ctrl + 0，折叠文件方便了解整体结构
-
-整体代码是一个立即执行函数表达式，接收一个 modules 参数，调用时传入了一个参数数组
-
-![bundle1](../../images/前端模块化/webpack/bundle1.png)
-
-展开调用的参数数组，数组有两项，每项是一个函数表达式，一个函数表达式对应源代码中的一个模块，从而让模块具有`函数作用域`
-
-![bundle2](../../images/前端模块化/webpack/bundle2.png)
-
-展开入口的立即执行函数表达式，开始定义一个 `installedModules` 数组用于存放或缓存加载过的模块，紧接着定义一个 `__webpack_require__` 函数用于加载模块，然后就是 `__webpack_require__` 函数上挂载一些工具函数和数据，最后就是调用 `__webpack_require__` 函数开始加载第一个模块
-
-![bundle3](../../images/前端模块化/webpack/bundle3.png)
+* dist_none/bundle.js
+  
+  VSCode 中折叠代码的快捷键是 `Ctrl + K，Ctrl + 0`，折叠文件方便了解整体结构
+  
+  整体代码是一个立即执行函数表达式，接收一个 modules 参数，调用时传入了一个参数数组
+  
+  ![bundle1](../../images/前端模块化/webpack/bundle1.png)
+  
+  展开调用的参数数组，数组有两项，每项是一个函数表达式，一个函数表达式对应源代码中的一个模块，从而让模块具有`函数作用域`
+  
+  ![bundle2](../../images/前端模块化/webpack/bundle2.png)
+  
+  展开入口的立即执行函数表达式，开始定义一个 `installedModules` 数组用于存放或缓存加载过的模块，紧接着定义一个 `__webpack_require__` 函数用于加载模块，然后就是 `__webpack_require__` 函数上挂载一些工具函数和数据，最后就是调用 `__webpack_require__` 函数开始加载第一个模块
+  
+  ![bundle3](../../images/前端模块化/webpack/bundle3.png)
 
 ## 2. 入口 entry
 
@@ -102,7 +94,7 @@ module.exports = {
 
 ## 3. 出口 output
 
-出口指示 Webpack 在磁盘哪里输出创建的 bundles，如何向磁盘写入编译文件，以及如何命名这些文件
+出口指示 Webpack 在磁盘哪里输出创建的 bundles，如何向`磁盘`写入编译文件，以及如何命名这些文件
 
 * Webpack 配置项 output 属性只能指定`一个`出口
 
@@ -174,20 +166,34 @@ module.exports = config
 
 ## 6. 加载器 loader
 
-Webpack 是 JS 模块打包工具，Webpack 自身只理解 JS，默认只能按照 JS 的语法解析模块
-
-Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部默认的 loader 只能导入 JS 模块，因此如果需要导入其他类型的资源模块，就需要配置不同的 loader，loader 机制使 Webpack 可以导入`任意类型的资源文件`，因此 loader 既是加载器，也是`资源管理器`
-
-![loader](../../images/前端模块化/webpack/loader.png)
+loader 机制是为了完成项目中各种类型资源模块的加载，从而实现项目的整体模块化
 
 ### (1) 加载 CSS
 
-#### ① css-loader
-
-* npm install css-loader --save-dev
-* 配置 css-loader
+* `npm install css-loader --save-dev`
+* `npm install style-loader --save-dev`
+* src/style.css
   
-  webpack.config.js
+  ```css
+  body {
+    color: red;
+  }
+  ```
+
+* src/index.js
+  
+  使用 ES6 Modules import 语法直接导入 CSS 文件
+
+  ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源
+  import './style.css'
+  ```
+
+* webpack.config.js
 
   ```javascript
   const path = require('path');
@@ -203,8 +209,11 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
     module: {
       rules: [
         {
-          test: /\.css$/,   //正则匹配文件路径
-          use: 'css-loader' //指定具体的loader
+          test: /\.css$/, //正则匹配文件路径
+          use: [          //指定具体的loader
+            'css-loader',
+            'style-loader'
+          ]
         }
       ]
     }
@@ -212,98 +221,30 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
   module.exports = config;
   ```
 
-* 导入 CSS 文件
-  
-  src/index.js 文件中使用 ES6 Modules import 语法直接导入 CSS 文件
-
-  ```javascript
-  import createHeading from './head.js'
-  const heading = createHeading()
-  document.body.append(heading)
-
-  // 导入其他类型资源
-  import './style.css'
-  ```
-
 * npx webpack
   
   由下图可知，CSS 文件并没有单独打包，而是被一起打包到 bundle.js 文件
 
-  ![css-loader打包](../../images/前端模块化/webpack/css-loader打包.png)
-
-* 查看效果
+  ![css_style_loader打包](../../images/前端模块化/webpack/css_style_loader打包.png)
   
-  index.html 文件中使用打包后的 dist_css_style_loader/bundle.js 文件，控制台打开 index.html 文件，查看效果，发现样式文件并没有生效
+  index.html 文件中使用打包后的 bundle.js 文件，控制台打开 index.html 文件，查看效果
 
-  ![css-loader使用](../../images/前端模块化/webpack/css-loader使用.png)
+  ![css_style_loader效果](../../images/前端模块化/webpack/css_style_loader效果.png)
 
-  ![css-loader效果](../../images/前端模块化/webpack/css-loader效果.png)
+* dist_css_style_loader/bundle.js
 
-#### ② css-loader 原理
+  阅读以下代码可知，css-loader 原理就是`将 CSS 模块转换为 JS 模块`，具体实现方式是将 CSS 代码 push 到一个数组中，数组是由 css-loader 内部一个模块提供的，`css-loader 只是将 CSS 模块加载到 JS 代码中，但并没有使用这个模块`
 
-从以上效果图片可看到，样式文件并没有生效
+  ![css_loader_bundle](../../images/前端模块化/webpack/css_loader_bundle.png)
 
-* css-loader 打包
+  style-loader 的作用就是将 css-loader 转换后的结果通过 `<style>` 标签追加到页面
   
-  由上图打包后的项目结构可知，CSS 文件并没有单独打包，而是被一起打包到 bundle.js 文件，由此可知 css-loader 的打包方式如下
-
-  ![css-loader](../../images/前端模块化/webpack/css-loader.png)
-
-* css-loader 原理
-  
-  查看 dist_loader/bundle.js 文件代码，获知 css-loader 打包原理，为什么样式文件没有生效？
-
-  阅读以下代码可知，css-loader 原理就是`将 CSS 模块转换为 JS 模块`，具体实现方式是将 CSS 代码 push 到一个数组中，数组是由 css-loader 内部一个模块提供的，但是整个过程并没有任何地方用到了这个数组
-
-  因此样式没有生效的原因是：css-loader 只是将 CSS 模块加载到 JS 代码中，但并没有使用这个模块
-
-  ![css-loader原理](../../images/前端模块化/webpack/css-loader原理.png)
-
-#### ③ style-loader
-
-* npm install style-loader --save-dev
-  
-  安装 style-loader，style-loader 的作用就是将 css-loader 转换后的结果通过 `<style>` 标签追加到页面
-
-* 配置 style-loader
-  
-  webpack.config.js 文件中添加 style-loader 配置，将之前 css-loader 配置的 use 属性改成数组，添加上 style-loader
-
-  ```javascript
-  const path = require('path')
-  const config = {
-    mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
-    entry: {
-      app: './src/index.js'
-    },
-    output: {
-      filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_css_style_loader')
-    },
-    module: {
-      rules: [
-        {
-          test: /\.css$/,   //正则匹配文件路径
-          use: [            //指定具体的loader,一组链式loader按相反顺序执行
-            'style-loader',
-            'css-loader'
-          ]
-        }
-      ]
-    }
-  }
-  module.exports = config
-  ```
-
-* npx webpack
-  
-  重新打包，查看效果，index.html 文件中使用打包后的 dist_loader/bundle.js 文件，控制台打开 index.html 文件，查看效果，发现样式文件已经生效
-
-  ![style-loader效果](../../images/前端模块化/webpack/style-loader效果.png)
+  ![style_loader_bundle](../../images/前端模块化/webpack/style_loader_bundle.png)
 
 ### (2) 加载图片
 
 * npm install url-loader --save-dev
+* npm install file-loader --save-dev
 * src/style.css
   
   ```css
@@ -336,9 +277,17 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
           ]
         },
         {
-          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-          use: 'url-loader'
-        }
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
       ]
     }
   }
@@ -346,8 +295,20 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
   ```
 
 * npx webpack
+
+  图片文件 cat.jpg 大小为 `15.7KB`，未超过设置的 20KB，因此 url-loader 将字体文件转换成 `base64 格式编码的 DataURL`，一起打包到 JS 文件
+  
+  ![url_loader_img打包](../../images/前端模块化/webpack/url_loader_img打包.png)
+  
+  index.html 文件中使用打包后的 bundle.js 文件，控制台打开 index.html 文件，查看效果
   
   ![url_loader_img](../../images/前端模块化/webpack/url_loader_img.png)
+
+* dist_url_loader_img/bundle.js
+  
+  由以下代码可知，url-loader 将图片转换成 `base64 格式编码的 DataURL`，加载到 JS 文件代码中，因此项目部署上线后，只需要向服务器请求 JS 文件，无需再单独请求图片文件
+  
+  ![url_loader_img_bundle](../../images/前端模块化/webpack/url_loader_img_bundle.png)
 
 ### (3) 加载字体
 
@@ -362,7 +323,6 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
     font-family: 'myFont';
     src: url('TJS.ttf');
   }
-
   body {
     color: red;
     background: url('../public/cat.jpg');
@@ -386,20 +346,36 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
     module: {
       rules: [
         {
-          test: /\.css$/,   //正则匹配文件路径
-          use: [            //指定具体的loader,一组链式loader按相反顺序执行
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
             'style-loader',
             'css-loader'
           ]
         },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          use: 'url-loader'
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
         },
         {
           test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-          use: 'url-loader'
-        }
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
       ]
     }
   }
@@ -408,13 +384,23 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
 
 * npx webpack
   
-  ![url_loader_font](../../images/前端模块化/webpack/url_loader_font.png)
+  字体文件 TJS.ttf 大小为 `15MB`，超过设置的 20KB，因此 url-loader 将字体文件交给 file-loader，file-loader 将字体文件拷贝到指定输出目录，然后修改打包后的 JS 文件的引用路径
+  
+  ![url_loader_font打包](../../images/前端模块化/webpack/url_loader_font打包.png)
 
-### (4) 加载媒体
+  index.html 文件中使用打包后的 bundle.js 文件，控制台打开 index.html 文件，查看效果
+  
+  ![url_loader_font](../../images/前端模块化/webpack/url_loader_font.png)
+  
+* dist_url_loader_font/bundle.js
+  
+  ![url_loader_font_bundle](../../images/前端模块化/webpack/url_loader_font_bundle.png)
+
+### (4) 加载多媒体
 
 * 下载一个视频
   
-  ![视频](../../images/前端模块化/webpack/视频.png)
+  ![font_TJS](../../images/前端模块化/webpack/font_TJS.png)
 
 * src/index.js
   
@@ -427,9 +413,11 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
   import './style.css'
 
   // 导入其他类型资源 ( 媒体 )
+  import movie from './movie.mp4'
   const video = document.createElement('video')
-  video.src = "./movie.mp4"
-  document.append(video)
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
   ```
 
 * webpack.config.js
@@ -443,29 +431,53 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_url_loader_video')
+      path: path.join(__dirname, 'dist_url_loader_media')
     },
     module: {
       rules: [
         {
-          test: /\.css$/,   //正则匹配文件路径
-          use: [            //指定具体的loader,一组链式loader按相反顺序执行
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
             'style-loader',
             'css-loader'
           ]
         },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          use: 'url-loader'
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
         },
         {
           test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-          use: 'url-loader'
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
         },
         {
-          test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/, //加载媒体
-          use: 'url-loader'
-        }
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
       ]
     }
   }
@@ -473,33 +485,24 @@ Webpack 内部使用加载器 loader 来加载每个模块，而 Webpack 内部�
   ```
 
 * npx webpack
+  
+  视频文件 movie.mp4 大小为 `311KB`，超过设置的 20KB，因此 url-loader 将视频文件交给 file-loader，file-loader 将视频文件拷贝到指定输出目录，然后修改打包后的 JS 文件的引用路径
+  
+  ![url_loader_media打包](../../images/前端模块化/webpack/url_loader_media打包.png)
 
-### (5) loader 的原理
+  index.html 文件中使用打包后的 bundle.js 文件，控制台打开 index.html 文件，查看效果
+  
+  ![url_loader_media](../../images/前端模块化/webpack/url_loader_media.png)
 
-#### ① loader 的原理
+* dist_url_loader_media/bundle.js
+  
+  ![url_loader_media_bundle1](../../images/前端模块化/webpack/url_loader_media_bundle1.png)
 
-loader 的原理是`在 JS 中加载其他资源`，与我们平时所尊崇的`样式和行为分离`的理论相悖
+  ![url_loader_media_bundle2](../../images/前端模块化/webpack/url_loader_media_bundle2.png)
 
-Webpack 的设计哲学是`真正需要引用资源的并不是整个应用，而是你正在编写的 JS 代码`
+### (5) loader 的特性
 
-假设我们在开发某个页面上的局部功能时，需要用到一个 CSS 文件和一个图片文件，如果还是将资源引用到 HTML 文件，然后在 JS 文件中添加需要的逻辑代码，那么如果后期这个局部功能不需要了，我们就需要同时删除 HTML 中的资源引用和 JS 中的逻辑代码，也就是说需要同时维护两条线，如果遵循 Webpack 的设计哲学，所有资源的加载都是由 JS 代码控制，后期也只需要维护 JS 代码这一条线
-
-CSS 被转换成 `<style>` 标签，图片被转换成 `base64` 格式
-
-<!-- 我们做的一个项目中首页用了十多张图片，每张图片都是一个静态资源，所以都会有 http 请求，为了减少请求，我们可以通过 base64 编码的方法来展示图片。webpack 中有一个包叫做 url-loader，他可以将 html 以及 css 中的图片打包成 base64 -->
-
-#### ② loader 的原理优势
-
-loader 的原理就是`建立 JS 代码与资源文件的深度依赖关系`，JS 代码本身负责整个应用的业务功能，放大来说就是驱动了整个前端应用，而 JS 代码在实现业务功能的过程中需要用到样式、图片等资源文件，这种依赖关系具有明显的优势
-
-* 逻辑上比较合理，JS 确实需要这些资源文件配合才能实现业务功能
-* 确保项目上线时，资源不会缺失
-
-### (6) loader 的特性
-
-#### ① loader 运行在 Node 环境
-
-#### ② loader 支持链式传递
+#### ① loader 支持链式传递
   
 由 css-loader、style-loader 的使用可知，loader 支持链式传递，能够对资源使用流水线，一组链式的 loader 按照`相反`的顺序执行，上一个 loader 的返回值传给下一个 loader，第一个 loader 以`字符串`的形式读入资源文件，最后一个 loader 返回 Webpack 期待的 `JS 代码`
 
@@ -531,11 +534,11 @@ loader 的原理就是`建立 JS 代码与资源文件的深度依赖关系`，J
   module.exports = config
   ```
 
-* **最后返回 JS 代码**：loader 的原理是`在 JS 中加载其他资源`，因此一组链式 loader 中`最终 loader` 的返回结果必须是 JS 代码
+* **最后返回 JS 代码**：loader 的原理是`在 JS 中加载其他资源`，因此一组链式 loader 中`最终 loader` 的返回结果必须是 `JS 代码`
   
-  ![JS代码](../../images/前端模块化/webpack/JS代码.png)
+  ![链式loader](../../images/前端模块化/webpack/链式loader.png)
 
-#### ③ loader 支持同步函数也支持异步函数
+#### ② loader 支持同步和异步
 
 ![loader分类](../../images/前端模块化/webpack/loader分类.jpg)
 
@@ -545,11 +548,38 @@ loader 的原理就是`建立 JS 代码与资源文件的深度依赖关系`，J
 
 **异步 loader**：异步 loader 指的是异步返回转换后的内容，因此异步 loader 不会阻塞 Webpack 整个构建，异步 loader 适用于计算量大、耗时长的情况（例如网络请求）
 
+### (6) loader 的作用
+
+#### ① 加载任意类型资源文件
+  
+Webpack 本身是 JS 模块打包器，自身只能理解 JS，默认只能按照 JS 的语法加载模块，Webpack 使用加载器 `loader` 来加载模块，而 Webpack 内部默认的 loader 只能加载 JS 模块
+
+因此如果需要加载其他类型的资源模块，就需要配置不同的 loader
+
+Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入是加载的资源文件内容，函数的输出是处理后的结果，`loader 的原理是在 JS 文件代码中加载其他类型资源`，而 loader 支持链式传递，因此`一组链式 loader 的最后一个必须返回 JS 代码`
+
+![loader](../../images/前端模块化/webpack/loader.png)
+
+#### ② 便于开发者维护
+
+Webpack 的设计哲学是`真正需要引用资源的并不是整个应用，而是你正在编写的 JS 代码`
+  
+假设我们在开发某个页面上的局部功能时，需要用到一个 CSS 文件和一个图片文件，如果还是将资源引用到 HTML 文件然后在 JS 文件中添加需要的逻辑代码，那么后期如果这个局部功能不需要了，我们就需要同时删除 HTML 中的资源引用和 JS 中的逻辑代码，也就是说需要同时维护两条线，但是如果遵循 Webpack 的设计哲学，所有资源的加载都是由 JS 代码控制，后期只需要维护 JS 代码这一条线
+
+#### ③ 减少网络请求
+  
+正常情况下，项目部署上线后，CSS 文件、图片文件、字体文件、多媒体文件等静态资源都是需要向服务器请求的
+
+而使用 Webpack 打包后的项目，CSS 文件被 css-loader、style-loader 转换成 `<style>` 标签加载到 JS 文件代码中，图片文件、字体文件、多媒体文件等，文件大小若小于 limit 参数，都被 url-loader 转换成 `base64` 格式编码加载到 JS 文件代码中，这些静态资源都不再需要单独向服务器请求了，只要请求到了 JS 文件，这些资源就都存在，因此能够显著减少网络请求
+
+* **style-loader**：将 CSS 文件转换成 `<style>` 标签
+* **url-loader**：url-loader 包含 file-loader，url-loader 工作分两种情况
+  * **文件大小小于 limit 参数**：url-loader 将资源文件转换成 `base64 格式编码的 DataURL`
+  * **文件大小大于 limit 参数**：url-loader 调用`内置 file-loader`，file-loader 根据配置将资源文件`拷贝至输出目录`，再修改打包后 JS 文件引用路径，使之指向拷贝后的资源文件，这种情况下，项目部署上线后，就需要向服务器请求资源文件
+
 ### (7) 开发一个 loader
 
 需求是开发一个可以加载 markdown 文件的 loader，以便在代码中可以直接导入 .md 文件，.md 文件一般是需要转换成 HTML 之后再呈现到页面上的，因此 markdown-loader 的工作原理是`接收 .md 文件，转换成 HTML 字符串，再拼接成 JS 代码`
-
-Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入就是导入的资源文件内容，函数的输出就是处理后的结果
 
 #### ① 同步 markdown-loader
 
@@ -596,19 +626,43 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
         },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          use: 'url-loader'
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
         },
         {
           test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-          use: 'url-loader'
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
         },
         {
-          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-          use: 'url-loader'
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
         },
         {
           test: /\.md$/,
-          use: './sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+          use: './rustom/sync-markdown-loader.js' //use属性既可以使用模块名称,也可以使用模块路径
         }
       ]
     }
@@ -627,9 +681,11 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
   import './style.css'
 
   // 导入其他类型资源 ( 媒体 )
+  import movie from './movie.mp4'
   const video = document.createElement('video')
-  video.src = "./movie.mp4"
-  document.append(video)
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -637,13 +693,13 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * npx webpack
 
-  查看 dist_sync_md_loader/bundle.js 文件
-
-  ![sync-markdown-loader-bundle](../../images/前端模块化/webpack/sync-markdown-loader-bundle.png)
-
-  浏览器查看效果
+  index.html 文件中使用打包后的 bundle.js 文件，控制台打开 index.html 文件，查看效果
   
-  ![sync-markdown-loader效果](../../images/前端模块化/webpack/sync-markdown-loader效果.png)
+  ![sync_md_loader](../../images/前端模块化/webpack/sync_md_loader.png)
+
+* dist_sync_md_loader/bundle.js
+
+  ![sync_md_loader_bundle](../../images/前端模块化/webpack/sync_md_loader_bundle.png)
 
 #### ② 异步 markdown-loader
 
@@ -651,10 +707,20 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
   
   ```javascript
   // 导出一个处理函数
-  module.exports = source => {
+  module.exports = function(source){
     console.log(source)
-    // 必须返回 JS 代码
-    return "console.log('<h1>hello async-markdown-loader</h1>')"
+
+    // 获取 callback() 函数（箭头函数取不到 this），通过 Webpack 异步返回
+    const cb = this.async()
+
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve("console.log('<h1>hello async-markdown-loader</h1>')")
+      }, 3000);
+    }).then(res => {
+      // 必须返回 JS 代码
+      cb(null, res)
+    })
   }
   ```
 
@@ -682,19 +748,43 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
         },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          use: 'url-loader'
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
         },
         {
           test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-          use: 'url-loader'
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
         },
         {
-          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-          use: 'url-loader'
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
         },
         {
           test: /\.md$/,
-          use: './async-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+          use: './rustom/async-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     }
@@ -702,15 +792,34 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
   module.exports = config
   ```
 
+* src/index.js
+  
+  ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
+
+  // 导入其他类型资源 ( 多媒体 )
+  const video = document.createElement('video')
+  video.src = "./movie.mp4"
+  document.append(video)
+
+  // 导入 .md 文件
+  import title from './title.md'
+  ```
+
 * npx webpack
 
-  查看 dist_async_md_loader/bundle.js 文件
-
-  ![async-markdown-loader-bundle](../../images/前端模块化/webpack/async-markdown-loader-bundle.png)
-
-  浏览器查看效果
+  index.html 文件中使用打包后的 bundle.js 文件，控制台打开 index.html 文件，查看效果
   
-  ![async-markdown-loader效果](../../images/前端模块化/webpack/async-markdown-loader效果.png)
+  ![async_md_loader](../../images/前端模块化/webpack/async_md_loader.png)
+
+* dist_async_md_loader/bundle.js
+
+  ![async_md_loader_bundle](../../images/前端模块化/webpack/async_md_loader_bundle.png)
 
 ## 7. 插件 plugins
 
@@ -720,19 +829,17 @@ plugin 机制是为了解决项目中除资源模块打包以外的其他自动�
 
 * 打包之前自动清除 dist 目录
 * 打包时自动生成使用打包结果的 HTML 文件到 dist 目录
-* 打包时将无需打包的资源文件拷贝到输出目录
+* 打包时将`无需 file-loader 处理的`资源文件拷贝到输出目录（一般放在 static 文件夹），绝大多数情况下都使用 file-loader 而非 copyWebpackPlugin
 * 压缩打包后输出的文件
 
 ### (1) clean-webpack-plugin
 
-Webpack 每次打包的结果都是直接覆盖到 dist 目录，因此打包之前 dist 目录就可能存在上次打包遗留的文件，再次打包时只能覆盖同名文件，所以已经移除的资源文件就会一直积累在里面，导致部署上线时出现多余文件，这显然非常不合理
+Webpack 每次打包的结果都是直接覆盖到 dist 目录，因此打包之前 dist 目录就可能存在上次打包遗留的文件，再次打包时只能覆盖同名文件，故而已经移除的资源文件就会一直积累在里面，导致部署上线时出现多余文件，这显然非常不合理
 
 clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
 
-#### clean-webpack-plugin 插件的使用如下
-
-* npm install clean-webpack-plugin --save-dev
-* webpack.config.js 文件，导入并配置插件
+* `npm install clean-webpack-plugin --save-dev`
+* webpack.config.js
   
   ```javascript
   const path = require('path')
@@ -744,7 +851,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_md_loader')
+      path: path.join(__dirname, 'dist_clean_plugin')
     },
     module: {
       rules: [
@@ -756,40 +863,78 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
           ]
         },
         {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
           test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
     plugins: [
-      new CleanWebpackPlugin()
+      new CleanWebpackPlugin(), //clean-webpack-plugin插件
     ]
   }
   module.exports = config
   ```
 
 * npx webpack
-  
-  打包之后，在 dist_clean_plugin 文件夹中放入 cat.jpg 图片，然后再次打包
 
-  ![clean-plugin](../../images/前端模块化/webpack/clean-plugin.png) ![clean-plugin2](../../images/前端模块化/webpack/clean-plugin2.png)
+  ![clean_plugin打包1](../../images/前端模块化/webpack/clean_plugin打包1.png) ![clean_plugin打包2](../../images/前端模块化/webpack/clean_plugin打包2.png)
+
+  index.html 文件中使用打包后的 bundle.js 文件，控制台打开 index.html 文件，查看效果
+  
+  ![clean_plugin](../../images/前端模块化/webpack/clean_plugin.png)
 
 ### (2) html-webpack-plugin
 
-HTML 文件一般是通过硬编码的方式，单独存放在项目根目录下，这回导致以下两个问题
+HTML 文件一般是单独存放在项目根目录下，这回导致以下两个问题
 
-* 项目发布时需要同时发布项目根目录下的 HTML 文件和 dist 目录下的打包结果，并且需要修改 HTML 文件下的引用为打包后的 bundle
-* 打包结果输出的目录或者 JS 文件名改变，需要手动修改 HTML 文件中对应的 script 标签 ( 其他资源文件都通过 loader 加载到 JS 文件中 )
+* 项目发布时需要同时发布项目根目录下的 HTML 文件和 dist 目录下的打包结果，并且需要修改 HTML 文件下的引用为打包后的 bundle.js 文件
+* 打包结果输出的目录或者文件名改变，需要手动修改 HTML 文件中对应的 script 标签 ( 其他类型资源文件都通过 loader 加载到 JS 文件代码中 )
 
 html-webpack-plugin 插件能够在 Webpack 打包的同时，自动生成使用打包结果的 HTML 文件到 dist 目录，让 HTML 文件也参与到整个项目的构建过程
 
 * 项目发布时只需要发布 dist 目录
 * 新生成的 HTML 文件中 script 标签是自动引入的，因此可以确保 JS 文件的路径和名称正确
 
-#### html-webpack-plugin 插件的使用如下
+html-webpack-plugin 插件的使用如下
 
-* npm install html-webpack-plugin --save-dev
-* webpack.config.js 文件，导入并配置插件
+* `npm install html-webpack-plugin --save-dev`
+* webpack.config.js
   
   ```javascript
   const path = require('path')
@@ -802,7 +947,7 @@ html-webpack-plugin 插件能够在 Webpack 打包的同时，自动生成使用
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_md_loader')
+      path: path.join(__dirname, 'dist_html_plugin')
     },
     module: {
       rules: [
@@ -814,114 +959,44 @@ html-webpack-plugin 插件能够在 Webpack 打包的同时，自动生成使用
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        }
-      ]
-    },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin(),
-    ]
-  }
-  module.exports = config
-  ```
-
-* npx webpack
-  
-  ![html-plugin](../../images/前端模块化/webpack/html-plugin.png)
-
-  dist_html_plugin/index.html
-
-  ![html-plugin效果](../../images/前端模块化/webpack/html-plugin效果.png)
-
-* webpack.config.js 文件，配置插件细节
-  
-  由以上 dist_html_plugin/index.html 文件可知，index.html 文件的页面 `title` 和 `<meta>` 标签需要修改，开发者可以修改 html-webpack-plugin 插件的配置
-
-  ```javascript
-  const path = require('path')
-  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-  const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const config = {
-    mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
-    entry: {
-      app: './src/index.js'
-    },
-    output: {
-      filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_md_loader')
-    },
-    module: {
-      rules: [
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
         {
-          test: /\.css$/,   //正则匹配文件路径
-          use: [            //指定具体的loader,一组链式loader按相反顺序执行
-            'style-loader',
-            'css-loader'
-          ]
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
         },
         {
           test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        }
-      ]
-    },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({
-        filename: 'index.html', //文件名
-        title: 'Webpack',       //title属性
-        meta: {                 //meta标签
-          viewPort: 'width=device-width'
-        }
-      })
-    ]
-  }
-  module.exports = config
-  ```
-
-  npx webpack
-
-  ![html-plugin效果2](../../images/前端模块化/webpack/html-plugin效果2.png)
-
-### (3) copy-webpack-plugin
-
-项目中通常会包含一些无需参与构建的静态资源文件，例如字体、图片等等，虽然无需构建，但仍需要部署到线上，一般建议将这类文件统一放到根目录下的 pulic 文件夹，Webpack 打包时将这个目录下的所有文件复制到输出目录
-
-copy-webpack-plugin 插件就是在打包时将无需打包的资源文件拷贝到输出目录
-
-#### copy-webpack-plugin 插件的使用如下
-
-* npm install copy-webpack-plugin --save-dev
-* webpack.config.js 文件，导入并配置插件
-  
-  ```javascript
-  const path = require('path')
-  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-  const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const config = {
-    mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
-    entry: {
-      app: './src/index.js'
-    },
-    output: {
-      filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_copy_plugin')
-    },
-    module: {
-      rules: [
-        {
-          test: /\.css$/,   //正则匹配文件路径
-          use: [            //指定具体的loader,一组链式loader按相反顺序执行
-            'style-loader',
-            'css-loader'
-          ]
-        },
-        {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -934,11 +1009,6 @@ copy-webpack-plugin 插件就是在打包时将无需打包的资源文件拷贝
           viewPort: 'width=device-width'
         }
       }),
-      new CopyWebpackPlugin({
-        patterns: [
-          { from: './public' } //需要拷贝的目录或者路径通配符
-        ]
-      })
     ]
   }
   module.exports = config
@@ -946,13 +1016,17 @@ copy-webpack-plugin 插件就是在打包时将无需打包的资源文件拷贝
 
 * npx webpack
   
-  ![copy-plugin](../../images/前端模块化/webpack/copy-plugin.png)
+  ![html_plugin打包](../../images/前端模块化/webpack/html_plugin打包.png)
 
-### (4) plugin 机制
+* dist_html_plugin/index.html
+
+  ![html_plugin_html](../../images/前端模块化/webpack/html_plugin_html.png)
+
+### (3) plugin 机制
 
 #### ① 钩子机制
 
-Webpack 的 plugin 机制就是软件开发中常见的`钩子机制`，钩子机制类似于 `DOM 的事件`，`钩子函数`类似 `DOM 的事件回调函数`
+Webpack 的 plugin 机制就是软件开发中常见的`钩子机制`，钩子机制类似于 `DOM 的事件`，`钩子函数`类似于 `DOM 的事件回调函数`
 
 Webpack 的整个工作过程会有很多环节，为了便于插件的扩展，Webpack 几乎在每个环节都埋下了一个钩子，这样开发 plugin 时就可以通过往这些不同钩子上挂载不同的任务，实现扩展 Webpack 的能力
 
@@ -1031,7 +1105,7 @@ Webpack 的钩子机制是通过 `Tapable 库`实现的，类似于 Node 的 `Ev
   }
   ```
 
-### (5) 开发一个 plugin
+### (4) 开发一个 plugin
 
 需求是开发一个打包时能够自动清除注释的插件，这样 bundle.js 文件将更易阅读
 
@@ -1082,8 +1156,7 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
     entry: {
@@ -1091,7 +1164,13 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_copy_plugin')
+      path: path.join(__dirname, 'dist_comments_plugin')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
     },
     module: {
       rules: [
@@ -1103,8 +1182,44 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
           ]
         },
         {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
           test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -1117,11 +1232,6 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
           viewPort: 'width=device-width'
         }
       }),
-      new CopyWebpackPlugin({
-        patterns: [
-          { from: './public' } //需要拷贝的目录或者路径通配符
-        ]
-      }),
       new RemoveCommentsPlugin()
     ]
   }
@@ -1130,11 +1240,11 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
 
 * npx webpack
   
-  ![comments-plugin](../../images/前端模块化/webpack/comments-plugin.png)
+  ![comments_plugin打包](../../images/前端模块化/webpack/comments_plugin打包.png)
 
-  dist_comments_plugin/bundle.js
+* dist_comments_plugin/bundle.js
 
-  ![comments-plugin效果](../../images/前端模块化/webpack/comments-plugin效果.png)
+  ![comments_plugin_bundle](../../images/前端模块化/webpack/comments_plugin_bundle.png)
 
 ## 8. Webpack 工作机制
 
@@ -1145,7 +1255,7 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
 * loader 机制处理除 JS 以外其他类型资源的加载，例如 CSS、图片等
 * plugin 机制实现各种自动化的构建任务，例如自动压缩、自动发布等
 
-Webpack 启动后，根据配置找到项目中的指定文件作为入口，然后顺着入口的代码，根据代码中出现的 import、require 之类的语句，解析推断出这个文件依赖的模块资源，然后再分别去解析每个资源模块的依赖，周而复始，最终形成整个项目中所有用到的文件的依赖关系树
+Webpack 启动后，根据配置找到项目中的指定入口文件，然后顺着文件的代码，根据代码中出现的 `import、require` 之类的语句，解析推断出这个文件依赖的模块资源，然后再分别去解析每个资源模块的依赖，周而复始，最终形成整个项目中所有用到的文件的依赖关系树
 
 ![依赖关系树](../../images/前端模块化/webpack/依赖关系树.gif)
 
@@ -1163,8 +1273,8 @@ Webpack 核心工作过程的关键环节
 * 载入 Webpack 核心模块，创建 Compiler 实例
 * 使用 Compiler 实例开始编译整个项目
 * 从入口文件开始，解析模块依赖，形成依赖关系树
-* 递归依赖树，将每个模块交给对应的 Loader 处理
-* 合并 Loader 处理完的结果，将打包结果输出到 dist 目录
+* 递归依赖关系树，将每个模块交给对应的 loader 处理
+* 合并 loader 处理完的结果，将打包结果输出到 dist 目录
 
 #### ① Webpack Cli
 
@@ -1244,29 +1354,26 @@ Compiler.run() 方法定义在 Compiler 类上，具体文件在 node_modules/we
 
 ## 9. Webpack Dev Server
 
-编写源代码 - Webpack 打包 - 运行应用程序 - 浏览器查看 这种周而复始的开发方式过于原始，开发效率十分低下
+编写源代码 - Webpack 打包 - 运行应用程序 - 浏览器查看，这种周而复始的开发方式过于原始，开发效率十分低下
 
 Webpack-dev-server 是 Webpack 官方推出的一款开发工具，提供了一个 Web 服务器，并且将自动打包、自动刷新浏览器等一系列对开发友好的功能全部集成到了一起
 
-### (1) webpack-dev-server 使用
+### (1) webpack-dev-server
 
-* npm install webpack-dev-server --save-dev
-  
-  webpack-dev-server 是一个独立的 npm 模块，没有集成在 Webpack 或者 Webpack-cli 中，需要单独安装
-
-* webpack.config.js 文件配置 devServer
+* `npm install webpack-dev-server --save-dev`
+* webpack.config.js
   
   ```javascript
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
     entry: {
       app: './src/index.js'
     },
-    output: {
+    output: { //devServer在内存中构建，不会产生dist文件夹写入磁盘
       filename: 'bundle.js',
       path: path.join(__dirname, 'dist_devServer')
     },
@@ -1286,18 +1393,45 @@ Webpack-dev-server 是 Webpack 官方推出的一款开发工具，提供了一�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
-        }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        },
       ]
     },
     plugins: [
@@ -1324,8 +1458,6 @@ Webpack-dev-server 是 Webpack 官方推出的一款开发工具，提供了一�
   
   运行命令，内部会启动一个 Web 服务器，为打包结果提供静态文件服务，并且自动使用 Webpack 打包应用，然后监听源代码的变化，一旦文件发生变化，就会立即重新打包
 
-  大致流程如下
-
   ![webpack-dev-server流程](../../images/前端模块化/webpack/webpack-dev-server流程.png)
 
   Webpack-dev-server 为了提高工作效率，并没有将打包结果写入磁盘，不会产生 dist 文件夹，而是暂时存放在`内存`，内部的 Web 服务器也是从内存中读取文件的，这样可以减少很多不必要的磁盘操作，大大提高整体的构建效率
@@ -1334,15 +1466,24 @@ Webpack-dev-server 是 Webpack 官方推出的一款开发工具，提供了一�
 
   ![devServer预览](../../images/前端模块化/webpack/devServer预览.png)
 
-* 修改 src/index.js 文件代码
+* src/index.js
+  
+  修改文件代码，新增 `console.log(111)`
   
   ```javascript
   import createHeading from './head.js'
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -1355,33 +1496,11 @@ Webpack-dev-server 是 Webpack 官方推出的一款开发工具，提供了一�
 
   ![devServer预览更新](../../images/前端模块化/webpack/devServer预览更新.png)
 
-### (2) webpack-dev-server 配置
-
-配置文件 webpack.config.js 有一个 devServer 属性，专门为 webpack-dev-server 提供配置
-
-#### ① 静态资源访问
-
-webpack-dev-server 会默认将构建结果和输出文件全部作为 Web 服务器的静态资源，也就是说，只要是 Webpack 打包输出的文件都可以直接被访问到，但是如果有一些没有参与打包的资源文件也需要作为 Web 服务器的资源被访问，就需要额外通过配置告诉 webpack-dev-server，具体方法是在配置文件 webpack.config.js 的 devServer 属性，添加一个 `contentBase` 属性，值为静态资源路径，可以是字符串或数组
-
-前面提出可以通过插件 `copy-webpack-plugin` 将 public 文件夹中的内容在打包时拷贝到输出目录，但是开发过程中会频繁执行打包工作，如果每次都执行这个插件拷贝文件夹，构建速度自然会降低，因此一般只有在项目上线前的那一次打包中使用这个插件，也就是说，`copy-webpack-plugin` 插件应该配置成只有在`生产模式`下打包时使用，具体如何配置后续再讲
-
-```javascript
-module.exports = {
-  // ...
-  devServer: {
-    port: '8081',
-    open: true,
-    overlay: {errors: true, warnings: false},
-    contentBase: './public'
-  }
-}
-```
-
-#### ② proxy 代理
+### (2) proxy 代理
 
 webpack-dev-server 是一个本地 Web 服务器，所以开发阶段前端应用程序独立运行于前端人员电脑的 localhost 的一个端口上，后端应用程序运行于后端人员的电脑上，因此前后端是`跨域`的，而最终上线后，前端应用程序和后端应用程序一般会部署到同一个服务器的同一个 IP 地址的不同端口上，也是`跨域`的
 
-解决开发阶段跨域请求的最好办法，就是在本地 Web 服务器中配置一个后端 API 的代理服务，具体方法是在配置文件 webpack.config.js 的 devServer 属性，添加一个 `proxy` 属性
+解决`开发阶段`跨域请求的最好办法，就是在本地 Web 服务器中配置一个后端 API 的代理服务，具体方法是在配置文件 webpack.config.js 的 devServer 属性，添加一个 `proxy` 属性
 
 ```javascript
 module.exports = {
@@ -1414,36 +1533,46 @@ module.exports = {
 
 ## 10. Webpack SourceMap
 
-Webpack 将开发阶段编写的源代码打包成生产环境运行的代码，也就意味着实际运行的代码和真正编写的代码之间存在很大的差异，这种情况下，打包后应用程序运行过程中出现意料之外的错误，将无从下手，因为只能在浏览器控制台看到错误信息定位在打包后的代码中的位置，而无法直接定位到源代码的位置
+Webpack 将开发阶段编写的源代码打包成客户端浏览器实际运行的代码，也就意味着实际运行的代码和真正编写的代码之间存在很大的差异（`loader、压缩`），这种情况下，打包后应用程序运行过程中出现意料之外的错误，将无从下手，因为只能在浏览器控制台看到错误信息定位在打包后的代码中的位置，而无法直接定位到源代码的位置
 
-### (1) SourceMap (源代码地图)
+### (1) SourceMap
 
 源代码地图 SourceMap 就是解决此类问题的最好办法，它的作用就是映射打包后的代码和源代码之间的关系，打包后的代码通过 SourceMap 文件就可以逆向解析得到源代码
 
 ![SourceMap](../../images/前端模块化/webpack/SourceMap.png)
 
-目前很多第三方库都会在发布的文件中同时提供一个 .map 后缀的 SourceMap 文件，例如 jQuery，这是一个 JSON 格式的文件，记录了转换前后代码的映射关系，主要存在以下几个属性
+目前很多第三方库都会在发布的文件中同时提供一个 `.map` 后缀的 SourceMap 文件，这是一个 `JSON 格式`的文件，记录了转换前后代码的映射关系，主要存在以下几个属性
 
 * **version**：使用的 SourceMap 标准版本
 * **sources**：转换前的源文件名称
 * **names**：源代码中使用的一些成员名称
 * **mappings**： base64-VLQ 编码字符串，记录转换后代码的字符与转换前代码的字符之间的映射关系
 
-![jquery_map](../../images/前端模块化/webpack/jquery_map.png)
+### (2) jquery SourceMap
 
-一般我们在转换后的代码中通过添加一行注释的方式引入 SourceMap 文件，用于开发调试
+![jquery](../../images/前端模块化/webpack/jquery.png)
 
-![引入SourceMap](../../images/前端模块化/webpack/引入SourceMap.png)
+* jquery.min.map
+  
+  ![jquery_map](../../images/前端模块化/webpack/jquery_map.png)
 
-chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面板，可以看到自动请求了 jquery.min.map 文件，然后根据文件内容逆向解析出来源代码 jquery.js 文件，以便于调试
+* jquery.min.js
+  
+  一般我们在转换后的代码中通过`添加一行注释`的方式引入 SourceMap 文件，用于开发调试
+  
+  ![引入SourceMap](../../images/前端模块化/webpack/引入SourceMap.png)
 
-![解析源代码](../../images/前端模块化/webpack/解析源代码.png)
+* index.html
+  
+  chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面板，可以看到自动请求了 jquery.min.map 文件，然后根据文件内容逆向解析出来源代码 jquery.js 文件，以便于调试
+  
+  ![解析源代码](../../images/前端模块化/webpack/解析源代码.png)
+  
+  还可以添加一个断点，然后刷新页面进行单点调试，此时调试的就是源代码而非压缩后的代码
+  
+  ![调试源代码](../../images/前端模块化/webpack/调试源代码.png)
 
-还可以添加一个断点，然后刷新页面进行单点调试，此时调试的就是源代码而非压缩后的代码
-
-![调试源代码](../../images/前端模块化/webpack/调试源代码.png)
-
-### (2) Webpack 配置 SourceMap
+### (3) Webpack 配置 SourceMap
 
 使用 Webpack 打包时，同样支持为打包结果生成 SourceMap，并且还支持几种不同的 SourceMap 机制，配置文件 webpack.config.js 有一个 devtool 属性，专门为 webpack-dev-server 提供配置
 
@@ -1452,15 +1581,26 @@ chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面
 
 ![source_map模式](../../images/前端模块化/webpack/source_map模式.png)
 
-* src/index.js 文件增加一行运行时错误
+以下以开发环境为例
+
+* src/index.js
+  
+  文件增加一行运行时错误代码
   
   ```javascript
   import createHeading from './head.js'
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -1469,21 +1609,21 @@ chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面
   console.log111('index.js running')
   ```
 
-* webpack.config.js 文件配置具体的 SourceMap
+* webpack.config.js
   
   ```javascript
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
-  const config = maps.map(item => ({
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const config = {
     mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
     entry: {
       app: './src/index.js'
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_cheap-module-eval-source-map')
+      path: path.join(__dirname, 'dist_cheap_module_eval_source_map')
     },
     resolve: {
       alias: {
@@ -1501,17 +1641,44 @@ chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -1530,22 +1697,17 @@ chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面
       port: '8081',
       open: true,
       overlay: {errors: true, warnings: false},
-      contentBase: './public'
     },
     devtool: 'cheap-module-eval-source-map'
-  }))
+  }
   module.exports = config
   ```
 
 * npx webpack-dev-server
-  
-  打包，浏览器打开每个 SourceMap 下的 HTML 文件，控制台查看报错效果
-  
-  ![cheap-module-eval-source-map打包](../../images/前端模块化/webpack/cheap-module-eval-source-map打包.png)
 
-  ![cheap-module-eval-source-map报错](../../images/前端模块化/webpack/cheap-module-eval-source-map报错.png)
+  ![cheap_module_eval_source_map报错](../../images/前端模块化/webpack/cheap_module_eval_source_map报错.png)
 
-  ![cheap-module-eval-source-map效果](../../images/前端模块化/webpack/cheap-module-eval-source-map效果.png)
+  ![cheap_module_eval_source_map效果](../../images/前端模块化/webpack/cheap_module_eval_source_map效果.png)
 
 ## 11. 模块热替换 HMR
 
@@ -1555,17 +1717,26 @@ chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面
 
 然而一旦`页面整体刷新`，那么`页面中的任何操作状态都会丢失`，因此 webpack-dev-server 的自动刷新功能并不是那么好用
 
-最好的办法就是能够实现，在页面不刷新的情况下，新增或修改的代码也能够及时更新到浏览器页面中，避免页面状态丢失
+最好的办法就是能够实现，`在页面不刷新的情况下`，新增或修改的代码也能够及时更新到浏览器页面中，避免页面状态丢失
 
-* src/index.js 文件添加 textarea 输入框
+* src/index.js
+  
+  文件添加 textarea 输入框
   
   ```javascript
   import createHeading from './head.js'
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -1575,35 +1746,142 @@ chrome 浏览器打开 index.html 文件，然后 F12 打开控制台 source 面
   document.body.append(text)
   ```
 
-* src/style.css 文件添加 textarea 输入框文字样式
+* src/style.css
   
   ```css
+  @font-face {
+    font-family: 'myFont';
+    src: url('../public/TJS.ttf');
+  }
   body {
     color: red;
+    background: url('../public/cat.jpg');
+    font-family: 'myFont'
   }
   textarea {
     color: green;
   }
   ```
 
+* webpack.config.js
+  
+  ```javascript
+  const path = require('path')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const config = {
+    mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
+    entry: {
+      app: './src/index.js'
+    },
+    output: { //devServer在内存中构建，不会产生dist文件夹写入磁盘
+      filename: 'bundle.js',
+      path: path.join(__dirname, 'dist_no_HMR')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [{
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin()
+    ],
+    devServer: {
+      port: '8081',
+      open: true,
+      overlay: { errors: true, warnings: false },
+    },
+    devtool: 'none' //构建速度很快，方便观察页面变化
+  }
+  module.exports = config
+  ```
+
 * npx webpack-dev-server
 * 浏览器页面上 textarea 输入框输入 ddddd...
-* 修改 src/style.css 文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
+* src/style.css
+  
+  修改文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
   
   ```css
+  @font-face {
+    font-family: 'myFont';
+    src: url('../public/TJS.ttf');
+  }
   body {
     color: red;
+    background: url('../public/cat.jpg');
+    font-family: 'myFont'
   }
   textarea {
     color: blue;
   }
   ```
 
-  ![no_HMR](../../images/前端模块化/webpack/no_HMR.gif)
+  ![HMR_no](../../images/前端模块化/webpack/HMR_no.gif)
 
 ### (2) HMR
 
-HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代码，Webpack 实时替换掉这个修改的模块，而无需完全刷新整个应用，那么应用的运行状态就不会因此而改变
+HMR 指的是在`应用程序运行过程`中，开发者修改了某个模块的代码，Webpack 实时替换掉这个修改的模块，而无需完全刷新整个应用，那么应用的运行状态就不会因此而改变
 
 #### ① HMR 的特性
 
@@ -1618,9 +1896,7 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
 * 应用程序代码要求 HMR runtime 应用更新
 * HMR runtime `同步`应用更新
 
-#### ③ HMR 的配置
-
-* 基础步骤同上
+#### ③ HMR 的 CSS 应用
 
 * webpack.config.js 文件配置 HMR 需要配置两处地方
   * devServer `hot` 属性设置为 true
@@ -1629,11 +1905,9 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   ```javascript
   const webpack = require('webpack')
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
     entry: {
@@ -1658,17 +1932,44 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -1676,23 +1977,19 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
       }),
       new RemoveCommentsPlugin(),
-      new webpack.HotModuleReplacementPlugin() //HMR特性必需的插件
+      new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
     ],
     devServer: {
       port: '8081',
       open: true,
       hot: true, //HMR
-      overlay: {
-        errors: true,
-        warnings: false
-      },
-      contentBase: './public'
+      overlay: { errors: true, warnings: false },
     },
     devtool: 'none' //构建速度很快，方便观察页面变化
   }
@@ -1700,27 +1997,34 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   ```
 
 * npx webpack-dev-server
-
-#### ④ HMR 的 CSS 应用
-
 * 浏览器页面上 textarea 输入框输入 ddddd...
-* 修改 src/style.css 文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
+* src/style.css
+  
+  修改文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
   
   ```css
+  @font-face {
+    font-family: 'myFont';
+    src: url('../public/TJS.ttf');
+  }
   body {
     color: red;
+    background: url('../public/cat.jpg');
+    font-family: 'myFont'
   }
   textarea {
-    color: blue;
+    color: blue; /* 修改之前为 green */
   }
   ```
-  
+
   ![HMR_css](../../images/前端模块化/webpack/HMR_css.gif)
 
 #### ⑤ HMR 的 JS 应用
 
 * 浏览器页面上 textarea 输入框输入 ddddd...
-* 修改 src/head.js 文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
+* src/head.js
+  
+  修改文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
   
   ```javascript
   // 导出一个箭头函数
@@ -1739,7 +2043,7 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   ![HMR_js](../../images/前端模块化/webpack/HMR_js.gif)
 
 * 观察得知，CSS 文件 HMR 没有问题，这是因为 CSS 文件 HMR 只需要将更新后的 CSS 代码及时替换到页面中就可以覆盖掉之前的样式从而实现更新，而 CSS 文件会经过 css-loader、style-loader 处理，`style-loader` 中会自动处理 CSS 文件的热替换，无需开发者操心
-* 观察得知，JS 文件 HMR 会回退到`自动刷新页面`，这是因为开发者编写的 JS 文件是没有任何规律的，导出的可能是一个对象/字符串/函数，使用时也各不相同，Webpack 面对这些毫无规律的 JS 文件，无法实现一个可以通用所有情况的 HMR 方案
+* 观察得知，JS 文件 HMR 会回退到`自动刷新页面`，这是因为开发者编写的 JS 文件是没有任何规律的，导出的可能是一个对象/字符串/函数，使用时也各不相同，Webpack 面对这些毫无规律的 JS 文件，无法实现一个通用所有情况的 HMR 方案
 * 因此 JS 文件要实现 HMR 需要开发者`手动通过代码处理`
 
 #### ⑥ HMR 的 JS 处理函数
@@ -1748,15 +2052,24 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
 
 开启 HMR 开发者就可以访问到`全局对象 module 的 hot 属性`，hot 属性提供了一个 `accept 方法`用于注册某个模块更新后的处理函数，第一个参数时监视的依赖模块路径，第二个参数是依赖模块更新后的处理函数
 
-* src.index.js 文件中编写 head.js 模块的 HMR 处理函数
+* src.index.js
+  
+  文件中编写 head.js 模块的 HMR 处理函数
   
   ```javascript
   import createHeading from './head.js'
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -1770,7 +2083,6 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
     module.hot.accept('./head.js', function(){
       console.log(222, createHeading)
-
       document.body.removeChild(lastHeading)
       lastHeading = createHeading()
       document.body.append(lastHeading)
@@ -1779,7 +2091,9 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   ```
 
 * 浏览器页面上 textarea 输入框输入 ddddd...
-* 修改 src/head.js 文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
+* src/head.js
+  
+  修改文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下
 
   ![HMR_js_accept](../../images/前端模块化/webpack/HMR_js_accept.gif)
 
@@ -1787,15 +2101,24 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
 
 如果 HMR 的处理函数中发生错误则会导致 HMR 失败，HMR 失败则会自动`回退到自动刷新页面`，页面一旦自动刷新，控制台报错信息也会被清除，因此这种情况下的错误很难被发现也不容易定位
 
-* src/index.js 文件中的 head.js 模块的 HMR 处理函数添加一个运行时错误
+* src/index.js
+  
+  文件中的 head.js 模块的 HMR 处理函数添加一个运行时错误
   
   ```javascript
   import createHeading from './head.js'
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -1809,7 +2132,6 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
     module.hot.accept('./head.js', function(){
       console.log(222, createHeading)
-
       document.body.removeChild(lastHeading)
       lastHeading = createHeading()
       document.body.append(lastHeading)
@@ -1821,7 +2143,9 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   ```
 
 * 浏览器页面上 textarea 输入框输入 ddddd...
-* 修改 src/head.js 文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下，这是因为如果 HMR 的处理函数中发生错误则会导致 HMR 失败，HMR 失败则会自动`回退到自动刷新页面`，页面一旦自动刷新，控制台报错信息也会被清除
+* src/head.js
+  
+  修改文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下，这是因为如果 HMR 的处理函数中发生错误则会导致 HMR 失败，HMR 失败则会自动`回退到自动刷新页面`，页面一旦自动刷新，控制台报错信息也会被清除
 
   ![HMR_js_error](../../images/前端模块化/webpack/HMR_js_error.gif)
 
@@ -1830,11 +2154,9 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   ```javascript
   const webpack = require('webpack')
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
     entry: {
@@ -1842,7 +2164,7 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
     },
     output: { //devServer在内存中构建，不会产生dist文件夹写入磁盘
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_HMR')
+      path: path.join(__dirname, 'dist_HMR_hotOnly')
     },
     resolve: {
       alias: {
@@ -1859,17 +2181,44 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -1877,8 +2226,8 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
       }),
@@ -1888,12 +2237,8 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
     devServer: {
       port: '8081',
       open: true,
-      hotOnly: true, //HMR
-      overlay: {
-        errors: true,
-        warnings: false
-      },
-      contentBase: './public'
+      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      overlay: { errors: true, warnings: false },
     },
     devtool: 'none' //构建速度很快，方便观察页面变化
   }
@@ -1904,13 +2249,89 @@ HMR 指的是在`应用运行过程`中，开发者修改了某个模块的代�
   
   ![HMR_js_hotOnly](../../images/前端模块化/webpack/HMR_js_hotOnly.gif)
 
-## 12. Webpack 生产环境高级特性
+### (3) 路由懒加载导致 HMR 慢
+
+Webpack 4 更好地利用缓存提高了编译速度，但是当项目中`路由懒加载`的页面多了之后 （50+），模块热替换慢的问题会很明显
+
+babel plugins 的 `babel-plugin-dynamic-import-node` 只做一件事，将所有的 import() 转换为 require()，这样就可以用插件将所有异步组件都用同步的方式引入，并结合 `BABEL_ENV` 这个 bebel 环境变量，让它只作用于`开发环境`下
+
+* `npm install babel-plugin-dynamic-import-node --save-dev`
+* package.json
+  
+  ```json
+  {
+    "name": "webpack-front",
+    "version": "0.1.0",
+    "main": "n/a",
+    "author": "yuyuyuzhang",
+    "license": "MIT",
+    "sideEffects": [
+      "./src/numPad.js",
+      "*.css"
+    ],
+    "scripts": {
+      "serve": "BABEL_ENV=development webpack-dev-server --mode development", //添加环境变量BABEL_ENV
+      "build": "webpack --mode production"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.11.4",
+      "@babel/preset-env": "^7.11.0",
+      "babel-loader": "^8.1.0",
+      "babel-plugin-dynamic-import-node": "^2.3.3",
+      "clean-webpack-plugin": "^3.0.0",
+      "copy-webpack-plugin": "^6.0.3",
+      "css-loader": "^4.2.2",
+      "file-loader": "^6.0.0",
+      "html-webpack-plugin": "^4.3.0",
+      "mini-css-extract-plugin": "^0.10.0",
+      "optimize-css-assets-webpack-plugin": "^5.0.3",
+      "style-loader": "^1.2.1",
+      "url-loader": "^4.1.0",
+      "webpack": "^4.44.1",
+      "webpack-cli": "^3.3.12",
+      "webpack-dev-server": "^3.11.0",
+      "webpack-merge": "^5.1.2"
+    },
+    "dependencies": {}
+  }
+  ```
+
+* .babelrc
+  
+  ```babelrc
+  {
+    "presets": [
+      ["env", {
+          "modules": false,
+          "targets": {
+            "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+          }
+        }
+      ],
+      "stage-2"
+    ],
+    "plugins": ["transform-runtime"],
+    "env": {
+      "development": {
+        "plugins": ["dynamic-import-node"]
+      }
+    }
+  }
+  ```
+
+* 之后就可以像平时一样写路由懒加载
+  
+  ```javascript
+  { path: '/login', component: () => import('@/views/login/index')}
+  ```
+
+## 12. Webpack 高级特性
 
 ### (1) Tree Shaking
 
 Tree Shaking 的意思是摇树，伴随着摇树的动作，树上的枯枝和树叶就会掉落下来，Tree Shaking 摇掉的是项目中的`未引用代码 dead-code`
 
-Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功能搭配使用实现的效果，Webpack 使用`生产模式`打包时，会自动开启这组优化功能，检测未引用代码并自动移除
+Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功能搭配使用实现的效果，Webpack 使用`生产模式`打包时，会自动开启这组优化功能，检测未引用代码并自动移除
 
 #### ① 生产环境 production
 
@@ -1937,8 +2358,15 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -1952,29 +2380,27 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
   if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
     module.hot.accept('./head.js', function(){
       console.log(222, createHeading)
-
       document.body.removeChild(lastHeading)
       lastHeading = createHeading()
       document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
     })
   }
 
   // Tree-shaking
-  import { Button } from './components'
+  import { Button } from './component.js'
   document.body.appendChild(Button())
   ```
 
 * webpack.config.js
   
   ```javascript
-  const webpack = require('webpack')
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'production',
     entry: {
@@ -1982,7 +2408,7 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_tree_shaking')
+      path: path.join(__dirname, 'dist_treeShaking_prod')
     },
     resolve: {
       alias: {
@@ -1999,17 +2425,44 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2017,26 +2470,22 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
       }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' }
-        ]
-      }),
-      new RemoveCommentsPlugin(),
+      new RemoveCommentsPlugin()
     ],
     devtool: 'none' //构建速度很快，方便观察页面变化
   }
   module.exports = config
   ```
 
-* `npx webpack --mode=production`
+* npx webpack --mode=production
+* dist_treeShaking_prod/bundle.js
   
-  生产环境下打包，查看 src/bundle.js，从搜索结果来看，并不包含 `document.createElement('a')`，说明生产环境下确实会自动开启摇树功能
+  从搜索结果来看，并不包含 `document.createElement('a')`，说明生产环境下确实会自动开启摇树功能
 
   ![treeShaking_prod](../../images/前端模块化/webpack/treeShaking_prod.png)
 
@@ -2050,12 +2499,9 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
   
   ```javascript
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none',
     entry: {
@@ -2063,7 +2509,7 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_treeShaking_none')
+      path: path.join(__dirname, 'dist_treeShaking_none_usedExports')
     },
     resolve: {
       alias: {
@@ -2080,17 +2526,44 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2098,29 +2571,23 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
-      }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' }
-        ]
       }),
       new RemoveCommentsPlugin()
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      usedExports: true, //打包结果中的模块只导出外部用到的成员(标记枯树枝、树叶)
+      usedExports: true, //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
     }
   }
   module.exports = config
   ```
 
-* `npx webpack --mode none`
-  
-  原始环境下打包，查看 src/bundle.js
+* npx webpack --mode none
+* dist_treeShaking_none_usedExports/bundle.js
 
   ![treeShaking_usedExports](../../images/前端模块化/webpack/treeShaking_usedExports.png)
 
@@ -2132,12 +2599,9 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
   
   ```javascript
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none',
     entry: {
@@ -2162,17 +2626,44 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2185,25 +2676,19 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
           viewPort: 'width=device-width'
         }
       }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' }
-        ]
-      }),
       new RemoveCommentsPlugin()
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      usedExports: true, //打包结果中的模块只导出外部用到的成员(标记枯树枝、树叶)
+      usedExports: true, //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
       minimize: true //压缩打包结果(摇下枯树枝、树叶)
     }
   }
   module.exports = config
   ```
 
-* `npx webpack --mode none`
-  
-  原始环境下打包，查看 src/bundle.js
+* npx webpack --mode none
+* dist_treeShaking_none_minimize/bundle.js
 
   ![treeShaking_prod](../../images/前端模块化/webpack/treeShaking_prod.png)
 
@@ -2221,12 +2706,9 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
 
   ```javascript
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none',
     entry: {
@@ -2251,17 +2733,44 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2269,23 +2778,18 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
-      }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' } 
-        ]
       }),
       new RemoveCommentsPlugin()
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      usedExports: true, //打包结果中的模块只导出外部用到的成员(标记枯树枝、树叶)
+      usedExports: true, //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
       minimize: false, //暂不压缩打包结果,压缩后不方便阅读代码
-      concatenateModules: true, //打包结果尽可能合并所有模块到一个函数中(合并可用树枝、树叶)
+      concatenateModules: true, //打包结果中尽可能合并所有模块到一个函数中(合并可用树枝、树叶)
     }
   }
   module.exports = config
@@ -2297,7 +2801,7 @@ Tree-shaking 并不是指 Webpack 中的某一个配置选项，而是一组功�
 
 #### ⑤ Tree Shaking 与 babel-loader
 
-`Tree-shaking 实现的前提是 ES6 Modules`，Tree-shaking 通过 ES6 Modules 的 export、import 判断模块成员是否被引用，从而识别出`未引用代码 dead-code`，也就是说最终交给 Webpack 打包的代码，必须是以 ES6 Modules 的方式组织的模块化
+`Tree-shaking 实现的前提是 ES6 Modules`，Tree-shaking 通过 ES6 Modules 的 `export、import` 判断模块成员是否被引用，从而识别出`未引用代码 dead-code`，也就是说最终交给 Webpack 打包的代码，必须是以 ES6 Modules 的方式组织的模块化
 
 很多资料说配置 `babel-loader`，会导致 Tree-shaking 失效，为什么这么说呢？因为 babel-loader 会在不兼容的环境中转换源代码中的一些 ES6 特性为 ES5 特性，因此 ES6 Modules 部分可能会被转换为 CommonJS
 
@@ -2307,7 +2811,7 @@ babel-loader 会不会转换 ES6 Modules 取决于开发者是否为其配置转
 
 **模块的副作用**：模块执行的时候除了导出成员，是否还做了其他的事情
 
-Webpack 4 中新增了一个 sideEffects 特性来实现`模块无副作用打包`，允许开发者在文件 `package.json` 中通过配置 `sideEffects` 来标识整个项目的代码是否有副作用，从而提供更大的压缩空间，这个特性一般只有在`开发 npm 模块`时才会用到，并且这个特性在`生产环境`下默认自动开启，以下以`原始环境`为例介绍怎样手动开启 sideEffects 功能
+Webpack 4 中新增了一个 `optimization.sideEffects` 特性来实现`模块无副作用打包`，允许开发者在文件 `package.json` 中通过配置 `sideEffects` 来标识整个项目的代码是否有副作用，从而提供更大的压缩空间，这个特性一般只有在`开发 npm 模块`时才会用到，并且这个特性在`生产环境`下默认自动开启，以下以`原始环境`为例介绍怎样手动开启 sideEffects 功能
 
 #### ① optimization.usedExports
 
@@ -2315,7 +2819,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
 
 * src 下新建 commons 文件夹，文件夹下新建 index.js、button.js、link.js 文件
   
-  ![sideEffects目录](../../images/前端模块化/webpack/sideEffects目录.png)
+  ![commons目录](../../images/前端模块化/webpack/commons目录.png)
 
   src/commons/button.js
 
@@ -2357,8 +2861,15 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -2372,10 +2883,12 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
   if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
     module.hot.accept('./head.js', function(){
       console.log(222, createHeading)
-
       document.body.removeChild(lastHeading)
       lastHeading = createHeading()
       document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
     })
   }
 
@@ -2386,7 +2899,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
   // sideEffects
   // 虽然只希望载入 Link 模块，但实际上载入的是 common/index.js 文件，
   // index.js 文件中又载入了 common 目录下的所有组件模块，这会导致所有组件模块都被加载执行
-  import { Link } from './common/index.js'
+  import { Link } from './commons/index.js'
   document.body.appendChild(Link())
   ```
 
@@ -2394,12 +2907,9 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
   
   ```javascript
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none',
     entry: {
@@ -2424,17 +2934,44 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2442,21 +2979,18 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
-      }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' } 
-        ]
       }),
       new RemoveCommentsPlugin()
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      usedExports: true, //打包结果中的模块只导出外部用到的成员(标记枯树枝、树叶)
+      usedExports: true,         //打包结果中的模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
     }
   }
   module.exports = config
@@ -2464,7 +2998,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
 
 * npx webpack --mode none
   
-  ![treeShaking_sideEffects](../../images/前端模块化/webpack/treeShaking_sideEffects.png)
+  ![sideEffects_none_usedExports](../../images/前端模块化/webpack/sideEffects_none_usedExports.png)
 
 #### ② optimization.sideEffects
 
@@ -2472,12 +3006,9 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
   
   ```javascript
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none',
     entry: {
@@ -2502,17 +3033,44 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2520,21 +3078,16 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
-      }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' } 
-        ]
       }),
       new RemoveCommentsPlugin()
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      sideEffects: true, //
+      sideEffects: true, //无副作用打包
     }
   }
   module.exports = config
@@ -2549,7 +3102,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
     "main": "n/a",
     "author": "yuyuyuzhang",
     "license": "MIT",
-    "sideEffects": false, //表示整个项目的所有代码都没有副作用,optimization.sideEffects放心大胆的压缩
+    "sideEffects": false,
     "scripts": {
       "serve": "webpack-dev-server --mode development",
       "build": "webpack --mode production"
@@ -2561,10 +3114,12 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
       "clean-webpack-plugin": "^3.0.0",
       "copy-webpack-plugin": "^6.0.3",
       "css-loader": "^4.2.2",
+      "file-loader": "^6.0.0",
       "html-webpack-plugin": "^4.3.0",
       "mini-css-extract-plugin": "^0.10.0",
       "optimize-css-assets-webpack-plugin": "^5.0.3",
       "style-loader": "^1.2.1",
+      "url-loader": "^4.1.0",
       "webpack": "^4.44.1",
       "webpack-cli": "^3.3.12",
       "webpack-dev-server": "^3.11.0",
@@ -2576,7 +3131,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
 
 * npx webpack --mode none
   
-  ![sideEffects](../../images/前端模块化/webpack/sideEffects.png)
+  ![sideEffects_none](../../images/前端模块化/webpack/sideEffects_none.png)
 
 #### ③ 必要的副作用
 
@@ -2592,6 +3147,59 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
     const leadingZeros = Array(size + 1).join(0)
     return leadingZeros + this
   }
+  ```
+
+* src/index.js
+  
+  ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 导入 .md 文件
+  import title from './title.md'
+
+  // 添加 textarea 输入框
+  const text = document.createElement('textarea')
+  document.body.append(text)
+
+  // head.js HMR 处理函数
+  let lastHeading = heading
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./head.js', function(){
+      console.log(222, createHeading)
+      document.body.removeChild(lastHeading)
+      lastHeading = createHeading()
+      document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
+    })
+  }
+
+  // Tree-shaking
+  import { Button } from './component.js'
+  document.body.appendChild(Button())
+
+  // sideEffects
+  // 虽然只希望载入 Link 模块，但实际上载入的是 common/index.js 文件，
+  // index.js 文件中又载入了 common 目录下的所有组件模块，这会导致所有组件模块都被加载执行
+  import { Link } from './commons/index.js'
+  document.body.appendChild(Link())
+
+  // sideEffects 必要的副作用
+  import './numPad.js' // 内部包含影响全局的副作用
+  console.log((8).pad(3))
   ```
 
 * package.json
@@ -2620,10 +3228,12 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
       "clean-webpack-plugin": "^3.0.0",
       "copy-webpack-plugin": "^6.0.3",
       "css-loader": "^4.2.2",
+      "file-loader": "^6.0.0",
       "html-webpack-plugin": "^4.3.0",
       "mini-css-extract-plugin": "^0.10.0",
       "optimize-css-assets-webpack-plugin": "^5.0.3",
       "style-loader": "^1.2.1",
+      "url-loader": "^4.1.0",
       "webpack": "^4.44.1",
       "webpack-cli": "^3.3.12",
       "webpack-dev-server": "^3.11.0",
@@ -2637,12 +3247,9 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
   
   ```javascript
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none',
     entry: {
@@ -2667,17 +3274,44 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2685,21 +3319,19 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
-      }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' }
-        ]
       }),
       new RemoveCommentsPlugin()
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      sideEffects: true, //无副作用打包
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
     }
   }
   module.exports = config
@@ -2707,30 +3339,23 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
 
 * npx webpack --mode none
   
-  ![sideEffects_numPad](../../images/前端模块化/webpack/sideEffects_numPad.png)
+  ![sideEffects_none_numPad](../../images/前端模块化/webpack/sideEffects_none_numPad.png)
 
-### (3) Code Splitting
+### (3) 按需加载
 
-Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致打包结果过大，绝大多数情况下，应用程序刚开始运行时，并非所有模块都是必须的，如果所有模块都被打包到一个 bundle.js 文件，即使应用程序一开始只需要一到两个模块工作，也必须将 bundle.js 文件整体加载进来，前端应用程序一般都是运行在浏览器，因此这种情况会浪费大量流量和带宽，可能也会导致浏览器响应速度变慢
+Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致打包结果过大，绝大多数情况下，应用程序刚开始运行时，并非所有模块都是必须的，如果所有模块都被打包到一个 bundle.js 文件，即使应用程序一开始只需要一到两个模块工作，也必须将 bundle.js 文件整体加载进来，前端应用程序一般都是运行在浏览器，因此这种情况会浪费大量流量和带宽，也会导致浏览器响应速度变慢
 
-合理的方式是将打包结果按照`一定的规则`分离到多个 bundle.js 文件，然后`根据应用程序的运行按需加载`，这样就可以降低启动成本，提高响应速度，Webpack 由此设计了一种代码分包功能 `Code Splitting`，Code Splitting 会把项目中的资源模块按照我们设计的规则打包到不同的 bundle.js 文件
+合理的方式是将打包结果按照一定的规则分离到`多个 bundle.js 文件`，然后`根据应用程序的运行按需加载`，这样就可以降低启动成本，提高响应速度
 
 这与 Webpack 将项目中散落的模块打包到一起，从而提高加载效率，并不自相矛盾，只是物极必反，前端应用程序中的资源受环境所限，太大不行，太碎也不行，需要维持在一个`合理的细粒度`，开发环境中划分模块的颗粒度一般都会非常细，很多时候一个模块只是提供一个小工具函数，并不能形成一个完整的功能单元，如果不将这些资源模块打包，直接按照开发过程划分的模块颗粒度加载，那么运行一个很小的功能，就需要加载非常多的资源模块，因此模块打包肯定是必要的，但是当应用程序体积越来越大时，我们也要学会变通
 
-#### ① Webpack 实现代码分包的方式
+Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态导入的模块都会被自动提取到`单独的 bundle.js 文件`
 
-* **传统的多页面应用程序**：配置多个打包入口，输出多个打包结果
-* **现在的单页面应用程序**：配置一个打包入口，结合 `ES6 Modules import()` 函数动态导入特性，按需加载模块
-
-#### ② import()
-
-代码分包的按需加载，指的是在应用程序运行过程中，需要某个资源模块时，才去加载这个模块，Webpack 支持使用 ES6 Modules import() 函数动态导入的方式实现模块的按需加载，而且所有动态导入的模块都会被自动提取到单独的 bundle.js 文件，从而实现分包
-
-* src 下新建 codeSplitting 文件夹，该文件夹下新建 buttonA.js、buttonB.js 文件
+* src 下新建 importDemand 文件夹，该文件夹下新建 buttonA.js、buttonB.js 文件
   
-  ![codeSplitting文件](../../images/前端模块化/webpack/codeSplitting文件.png)
+  ![importDemand目录](../../images/前端模块化/webpack/importDemand目录.png)
   
-  src/codeSplitting/buttonA.js
+  src/importDemand/buttonA.js
 
   ```javascript
   export const Button = () => {
@@ -2740,7 +3365,7 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
   }
   ```
 
-  src/codeSplitting/buttonB.js
+  src/importDemand/buttonB.js
 
   ```javascript
   export const Button = () => {
@@ -2757,8 +3382,15 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
   const heading = createHeading()
   document.body.append(heading)
 
-  // 导入其他类型资源
+  // 导入其他类型资源 ( CSS、图片、字体 )
   import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
   // 导入 .md 文件
   import title from './title.md'
@@ -2772,10 +3404,12 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
   if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
     module.hot.accept('./head.js', function(){
       console.log(222, createHeading)
-
       document.body.removeChild(lastHeading)
       lastHeading = createHeading()
       document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
     })
   }
 
@@ -2793,7 +3427,7 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
   import './numPad.js'
   console.log((8).pad(3))
 
-  // Code-Splitting
+  // 按需加载
   const btn1 = document.createElement('button')
   const btn2 = document.createElement('button')
   btn1.innerHTML = '显示按钮'
@@ -2801,13 +3435,13 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
   document.body.append(btn1)
   document.body.append(btn2)
   btn1.addEventListener('click', function(e){
-    import('./codeSplitting/buttonA.js')
+    import('./importDemand/buttonA.js')
       .then(({Button}) => {
         document.body.append(Button())
       })
   })
   btn2.addEventListener('click', function(e){
-    import('./codeSplitting/buttonB.js')
+    import('./importDemand/buttonB.js')
       .then(({Button}) => {
         document.body.appendChild(Button())
       })
@@ -2818,12 +3452,9 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
   
   ```javascript
   const path = require('path')
-  const {
-    CleanWebpackPlugin
-  } = require('clean-webpack-plugin')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none',
     entry: {
@@ -2831,7 +3462,7 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
     },
     output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_codeSplitting_none')
+      path: path.join(__dirname, 'dist_importDemand_none')
     },
     resolve: {
       alias: {
@@ -2848,17 +3479,44 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
           ]
         },
         {
-          test: /\.md$/,
-          use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        },
-        {
-          test: /\.js$/,
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
           use: {
-            loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+            loader: 'url-loader',
             options: {
-              presets: ['@babel/preset-env']
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
             }
           }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
         }
       ]
     },
@@ -2866,45 +3524,215 @@ Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致�
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: 'index.html', //文件名
-        title: 'Webpack', //title属性
-        meta: { //meta标签
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
           viewPort: 'width=device-width'
         }
-      }),
-      new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-        patterns: [
-          { from: './public' } 
-        ]
       }),
       new RemoveCommentsPlugin()
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      sideEffects: true, //无副作用打包
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
+    },
+  }
+  module.exports = config
+  ```
+
+* npx webpack --mode none
+  
+  可以看出，多出了 1.bundle.js、2.bundle.js 文件，这两个文件就是由 import() 函数动态导入代码分包产生的，以上就是动态导入在 Webpack 的使用，整个过程无需任何配置，只需要按照 ES6 Modules import() 函数的方式动态导入模块就可以了，Webpack 内部会自动处理分包和按需加载
+  
+  ![importDemand_none打包](../../images/前端模块化/webpack/importDemand_none打包.png)
+
+  ![importDemand_none](../../images/前端模块化/webpack/importDemand_none.gif)
+
+### (4) CSS 提取压缩
+
+#### ① MiniCSSExtractPlugin
+
+CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果就是将 CSS 代码通过 `<style>` 标签嵌套在 JS 文件代码中
+
+MiniCSSExtractPlugin 插件可以将 CSS 代码单独打包成 CSS 文件，通过 `<link>` 标签引入到页面
+
+CSS 独立拆包的最大好处就是 JS 和 CSS 的改动，不会影响对方，例如修改 JS 文件不会导致 CSS 文件缓存失效
+
+* `npm i mini-css-extract-plugin --save-dev`
+
+#### ② OptimizeCSSAssetsWebpackPlugin
+
+MiniCSSExtractPlugin 插件只负责将 CSS 代码提取到单独的 CSS 文件，但是生产环境下 Webpack 内置压缩插件只会自动压缩 JS 文件，不会压缩 CSS 文件，因此我们需要通过 OptimizeCSSAssetsWebpackPlugin 插件来压缩 CSS 文件
+
+* `npm i optimize-css-assets-webpack-plugin --save-dev`
+
+### (5) 缓存
+
+当我们把打包后的 dist 目录部署到服务器上后，客户端浏览器就能够访问该服务器的网站和资源，而获取资源是比较耗时的，因此浏览器使用一种名为`缓存`的技术，可以通过命中缓存，降低网络流量，使网站加载速度更快
+
+然而如果我们在部署新版本时，未更改资源文件名，浏览器很可能会认为其未更新，转而使用缓存版本，如果新版本和缓存版本资源内容不同，就需要用户手动清除浏览器缓存之后才能访问新版本内容，这对于用户来说并不方便
+
+Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包都生成新的文件名，从而告诉浏览器是否要读取缓存
+
+#### ① hash
+
+hash 是`项目级别`的，整个项目的所有文件共用一个 hash，Webpack 每次重新构建打包时，如果项目没有任何更改，其 hash 值就不会改变，否则就会改变
+
+`url-loader 管理的图片文件、字体文件、多媒体文件`等静态资源，应该在打包的文件名里嵌套 hash
+
+#### ② chunkhash
+
+chunkhash 是 `JS 文件级别`的，每个 JS 模块及其依赖的任意类型模块共用一个 chunkhash，如果某个 JS 模块及其依赖的任意类型模块内容改变，其共用的 chunkhash 值就会改变，否则不会改变
+
+`output 输出的 JS 文件`，应该在打包的文件名里嵌套 chunkhash
+
+#### ③ contenthash
+
+contenthash 是 `CSS 文件级别`的，每个 CSS 模块一个 contenthash，只要 CSS 模块内容不变，其 contenthash 值不会改变，否则就会改变
+
+contenthash 值的出现主要是为了让 CSS 文件不受 JS 文件的影响，比如 foo.css 被 foo.js 引用了，所以它们共用相同的 chunkhash，但这样是有问题的，如果 foo.js 修改了代码，foo.css 文件就算内容没有任何改变，其 hash、chunkhash 也会随之改变
+
+`MiniCSSExtractPlugin 插件输出的 CSS 文件`，应该在打包的文件名里嵌套 contenthash
+
+* webpack.config.js
+  
+  ```javascript
+  const path = require('path')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const config = {
+    mode: 'none',
+    entry: {
+      app: './src/index.js'
+    },
+    output: {
+      filename: 'js/[name].[chunkhash].js',
+      path: path.join(__dirname, 'dist_hash_and_css')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [{
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'                 //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+        chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+      })
+    ],
+    devtool: 'none', //构建速度很快，方便观察页面变化
+    optimization: {
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
+      minimizer: [
+        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+      ]
     },
     devServer: {
       port: '8081',
       open: true,
       hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-      overlay: {
-        errors: true,
-        warnings: false
-      },
-      contentBase: './public'
+      overlay: { errors: true, warnings: false },
     }
   }
   module.exports = config
   ```
 
-* npx webpack-dev-server --mode none
+* npx webpack
   
-  ![codeSplitting_import()](../../images/前端模块化/webpack/codeSplitting_import().gif)
-  
-* npx webpack --mode none
-  
-  可以看出，多出了 1.bundle.js、2.bundle.js 文件，这两个文件就是由 import() 函数动态导入代码分包产生的，以上就是动态导入在 Webpack 的使用，整个过程无需任何配置，只需要按照 ES6 Modules import() 函数的方式动态导入模块就可以了，Webpack 内部会自动处理分包和按需加载
-  
-  ![codeSplitting打包](../../images/前端模块化/webpack/codeSplitting打包.png)
+  ![hash_and_css打包](../../images/前端模块化/webpack/hash_and_css打包.png)
+
+### (6) Code Splitting
+
+optimization.splitChunks
+
+Webpack 4 中新增了一个 optimization.splitChunks 特性来实现`代码分包`，并且这个特性在`生产环境`下默认自动开启，以下以`原始环境`为例介绍怎样手动开启 splitChunks 功能
+
+Webpack 4 代码分包策略如下
+
+* 新的 chunk 是否被共享或者是来自 node_modules 的模块
+* 新的 chunk 体积在压缩之前是否大于 30kb
+* 按需加载 chunk 的并发请求数量小于等于 5 个
+* 页面初始加载时的并发请求数量小于等于 3 个
+
+![分包策略](../../images/前端模块化/webpack/分包策略.png)
+
+module：
+
+trunk：
+
+### (8) 长缓存 Long term caching
+
+### (7) babel-loader
+
+①②③④⑤⑥⑦⑧⑨⑩
 
 ## 13. 开发环境和生产环境
 
@@ -2981,25 +3809,11 @@ module.exports = (env, argv) => {
 
 ### (4) 生产环境下的优化插件
 
-Webpack 4 的生产环境 production 模式下，Webpack 内部开启了很多通用的优化功能，对于开发者而言，开箱即用十分方便，这里主要介绍 production 环境下的几个主要优化功能
+Webpack 4 的生产环境 production 模式下，Webpack 内部开启了很多通用的优化功能，对于开发者而言
 
 #### ① Define Plugin
 
 插件 Define Plugin 用于为代码注入全局成员，例如 `process.env.NODE_ENV`，很多第三方插件都是通过这个全局成员判断当前运行环境，从而决定是否执行例如打印日志之类的操作
-
-#### ② Mini CSS Extract Plugin
-
-CSS 文件一般会使用 style-loader 处理，最终打包结果就是将 CSS 的代码通过 `<style>` 标签嵌套在 JS 代码中
-
-插件 Mini CSS Extract Plugin 可以将 CSS 代码单独打包成 CSS 文件，通过 `<link>` 标签引入到页面
-
-* `npm i mini-css-extract-plugin --save-dev`
-
-#### ③ Optimize CSS Assets Webpack Plugin
-
-插件 Mini CSS Extract Plugin 将 CSS 代码提取到单独的文件，但是有一个小问题，生产环境下 Webpack 内置的压缩插件只会自动压缩 JS 文件，不会压缩 CSS 文件，因此我们需要通过插件 Optimize CSS Assets Webpack Plugin 来压缩 CSS 文件
-
-* `npm i optimize-css-assets-webpack-plugin --save-dev`
 
 ### (5) package.json
 

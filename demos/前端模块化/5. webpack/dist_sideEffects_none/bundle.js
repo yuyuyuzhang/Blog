@@ -65,90 +65,115 @@
 	// __webpack_public_path__
 	__webpack_require__.p = "";
 	// Load entry module and return exports
-	return __webpack_require__(__webpack_require__.s = 4);
+	return __webpack_require__(__webpack_require__.s = 10);
 })
 ([
 /* 0 */,
 /* 1 */,
 /* 2 */,
 /* 3 */,
-/* 4 */
-(function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _head_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var _component_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
-/* harmony import */ var _commons_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
-
-var heading = Object(_head_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
-document.body.append(heading); 
-
-// 导入其他类型资源
-
-// 导入 .md 文件
-
-// 添加 textarea 输入框
-var text = document.createElement('textarea');
-document.body.append(text); // head.js HMR 处理函数
-
-var lastHeading = heading;
-
-if (false) {} // Tree-shaking
-
-document.body.appendChild(Object(_component_js__WEBPACK_IMPORTED_MODULE_1__["Button"])()); 
-
-// sideEffects
-// 虽然只希望载入 Link 模块，但实际上载入的是 common/index.js 文件，
-// index.js 文件中又载入了 common 目录下的所有组件模块，这会导致所有组件模块都被加载执行
-document.body.appendChild(Object(_commons_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])());
-}),
+/* 4 */,
 /* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */
-(function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// 导出一个箭头函数
-/* harmony default export */ __webpack_exports__["default"] = (function () {
-  var element = document.createElement('h2');
-  element.textContent = 'Hello Webpack';
-  element.addEventListener('click', function () {
-    return alert('Hello Webpack');
-  }); // 测试 JS 文件 HMR
-  // console.log(555)
-
-  return element;
-});
-}),
-/* 9 */
-(function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Button", function() { return Button; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return Link; });
-var Button = function Button() {
-  return document.createElement('button');
-}; 
-
-// 未引用代码
-var Link = function Link() {
-  return document.createElement('a');
-};
-}),
+/* 8 */,
+/* 9 */,
 /* 10 */
 (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Link", function() { return Link; });
+/* harmony import */ var _head_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _public_movie_mp4__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _component_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
+/* harmony import */ var _commons_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14);
+
+const heading = Object(_head_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])()
+document.body.append(heading)
+
+// 导入其他类型资源 ( CSS、图片、字体 )
+
+// 导入其他类型资源 ( 媒体 )
+const video = document.createElement('video')
+video.src = _public_movie_mp4__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]
+video.controls = 'controls'
+document.body.append(video)
+
+// 导入 .md 文件
+
+// 添加 textarea 输入框
+const text = document.createElement('textarea')
+document.body.append(text)
+
+// head.js HMR 处理函数
+let lastHeading = heading
+if (false) {}
+
+// Tree-shaking
+document.body.appendChild(Object(_component_js__WEBPACK_IMPORTED_MODULE_2__[/* Button */ "a"])())
+
+// sideEffects
+// 虽然只希望载入 Link 模块，但实际上载入的是 common/index.js 文件，
+// index.js 文件中又载入了 common 目录下的所有组件模块，这会导致所有组件模块都被加载执行
+document.body.appendChild(Object(_commons_index_js__WEBPACK_IMPORTED_MODULE_3__[/* Link */ "a"])())
+
+}),
+/* 11 */
+(function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// 导出一个箭头函数
+/* harmony default export */ __webpack_exports__["a"] = (() => {
+  const element = document.createElement('h2')
+  element.textContent = 'Hello Webpack'
+  element.addEventListener('click', () => alert('Hello Webpack'))
+  
+  // 测试 JS 文件 HMR
+  // console.log(555)
+  
+  return element 
+});
+
+}),
+/* 12 */
+(function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ("./media/movie.mp4");
+
+}),
+/* 13 */
+(function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Button; });
+/* unused harmony export Link */
+const Button = () => {
+  const button = document.createElement('button')
+  button.innerHTML = '按钮-component'
+  return button
+}
+// 未引用代码
+const Link = () => {
+  const a = document.createElement('a')
+  a.innerHTML = '链接-component'
+  return a
+}
+
+}),
+/* 14 */
+(function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Link; });
 // 副作用代码
-console.log('Link component');
-var Link = function Link() {
-  return document.createElement('a');
-};
+console.log('Link component')
+
+const Link = () => {
+  const a = document.createElement('a')
+  a.innerHTML = '链接-common'
+  return a
+}
+
 })
 ]);

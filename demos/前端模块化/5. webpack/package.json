@@ -9,16 +9,18 @@
     "*.css"
   ],
   "scripts": {
-    "serve": "webpack-dev-server --mode development",
+    "serve": "BABEL_ENV=development webpack-dev-server --mode development",
     "build": "webpack --mode production"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "babel-loader": "^8.1.0",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^4.2.2",
+    "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.10.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",

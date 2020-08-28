@@ -93,18 +93,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _head_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _title_md__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
-/* harmony import */ var _title_md__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_title_md__WEBPACK_IMPORTED_MODULE_2__);
 
 const heading = Object(_head_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
 document.body.append(heading)
 
-// 导入其他类型资源
-
-
-// 导入.md文件
-
-console.log(_title_md__WEBPACK_IMPORTED_MODULE_2___default.a)
+// 导入其他类型资源 ( CSS、图片、字体 )
 
 /***/ }),
 /* 1 */
@@ -117,7 +110,11 @@ __webpack_require__.r(__webpack_exports__);
   const element = document.createElement('h2')
   element.textContent = 'Hello Webpack'
   element.addEventListener('click', () => alert('Hello Webpack'))
-  return element
+  
+  // 测试 JS 文件 HMR
+  // console.log(555)
+  
+  return element 
 });
 
 /***/ }),
@@ -125,22 +122,17 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(3);
-            var content = __webpack_require__(4);
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
+var content = __webpack_require__(4);
+content = content.__esModule ? content.default : content;
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
 
 var options = {};
-
 options.insert = "head";
 options.singleton = false;
 
 var update = api(content, options);
-
-
 
 module.exports = content.locals || {};
 
@@ -149,7 +141,6 @@ module.exports = content.locals || {};
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
 
 var isOldIE = function isOldIE() {
   var memo;
@@ -279,9 +270,8 @@ function removeStyleElement(style) {
 
   style.parentNode.removeChild(style);
 }
+
 /* istanbul ignore next  */
-
-
 var replaceText = function replaceText() {
   var textStore = [];
   return function replace(index, replacement) {
@@ -431,17 +421,15 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(false);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, "body {\r\n  color: red;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.i, "/* @font-face {\r\n  font-family: 'myFont';\r\n  src: url('../public/TJS.ttf');\r\n} */\r\nbody {\r\n  color: red;\r\n  /* background: url('../public/cat.jpg'); */\r\n  /* font-family: 'myFont' */\r\n}\r\ntextarea {\r\n  color: green;\r\n}", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
-
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
 
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
@@ -526,21 +514,15 @@ function cssWithMappingToString(item, useSourceMap) {
   }
 
   return [content].join('\n');
-} // Adapted from convert-source-map (MIT)
+} 
 
-
+// Adapted from convert-source-map (MIT)
 function toComment(sourceMap) {
   // eslint-disable-next-line no-undef
   var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
   var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
   return "/*# ".concat(data, " */");
 }
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./markdown-loader.js):\nLoaderRunnerError: Module 'F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\markdown-loader.js' is not a loader (must have normal or pitch function)\n    at loadLoader (F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\loader-runner\\lib\\loadLoader.js:43:20)\n    at iteratePitchingLoaders (F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at runLoaders (F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\loader-runner\\lib\\LoaderRunner.js:365:2)\n    at NormalModule.doBuild (F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\NormalModule.js:295:3)\n    at NormalModule.build (F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\NormalModule.js:446:15)\n    at Compilation.buildModule (F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\Compilation.js:739:10)\n    at F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\Compilation.js:981:14\n    at F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\NormalModuleFactory.js:409:6\n    at F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\NormalModuleFactory.js:155:13\n    at AsyncSeriesWaterfallHook.eval [as callAsync] (eval at create (F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:6:1)\n    at F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\NormalModuleFactory.js:138:29\n    at F:\\学习\\Blog\\demos\\前端模块化\\5. webpack\\node_modules\\webpack\\lib\\NormalModuleFactory.js:346:9\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
 
 /***/ })
 /******/ ]);

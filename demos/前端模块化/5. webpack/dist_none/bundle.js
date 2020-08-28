@@ -95,9 +95,6 @@ __webpack_require__.r(__webpack_exports__);
 const heading = Object(_head_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
 document.body.append(heading)
 
-// 导入其他类型资源
-// import './style.css'
-
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -109,7 +106,11 @@ __webpack_require__.r(__webpack_exports__);
   const element = document.createElement('h2')
   element.textContent = 'Hello Webpack'
   element.addEventListener('click', () => alert('Hello Webpack'))
-  return element
+  
+  // 测试 JS 文件 HMR
+  // console.log(555)
+  
+  return element 
 });
 
 /***/ })

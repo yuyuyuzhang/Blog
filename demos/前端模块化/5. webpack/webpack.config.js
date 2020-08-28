@@ -58,8 +58,16 @@
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
-//       }
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
+//       },
 //     ]
 //   }
 // }
@@ -87,12 +95,28 @@
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
-//       }
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
+//       },
 //     ]
 //   }
 // }
@@ -107,7 +131,7 @@
 //   },
 //   output: {
 //     filename: 'bundle.js',
-//     path: path.join(__dirname, 'dist_url_loader_video')
+//     path: path.join(__dirname, 'dist_url_loader_media')
 //   },
 //   module: {
 //     rules: [
@@ -120,16 +144,40 @@
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
-//       }
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
+//       },
 //     ]
 //   }
 // }
@@ -157,19 +205,43 @@
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//         use: './rustom/sync-markdown-loader.js' //use属性既可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   }
@@ -177,45 +249,69 @@
 // module.exports = config
 
 
-const path = require('path')
-const config = {
-  mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
-  entry: {
-    app: './src/index.js'
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, 'dist_async_md_loader')
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,   //正则匹配文件路径
-        use: [            //指定具体的loader,一组链式loader按相反顺序执行
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-        use: 'url-loader'
-      },
-      {
-        test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-        use: 'url-loader'
-      },
-      {
-        test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-        use: 'url-loader'
-      },
-      {
-        test: /\.md$/,
-        use: './async-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-      }
-    ]
-  }
-}
-module.exports = config
+// const path = require('path')
+// const config = {
+//   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
+//   entry: {
+//     app: './src/index.js'
+//   },
+//   output: {
+//     filename: 'bundle.js',
+//     path: path.join(__dirname, 'dist_async_md_loader')
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.css$/,   //正则匹配文件路径
+//         use: [            //指定具体的loader,一组链式loader按相反顺序执行
+//           'style-loader',
+//           'css-loader'
+//         ]
+//       },
+//       {
+//         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
+//       },
+//       {
+//         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
+//       },
+//       {
+//         test: /\.md$/,
+//         use: './rustom/async-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//       }
+//     ]
+//   }
+// }
+// module.exports = config
 
 
 // const path = require('path')
@@ -240,19 +336,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -286,96 +406,55 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
 //   plugins: [
 //     new CleanWebpackPlugin(), //clean-webpack-plugin插件
-//     new HtmlWebpackPlugin({ //html-webpack-plugin插件
-//       filename: 'index.html',
-//       title: 'Webpack',
-//       meta: {
-//         viewPort: 'width=device-width'
-//       }
-//     }),
-//   ]
-// }
-// module.exports = config
-
-
-// const path = require('path')
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const config = {
-//   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
-//   entry: {
-//     app: './src/index.js'
-//   },
-//   output: {
-//     filename: 'bundle.js',
-//     path: path.join(__dirname, 'dist_copy_plugin')
-//   },
-//   resolve: {
-//     alias: {
-//       '@': path.join(__dirname, '..', 'src')
-//     },
-//     extensions: ['.js', '.json', '.vue']
-//   },
-//   module: {
-//     rules: [
-//       {
-//         test: /\.css$/,   //正则匹配文件路径
-//         use: [            //指定具体的loader,一组链式loader按相反顺序执行
-//           'style-loader',
-//           'css-loader'
-//         ]
-//       },
-//       {
-//         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
-//       },
-//       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
-//       },
-//       {
-//         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
-//       },
-//       {
-//         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       }
-//     ]
-//   },
-//   plugins: [
-//     new CleanWebpackPlugin(),
-//     new HtmlWebpackPlugin({
+//     new HtmlWebpackPlugin({   //html-webpack-plugin插件
 //       filename: 'index.html', //文件名
 //       title: 'Webpack',       //title属性
 //       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
 //     }),
-//     new CopyWebpackPlugin({
-//       patterns: [
-//         { from: './public' } //需要拷贝的目录或者路径通配符
-//       ]
-//     })
 //   ]
 // }
 // module.exports = config
@@ -384,8 +463,7 @@ module.exports = config
 // const path = require('path')
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
 //   entry: {
@@ -412,19 +490,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -437,11 +539,6 @@ module.exports = config
 //         viewPort: 'width=device-width'
 //       }
 //     }),
-//     new CopyWebpackPlugin({
-//       patterns: [
-//         { from: './public' } //需要拷贝的目录或者路径通配符
-//       ]
-//     }),
 //     new RemoveCommentsPlugin()
 //   ]
 // }
@@ -451,7 +548,7 @@ module.exports = config
 // const path = require('path')
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
 //   entry: {
@@ -478,29 +575,44 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
-//       }
 //     ]
 //   },
 //   plugins: [
@@ -518,7 +630,6 @@ module.exports = config
 //     port: '8081',
 //     open: true,
 //     overlay: {errors: true, warnings: false},
-//     contentBase: './public'
 //   },
 // }
 // module.exports = config
@@ -527,7 +638,7 @@ module.exports = config
 // const path = require('path')
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
 //   entry: {
@@ -535,7 +646,7 @@ module.exports = config
 //   },
 //   output: {
 //     filename: 'bundle.js',
-//     path: path.join(__dirname, 'dist_cheap-module-eval-source-map')
+//     path: path.join(__dirname, 'dist_cheap_module_eval_source_map')
 //   },
 //   resolve: {
 //     alias: {
@@ -554,28 +665,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -594,7 +720,6 @@ module.exports = config
 //     port: '8081',
 //     open: true,
 //     overlay: {errors: true, warnings: false},
-//     contentBase: './public'
 //   },
 //   devtool: 'cheap-module-eval-source-map'
 // }
@@ -602,11 +727,9 @@ module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
 //   entry: {
@@ -632,28 +755,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提高构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -661,8 +799,8 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
 //     }),
@@ -671,11 +809,7 @@ module.exports = config
 //   devServer: {
 //     port: '8081',
 //     open: true,
-//     overlay: {
-//       errors: true,
-//       warnings: false
-//     },
-//     contentBase: './public'
+//     overlay: { errors: true, warnings: false },
 //   },
 //   devtool: 'none' //构建速度很快，方便观察页面变化
 // }
@@ -684,11 +818,9 @@ module.exports = config
 
 // const webpack = require('webpack')
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
 //   entry: {
@@ -714,28 +846,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -743,8 +890,8 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
 //     }),
@@ -755,11 +902,7 @@ module.exports = config
 //     port: '8081',
 //     open: true,
 //     hot: true, //HMR
-//     overlay: {
-//       errors: true,
-//       warnings: false
-//     },
-//     contentBase: './public'
+//     overlay: { errors: true, warnings: false },
 //   },
 //   devtool: 'none' //构建速度很快，方便观察页面变化
 // }
@@ -768,11 +911,9 @@ module.exports = config
 
 // const webpack = require('webpack')
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
 //   entry: {
@@ -798,28 +939,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -827,8 +983,8 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
 //     }),
@@ -839,11 +995,7 @@ module.exports = config
 //     port: '8081',
 //     open: true,
 //     hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-//     overlay: {
-//       errors: true,
-//       warnings: false
-//     },
-//     contentBase: './public'
+//     overlay: { errors: true, warnings: false },
 //   },
 //   devtool: 'none' //构建速度很快，方便观察页面变化
 // }
@@ -851,12 +1003,9 @@ module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'production',
 //   entry: {
@@ -882,28 +1031,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -911,15 +1075,10 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
@@ -929,12 +1088,9 @@ module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -960,28 +1116,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -989,15 +1160,10 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
@@ -1010,12 +1176,9 @@ module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -1041,28 +1204,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -1074,11 +1252,6 @@ module.exports = config
 //       meta: { //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
@@ -1092,12 +1265,9 @@ module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -1123,28 +1293,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -1152,15 +1337,10 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
@@ -1175,12 +1355,9 @@ module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -1206,28 +1383,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -1235,33 +1427,27 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
 //   devtool: 'none', //构建速度很快，方便观察页面变化
 //   optimization: {
-//     usedExports: true, //打包结果中的模块只导出外部用到的成员(标记枯树枝、树叶)
+//     usedExports: true,         //打包结果中的模块只导出外部用到的成员(标记枯树枝、树叶)
+//     minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+//     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
 //   }
 // }
 // module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin} = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -1287,28 +1473,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -1316,33 +1517,28 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
 //   devtool: 'none', //构建速度很快，方便观察页面变化
 //   optimization: {
-//     sideEffects: true, //无副作用打包
+//     usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+//     minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+//     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+//     sideEffects: true,         //无副作用打包
 //   }
 // }
 // module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -1368,28 +1564,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -1397,33 +1608,28 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
 //   devtool: 'none', //构建速度很快，方便观察页面变化
 //   optimization: {
-//     sideEffects: true, //无副作用打包
+//     usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+//     minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+//     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+//     sideEffects: true,         //无副作用打包
 //   }
 // }
 // module.exports = config
 
 
 // const path = require('path')
-// const {
-//   CleanWebpackPlugin
-// } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin} = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -1431,7 +1637,7 @@ module.exports = config
 //   },
 //   output: {
 //     filename: 'bundle.js',
-//     path: path.join(__dirname, 'dist_codeSplitting_none')
+//     path: path.join(__dirname, 'dist_importDemand_none')
 //   },
 //   resolve: {
 //     alias: {
@@ -1449,28 +1655,43 @@ module.exports = config
 //       },
 //       {
 //         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//         use: 'url-loader'
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'          //打包后引用地址(相对name)
+//           }
+//         }
 //       },
 //       {
 //         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//         use: 'url-loader'
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
-//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//         use: 'url-loader'
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[ext]',
+//             publicPath: './'
+//           }
+//         }
 //       },
 //       {
 //         test: /\.md$/,
-//         use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-//       },
-//       {
-//         test: /\.js$/,
-//         use: {
-//           loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//           options: {
-//             presets: ['@babel/preset-env']
-//           }
-//         }
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //       }
 //     ]
 //   },
@@ -1478,42 +1699,253 @@ module.exports = config
 //     new CleanWebpackPlugin(),
 //     new HtmlWebpackPlugin({
 //       filename: 'index.html', //文件名
-//       title: 'Webpack', //title属性
-//       meta: { //meta标签
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
 //         viewPort: 'width=device-width'
 //       }
-//     }),
-//     new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//       patterns: [
-//         { from: './public' } 
-//       ]
 //     }),
 //     new RemoveCommentsPlugin()
 //   ],
 //   devtool: 'none', //构建速度很快，方便观察页面变化
 //   optimization: {
-//     sideEffects: true, //无副作用打包
+//     usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+//     minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+//     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+//     sideEffects: true,         //无副作用打包
 //   },
-//   devServer: {
-//     port: '8081',
-//     open: true,
-//     hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-//     overlay: {
-//       errors: true,
-//       warnings: false
-//     },
-//     contentBase: './public'
-//   }
 // }
 // module.exports = config
+
+
+// const path = require('path')
+// const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// const config = {
+//   mode: 'none',
+//   entry: {
+//     app: './src/index.js'
+//   },
+//   output: {
+//     filename: 'js/[name].[chunkhash].js',
+//     path: path.join(__dirname, 'dist_hash_and_css')
+//   },
+//   resolve: {
+//     alias: {
+//       '@': path.join(__dirname, '..', 'src')
+//     },
+//     extensions: ['.js', '.json', '.vue']
+//   },
+//   module: {
+//     rules: [{
+//         test: /\.css$/, //正则匹配文件路径
+//         use: [ //指定具体的loader,一组链式loader按相反顺序执行
+//           'style-loader',
+//           'css-loader'
+//         ]
+//       },
+//       {
+//         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+//         exclude: /(node_modules)/, //提供构建速度
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//             name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+//             publicPath: './'                 //打包后引用地址(相对name)
+//           }
+//         }
+//       },
+//       {
+//         test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'fonts/[name].[hash].[ext]',
+//             publicPath: './'
+//           }
+//         }
+//       },
+//       {
+//         test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//         exclude: /(node_modules)/,
+//         use: {
+//           loader: 'url-loader',
+//           options: {
+//             limit: 20000, 
+//             name: 'media/[name].[hash].[ext]',
+//             publicPath: './'
+//           }
+//         }
+//       },
+//       {
+//         test: /\.md$/,
+//         use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//       }
+//     ]
+//   },
+//   plugins: [
+//     new CleanWebpackPlugin(),
+//     new HtmlWebpackPlugin({
+//       filename: 'index.html', //文件名
+//       title: 'Webpack',       //title属性
+//       meta: {                 //meta标签
+//         viewPort: 'width=device-width'
+//       }
+//     }),
+//     new RemoveCommentsPlugin(),
+//     new MiniCssExtractPlugin({
+//       filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+//       chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+//     })
+//   ],
+//   devtool: 'none', //构建速度很快，方便观察页面变化
+//   optimization: {
+//     usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+//     minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+//     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+//     sideEffects: true,         //无副作用打包
+//     minimizer: [
+//       new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+//     ]
+//   },
+// }
+// module.exports = config
+
+
+const path = require('path')
+const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const { dirname } = require('path')
+const config = {
+  mode: 'none',
+  entry: {
+    app: './src/index.js'
+  },
+  output: {
+    filename: 'js/[name].[chunkhash].js',
+    path: path.join(__dirname, 'dist_test')
+  },
+  resolve: {
+    alias: {
+      '@': path.join(__dirname, '..', 'src')
+    },
+    extensions: ['.js', '.json', '.vue']
+  },
+  module: {
+    rules: [{
+        test: /\.css$/, //正则匹配文件路径
+        use: [ //指定具体的loader,一组链式loader按相反顺序执行
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+        exclude: /(node_modules)/, //提高构建速度
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+            name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+            publicPath: './'                 //打包后引用地址(相对name)
+          }
+        }
+      },
+      {
+        test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 20000, 
+            name: 'fonts/[name].[hash].[ext]',
+            publicPath: './'
+          }
+        }
+      },
+      {
+        test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 20000, 
+            name: 'media/[name].[hash].[ext]',
+            publicPath: './'
+          }
+        }
+      },
+      {
+        test: /\.md$/,
+        use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+      }
+    ]
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html', //文件名
+      title: 'Webpack',       //title属性
+      meta: {                 //meta标签
+        viewPort: 'width=device-width'
+      }
+    }),
+    new RemoveCommentsPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+      chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+    })
+  ],
+  devtool: 'none', //构建速度很快，方便观察页面变化
+  optimization: {
+    usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+    minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+    concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+    sideEffects: true,         //无副作用打包
+    minimizer: [
+      new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+    ],
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        libs: { //基础类库
+          name: 'chunk-libs',
+          test: /[\\/]node_modules[\\]/,
+          priority: 10,
+          chunks: 'initial' //只打包初始时依赖的第三方
+        },
+        elementUI: { //UI组件库
+          name: 'chunk-elementUI', //elementUI单独拆包
+          test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+          priority: 20,
+        },
+        commons: { //自定义组件/函数
+          name: 'chunk-commons',
+          test: path.resolve(dirname, 'src/components'),
+          priority: 5,
+          minChunks: 3, //最小共用次数
+          reuseExistingChunk: true
+        }
+      }
+    }
+  },
+}
+module.exports = config
 
 
 // const webpack = require('webpack')
 // const path = require('path')
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const RemoveCommentsPlugin = require('./remove-comments-plugin.js')
+// const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 // module.exports = (env, argv) => {
@@ -1539,36 +1971,65 @@ module.exports = config
 //         },
 //         {
 //           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-//           use: 'url-loader'
+//           use: {
+//             loader: 'url-loader',
+//             options: {
+//               limit: 20000, //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+//               name: '[name].[ext]',
+//               outputPath: 'img/', //资源文件输出目录
+//               publicPath: './img/' //打包后引用地址
+//             }
+//           }
 //         },
 //         {
 //           test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-//           use: 'url-loader'
+//           use: {
+//             loader: 'url-loader',
+//             options: {
+//               limit: 20000,
+//               name: '[name].[ext]',
+//               outputPath: 'fonts/', 
+//               publicPath: './fonts/'
+//             }
+//           }
 //         },
 //         {
-//           test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载媒体
-//           use: 'url-loader'
+//           test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+//           use: {
+//             loader: 'url-loader',
+//             options: {
+//               limit: 20000,
+//               name: '[name].[ext]',
+//               outputPath: 'media/', 
+//               publicPath: './media/'
+//             }
+//           }
 //         },
 //         {
 //           test: /\.md$/,
-//           use: './markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+//           use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
 //         },
 //         {
 //           test: /\.js$/,
-//           use: {
-//             loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
-//             options: {
-//               presets: ['@babel/preset-env']
-//             }
-//           }
-//         }
+//           include: path.resolve(__dirname, "src"),
+//           loader: "babel-loader"
+//         },
+//         // {
+//         //   test: /\.js$/,
+//         //   use: {
+//         //     loader: 'babel-loader', //babel主要用于在旧的浏览器或环境中将ES6代码转换为ES5代码
+//         //     options: {
+//         //       presets: ['@babel/preset-env']
+//         //     }
+//         //   }
+//         // }
 //       ]
 //     },
 //     plugins: [
 //       new HtmlWebpackPlugin({
 //         filename: 'index.html', //文件名
-//         title: 'Webpack', //title属性
-//         meta: { //meta标签
+//         title: 'Webpack',       //title属性
+//         meta: {                 //meta标签
 //           viewPort: 'width=device-width'
 //         }
 //       }),
@@ -1584,11 +2045,7 @@ module.exports = config
 //       port: '8081',
 //       open: true,
 //       hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-//       overlay: {
-//         errors: true,
-//         warnings: false
-//       },
-//       contentBase: './public'
+//       overlay: { errors: true, warnings: false },
 //     },
 //     config.plugins = [
 //       ...config.plugins,
@@ -1611,11 +2068,6 @@ module.exports = config
 //         'process.env.NODE_ENV': JSON.stringify('production')
 //       }),
 //       new CleanWebpackPlugin(), //每次打包前清空dist文件夹
-//       new CopyWebpackPlugin({ //生产环境上线打包时需要拷贝到输出目录的资源文件目录
-//         patterns: [
-//           { from: './public' } 
-//         ]
-//       }),
 //       new MiniCssExtractPlugin(), //提取CSS代码到单独的CSS文件,通过<link>标签引入到页面
 //       new OptimizeCssAssetsWebpackPlugin(), //压缩CSS文件代码
 //     ]

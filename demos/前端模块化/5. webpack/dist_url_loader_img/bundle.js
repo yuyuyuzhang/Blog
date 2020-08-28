@@ -97,7 +97,7 @@ __webpack_require__.r(__webpack_exports__);
 const heading = Object(_head_js__WEBPACK_IMPORTED_MODULE_0__["default"])()
 document.body.append(heading)
 
-// 导入其他类型资源
+// 导入其他类型资源 ( CSS、图片、字体 )
 
 /***/ }),
 /* 1 */
@@ -105,7 +105,6 @@ document.body.append(heading)
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-
 // 导出一个箭头函数
 /* harmony default export */ __webpack_exports__["default"] = (() => {
   const element = document.createElement('h2')
@@ -117,6 +116,7 @@ __webpack_require__.r(__webpack_exports__);
   
   return element 
 });
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -137,12 +137,16 @@ options.singleton = false;
 
 var update = api(content, options);
 
+
+
 module.exports = content.locals || {};
+
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
 
 var isOldIE = function isOldIE() {
   var memo;
@@ -272,8 +276,9 @@ function removeStyleElement(style) {
 
   style.parentNode.removeChild(style);
 }
-
 /* istanbul ignore next  */
+
+
 var replaceText = function replaceText() {
   var textStore = [];
   return function replace(index, replacement) {
@@ -410,6 +415,7 @@ module.exports = function (list, options) {
     lastIdentifiers = newLastIdentifiers;
   };
 };
+
 /***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -423,18 +429,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _public_cat_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
 // Imports
 
+
+
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_public_cat_jpg__WEBPACK_IMPORTED_MODULE_2__["default"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, "body {\r\n  color: red;\r\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ")\r\n}\r\ntextarea {\r\n  color: green;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.i, "/* @font-face {\r\n  font-family: 'myFont';\r\n  src: url('../public/TJS.ttf');\r\n} */\r\nbody {\r\n  color: red;\r\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n  /* font-family: 'myFont' */\r\n}\r\ntextarea {\r\n  color: green;\r\n}", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
+
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
 
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
@@ -519,9 +529,9 @@ function cssWithMappingToString(item, useSourceMap) {
   }
 
   return [content].join('\n');
-} 
+} // Adapted from convert-source-map (MIT)
 
-// Adapted from convert-source-map (MIT)
+
 function toComment(sourceMap) {
   // eslint-disable-next-line no-undef
   var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
@@ -534,6 +544,7 @@ function toComment(sourceMap) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
 
 module.exports = function (url, options) {
   if (!options) {
@@ -567,6 +578,7 @@ module.exports = function (url, options) {
 
   return url;
 };
+
 /***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
