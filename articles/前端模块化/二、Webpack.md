@@ -3572,33 +3572,37 @@ MiniCSSExtractPlugin 插件只负责将 CSS 代码提取到单独的 CSS 文件�
 
 当我们把打包后的 dist 目录部署到服务器上后，客户端浏览器就能够访问该服务器的网站和资源，而获取资源是比较耗时的，因此浏览器使用一种名为`缓存`的技术，可以通过命中缓存，降低网络流量，使网站加载速度更快
 
-然而如果我们在部署新版本时，未更改资源文件名，浏览器很可能会认为其未更新，转而使用缓存版本，如果新版本和缓存版本资源内容不同，就需要用户手动清除浏览器缓存之后才能访问新版本内容，这对于用户来说并不方便
+然而如果我们在部署新版本时，未更改资源文件名，浏览器很可能会认为其未更新，转而使用缓存版本，如果新版本和缓存版本资源内容不同，就需要用户手动清除浏览器缓存之后才能访问新版本，这对于用户来说并不方便
 
 Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包都生成新的文件名，从而告诉浏览器是否要读取缓存
 
-#### ① hash
+#### ① module vs chunk
 
-hash 是`项目级别`的，整个项目的所有文件共用一个 hash，Webpack 每次重新构建打包时，如果项目没有任何更改，其 hash 值就不会改变，否则就会改变
+一个 chunk 包含一或多个 module
 
-`url-loader 管理的图片文件、字体文件、多媒体文件`等静态资源，应该在打包的文件名里嵌套 hash
+* **module**：代码中按照功能拆分的离散功能块，`一个 import 就是 module（JS 文件、CSS 文件、图片文件、字体文件、多媒体文件）`
 
-#### ② chunkhash
+* **chunk**：代码中引用的文件根据配置合并成一或多个包，`一个包就是 chunk（输出的 bundle.js 文件）`
 
-chunkhash 是 `JS 文件级别`的，每个 JS 模块及其依赖的任意类型模块共用一个 chunkhash，如果某个 JS 模块及其依赖的任意类型模块内容改变，其共用的 chunkhash 值就会改变，否则不会改变
+#### ② hash vs chunkhash vs contenthash
 
-`output 输出的 JS 文件`，应该在打包的文件名里嵌套 chunkhash
-
-#### ③ contenthash
-
-contenthash 是 `CSS 文件级别`的，每个 CSS 模块一个 contenthash，只要 CSS 模块内容不变，其 contenthash 值不会改变，否则就会改变
-
-contenthash 值的出现主要是为了让 CSS 文件不受 JS 文件的影响，比如 foo.css 被 foo.js 引用了，所以它们共用相同的 chunkhash，但这样是有问题的，如果 foo.js 修改了代码，foo.css 文件就算内容没有任何改变，其 hash、chunkhash 也会随之改变
-
-`MiniCSSExtractPlugin 插件输出的 CSS 文件`，应该在打包的文件名里嵌套 contenthash
-
-* webpack.config.js
+* **hash**：hash 是`项目级别`的，整个项目的所有文件共用一个 hash，Webpack 每次重新构建打包时，如果项目没有任何更改，其 hash 值就不会改变，否则就会改变
   
-  ```javascript
+  `url-loader 管理的图片文件、字体文件、多媒体文件`等静态资源，应该在打包的文件名里嵌套 hash
+
+* **chunkhash**：chunkhash 是 `JS 文件级别`的，每个 JS 模块及其依赖的任意类型模块共用一个 chunkhash，如果某个 JS 模块及其依赖的任意类型模块内容改变，其共用的 chunkhash 值就会改变，否则不会改变
+  
+  `output 输出的 JS 文件`，应该在打包的文件名里嵌套 chunkhash
+
+* **contenthash**：contenthash 是 `CSS 文件级别`的，每个 CSS 模块一个 contenthash，只要 CSS 模块内容不变，其 contenthash 值不会改变，否则就会改变
+  
+  contenthash 值的出现主要是为了让 CSS 文件不受 JS 文件的影响，比如 foo.css 被 foo.js 引用了，所以它们共用相同的 chunkhash，但这样是有问题的，如果 foo.js 修改了代码，foo.css 文件就算内容没有任何改变，其 hash、chunkhash 也会随之改变
+  
+  `MiniCSSExtractPlugin 插件输出的 CSS 文件`，应该在打包的文件名里嵌套 contenthash
+
+  * webpack.config.js
+  
+   ```javascript
   const path = require('path')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -3612,7 +3616,7 @@ contenthash 值的出现主要是为了让 CSS 文件不受 JS 文件的影响�
     },
     output: {
       filename: 'js/[name].[chunkhash].js',
-      path: path.join(__dirname, 'dist_hash_and_css')
+      path: path.join(__dirname, 'dist_hash_chunkhash_contenthash')
     },
     resolve: {
       alias: {
@@ -3705,15 +3709,311 @@ contenthash 值的出现主要是为了让 CSS 文件不受 JS 文件的影响�
   module.exports = config
   ```
 
+  * npx webpack
+  
+  ![hash_chunkhash_contenthash打包](../../images/前端模块化/webpack/hash_chunkhash_contenthash打包.png)
+
+#### ③ moduleId vs chunkId
+
+* **moduleId**：Webpack 内部为每个 module 维护了一个递增的 moduleId，当增加或删除 moudle 的时候，就需要增加或删除 moduleId，导致其他 module 虽然内容没有变化，但由于 moduleId 被强占，自身 moduleId 只能自增或自减，因此整个 moduleId 表的顺序都错乱了
+  
+  chunk 内部的每个 module 都有一个 moduleId，如果引用一个新文件或删除一个旧文件，都可能导致其他文件的 moduleId 变化，这样缓存就失效了
+  
+  ![moduleId表](../../images/前端模块化/webpack/moduleId表.png)
+  
+  Webpack 提供 `HashedModuleIdsPlugin` 插件解决这个问题，
+  不使用自增的 moudleId，使用 `hash 之后的文件路径`作为 moudleId
+  
+  ![新moduleId](../../images/前端模块化/webpack/新moduleId.png)
+
+* **chunkId**：Webpack 内部为每个 chunk 维护了一个递增的 chunkId，当增加或删除 chunk 的时候，就需要增加或删除 chunkId，导致其他 module 虽然内容没有变化，但由于 chunkId 被强占，自身 chunkId 只能自增或自减，因此整个 chunkId 表的顺序都错乱了
+  
+  Webpack 提供 `NamedChunkPlugin` 插件解决这个问题，但是该插件只对有 name 的 chunk 有效，因此对于`路由懒加载`的页面无效，`NamedChunkPlugin` 插件支持自定义 `nameResolver` 规则解决路由懒加载无效的问题
+
+  * webpack.config.js
+  
+  ```javascript
+  const path = require('path')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const webpack = require('webpack')
+  const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
+  const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
+  const config = {
+    mode: 'none',
+    entry: {
+      app: './src/index.js'
+    },
+    output: {
+      filename: 'js/[name].[chunkhash].js',
+      path: path.join(__dirname, 'dist_moduleId_chunkId')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [{
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'                 //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+        chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+      }),
+      new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
+      new webpack.NamedChunksPlugin(chunk => { //固定chunkId
+        if (chunk.name) {
+          return chunk.name;
+        }
+        const modules = Array.from(chunk.modulesIterable);
+        if (modules.length > 1) {
+          const hash = require("hash-sum");
+          const joinedHash = hash(modules.map(m => m.id).join("_"));
+          let len = nameLength;
+          while (seen.has(joinedHash.substr(0, len))) len++;
+          seen.add(joinedHash.substr(0, len));
+          return `chunk-${joinedHash.substr(0, len)}`;
+        } else {
+          return modules[0].id;
+        }
+      })
+    ],
+    devtool: 'none', //构建速度很快，方便观察页面变化
+    optimization: {
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
+      minimizer: [
+        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+      ]
+    },
+  }
+  module.exports = config
+  ```
+
+  * npx webpack
+  
+  ![moduleId_chunkId打包](../../images/前端模块化/webpack/moduleId_chunkId打包.png)
+
+#### ④ manifest
+
+使用 Webpack 构建的应用程序中，主要存在三种代码类型
+
+* 第三方库
+* 开发者编写的源代码
+* webpack 的 runtime 和 manifest
+
+manifest 和 runtime 的概念如下
+
+* **manifest**：Webpack compiler 开始执行、解析、映射应用程序时，保留所有模块的详细要点的`数据集合`，所有 import/require 语句都转换为 `__webpack_require__` 方法，并指向模块标识符
+
+* **runtime**：应用程序打包完成在浏览器运行时，webpack 用来连接所有模块所需的`逻辑代码`，通过 manifest 中的数据，runtime 能够查询模块标识符，检索出对应的模块
+
+Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何提取 manifest，作用是将包含 chunks 映射关系的 list 从 app.js 提取出来单独生成一个 `runtimeChunk.xxx.js`，但是该 JS 文件非常小，又经常会改变，每次都需要重新请求，其 HTTP 耗时远大于执行时间，因此建议不要单独拆包，而是使用插件 `ScriptExtHtmlWebpackPlugin` 将其内联到 `index.html`，index.html 本来每次打包都会变
+
+* `npm install script-ext-html-webpack-plugin --save-dev`
+
+* webpack.config.js
+  
+  ```javascript
+  const path = require('path')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+  const webpack = require('webpack')
+  const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
+  const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
+  const config = {
+    mode: 'none',
+    entry: {
+      app: './src/index.js'
+    },
+    output: {
+      filename: 'js/[name].[chunkhash].js',
+      path: path.join(__dirname, 'dist_manifest')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [{
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'                 //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+        chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+      }),
+      new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
+      new webpack.NamedChunksPlugin(chunk => { //固定chunkId
+        if (chunk.name) {
+          return chunk.name;
+        }
+        const modules = Array.from(chunk.modulesIterable);
+        if (modules.length > 1) {
+          const hash = require("hash-sum");
+          const joinedHash = hash(modules.map(m => m.id).join("_"));
+          let len = nameLength;
+          while (seen.has(joinedHash.substr(0, len))) len++;
+          seen.add(joinedHash.substr(0, len));
+          return `chunk-${joinedHash.substr(0, len)}`;
+        } else {
+          return modules[0].id;
+        }
+      }),
+      new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
+        inline: /runtime\..*\.js$/
+      })
+    ],
+    devtool: 'none', //构建速度很快，方便观察页面变化
+    optimization: {
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
+      minimizer: [
+        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+      ],
+      runtimeChunk: 'single' //提取manifest
+    },
+  }
+  module.exports = config
+  ```
+
 * npx webpack
   
-  ![hash_and_css打包](../../images/前端模块化/webpack/hash_and_css打包.png)
+  ![manifest打包](../../images/前端模块化/webpack/manifest打包.png)
+  
+* dist_manifest/index.html
+  
+  ![manifest_index](../../images/前端模块化/webpack/manifest_index.png)
 
 ### (6) Code Splitting
 
-optimization.splitChunks
-
-Webpack 4 中新增了一个 optimization.splitChunks 特性来实现`代码分包`，并且这个特性在`生产环境`下默认自动开启，以下以`原始环境`为例介绍怎样手动开启 splitChunks 功能
+Webpack 4 中新增了一个 `optimization.splitChunks` 特性来实现`代码分包`，并且这个特性在`生产环境`下默认自动开启，以下以`原始环境`为例介绍怎样手动开启 splitChunks 功能
 
 Webpack 4 代码分包策略如下
 
@@ -3724,15 +4024,156 @@ Webpack 4 代码分包策略如下
 
 ![分包策略](../../images/前端模块化/webpack/分包策略.png)
 
-module：
+webpack.config.js
 
-trunk：
-
-### (8) 长缓存 Long term caching
-
-### (7) babel-loader
-
-①②③④⑤⑥⑦⑧⑨⑩
+```javascript
+const path = require('path')
+const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+const webpack = require('webpack')
+const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
+const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
+const config = {
+  mode: 'none',
+  entry: {
+    app: './src/index.js'
+  },
+  output: {
+    filename: 'js/[name].[chunkhash].js',
+    path: path.join(__dirname, 'dist_codeSplitting')
+  },
+  resolve: {
+    alias: {
+      '@': path.join(__dirname, '..', 'src')
+    },
+    extensions: ['.js', '.json', '.vue']
+  },
+  module: {
+    rules: [{
+        test: /\.css$/, //正则匹配文件路径
+        use: [ //指定具体的loader,一组链式loader按相反顺序执行
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+        exclude: /(node_modules)/, //提高构建速度
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+            name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+            publicPath: './'                 //打包后引用地址(相对name)
+          }
+        }
+      },
+      {
+        test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 20000, 
+            name: 'fonts/[name].[hash].[ext]',
+            publicPath: './'
+          }
+        }
+      },
+      {
+        test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 20000, 
+            name: 'media/[name].[hash].[ext]',
+            publicPath: './'
+          }
+        }
+      },
+      {
+        test: /\.md$/,
+        use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+      }
+    ]
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html', //文件名
+      title: 'Webpack',       //title属性
+      meta: {                 //meta标签
+        viewPort: 'width=device-width'
+      }
+    }),
+    new RemoveCommentsPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+      chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+    }),
+    new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
+    new webpack.NamedChunksPlugin(chunk => { //固定chunkId
+      if (chunk.name) {
+        return chunk.name;
+      }
+      const modules = Array.from(chunk.modulesIterable);
+      if (modules.length > 1) {
+        const hash = require("hash-sum");
+        const joinedHash = hash(modules.map(m => m.id).join("_"));
+        let len = nameLength;
+        while (seen.has(joinedHash.substr(0, len))) len++;
+        seen.add(joinedHash.substr(0, len));
+        return `chunk-${joinedHash.substr(0, len)}`;
+      } else {
+        return modules[0].id;
+      }
+    }),
+    new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
+      inline: /runtime\..*\.js$/
+    })
+  ],
+  devtool: 'none', //构建速度很快，方便观察页面变化
+  optimization: {
+    usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+    minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+    concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+    sideEffects: true,         //无副作用打包
+    minimizer: [
+      new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+    ],
+    runtimeChunk: 'single' //提取manifest
+  },
+  splitChunks: { //codeSplitting
+    chunks: 'all',
+    cacheGroups: {
+      libs: { //基础类库
+        name: 'chunk-libs',
+        test: /[\\/]node_modules[\\]/,
+        priority: 10,
+        chunks: 'initial' //只打包初始时依赖的第三方
+      },
+      elementUI: { //UI组件库
+        name: 'chunk-elementUI', //elementUI单独拆包
+        test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+        priority: 20,
+      },
+      commons: { //自定义组件/函数
+        name: 'chunk-commons',
+        test: path.resolve(__dirname, 'src/components'),
+        priority: 5,
+        minChunks: 3, //最小共用次数
+        reuseExistingChunk: true
+      }
+    }
+  }
+}
+module.exports = config
+```
 
 ## 13. 开发环境和生产环境
 
@@ -3807,25 +4248,239 @@ module.exports = (env, argv) => {
   })
   ```
 
-### (4) 生产环境下的优化插件
+### (4) 以一个配置文件为例
 
-Webpack 4 的生产环境 production 模式下，Webpack 内部开启了很多通用的优化功能，对于开发者而言
+插件 DefinePlugin 用于为代码注入全局成员，例如 `process.env.NODE_ENV`，很多第三方插件都是通过这个全局成员判断当前运行环境，从而决定是否执行例如打印日志之类的操作
 
-#### ① Define Plugin
+* webpack.config.js
+  
+  ```javascript
+  const path = require('path')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+  const webpack = require('webpack')
+  const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
+  const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
+  module.exports = (env, argv) => {
+    console.log(env)
+    //公共配置
+    const config = {
+      entry: {
+        app: './src/index.js'
+      },
+      resolve: {
+        alias: {
+          '@': path.join(__dirname, '..', 'src')
+        },
+        extensions: ['.js', '.json', '.vue']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, //正则匹配文件路径
+            use: [ //指定具体的loader,一组链式loader按相反顺序执行
+              'style-loader',
+              'css-loader'
+            ]
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+                name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+                publicPath: './'                 //打包后引用地址(相对name)
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, 
+                name: 'fonts/[name].[hash].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, 
+                name: 'media/[name].[hash].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.md$/,
+            use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+          }
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+        new RemoveCommentsPlugin(),
+      ],
+    }
 
-插件 Define Plugin 用于为代码注入全局成员，例如 `process.env.NODE_ENV`，很多第三方插件都是通过这个全局成员判断当前运行环境，从而决定是否执行例如打印日志之类的操作
+    // 开发环境下的特殊配置
+    if (env === 'development') {
+      config.mode = 'development'
+      config.devtool = 'cheap-eval-module-source-map',
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false },
+      },
+      config.plugins = [
+        ...config.plugins,
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('development')
+        }),
+        new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
+      ]
+    }
 
-### (5) package.json
+    // 生产环境下的特殊配置
+    if (env === 'production') {
+      config.mode = 'production'
+      config.devtool = 'none',
+      config.output = {
+        filename: 'js/[name].[chunkhash].js',
+        path: path.join(__dirname, 'dist_config_one')
+      },
+      config.plugins = [
+        ...config.plugins,
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+          chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+        }),
+        new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
+        new webpack.NamedChunksPlugin(chunk => { //固定chunkId
+          if (chunk.name) {
+            return chunk.name;
+          }
+          const modules = Array.from(chunk.modulesIterable);
+          if (modules.length > 1) {
+            const hash = require("hash-sum");
+            const joinedHash = hash(modules.map(m => m.id).join("_"));
+            let len = nameLength;
+            while (seen.has(joinedHash.substr(0, len))) len++;
+            seen.add(joinedHash.substr(0, len));
+            return `chunk-${joinedHash.substr(0, len)}`;
+          } else {
+            return modules[0].id;
+          }
+        }),
+        new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
+          inline: /runtime\..*\.js$/
+        })
+      ]
+      config.optimization = {
+        minimizer: [
+          new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+        ],
+        runtimeChunk: 'single', //提取manifest
+        splitChunks: { //codeSplitting
+          chunks: 'all',
+          cacheGroups: {
+            libs: { //基础类库
+              name: 'chunk-libs',
+              test: /[\\/]node_modules[\\]/,
+              priority: 10,
+              chunks: 'initial' //只打包初始时依赖的第三方
+            },
+            elementUI: { //UI组件库
+              name: 'chunk-elementUI', //elementUI单独拆包
+              test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+              priority: 20,
+            },
+            commons: { //自定义组件/函数
+              name: 'chunk-commons',
+              test: path.resolve(__dirname, 'src/components'),
+              priority: 5,
+              minChunks: 3, //最小共用次数
+              reuseExistingChunk: true
+            }
+          }
+        }
+      }
+    }
+    return config
+  }
+  ```
 
-* **devDependencies**：Node 项目在开发环境下需要的一些前端依赖
-* **dependencies**：Node 项目部署上线后代码执行所需要的第三方依赖包
+* package.json
+  
+  * **devDependencies**：Node 项目在开发环境下需要的一些前端依赖
+  * **dependencies**：Node 项目部署上线后代码执行所需要的第三方依赖包
+  
+  ```json
+  {
+    "name": "webpack-front",
+    "version": "0.1.0",
+    "main": "n/a",
+    "author": "yuyuyuzhang",
+    "license": "MIT",
+    "sideEffects": [
+      "./src/numPad.js",
+      "*.css"
+    ],
+    "scripts": {
+      "serve": "webpack-dev-server --mode development --env development", //加上--env环境参数
+      "build": "webpack --mode production --env production"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.11.4",
+      "@babel/preset-env": "^7.11.0",
+      "babel-loader": "^8.1.0",
+      "babel-plugin-dynamic-import-node": "^2.3.3",
+      "clean-webpack-plugin": "^3.0.0",
+      "copy-webpack-plugin": "^6.0.3",
+      "css-loader": "^4.2.2",
+      "file-loader": "^6.0.0",
+      "html-webpack-plugin": "^4.3.0",
+      "mini-css-extract-plugin": "^0.10.0",
+      "optimize-css-assets-webpack-plugin": "^5.0.3",
+      "script-ext-html-webpack-plugin": "^2.1.4",
+      "style-loader": "^1.2.1",
+      "url-loader": "^4.1.0",
+      "webpack": "^4.44.1",
+      "webpack-cli": "^3.3.12",
+      "webpack-dev-server": "^3.11.0",
+      "webpack-merge": "^5.1.2"
+    },
+    "dependencies": {}
+  }
+  ```
 
-环境变量
+* npm run build
+  
+  ![config_one打包](../../images/前端模块化/webpack/config_one打包.png)
 
-环境变量（environment variables）不属于 Node 范畴，是操作系统用于设定执行环境的参数，会在程序运行时传递给应用程序
-
-node 的 process.env 属性返回包含用户环境的对象
-Windows 不支持 NODE_ENV=development的设置方式
-cross-env：跨平台设置和使用环境变量 npm install cross-env --save-dev
-
-①②③④⑤⑥⑦⑧⑨⑩
+* npm run serve
+  
+  ![config_one效果](../../images/前端模块化/webpack/config_one效果.png)
