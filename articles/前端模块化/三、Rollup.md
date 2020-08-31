@@ -38,7 +38,7 @@ Rollup 诞生的目的并不是要与 Webpack 这样的工具全面竞争，其�
   
 通过 npm 安装 rollup，会产生 node_modules 依赖文件夹和 package-lock.json 文件
 
-![安装](../../images/前端模块化/rollup/安装.png)
+![安装](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/%E5%AE%89%E8%A3%85.png)
 
 ### (2) 打包
 
@@ -48,7 +48,7 @@ Rollup 诞生的目的并不是要与 Webpack 这样的工具全面竞争，其�
 
 Rollup 打包结果与 Webpack 相比异常简洁，几乎与手写代码一样，就是把打包过程中的各个模块按照顺序依次拼接到一起
 
-![bundle](../../images/前端模块化/rollup/bundle.png)
+![bundle](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/bundle.png)
 
 ## 3. 有配置打包
 
@@ -72,7 +72,7 @@ Rollup 同样支持以配置文件的方式去配置打包过程中的各项参�
   
   使用 rollup.config.js 配置文件打包
 
-  ![打包](../../images/前端模块化/rollup/打包.png)
+  ![打包](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/%E6%89%93%E5%8C%85.png)
 
 ### (2) 输出格式
 
@@ -92,7 +92,7 @@ export default formats.map(format => ({
 }))
 ```
 
-![输出格式](../../images/前端模块化/rollup/输出格式.png)
+![输出格式](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F.png)
 
 ## 4. 插件
 
@@ -144,7 +144,7 @@ Rollup 只能加载 ES6 Modules 的 JS 模块文件，不能像 Webpack 一样�
   
   重新打包，查看 dist/bundle.js 文件
   
-  ![bundle_json](../../images/前端模块化/rollup/bundle_json.png)
+  ![bundle_json](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/bundle_json.png)
 
 ### (2) @rollup/plugin-node-resolve
 
@@ -241,9 +241,9 @@ export default {
 }
 ```
 
-![dist_more](../../images/前端模块化/rollup/dist_more.png)
+![dist_more](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/dist_more.png)
 
-![bundle_more](../../images/前端模块化/rollup/bundle_more.png)
+![bundle_more](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/bundle_more.png)
 
 ### (3) 兼容低版本浏览器
 
@@ -291,6 +291,6 @@ index.html
 </html>
 ```
 
-![dist_more_amd](../../images/前端模块化/rollup/dist_more_amd.png)
+![dist_more_amd](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/dist_more_amd.png)
 
-![bundle_more_amd](../../images/前端模块化/rollup/bundle_more_amd.png)
+![bundle_more_amd](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/rollup/bundle_more_amd.png)

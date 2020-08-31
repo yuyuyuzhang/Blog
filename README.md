@@ -38,8 +38,6 @@ JS 系列之设计模式 进行中......
 
 前端模块化系列已完结
 
-[前端开发的发展历程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.md)
-
 ## 计算机和操作系统系列
 
 1. [计算机组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.md)
@@ -170,6 +168,10 @@ JS 系列之设计模式 进行中......
 
 ## JS 系列之设计模式
 
+## 前端工程化之前端开发的发展历程
+
+[前端开发的发展历程]()
+
 ## 前端工程化系列之 Vue
 
 1. [Vue 模板](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E4%B8%80%E3%80%81Vue%20%E6%A8%A1%E6%9D%BF.md)
@@ -184,4 +186,4 @@ JS 系列之设计模式 进行中......
 1. [前端模块化](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96.md)
 2. [Webpack](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%BA%8C%E3%80%81Webpack.md)
 3. [Rollup](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%B8%89%E3%80%81Rollup.md)
-4. [Parcel](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E5%9B%9B%E3%80%81Rarcel.md)
+<!-- 4. [Parcel]() -->

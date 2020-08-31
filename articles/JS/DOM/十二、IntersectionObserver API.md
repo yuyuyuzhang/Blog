@@ -30,7 +30,7 @@ options:{
 threshold: [0, 0.25, 0.5, 0.75, 1],  //目标元素 0%、25%、50%、75%、100% 可见时将回调函数添加到 JS 引擎线程的宏任务队列
 ```
 
-![viewport](../../../images/JS/DOM/viewport.gif)
+![viewport](https://github.com/yuyuyuzhang/Blog/blob/master/images/JS/DOM/viewport.gif)
 
 ### (3) callback 回调函数
 
@@ -61,7 +61,7 @@ IntersectionObserverEntry 对象表示`目标元素的信息`
 }
 ```
 
-![交叉观察器](../../../images/JS/DOM/交叉观察器.png)
+![交叉观察器](https://github.com/yuyuyuzhang/Blog/blob/master/images/JS/DOM/%E4%BA%A4%E5%8F%89%E8%A7%82%E5%AF%9F%E5%99%A8.png)
 
 ## 3. 实例
 

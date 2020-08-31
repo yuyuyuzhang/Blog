@@ -22,7 +22,7 @@
 </div>
 ```
 
-![真实DOM](../../../images/前端工程化/Vue/真实DOM.png)
+![真实DOM](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E7%9C%9F%E5%AE%9EDOM.png)
 
 ## 2. 虚拟 DOM
 
@@ -199,7 +199,7 @@ const vm = new Vue({
 </script>
 ```
 
-![v-show/if](../../../images/前端工程化/Vue/v-show&v-if.png)
+![v-show&v-if](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/v-show%26v-if.png)
 
 ### (3) v-for
 
@@ -339,7 +339,7 @@ const vm = new Vue({
   console.log(div.attributes) //NamedNodeMap {0: id, 1: data-a, 2: value, length: 3}
   ```
 
-  ![attribute](../../../images/前端工程化/Vue/attribute.png)
+  ![attribute](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/attribute.png)
 
 * .prop 修饰符属性绑定，作为一个 `property` 属性绑定
   
@@ -372,7 +372,7 @@ const vm = new Vue({
   </script>
   ```
 
-  ![.prop修饰符](../../../images/前端工程化/Vue/.prop修饰符.png)
+  ![.prop修饰符](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/.prop%E4%BF%AE%E9%A5%B0%E7%AC%A6.png)
 
 .sync 修饰符属性绑定
 

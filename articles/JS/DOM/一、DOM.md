@@ -65,4 +65,4 @@ DOM 是针对 HTML 文档的一个`应用程序编程接口`（API），浏览�
 </html>
 ```
 
-![dom树](../../../images/JS/DOM/DOM树.png)
+![DOM树](https://github.com/yuyuyuzhang/Blog/blob/master/images/JS/DOM/DOM%E6%A0%91.png)
