@@ -34,11 +34,9 @@ JS 系列之函数式编程 进行中......
 
 JS 系列之设计模式 进行中......
 
-前端工程化系列之 Vue 进行中......
+前端工程化系列之 Vue 已完结
 
-前端工程化系列之 React 进行中......
-
-前端模块化系列 进行中......
+前端模块化系列已完结
 
 [前端开发的发展历程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.md)
 
@@ -87,13 +85,14 @@ JS 系列之设计模式 进行中......
 
 ## 浏览器系列之浏览器相关
 
-<!-- 1. [浏览器组成和渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90%E5%92%8C%E6%B8%B2%E6%9F%93.md) -->
-2. [Window 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81Window%E5%AF%B9%E8%B1%A1.md)
-3. [Screen 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%89%E3%80%81Screen%E5%AF%B9%E8%B1%A1.md)
-4. [Navigator 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%9B%9B%E3%80%81Navigator%E5%AF%B9%E8%B1%A1.md)
-5. [Location 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%94%E3%80%81Location%E5%AF%B9%E8%B1%A1.md)
-6. [History 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AD%E3%80%81History%E5%AF%B9%E8%B1%A1.md)
-7. [Notification 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%83%E3%80%81Notification%E5%AF%B9%E8%B1%A1.md)
+1. [浏览器组成和渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90%E5%92%8C%E6%B8%B2%E6%9F%93.md)
+<!-- 2. [浏览器缓存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98.md) -->
+3. [Window 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%89%E3%80%81Window%E5%AF%B9%E8%B1%A1.md)
+4. [Screen 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%9B%9B%E3%80%81Screen%E5%AF%B9%E8%B1%A1.md)
+5. [Navigator 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%94%E3%80%81Navigator%E5%AF%B9%E8%B1%A1.md)
+6. [Location 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AD%E3%80%81Location%E5%AF%B9%E8%B1%A1.md)
+7. [History 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%83%E3%80%81History%E5%AF%B9%E8%B1%A1.md)
+8. [Notification 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AB%E3%80%81Notification%E5%AF%B9%E8%B1%A1.md)
 
 ## 浏览器系列之浏览器通信
 
@@ -178,10 +177,7 @@ JS 系列之设计模式 进行中......
 3. [Vue 组件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E4%B8%89%E3%80%81Vue%20%E7%BB%84%E4%BB%B6.md)
 4. [数据绑定](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A.md)
 5. [Vue Router](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E4%BA%94%E3%80%81Vue%20Router.md)
-<!-- 6. [Vuex](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E5%85%AD%E3%80%81Vuex.md)
-7. [Vue 项目](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E4%B8%83%E3%80%81Vue%20%E9%A1%B9%E7%9B%AE.md) -->
-
-## 前端工程化系列之 React
+6. [Vuex](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E5%85%AD%E3%80%81Vuex.md)
 
 ## 前端模块化系列
 
