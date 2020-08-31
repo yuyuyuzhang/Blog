@@ -18,9 +18,9 @@
 
 **⑥ 设备**：磁盘、输入设备 ( 鼠标、键盘、扫描仪、视频摄像头 )、输出设备 ( 显示器、打印机、绘图仪 )
 
-![IO系统的层次](../../images/计算机/IO管理/IO系统的层次.png)
+![IO系统的层次](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/IO%E7%AE%A1%E7%90%86/IO%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B1%82%E6%AC%A1.png)
 
-![层次视图](../../images/计算机/IO管理/层次视图.png)
+![层次视图](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/IO%E7%AE%A1%E7%90%86/%E5%B1%82%E6%AC%A1%E8%A7%86%E5%9B%BE.png)
 
 ## 2. 设备控制器
 
@@ -40,7 +40,7 @@
 
 **④ 地址识别**：设备控制器记录控制的每个设备的地址到`地址译码器`
 
-![设备控制器](../../images/计算机/IO管理/设备控制器.png)
+![设备控制器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/IO%E7%AE%A1%E7%90%86/%E8%AE%BE%E5%A4%87%E6%8E%A7%E5%88%B6%E5%99%A8.png)
 
 ## 3. 中断处理程序
 
@@ -54,7 +54,7 @@
 
 首先保护`阻塞进程`的 CPU 环境，然后 CPU 自动转而执行中断处理程序，执行完后再回到断点处，唤醒并继续执行原来的进程
 
-![中断处理流程](../../images/计算机/IO管理/中断处理流程.png)
+![中断处理流程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/IO%E7%AE%A1%E7%90%86/%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png)
 
 ## 4. 设备驱动程序
 
@@ -117,7 +117,7 @@
 
 设备独立性软件能够隐藏这些差异，向高层软件提供统一的逻辑数据块
 
-![设备独立性软件的功能层次](../../计算机/../images/计算机/IO管理/设备独立性软件的功能层次.png)
+![设备独立性软件的功能层次](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/IO%E7%AE%A1%E7%90%86/%E8%AE%BE%E5%A4%87%E7%8B%AC%E7%AB%8B%E6%80%A7%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%8A%9F%E8%83%BD%E5%B1%82%E6%AC%A1.png)
 
 ## 6. 用户层 IO 软件
 
@@ -147,7 +147,7 @@ GUI 采用了图形化的操作界面，将窗口、图标、菜单、鼠标和�
 
 有了 GUI，可以直接在系统桌面上显示各种常用图标，每个图标对应一个应用程序，用户只需双击图标就可以启动应用程序 ( 无需键入命令 )，用户还可以通过选择窗口、菜单、对话框、滚动条，完成对应用程序的各种控制和操作
 
-![用户与计算机硬件之间的接口](../../images/计算机/操作系统/用户与计算机硬件之间的接口.png)
+![用户与计算机硬件之间的接口](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%94%A8%E6%88%B7%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E6%8E%A5%E5%8F%A3.png)
 
 ### (2) 系统调用
 

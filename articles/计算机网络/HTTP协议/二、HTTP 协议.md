@@ -10,7 +10,7 @@
 
 ② 这是为了让 HTTP/1.1 协议更快更简单地处理大量事务，确保协议的可伸缩性，才能被应用到各种场景里
 
-![无状态协议](../../../images/计算机网络/HTTP协议/HTTP协议/无状态协议.png)
+![无状态协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%8D%8F%E8%AE%AE/%E6%97%A0%E7%8A%B6%E6%80%81%E5%8D%8F%E8%AE%AE.png)
 
 ### (2) Cookie
 
@@ -24,7 +24,7 @@
 
 ③ 客户端收到服务器返回的 Set-Cookie 字段后，从中获取 Session ID 值，将其作为 Cookie 保存在本地，下次向服务器发送请求时，浏览器会自动发送 Cookie，服务器就可以通过验证 Session ID 识别用户及其认证状态
 
-![Cookie管理状态](../../../images/计算机网络/网络安全/身份认证技术/Cookie管理状态.png)
+![Cookie管理状态](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/Cookie%E7%AE%A1%E7%90%86%E7%8A%B6%E6%80%81.png)
 
 ## 2. 持久连接
 
@@ -36,7 +36,7 @@ HTTP 协议是应用层的面向无连接协议，HTTP 协议建立在 TCP 协�
 
 HTTP 协议的初始版本中，每进行一次 HTTP 通信就要建立和断开一次 TCP 连接，随着 HTTP 的普及，使用浏览器浏览一个 HTML 页面时，会发送多个请求，请求该 HTML 页面的各种资源，每次请求都会造成无畏的 TCP 连接的建立与断开，增加通信量的开销
 
-![非持久连接](../../../images/计算机网络/HTTP协议/HTTP协议/非持久连接.png)
+![非持久连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%8D%8F%E8%AE%AE/%E9%9D%9E%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5.png)
 
 ### (3) 持久连接
 
@@ -44,14 +44,14 @@ HTTP 协议的初始版本中，每进行一次 HTTP 通信就要建立和断开
 
 **② 持久连接的好处**：减少了 TCP 连接的重复建立和断开造成的额外开销，减轻了服务器的负载，另外，减少开销的那部分时间，使 HTTP 请求和响应能更早的结束，Web 页面的显示速度有所提高
 
-![持久连接](../../../images/计算机网络/HTTP协议/HTTP协议/持久连接.png)
+![持久连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%8D%8F%E8%AE%AE/%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5.png)
 
 **③ 管理持久连接**：HTTP 报文的通用首部字段 `Connection` 用于管理持久连接
 
 * Connection 字段值为 `keep-alive` 表示服务器想建立持久连接
 * Connection 字段值为 `close` 表示服务器想断开连接
 
-![Connection管理持久连接](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Connection管理持久连接.png)
+![Connection控制逐跳首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Connection%E6%8E%A7%E5%88%B6%E9%80%90%E8%B7%B3%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
 
 ### (3) 管线化
 
@@ -61,4 +61,4 @@ HTTP 协议的初始版本中，每进行一次 HTTP 通信就要建立和断开
 
 ③ **队头堵塞**：管线化限定了客户端接收响应的顺序必须一一对应客户端发送请求的顺序，如下图所示，如果请求 1 阻塞，即使服务器已经处理完请求 2，也必须等待请求 1 处理完，然后先返回响应 1，再返回响应 2，这就是队头阻塞，第一个请求阻塞，后面的请求都需要等待
 
-![管线化](../../../images/计算机网络/HTTP协议/HTTP协议/管线化.png)
+![管线化](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%8D%8F%E8%AE%AE/%E7%AE%A1%E7%BA%BF%E5%8C%96.png)

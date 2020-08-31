@@ -10,7 +10,7 @@
 
 一个应用程序由若干子程序组成，每个子程序完成特定的功能，子程序必须`按序执行`，例如必须先执行输入程序 I，再执行计算程序 C，最后执行打印程序 P，子程序的前驱图如下所示
 
-![顺序执行](../../images/计算机/CPU管理/顺序执行.png)
+![顺序执行](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/CPU%E7%AE%A1%E7%90%86/%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C.png)
 
 程序顺序执行的特征如下
 
@@ -30,7 +30,7 @@ CPU 在同一时刻只能执行一个程序，因此单处理机只能`并发`�
 
 内存中存在多个应用程序，每个应用程序都有输入程序 I、计算程序 C、打印程序 P 这三个子程序，I1 输入数据后，C1 进行计算，然后通过 `CPU 时间片轮转等调度方式`，执行 I2，从而使得 C1 和 I2 `并发`执行，也就使得第一个应用程序和第二个应用程序`并发`执行
 
-![并发执行](../../images/计算机/CPU管理/并发执行.png)
+![并发执行](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/CPU%E7%AE%A1%E7%90%86/%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C.png)
 
 程序并发执行的特征如下
 
@@ -110,7 +110,7 @@ CPU 在同一时刻只能执行一个程序，因此单处理机只能`并发`�
 
 正在执行的进程由于发生某些事件暂时无法继续执行而自动阻塞，此时操作系统会把 CPU 分配给另一个就绪进程，所有阻塞状态的进程按照优先级策略排列成`阻塞队列`
 
-![五种基本状态](../../images/计算机/CPU管理/五种基本状态.png)
+![五种基本状态](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/CPU%E7%AE%A1%E7%90%86/%E4%BA%94%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81.png)
 
 ### (5) 进程的层次结构
 
@@ -122,7 +122,7 @@ Unix 系统中，允许父进程创建子进程，子进程再创建更多的孙
 
 撤销父进程时，也必须撤销其所有的子进程
 
-![进程树](../../images/计算机/CPU管理/进程树.png)
+![进程树](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/CPU%E7%AE%A1%E7%90%86/%E8%BF%9B%E7%A8%8B%E6%A0%91.png)
 
 #### ② Windows
 
@@ -142,7 +142,7 @@ Windows 系统中不存在进程层次结构的概念，所有的进程都具有
 
 **③ 装入**：装入程序将装入模块装入内存
 
-![程序装入内存](../../images/计算机/CPU管理/程序装入内存.png)
+![程序装入内存](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/CPU%E7%AE%A1%E7%90%86/%E7%A8%8B%E5%BA%8F%E8%A3%85%E5%85%A5%E5%86%85%E5%AD%98.png)
 
 ### (2) 进程的创建
 
@@ -211,7 +211,7 @@ Windows 系统中不存在进程层次结构的概念，所有的进程都具有
 * 静止就绪状态的进程激活后处于活动就绪状态，静止阻塞状态的进程激活后处于活动阻塞状态，`激活进程可以被正常调度执行`
 * 挂起进程会从内存被调至`磁盘`
 
-![状态转换](../../images/计算机/CPU管理/状态转换.png)
+![状态转换](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/CPU%E7%AE%A1%E7%90%86/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png)
 
 ## 4. 进程同步
 
@@ -326,4 +326,4 @@ Windows 系统中不存在进程层次结构的概念，所有的进程都具有
 
 ② 线程也具有挂起和激活操作
 
-![线程状态](../../images/计算机/CPU管理/线程状态.png)
+![线程状态](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA/CPU%E7%AE%A1%E7%90%86/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png)

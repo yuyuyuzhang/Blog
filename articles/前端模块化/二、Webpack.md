@@ -1550,7 +1550,7 @@ Webpack 将开发阶段编写的源代码打包成客户端浏览器实际运行
 
 ### (2) jquery SourceMap
 
-![jquery](../../images/前端模块化/webpack/jquery.png)
+![jquery](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/jquery.png)
 
 * jquery.min.map
   

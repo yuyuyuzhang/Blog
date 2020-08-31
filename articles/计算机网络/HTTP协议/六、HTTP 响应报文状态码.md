@@ -4,7 +4,7 @@
 
 ## 1. HTTP 响应报文
 
-![HTTP响应报文](../../../images/计算机网络/HTTP协议/HTTP报文/HTTP响应报文.png)
+![HTTP响应报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png)
 
 ## 2. 状态码
 
@@ -16,7 +16,7 @@
 
 ② 只要遵循了状态码的类别，即使改变 RFC2616 中定义的状态码，或服务器自行创建状态码，都没有问题
 
-![状态码类别](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/状态码类别.png)
+![状态码类别](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/%E7%8A%B6%E6%80%81%E7%A0%81%E7%B1%BB%E5%88%AB.png)
 
 ### (2) 常用状态码
 
@@ -26,7 +26,7 @@
 
 * 表示请求被服务器正常处理了，返回正确的响应报文
 
-![200](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/200.png)
+![200](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/200.png)
 
 #### ② 204 No Content
 
@@ -34,25 +34,25 @@
 
 * 常用于只往服务器发送信息，而无需向客户端返回信息的情况，即客户端无需更新
 
-![204](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/204.png)
+![204](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/204.png)
 
 #### ③ 206 Partial Content
 
 * 表示服务器成功执行了客户端发来的范围请求，返回的响应报文中包含指定范围的实体内容
 
-![206](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/206.png)
+![206](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/206.png)
 
 #### ④ 301 Moved Permanently
 
 * 表示`永久性重定向` (URI 不会再次改变)，请求的资源已经被永久分配了新的 URI，希望客户端按照响应报文的 `Location` 字段提示的 URI 重新请求
 
-![301](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/301.png)
+![301](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/301.png)
 
 #### ⑤ 302 Found
 
 * 表示`临时性重定向` (URI 将来还有可能改变)，请求的资源已经被临时被分配了新的 URI，希望客户端按照响应报文的 `Location` 字段提示的 URI 重新请求
 
-![302](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/302.png)
+![302](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/302.png)
 
 #### ⑥ 303 See Other
 
@@ -60,7 +60,7 @@
 
 * 当 301、302、303 的状态码返回时，几乎所有的浏览器都会删除请求报文的主体，将 POST 改成 GET，自动再次发送请求
 
-![303](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/303.png)
+![303](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/303.png)
 
 #### ⑦ 307 Temporary Redirect
 
@@ -74,13 +74,13 @@
 
 * 附带条件的请求是指采用 `GET` 方法的请求报文中包含 If-Match、If-ModifiedSince、If-None-Match、If-Range、If-Unmodified-Since 中任一首部字段
 
-![304](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/304.png)
+![304](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/304.png)
 
 #### ⑨ 400 Bad Request
 
 * 表示请求报文中存在语法错误，需要修改请求报文后再次发送
 
-![400](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/400.png)
+![400](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/400.png)
 
 #### ⑩ 401 Unauthorized
 
@@ -88,25 +88,25 @@
 
 * 状态码为 401 的响应报文必须包含 `Authenticate` 首部字段用以质询用户信息，浏览器初次接收 401 响应，会弹出认证用的对话窗口
 
-![401](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/401.png)
+![401](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/401.png)
 
 #### ⑪ 403 Forbidden
 
 * 表示服务器拒绝访问资源的请求，访问权限出现某些问题、未获得访问授权等都有可能导致这种情况
 
-![403](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/403.png)
+![403](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/403.png)
 
 #### ⑫ 404 Not Found
 
 * 表示服务器无法找到访问的资源
 
-![404](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/404.png)
+![404](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/404.png)
 
 #### ⑬ 500 Internal Server Error
 
 * 表示服务器在执行请求时发生了错误，可能是 Web 应用存在 bug 或者是某些临时故障
 
-![500](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/500.png)
+![500](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/500.png)
 
 #### ⑭ 503 Service Unavailable
 
@@ -114,4 +114,4 @@
 
 * 如果事先得知解决以上情况需要的时间，可以写入响应报文的 `RetryAfter` 字段后返回给客户端
 
-![503](../../../images/计算机网络/HTTP协议/HTTP响应报文状态码/503.png)
+![503](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/503.png)

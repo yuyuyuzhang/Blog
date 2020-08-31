@@ -6,29 +6,29 @@
 
 **HTTP 请求报文**
 
-![HTTP请求报文](../../../images/计算机网络/HTTP协议/HTTP报文/HTTP请求报文.png)
+![HTTP请求报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png)
 
 **HTTP 响应报文**
 
-![HTTP响应报文](../../../images/计算机网络/HTTP协议/HTTP报文/HTTP响应报文.png)
+![HTTP响应报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png)
 
 ## 2. 请求首部字段
 
 请求报文特有的首部字段，用于补充请求的附加信息、客户端信息、对响应内容相关的优先级等内容
 
-![请求首部字段](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/请求首部字段.png)
+![请求首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/%E8%AF%B7%E6%B1%82%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
 
 ### (1) User-Agent
 
 客户端的 User-Agent 字段用于告知服务器，客户端浏览器的用户代理字符串，表示浏览器厂商和版本信息
 
-![User-Agent](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/User-Agent.png)
+![User-Agent](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/User-Agent.png)
 
 ### (2) Accept
 
 客户端的 Accept 字段用于通知服务器，客户端用户代理支持的媒体类型及优先级，媒体类型可以后跟 `q = 0 到 1 的精确到小数点后三位的数值`来额外表示权重值，媒体类型用分号 `;` 进行分割，服务器会优先返回权重值最高的媒体类型
 
-![Accept](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Accept.png)
+![Accept](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Accept.png)
 
 ### (3) Accept-Charset
 
@@ -52,7 +52,7 @@
 
 客户端的 Referer 字段用于通知服务器，客户端发送当前请求的引荐人
 
-![Referer](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Referer.png)
+![Referer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Referer.png)
 
 #### ① 发送 Referer 字段的场景
 
@@ -152,13 +152,13 @@ Referrer Policy 有以下三种常用方法
 
 ② HTTP/1.1 协议允许一台 Web 服务器通过`网址名称对应的虚拟主机功能`搭建多个 Web 站点，互联网上，域名通过 DNS 服务器映射到 IP 地址之后访问 Web 服务器，可见当请求发送到 Web 服务器时已经是 IP 地址的形式了，因此当一台 Web 服务器内托管了多个域名时，收到请求就必须弄清楚是访问哪个域名，因此发送 HTTP 请求时必须在 `Host` 首部字段指定带域名的主机名的完整 URI，请求首部字段 Host 是 HTTP/1.1 协议规定的唯一必须包含在请求内的字段
 
-![Host](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Host.png)
+![Host](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Host.png)
 
 ### (9) From
 
 客户端的 From 字段用于通知服务器，使用用户代理的用户的电子邮件地址
 
-![From](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/From.png)
+![From](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/From.png)
 
 ### (10) Authorization (HTTP 的身份认证技术)
 
@@ -166,11 +166,11 @@ Referrer Policy 有以下三种常用方法
 
 **① Basic 认证**：客户端收到服务器发来的 Basic 认证质询时，将用户 ID 和密码以冒号 `:` 连接然后经过 Base64 编码处理，再通过 Authorization 字段告知服务器
 
-![BASIC](../../../images/计算机网络/网络安全/身份认证技术/BASIC.png)
+![BASIC](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/BASIC.png)
 
 **② Digest 认证**：客户端收到服务器发来的 Digest 认证质询时，由质询码 nonce 通过 MD5 算法计算出响应码 response，再将包含 realm、nonce、response、uri (请求 URI)、username (realm 限定范围内可进行认证的用户名) 这 5 个字段的 Authorization 字段告知服务器
 
-![DIGEST](../../../images/计算机网络/网络安全/身份认证技术/DIGEST.png)
+![DIGEST](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/DIGEST.png)
 
 ### (11) Proxy-Authorization (HTTP 的身份认证技术)
 
@@ -180,7 +180,7 @@ Referrer Policy 有以下三种常用方法
 
 客户端的 Max-Forwards 字段指明 HTTP 请求报文可经过的服务器的最大数量，每经过一个服务器，Max-Forwards 字段值就会减 1，当服务器收到 Max-Forwards 字段值为 0 的请求时，就不再转发请求，而是直接返回响应
 
-![Max-Forwards](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Max-Forwards.png)
+![Max-Forwards](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Max-Forwards.png)
 
 ### (13) Expect
 
@@ -194,19 +194,19 @@ Referrer Policy 有以下三种常用方法
 
 ② 服务器不能处理范围请求时，返回状态码 `200 OK` 和`全部资源`
 
-![范围请求](../../../images/计算机网络/HTTP协议/HTTP报文/范围请求.png)
+![范围请求](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/%E8%8C%83%E5%9B%B4%E8%AF%B7%E6%B1%82.png)
 
 ### (15) If-Range、If-Match、If-None-Match、If-Modified-Since、If-Unmodified-Since
 
 **条件请求**：带 If 的请求首部字段，都称为条件请求，服务器收到条件请求后，只有判断条件为真，才会执行请求  
 
-![条件请求](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/条件请求.png)
+![条件请求](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/%E6%9D%A1%E4%BB%B6%E8%AF%B7%E6%B1%82.png)
 
 #### ① If-Range
   
 客户端的 If-Range 字段用于通知服务器，对比 If-Range 字段值和资源 ETag 值或时间，两者一致时，请求作为范围请求处理，否则返回全体资源
 
-![If-Range](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/If-Range.png)
+![If-Range](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/If-Range.png)
 
 #### ② If-Match
 
@@ -214,7 +214,7 @@ Referrer Policy 有以下三种常用方法
 
 * 客户端的 If-Match 字段值为星号 `*` 时，只要资源存在，服务器就执行请求
 
-![If-Match](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/If-Match.png)
+![If-Match](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/If-Match.png)
 
 #### ③ If-None-Match
   
@@ -224,7 +224,7 @@ Referrer Policy 有以下三种常用方法
   
 客户端的 If-Modified-Since 字段用于通知服务器，对比 If-Modified-Since 字段值和资源的更新时间，只有指定值早于更新时间，才会执行请求
 
-![If-Modified-Since](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/If-Modified-Since.png)
+![If-Modified-Since](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/If-Modified-Since.png)
 
 #### ⑤ If-Unmodified-Since
 
@@ -234,19 +234,19 @@ Referrer Policy 有以下三种常用方法
 
 响应报文特有的首部字段，用于补充响应的附加信息、服务器信息、对客户端的附加要求等内容
 
-![响应首部字段](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/响应首部字段.png)
+![响应首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/%E5%93%8D%E5%BA%94%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
 
 ### (1) Accept-Ranges
 
 服务器的 Accept-Ranges 字段用于告知客户端，服务器是否能够处理范围请求，`bytes` 代表可以处理范围请求，`none` 代表不能处理范围请求
 
-![Accept-Ranges](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Accept-Ranges.png)
+![Accept-Ranges](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Accept-Ranges.png)
 
 ### (2) Server
 
 服务器的 Server 字段用于告知客户端，当前服务器上安装的 HTTP 服务器应用程序的信息，包括软件应用名称、版本号、安装时的启动项等等
 
-![Server](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Server.png)
+![Server](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Server.png)
 
 ### (3) Vary
 
@@ -254,7 +254,7 @@ Referrer Policy 有以下三种常用方法
 
 ② 客户端向源服务器发送一个包含字段 Accept-Language: en-us 的请求，代理服务器收到这个请求后，没有对应的缓存，就将请求转发给源服务器，源服务器根据请求返回响应，并在响应中添加字段 Vary: Accept-Language，用于告知代理服务器缓存资源，并且将当前缓存映射到 Accept-Language: en-us，当下次客户端再次发送相同请求时，代理服务器收到请求并且缓存未过期，就直接将缓存返回给客户端而无需转发请求给源服务器
 
-![Vary](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Vary.png)
+![Vary](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Vary.png)
 
 ### (4) ETag
 
@@ -268,13 +268,13 @@ Referrer Policy 有以下三种常用方法
 
 服务器的 Age 字段用于告知客户端，源服务器在`多少秒前`创建了响应，如果是缓存代理服务器创建了响应，则表示缓存资源从再次发起认证到认证完成的时间
 
-![Age](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Age.png)
+![Age](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Age.png)
 
 ### (6) Location
 
 服务器的 Location 字段用于告知客户端，请求资源的重定向 URI，几乎所有的浏览器在收到包含首部字段 Location 的响应后，都会`强制访问`重定向资源
 
-![Location](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Location.png)
+![Location](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Location.png)
 
 ### (7) Retry-After
 
@@ -286,11 +286,11 @@ Referrer Policy 有以下三种常用方法
 
 **① Basic 认证**：客户端请求需要认证的资源时，服务器返回状态码 `401 Authorization Required`，响应首部字段 `WWW-Authenticate` 包含认证方式 (Basic)、realm 字符串
 
-![BASIC](../../../images/计算机网络/网络安全/身份认证技术/BASIC.png)
+![BASIC](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/BASIC.png)
 
 **② Digest 认证**：客户端请求需要认证的资源时，服务器返回状态码 `401 Authorization Required`，响应首部字段 `WWW-Authenticate` 包含认证方式 (Digest)、realm 字符串、质询码 nonce (生成的随机数)
 
-![DIGEST](../../../images/计算机网络/网络安全/身份认证技术/DIGEST.png)
+![DIGEST](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/DIGEST.png)
 
 ### (9) Proxy-Authenticate (HTTP 的身份认证技术)
 
@@ -300,25 +300,25 @@ Referrer Policy 有以下三种常用方法
 
 请求报文和响应报文共有的首部字段
 
-![通用首部字段](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/通用首部字段.png)
+![通用首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/%E8%AF%B7%E6%B1%82%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
 
 ### (1) Transfer-Encoding
 
 Transfer-Encoding 规定报文主体时采用的`分块传输编码`方式，Transfer-Encoding 字段属于逐跳首部字段，只在`两个节点间`有效
 
-![Transfer-Encoding](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Transfer-Encoding.png)
+![Transfer-Encoding](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Transfer-Encoding.png)
 
 ### (2) Trailer
 
 Trailer 字段事先说明在报文主体后记录了哪些首部字段
 
-![Trailer](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Trailer.png)
+![Trailer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Trailer.png)
 
 ### (3) Via
 
 Via 字段用于标记请求报文和响应报文转发过程中经过的所有代理服务器，避免请求回环的产生
 
-![代理](../../../images/计算机网络/HTTP协议/Web/代理服务器.png)
+![代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E4%BB%A3%E7%90%86.png)
 
 ### (4) Cache-Control 和 Warning
 
@@ -341,17 +341,17 @@ Pragma: no-cache
 
 **① 控制逐跳首部字段**：在客户端发送的请求和服务器返回的响应内，使用 Connection 首部字段指明代理无需转发给源服务器的逐跳首部字段
 
-![Connection控制逐跳首部字段](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Connection控制逐跳首部字段.png)
+![Connection控制逐跳首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Connection%E6%8E%A7%E5%88%B6%E9%80%90%E8%B7%B3%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
 
 **① 管理持久连接**：HTTP/1.1 协议都是持久连接，客户端会在持久连接上连续发送请求，当服务器明确想断开连接时，会指定响应报文的 Connection 首部字段值为 close
 
-![Connection管理持久连接](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Connection管理持久连接.png)
+![Connection管理持久连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Connection%E7%AE%A1%E7%90%86%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5.png)
 
 ### (7) Upgrade
 
 Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
-![Upgrade](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Upgrade.png)
+![Upgrade](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Upgrade.png)
 
 ## 4. 实体首部字段
 
@@ -360,7 +360,7 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 * 请求报文：POST 请求中与`参数实体`相关的信息 (不常用)
 * 响应报文：与服务器返回的`资源实体`相关的信息 (常用)
 
-![实体首部字段](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/实体首部字段.png)
+![实体首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/%E5%AE%9E%E4%BD%93%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
 
 ### (1) Allow
 
@@ -390,7 +390,7 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 服务器的 Content-Range 字段用于告知客户端，作为响应返回的实体的哪个部分符合范围请求的要求字段值以字节为单位，表示当前发送部分以及整体实体大小
 
-![Content-Range](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Content-Range.png)
+![Content-Range](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Content-Range.png)
 
 ### (7) Content-Location
 
@@ -400,7 +400,7 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 服务器的 Content-MD5 字段用于让客户端确认响应报文是否完整，Content-MD5 字段是服务器对响应报文主体执行 MD5 算法后再通过 Base64 编码得到的值，客户端在收到响应报文后，对响应报文主体执行相同的 MD5 算法后，得到的值与响应报文的 Content-MD5 字段解码后的值进行对比，用于确认响应报文主体在传输过程中是否保持完整，以及确认传输到达
 
-![Content-MD5](../../../images/计算机网络/HTTP协议/HTTP报文首部字段/Content-MD5.png)
+![Content-MD5](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Content-MD5.png)
 
 ### (9) Expires
 

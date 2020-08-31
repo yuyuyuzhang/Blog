@@ -72,7 +72,7 @@ IP 地址 = 网络号 + 主机号
 
 ② IPv4 地址以 8 个比特为一组，每组以 `.` 隔开，再转成十进制表示
 
-![IPv4地址](../../../images/计算机网络/TCPIP协议群/IP协议/IPv4地址.png)
+![IPv4地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/IPv4%E5%9C%B0%E5%9D%80.png)
 
 ### (2) 子网掩码
 
@@ -114,7 +114,7 @@ IP 地址 = 网络号 + 主机号
 
 **⑩ 源地址和目标地址**：发送端 IPv4 地址，接收端 IPv4 地址
 
-![IPv4报文](../../../images/计算机网络/TCPIP协议群/IP协议/IPv4报文.png)
+![IPv4报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/IPv4%E6%8A%A5%E6%96%87.png)
 
 ## 4. IPv6 地址
 
@@ -128,7 +128,7 @@ IPv6 是为了从根本上解决 IPv4 即将耗尽的问题而被标准化的网
 
 ③ IPv6 地址不存在子网掩码，IPv6 地址前 64 位比特为网络号，后 64 位比特为主机号
 
-![IPv6地址](../../../images/计算机网络/TCPIP协议群/IP协议/IPv6地址.png)
+![IPv6地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/IPv6%E5%9C%B0%E5%9D%80.png)
 
 ### (2) IPv6 地址的特点
 
@@ -158,7 +158,7 @@ IPv6 是为了从根本上解决 IPv4 即将耗尽的问题而被标准化的网
 
 **⑦ 扩展首部**：IPv6 报文首部长度固定，无法添加可选项，而是通过扩展首部进行有效扩展，IPv6 的扩展首部可以是任意个数任意长度
 
-![IPv6报文](../../../images/计算机网络/TCPIP协议群/IP协议/IPv6报文.png)
+![IPv6报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/IPv6%E6%8A%A5%E6%96%87.png)
 
 ## 5. 路由控制
 
@@ -188,7 +188,7 @@ IP 协议本身没有制定路由控制表的机制，路由控制表是由路�
 
 ② 发送 IP 报文时，首先确定 IP 报文首部的目标主机 IP 地址，再从路由控制表中找到与目标主机 IP 地址网络号相同的记录，根据该记录将 IP 报文转发给下一个路由器，如果路由控制表中存在多条具有相同网络号的记录，就选择相同位数最多的网络号对应的记录
 
-![路由控制](../../../images/计算机网络/TCPIP协议群/IP协议/路由控制.png)
+![路由控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/%E8%B7%AF%E7%94%B1%E6%8E%A7%E5%88%B6.png)
 
 ## 6. IP 报文的分片与重组
 
@@ -198,7 +198,7 @@ IP 协议本身没有制定路由控制表的机制，路由控制表是由路�
 
 数据链路层的 MAC 地址可以抽象成网络层的 IP 地址，因此对于 IP 地址来说，无论数据链路层使用的是以太网协议还是 PPP 协议等，都将被一视同仁，但是不同的数据链路层协议各自的最大传输单位 MTU 不同，为了解决这个问题，IP 报文采用分片与重组机制
 
-![不同数据链路MTU](../../../images/计算机网络/TCPIP协议群/IP协议/不同数据链路MTU.png)
+![不同数据链路MTU](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AFMTU.png)
 
 #### ② 原理
 
@@ -206,7 +206,7 @@ IP 协议本身没有制定路由控制表的机制，路由控制表是由路�
 
 * 以太网协议的默认 MTU 是 1500 字节，因此一个 4300 字节的 IP 报文无法在一个以太网数据帧中发送完成，此时路由器会将 IP 报文划分为 3 个分片转发
 
-![IP报文的分片](../../../images/计算机网络/TCPIP协议群/IP协议/IP报文的分片.png)
+![IP报文的分片](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/IP%E6%8A%A5%E6%96%87%E7%9A%84%E5%88%86%E7%89%87.png)
 
 #### ③ 缺陷
 
