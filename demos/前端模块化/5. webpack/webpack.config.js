@@ -1723,6 +1723,7 @@
 // const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// const TerserWebpackPlugin = require('terser-webpack-plugin')
 // const config = {
 //   mode: 'none',
 //   entry: {
@@ -1810,6 +1811,7 @@
 //     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
 //     sideEffects: true,         //无副作用打包
 //     minimizer: [
+//       new TerserWebpackPlugin(), //Webpack内置JS压缩插件
 //       new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
 //     ]
 //   },
@@ -1823,6 +1825,7 @@
 // const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// const TerserWebpackPlugin = require('terser-webpack-plugin')
 // const webpack = require('webpack')
 // const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
 // const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
@@ -1930,6 +1933,7 @@
 //     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
 //     sideEffects: true,         //无副作用打包
 //     minimizer: [
+//       new TerserWebpackPlugin(), //Webpack内置JS压缩插件
 //       new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
 //     ]
 //   },
@@ -1943,6 +1947,7 @@
 // const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// const TerserWebpackPlugin = require('terser-webpack-plugin')
 // const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 // const webpack = require('webpack')
 // const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
@@ -2054,6 +2059,7 @@
 //     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
 //     sideEffects: true,         //无副作用打包
 //     minimizer: [
+//       new TerserWebpackPlugin(), //Webpack内置JS压缩插件
 //       new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
 //     ],
 //     runtimeChunk: 'single' //提取manifest
@@ -2068,6 +2074,7 @@
 // const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+// const TerserWebpackPlugin = require('terser-webpack-plugin')
 // const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 // const webpack = require('webpack')
 // const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
@@ -2180,6 +2187,7 @@
 //     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
 //     sideEffects: true,         //无副作用打包
 //     minimizer: [
+//       new TerserWebpackPlugin(), //Webpack内置JS压缩插件
 //       new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
 //     ],
 //     runtimeChunk: 'single', //提取manifest
@@ -2217,6 +2225,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const webpack = require('webpack')
 const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
@@ -2357,6 +2366,7 @@ module.exports = (env, argv) => {
     ]
     config.optimization = {
       minimizer: [
+        new TerserWebpackPlugin(), //Webpack内置JS压缩插件
         new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
       ],
       runtimeChunk: 'single', //提取manifest

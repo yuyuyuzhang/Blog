@@ -34,7 +34,7 @@ Storage 接口操作是`同步`的，进行大量操作时会锁死浏览器
 
 ② session 对象可以保存浏览器的一次会话内要求保存的任何数据
 
-③ sessionStorage 接口将数据保存在 `session 对象`中，数据的有效期仅限于`浏览器的一次会话`，会话结束后（浏览器加载文档的窗口关闭），数据被清空
+③ SessionStorage 接口将数据保存在 `session 对象`中，数据的有效期仅限于`浏览器的一次会话`，会话结束后（浏览器加载文档的窗口关闭），数据被清空
 
 ```javascript
 window.sessionStorage   //指向SessionStorage对象

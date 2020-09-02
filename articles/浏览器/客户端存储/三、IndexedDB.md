@@ -757,4 +757,7 @@ function showMsg(person){
 }
 
 function showKey(key){
+  const msg = document.getElementById('msg')
+  msg.innerHTML = key
+}
 ```

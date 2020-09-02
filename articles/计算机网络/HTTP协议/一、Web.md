@@ -36,9 +36,9 @@ WWW 当初是指用来浏览超文本的客户端应用程序的名称，现在�
 
 #### ② 统一资源定位符 URL (Uniform Resource Locator)
 
-* URI 用字符串标识某一互联网资源
-* URL 表示资源在互联网所处的位置
-* 可见 URL 是 URI 的子集
+* URI 用字符串来唯一标识某个互联网资源
+* URL 表示某个资源在互联网上所处的位置
+* 可见 URL 是 URI 的`子集`
 
 #### ③ 互联网资源地址类型
 
@@ -243,7 +243,7 @@ HTTPS 客户端网关需要支持完整的 SSL 实现
 
 隧道中 SSL 会话建立在客户端和服务器之间，无需在代理中实现 SSL，代理服务器只是将加密数据经过隧道传输，并不会在安全事务中扮演其他角色
 
-## 6. 缓存
+## 6. HTTP 缓存
 
 缓存是指`代理服务器`或`客户端本地磁盘`内保存的资源副本，利用缓存可减少对源服务器的访问，节省通信流量和通信时间
 
@@ -265,26 +265,21 @@ HTTPS 客户端网关需要支持完整的 SSL 实现
 
 ### (4) 缓存行为控制
 
-HTTP 报文的通用首部字段 `Cache-Control` 用于控制缓存行为，Cache-Control 字段值分为缓存请求指令和缓存响应指令，多个指令之间通过逗号 `,` 分割
+HTTP 报文的`通用首部字段 Cache-Control` 用于控制缓存行为，Cache-Control 字段值分为缓存请求指令和缓存响应指令，多个指令之间通过逗号 `,` 分割
+
+#### ① 缓存请求指令
 
 ![缓存请求指令](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BC%93%E5%AD%98%E8%AF%B7%E6%B1%82%E6%8C%87%E4%BB%A4.png)
 
-![缓存响应指令](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BC%93%E5%AD%98%E5%93%8D%E5%BA%94%E6%8C%87%E4%BB%A4.png)
+* **no-store**：客户端的 no-store 指令代表客户端不允许缓存请求
 
-* **public**：服务器的 public 指令代表响应的缓存可以提供给任何用户
-
-* **private**：服务器的 private 指令代表响应的缓存只能提供给特定用户
-  ![private](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/private.png)
-
-* **no-cache**：客户端的 no-cache 指令代表客户端不接受缓存的资源，只接收从源服务器返回的资源，服务器的 no-cache 指令代表源服务器允许代理服务器缓存资源，但是每次使用缓存前必须向源服务器确认有效性
+* **no-cache**：客户端的 no-cache 指令代表客户端不接受缓存的资源，只接收从源服务器返回的资源
+  
   ![no-cache](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/no-cache.png)
 
-* **no-store**：客户端的 no-store 指令代表客户端不允许缓存请求，服务器的 no-store 指令代表源服务器不允许缓存响应
-
-* **max-age**：客户端的 max-age 指令代表缓存资源的缓存时间如果小于指定数值，客户端就可以接受缓存资源，服务器的 max-age 指令代表资源保存为缓存的最长时间，代理服务器在这段时间内将不再对缓存的有效性进行确认 (对于 HTTP/1.1 的缓存代理服务器而言，Cache-Control 字段的 max-age 指令优先级高于 Expires 字段)
+* **max-age**：客户端的 max-age 指令代表缓存资源的缓存时间如果小于指定数值，客户端就可以接受缓存资源
+  
   ![max-age](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/max-age.png)
-
-* **s-maxage**：服务器的 s-maxage 指令代表资源保存为缓存的最长时间，代理服务器将不再对缓存的有效性进行确认，但是 s-maxage 指令只适用于`供多用户使用的公共代理服务器`，也就是说 s-maxage 指令对于向同一用户重复返回响应的代理服务器来说没有任何作用 (对于 HTTP/1.1 的代理服务器而言，Cache-Control 字段的 s-maxage 指令优先级高于 max-age 指令和 Expires 字段)
 
 * **max-stale**：客户端的 max-stale 指令代表缓存资源即使过期，只要仍小于指定时间，依然会被客户端接收
 
@@ -292,17 +287,39 @@ HTTP 报文的通用首部字段 `Cache-Control` 用于控制缓存行为，Cach
 
 * **only-if-cached**：客户端的 only-if-cached 指令代表客户端要求代理服务器返回缓存资源，无需向源服务器确认缓存有效性，也无需向源服务器重新请求资源，若代理服务器没有缓存，则返回状态码 `504 Gateway Timeout`
 
-* **must-revalidate**：服务器的 must-revalidate 指令要求代理服务器在向客户端返回缓存之前，必须再次向源服务器验证缓存是否有效，若无法连通源服务器，则返回状态码 `504 Gateway Timeout`
+#### ② 缓存响应指令
 
-* **proxy-revalidate**：服务器的 proxy-revalidate 指令同 must-revalidate 指令功能相同
+![缓存响应指令](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BC%93%E5%AD%98%E5%93%8D%E5%BA%94%E6%8C%87%E4%BB%A4.png)
 
-* **no-transform**：客户端和服务器的 no-transform 指令规定无论在请求还是响应中，缓存都不能改变实体的媒体类型，可以防止缓存代理压缩图片等操作
+* **public**：服务器的 public 指令代表响应可以被`客户端和代理服务器`缓存
 
-* **cache-extension**：客户端和服务器的 cache-extension 指令用于扩展 Cache-Control 首部字段的功能
+* **private**：服务器的 private 指令代表响应只能被`客户端`缓存，不包括代理服务器
+  
+  ![private](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/private.png)
+
+* **s-maxage**：服务器的 s-maxage 指令代表资源保存为缓存的`最长相对时间`，`这段时间内即命中强缓存`，`代理服务器`无需进行协商缓存向源服务器发送请求确认有效性，s-maxage 指令只适用于`供多客户端使用的公共代理服务器`，也就是说 s-maxage 指令对于向同一客户端重复返回响应的代理服务器来说没有任何作用
+  
+  通用首部字段 Cache-Control 的 s-maxage 指令优先级高于 max-age 指令和实体首部字段 Expires
+
+* **max-age**：服务器的 max-age 指令代表资源保存为缓存的`最长相对时间`，`这段时间内即命中强缓存`，`客户端`无需进行协商缓存向源服务器发送请求确认有效性
+  
+  通用首部字段 Cache-Control 的 max-age 指令优先级高于实体首部字段 Expires
+  
+  ![max-age](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/max-age.png)
+
+* **must-revalidate**：服务器的 must-revalidate 指令要求`代理服务器`在向客户端返回缓存之前必须进行`协商缓存`，向源服务器发送请求确认缓存有效性，若无法连通源服务器，则返回状态码 `504 Gateway Timeout`
+
+* **proxy-revalidate**：服务器的 proxy-revalidate 指令要求`代理服务器`在向客户端返回缓存之前必须进行`协商缓存`，向源服务器发送请求确认缓存有效性，若无法连通源服务器，则返回状态码 `504 Gateway Timeout`
+
+* **no-cache**：服务器的 no-cache 指令代表`客户端`每次使用缓存前必须进行`协商缓存`，向源服务器发送请求确认缓存有效性
+  
+  ![no-cache](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/no-cache.png)
+
+* **no-store**：服务器的 no-store 指令代表源服务器`不允许使用缓存`，每次都要重新请求数据
 
 ### (5) 缓存相关警告
 
-HTTP 报文的通用首部字段 Warning 用于告知用户与缓存相关的警告
+HTTP 报文的`通用首部字段 Warning` 用于告知用户与缓存相关的警告
 
 ![Warning](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/Warning.png)
 

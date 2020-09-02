@@ -72,6 +72,8 @@ Set-Cookie: sid=a3fWa; Max-Age=60; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
 
 #### ④ Secure、HttpOnly 属性
 
+**XSS 攻击**：XSS 攻击是一种代码注入攻击，攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行，利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全
+
 * Secure 属性指定浏览器只有在加密协议 HTTPS 下才将 Cookie 发送给服务器
 * HttpOnly 属性指定 Cookie 无法由 JS 脚本使用 `document.cookie` 获得，主要目的是为了防止跨站脚本攻击 XSS (Cross-site scripting) 对 Cookie 信息的窃取
 

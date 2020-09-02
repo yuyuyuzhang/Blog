@@ -146,7 +146,7 @@ Referrer Policy 有以下三种常用方法
   <a href="..." target="_blank" referrerpolicy="origin">xxx</a>
   ```
 
-### (8) Host (必须)
+### (8) Host（必须）
 
 ① 客户端的 Host 字段用于通知服务器，客户端请求是访问服务器上的哪个域名
 
@@ -160,7 +160,7 @@ Referrer Policy 有以下三种常用方法
 
 ![From](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/From.png)
 
-### (10) Authorization (HTTP 的身份认证技术)
+### (10) Authorization（HTTP 的身份认证技术）
 
 客户端的 Authorization 字段用于客户端与服务器之间的身份认证
 
@@ -172,7 +172,7 @@ Referrer Policy 有以下三种常用方法
 
 ![DIGEST](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/DIGEST.png)
 
-### (11) Proxy-Authorization (HTTP 的身份认证技术)
+### (11) Proxy-Authorization（HTTP 的身份认证技术）
 
 客户端的 Proxy-Authorization 字段用于客户端与代理服务器之间的认证，客户端收到代理服务器发来的认证质询时，通过 Proxy-Authorization 字段告知代理服务器认证信息
 
@@ -208,7 +208,7 @@ Referrer Policy 有以下三种常用方法
 
 ![If-Range](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/If-Range.png)
 
-#### ② If-Match
+#### ② If-Match（基本不使用）
 
 * 客户端的 If-Match 字段用于通知服务器，对比 If-Match 字段值和资源的 ETag 值，只有当两者一致时，才会执行请求
 
@@ -216,19 +216,25 @@ Referrer Policy 有以下三种常用方法
 
 ![If-Match](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/If-Match.png)
 
-#### ③ If-None-Match
-  
-客户端的 If-None-Match 字段用于通知服务器，对比 If-Match 字段值和资源的 ETag 值，只有当两者不一致时，才会执行请求，与 If-Match 字段功能相反
+#### ③ If-None-Match（HTTP 1.1 — 协商缓存）
 
-#### ④ If-Modified-Since
-  
-客户端的 If-Modified-Since 字段用于通知服务器，对比 If-Modified-Since 字段值和资源的更新时间，只有指定值早于更新时间，才会执行请求
+* 浏览器第一次请求资源时，服务器返回的响应报文包含`响应首部字段 ETag`，告知客户端返回的资源的唯一字符串标识，当资源更新时，ETag 字段值也会更新
+* 浏览器再次请求该资源时，请求报文包含`请求首部字段 If-None-Match`，字段值为第一次请求该资源时响应报文的`响应首部字段 ETag` 值，服务器对比 If-None-Match 字段值与服务器上请求资源的 ETag 字段值
+  * 若`相同`则命中协商缓存，返回 `304`，并且不包含资源内容和响应首部字段 ETag
+  * 若`不同`则未命中协商缓存，返回 `200`，并且包含更新后的资源内容
+
+#### ④ If-Modified-Since（HTTP 1.0 — 协商缓存）
+
+* 浏览器第一次请求资源时，服务器返回的响应报文包含`实体首部字段 Last-Modify`，标识该资源的最后修改时间
+* 浏览器再次请求该资源时，请求报文包含`请求首部字段 If-Modified-Since`，字段值为第一次请求该资源时响应报文的`实体首部字段 Last-Modify` 值，服务器对比 If-Modified-Since 字段值与服务器上请求资源的 Last-Modify 字段值
+  * 若`早于`则命中协商缓存，返回 `304`，并且不包含资源内容和实体首部字段 Last-Modify
+  * 若`晚于`则未命中协商缓存，返回 `200`，并且包含更新后的资源内容
 
 ![If-Modified-Since](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/If-Modified-Since.png)
 
-#### ⑤ If-Unmodified-Since
+#### ⑤ If-Unmodified-Since（基本不使用）
 
-客户端的 If-Unmodified-Since 字段用于通知服务器，对比 If-Unmodified-Since 字段值和资源的更新时间，只有指定值晚于更新时间，才会执行请求
+客户端再次请求某个资源时，请求报文包含`请求首部字段 If-Modified-Since`，字段值为第一次请求时响应报文的`实体首部字段 Last-Modify` 值，服务器对比 If-Modified-Since 字段值若`晚于`请求资源的最后更新时间，则命中缓存，返回 `304`，并且不包含资源内容和实体首部字段 Last-Modify
 
 ## 2. 响应首部字段
 
@@ -256,13 +262,12 @@ Referrer Policy 有以下三种常用方法
 
 ![Vary](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Vary.png)
 
-### (4) ETag
+### (4) ETag（HTTP 1.1 — 协商缓存）
 
-服务器的 ETag 字段用于告知客户端，服务器给每个实体资源分配的`唯一字符串标识`，当资源更新时，ETag 字段值也会更新
+服务器的 ETag 字段用于告知客户端，返回资源的`唯一字符串标识`，当资源更新时，ETag 字段值也会更新
 
-**强 ETag 值**：不论实体发生多么细微的变化都会改变其值
-
-**弱 ETag 值**：只用于提示资源是否相同，只有资源发生了根本改变，产生差异时才会改变其值
+* **强 ETag 值**：不论实体发生多么细微的变化都会改变其值
+* **弱 ETag 值**：只用于提示资源是否相同，只有资源发生了根本改变，产生差异时才会改变其值，会在字段值开头附加 `W/`
 
 ### (5) Age
 
@@ -280,7 +285,7 @@ Referrer Policy 有以下三种常用方法
 
 服务器的 Retry-After 字段用于告知客户端，应该在多久之后再次发送请求，字段值可以是创建响应后的秒数，也可以是具体的日期时间
 
-### (8) WWW-Authenticate (HTTP 的身份认证技术)
+### (8) WWW-Authenticate（HTTP 的身份认证技术）
 
 服务器的 WWW-Authenticate 字段用于客户端与服务器之间的身份认证
 
@@ -292,7 +297,7 @@ Referrer Policy 有以下三种常用方法
 
 ![DIGEST](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/DIGEST.png)
 
-### (9) Proxy-Authenticate (HTTP 的身份认证技术)
+### (9) Proxy-Authenticate（HTTP 的身份认证技术）
 
 服务器的 Proxy-Authenticate 字段用于客户端与代理服务器之间的认证，将代理服务器要求的认证信息发送给客户端
 
@@ -320,17 +325,18 @@ Via 字段用于标记请求报文和响应报文转发过程中经过的所有�
 
 ![代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E4%BB%A3%E7%90%86.png)
 
-### (4) Cache-Control 和 Warning
+### (4) Cache-Control 和 Warning（HTTP 1.1 — 强缓存）
 
 **① Cache-Control**：用于控制缓存的行为
 
+* 浏览器第一次请求资源时，服务器返回的响应报文包含`通用首部字段 Cache-Control`，其指令告知客户端服务器对资源缓存的各种限制
+* 浏览器再次需要该资源时，根据各种指令判断是否命中强缓存，命中则直接使用缓存，未命中则向服务器发送请求判断是否命中协商缓存
+
 **② Warning**：用于告知用户与缓存相关的警告
 
-③ 具体功能见 Web 章节 - Web 服务器 - 缓存 - 缓存行为控制
+### (5) Pragma（HTTP 1.0）
 
-### (5) Pragma
-
-Pragma 字段是 HTTP/1.0 的遗留字段，只用在客户端发送的 HTTP 请求报文中，要求所有的代理服务器不返回缓存，为了兼容所有的 HTTP 协议版本，通常的 HTTP 请求中会同时包含以下两个字段
+Pragma 字段是 HTTP 1.0 的遗留字段，只用在客户端发送的 HTTP 请求报文中，要求所有的代理服务器不返回缓存，为了兼容所有的 HTTP 协议版本，通常的 HTTP 请求中会同时包含以下两个字段
 
 ```javascript
 Cache-Control: no-cache
@@ -396,19 +402,24 @@ Upgrade 字段用于检测 HTTP 协议是否可升级为指定的其他协议
 
 服务器的 Content-Location 字段用于告知客户端，实体主体返回资源对应的 URI
 
-### (8) Content-MD5 (HTTP 的完整性保护)
+### (8) Content-MD5（HTTP 的完整性保护）
 
 服务器的 Content-MD5 字段用于让客户端确认响应报文是否完整，Content-MD5 字段是服务器对响应报文主体执行 MD5 算法后再通过 Base64 编码得到的值，客户端在收到响应报文后，对响应报文主体执行相同的 MD5 算法后，得到的值与响应报文的 Content-MD5 字段解码后的值进行对比，用于确认响应报文主体在传输过程中是否保持完整，以及确认传输到达
 
 ![Content-MD5](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Content-MD5.png)
 
-### (9) Expires
+### (9) Expires（HTTP 1.0 — 强缓存）
 
-服务器的 Expires 字段用于告知客户端，资源过期的日期时间
+* 浏览器第一次请求资源时，服务器返回的响应报文包含`实体首部字段 Expires`，告知客户端资源过期的 `GMT 格式的绝对时间字符串`的日期时间
+* 浏览器再次需要该资源时，`在此时间之前即命中强缓存`，直接使用缓存，超过该时间则向服务器发送请求判断是否命中协商缓存
 
-### (10) Last-Modified
+这种方式有一个明显的缺点，由于失效时间是一个绝对时间，所以当客户端浏览器时间和服务器时间不一致甚至相差较大时，就会导致缓存混乱
 
-服务器的 Last-Modified 字段用于告知客户端，资源最后修改的日期时间
+实体首部字段 Expires 是 HTTP 1.0 的规范，在 HTTP 1.1 中被通用首部字段 Cache-Control 取代
+
+### (10) Last-Modified（HTTP 1.0 — 协商缓存）
+
+服务器的 Last-Modified 字段用于告知客户端，资源的`最后修改日期时间`
 
 ## 5. 其他首部字段
 
