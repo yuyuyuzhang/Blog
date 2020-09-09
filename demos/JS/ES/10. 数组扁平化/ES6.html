@@ -6,15 +6,26 @@
 </head>
 <body>
 <script>
+//情况1
 function flatten(arr){
-  while(arr.some(item => Array.isArray(item))){
-    arr = [].concat(...arr);
-  }
-  return arr;
+  var array = [];
+  arr.forEach(item => {
+    if(!Array.isArray(item)){
+      array.push(item)
+    } else{
+      array = array.concat(flatten(item))
+    }
+  })
+  return array;
+}
+
+//情况2
+function flatten(arr){
+  return arr.reduce((prev, cur) => prev.concat(Array.isArray(cur) ? flatten(cur) : cur), [])
 }
 
 
-const arr = [1, '2', [3, '4', [5]], 1];
+var arr = [1, '2', [3, '4', [5]], 1];
 console.log(flatten(arr)); //Array [1, '2', 3, '4', 5, 1]
 
 

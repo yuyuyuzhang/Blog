@@ -7,21 +7,18 @@
 <body>
 <script>
 function equal(val1, val2){
-  var type1 = Object.prototype.toString.call(val1);
-  var type2 = Object.prototype.toString.call(val2);
+  const type11 = typeof val1
+  const type1 = Object.prototype.toString.call(val1);
+  const type2 = Object.prototype.toString.call(val2);
 
   if(type1 !== type2){
     return false;
-  } else if((typeof val1 === 'object' && type1 !== '[object Null]') || typeof val1 === 'function'){
-    return deepEqual(val1, val2, type1);
-  } 
-
-  //NaN === NaN
-  if(val1 !== val1){
-    return true;
+  } else if((type11 !== 'object' && type11 !== 'function') || type1 === '[object Null]'){
+    //比较基本类型
+    return Object.is(val1, val2);
   }
-  //+0 !== -0
-  return val1 === 0 ? 1/val1 === 1/val2 : val1 === val2;
+  //比较引用类型
+  return deepEqual(val1, val2, type1);
 }
 function deepEqual(val1, val2, type, aStack, bStack){
   //基本包装对象/Date/RegExp：隐式类型转换
@@ -46,7 +43,7 @@ function deepEqual(val1, val2, type, aStack, bStack){
   //检查循环引用
   aStack = aStack || [];
   bStack = bStack || [];
-  var length = aStack.length;
+  let length = aStack.length;
   while(length--){
     if(aStack[length] === val1){
       return bStack[length] === val2;
@@ -57,8 +54,8 @@ function deepEqual(val1, val2, type, aStack, bStack){
 
   //对象
   if(type === '[object Object]'){
-    var arr = Object.keys(val1);
-    var length = arr.length;
+    const arr = Object.keys(val1);
+    let length = arr.length;
     if(length !== Object.keys(val2).length){
       return false;
     }
@@ -70,7 +67,7 @@ function deepEqual(val1, val2, type, aStack, bStack){
 
   //数组
   if(type === '[object Array]'){
-    var length = val1.length;
+    let length = val1.length;
     if(length !== val2.length){
       return false;
     }
@@ -82,11 +79,11 @@ function deepEqual(val1, val2, type, aStack, bStack){
   aStack.pop();
   bStack.pop();
   return true;
-}
+} 
 
 function unique(arr){
-  for(var i=0; i<arr.length; i++){
-    for(var j=i+1; j<arr.length; j++){
+  for(let i=0; i<arr.length; i++){
+    for(let j=i+1; j<arr.length; j++){
       if(equal(arr[i], arr[j])){
         arr.splice(j, 1);
         j--;
@@ -97,11 +94,10 @@ function unique(arr){
 }
 
 
-
-var arr1 = [undefined, undefined, null, null, true, true, NaN, NaN, +0, -0, '1', '1'];
+const arr1 = [undefined, undefined, null, null, true, true, NaN, NaN, +0, -0, '1', '1'];
 console.log(unique(arr1)); //Array [undefined, null, true, NaN, +0, -0, '1']
 
-var arr2 = [{a: {b: 1}}, {a: {b: 1}}, [1, [2]], [1, [2]], new Date(), new Date(), /1/g, /1/g, function f(){}, function f(){}];
+const arr2 = [{a: {b: 1}}, {a: {b: 1}}, [1, [2]], [1, [2]], new Date(), new Date(), /1/g, /1/g, function f(){}, function f(){}];
 console.log(unique(arr2)); //Array [{a: {b: 1}}, [1, [2]], Thu Oct 31 2019 19:05:56 GMT+0800 (中国标准时间), /1/g, function f(){}];
 
 </script>

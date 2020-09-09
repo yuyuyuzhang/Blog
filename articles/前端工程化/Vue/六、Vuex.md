@@ -165,7 +165,7 @@ export default {
 
 ② mutation 必须是`同步函数`，为什么？当我们 debug 一个 app 并且观察 devtools 中的 mutation 日志时，每一条 mutation 被记录，devtools 都需要捕捉前一状态和后一状态的快照，而异步函数是无法实现的，如下所示，mutation 触发时，回调函数还未调用，devtools 不知道回调函数什么时候被实际调用，因此无法捕捉后一状态的快照
 
-③ mutation 函数通过 `store.commit(name, args)` 触发
+③ mutation 函数通过 `$store.commit(name, args)` 触发
 
 ```javascript
 mutations: {
@@ -183,7 +183,7 @@ mutations: {
 
 ② action 必须是`异步函数`，可以包含任意异步操作，action 函数接受一个与 store 实例具有相同属性和方法的 `context 对象`，因此可以调用 `context.commit()` 提交一个 mutation，也可以通过 `context.state` 或 `context.getters` 来获取 state 和 getters
 
-③ action 函数通过 `store.dispatch(name, args)` 触发
+③ action 函数通过 `$store.dispatch(name, args)` 触发
 
 store/modules/config.js
 

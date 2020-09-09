@@ -4,7 +4,7 @@
 
 ## 1. Navigator对象
 
-Navigator对象表示`当前浏览器信息`，包含与浏览器相关的各种信息
+Navigator 对象表示`当前浏览器信息`，包含与浏览器相关的各种信息
 
 ```javascript
 属性：navigator.userAgent            //返回浏览器的user agent字符串,表示浏览器厂商和版本信息

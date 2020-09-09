@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>shallow copy</title>
+    <title>lightCopy</title>
 </head>
 <body>
 <script>
@@ -20,29 +20,11 @@ function copy(arr){
   return arr.concat();
 }
 
-//浅拷贝：仅适用于Object、Array
+//浅拷贝：仅适用于Object
 function copy(obj){
-  var newObj = obj instanceof Array ? [] : {};
-  for(var key in obj){
-    newObj[key] = obj[key];
-  }
-  return newObj;
+  return Object.assign({}, obj);
 }
 
-//深拷贝：适用于所有数据类型
-function copy(obj){
-  var type2 = Object.prototype.toString.call(obj);
-
-  if(typeof obj !== 'object' || type2 === '[object Null]' || type2 === '[object Date]' || type2 === '[object RegExp]' || type2 === '[object Function]'){
-    return obj;
-  } else{
-    var newObj = obj instanceof Array ? [] : {};
-    for(var key in obj){
-      newObj[key] = copy(obj[key]);
-    }
-    return newObj;
-  }
-}
 
 
 var obj = {a: {b: {c: 1}}, d: new Date(), e: /1/g, f: function(){}};
@@ -66,7 +48,6 @@ console.log(newF);    //Function  ƒ(){}
 newObj.a.b.c = 2;
 console.log(newObj);  //Object {a: {b: {c: 2}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
 console.log(obj);     //Object {a: {b: {c: 1}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
-
 </script>
 </body>
 </html>

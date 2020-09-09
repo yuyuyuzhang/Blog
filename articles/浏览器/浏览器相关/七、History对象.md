@@ -81,6 +81,7 @@ hidtory.go(1);  //前进
 * 用户点击浏览器后退和前进按钮，会在 window 对象上触发 popstate 事件
 * 调用 back()、forward()、go() 方法时，会在 window 对象上触发 popstate 事件
 * 调用 pushState()、replaceState() 方法时，不会触发 popstate 事件
+* 由于改变片段识别符会改变 History 对象的浏览记录，因此会在 `window` 对象上触发 `popstate` 事件，并且先触发 popstate 事件，后触发 hashchange 事件
 
 Event对象相关属性如下
 

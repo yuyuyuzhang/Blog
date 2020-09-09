@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>deep copy</title>
+    <title>deepCopy</title>
 </head>
 <body>
 <script>
@@ -10,25 +10,45 @@
 //深拷贝：Object属性值、Array元素无论为基本类型/引用类型，均拷贝值
 
 
-//浅拷贝：仅适用于Object
-function copy(obj){
-  return Object.assign({}, obj);
-}
-
 //深拷贝：适用于所有数据类型
 function copy(obj){
-  var type2 = Object.prototype.toString.call(obj);
+  const trpe1 = typeof obj;
+  const type2 = Object.prototype.toString.call(obj).slice(8, -1);
 
-  if(typeof obj !== 'object' || type2 === '[object Null]' || type2 === '[object Date]' || type2 === '[object RegExp]' || type2 === '[object Function]'){
-    return obj;
-  } else{
-    var newObj = obj instanceof Array ? [] : {};
-    for(var key in obj){
-      newObj[key] = copy(obj[key]);
-    }
-    return newObj;
+  // 基本类型及函数直接返回
+  if(type1 !== 'object' || type2 === 'Null') {
+    return obj
   }
+
+  // 基本包装类型及特殊引用类型处理
+  switch(type2){
+    case 'Boolean':
+      return new Boolean(obj)
+    case 'Number':
+      return new Number(obj)
+    case 'String':
+      return new String(obj)
+    case 'Data':
+      return new Date(obj)
+    case 'RegExp':
+      return new ReagExp(obj)
+  }
+
+  // Object、Array
+  const newObj = obj instanceof Array ? [] : {};
+  for(var key in obj){
+    //排除继承属性
+    if(obj.hasOwnProperty(key)){
+        //深度递归
+        newObj[key] = copy(obj[key]);
+      }
+  }
+  return newObj;
+
+  // Map、Set、Symbol、JSON、Math、Error
+
 }
+
 
 
 var obj = {a: {b: {c: 1}}, d: new Date(), e: /1/g, f: function(){}};
@@ -52,6 +72,7 @@ console.log(newF);    //Function  ƒ(){}
 newObj.a.b.c = 2;
 console.log(newObj);  //Object {a: {b: {c: 2}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
 console.log(obj);     //Object {a: {b: {c: 1}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
+
 </script>
 </body>
 </html>

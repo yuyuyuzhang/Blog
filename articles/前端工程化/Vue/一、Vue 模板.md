@@ -77,34 +77,63 @@ export default {
 
 #### ① VNode
 
-Vue 其实最终也是把模板编译成渲染函数 render，这是 Vue 的底层实现细节，通常不需要关心，不过开发者可以使用 `Vue.compile(template)` 实时编译模板
+Vue 其实最终也是把模板编译成 render 渲染函数，这是 Vue 的底层实现细节，通常不需要关心，不过开发者可以使用 `Vue.compile(template)` 实时编译模板
 
-渲染函数 render 的参数函数 createElement 返回的并不是一个实际的 DOM 节点，而是一个`虚拟节点 VNode`，VNode 更准确的描述其实是 `DOM 节点描述信息`，用来描述需要在页面上渲染一个什么样的 DOM 节点
+render 渲染函数的参数函数 createElement 返回的并不是一个实际的 DOM 节点，而是一个`虚拟节点 VNode`，VNode 更准确的描述其实是 `DOM 节点描述信息`，用来描述需要在页面上渲染一个什么样的 DOM 节点
 
 组件树中的所有 VNode 必须是`唯一`的
 
 #### ② diff 算法
 
 * 旧虚拟 DOM：实际 DOM
-* 新虚拟 DOM：初始为实际 DOM，随着用户交互，改变 VNode 之后，和实际 DOM 不同
+* 新虚拟 DOM：初始为实际 DOM
 * 每次用户交互，就会改变新虚拟 DOM 的 VNode
 * 每次修改新虚拟 DOM，都会将新虚拟 DOM 和旧虚拟 DOM 通过 diff 算法进行对比，得出 `diff 结果数据表`
 * 将`同一事件循环`中的所有数据变更，通过`文档片段`更新到浏览器 DOM
 * 浏览器实际 DOM 成为旧虚拟 DOM
 
-#### ③ 文档片段
+#### ③ diff 比较过程（v-for key 原理）
+
+![diff比较](../../../images/前端工程化/Vue/diff比较.jpg)
+
+**diff 比较过程**
+
+* 图中很清楚的说明了，diff 的比较过程只会在`同层级比较`，不会跨级比较
+* 整体的比较过程可以理解为一个层层递进的过程，每一级都是一个 vnode 数组，当比较其中一个 vnode 时，若 children 不一样，就会进入 `updateChildren()` 函数（其主要入参为 newChildren 和 oldChildren，此时 newChildren 和 oldChildren 为同级的 vnode 数组），然后逐一比较 children 里的节点，对于 children 的 children，再循环以上步骤
+* updateChildren() 函数就是 diff 最核心的算法
+
+**updateChildren()**
+
+* updateChildren() 函数中有一个 `saveVnode()` 函数，源码如下
+* 也就是说，判断两个节点是否为同一节点（也就是是否可复用），标准是 `key 相同且 tag 相同`
+  
+  ```javascript
+  function sameVnode (a, b) {
+    return (a.key === b.key && a.tag === b.tag)
+  }
+  ```
+
+**v-for key 原理**
+
+* 最大化利用节点，diff 比较时减少性能消耗，如下图，所有 Vnode tag 相同
+* 不加 kay 属性时，diff 比较如下
+  ![不加key](../../../images/前端工程化/Vue/不加key.jpg)
+* 加上 key 属性时，diff 比较如下
+  ![加上key](../../../images/前端工程化/Vue/加上key.jpg)
+
+#### ④ 文档片段
 
 DocumentFrament 对象表示`一个文档片段`，DOM 规定文档片段是一种轻量级的文档，可以包含和控制节点，但不会像完整的文档那样占用额外的资源
 
 文档片段`不属于当前文档`，故操作文档片段节点比直接操作 DOM 树快得多，常用于先构建一个 DOM 树结构，然后再插入当前文档，可以`避免浏览器反复渲染新信息`的问题
 
-#### ④ 异步更新
+#### ⑤ 异步更新
 
 Vue 更新 DOM 是异步执行的，Vue 侦听到数据变化，将开启一个队列 ( diff 结果数据表 )，缓存`同一事件循环`中的所有数据变更
 
 下一次事件循环中，Vue 实际更新 DOM，并且清空缓存队列
 
-#### ⑤ 虚拟 DOM 的作用
+#### ⑥ 虚拟 DOM 的作用
 
 * **跨平台**：虚拟 DOM 以 JS 对象为基础，可以根据不同的运行环境进行代码转换 ( 浏览器、服务器、原生应用 )，这使得虚拟 DOM 具有了跨平台的能力
 
@@ -174,7 +203,7 @@ const vm = new Vue({
 ### (2) v-show、v-if
 
 * v-show 根据后跟表达式的真假值，`切换元素样式的 display`
-* v-if 根据后跟表达式的真假值，决定是否渲染元素，切换时元素及其数据绑定/组件被`销毁并重建`
+* v-if 根据后跟表达式的真假值，决定是否渲染元素，切换时元素或组件被`销毁并重建`
 
 ```html
 <div id="app">
@@ -203,7 +232,7 @@ const vm = new Vue({
 
 ### (3) v-for
 
-v-for 用于实现数组的列表渲染，配合使用 item in/of items 语法，并且最好为每个迭代元素提供一个不重复的 key 属性
+v-for 用于实现数组的列表渲染，配合使用 `item in/of items` 语法，并且最好为每个迭代元素提供一个`不重复的 key 属性`
 
 * 不使用 key 属性，数组成员改变时，Vue 会为数组成员就近复用已存在的 DOM 节点
 * 使用 key 属性，数组成员改变时，Vue 会根据 key 属性的变化重新排列节点顺序
@@ -655,7 +684,7 @@ Vue 实现了一套内容分发的 API，设计灵感来自于 Web Components �
 
 #### ① 具名插槽
 
-有时一个组件内需要多个插槽承载不同的内容，为了识别多个插槽而诞生了具名插槽，通过模板或组件的 `v-slot` 指令唯一标识某个插槽，再通过 `<slot name="">` 元素的 name 属性唯一标识某个插槽的承载内容
+有时一个组件内需要多个插槽承载不同的内容，为了识别多个插槽而诞生了具名插槽，父组件通过模板或组件的 `v-slot` 指令唯一标识某个插槽，子组件通过 `<slot name="">` 元素的 name 属性唯一标识某个插槽的承载内容
 
 父组件
 
@@ -709,7 +738,7 @@ export default {
 
 父组件中所有内容都是在父级作用域中编译的，子组件中所有内容都是在子级作用域中编译的，插槽中使用数据只能访问当前组件中数据，而不能访问子组件中数据
 
-**插槽 prop**：绑定到 `<slot>` 元素上的 attribute，通过插槽 prop 可以实现父组件插槽访问子组件数据，作用域插槽由此诞生
+**插槽 prop**：插槽 prop：子组件在 `<slot>` 元素上通过属性绑定传值，父组件在 `v-slot` 指令上通过插槽 prop 访问子组件数据
 
 父组件
 

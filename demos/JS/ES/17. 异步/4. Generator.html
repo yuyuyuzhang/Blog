@@ -9,8 +9,10 @@
 
 function* f(){
   console.log(2);
-  yield console.log(3); //情况1：同步操作
-  yield Promise.resolve(3).then(val => console.log(val)); //情况2：异步操作(Promise的then在本轮事件循环末尾执行)
+  yield new Promise(resolve => {
+    console.log(6)
+    resolve(3)
+  }).then(val => console.log(val))
   console.log(4);
 }
 const ite = f();
@@ -20,8 +22,7 @@ ite.next();
 console.log(5);
 ite.next();
 
-//输出：1 2 3 5 4
-//     1 2 5 4 3
+//输出：1 2 6 5 4 3
 
 
 

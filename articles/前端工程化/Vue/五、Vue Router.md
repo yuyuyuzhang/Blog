@@ -196,7 +196,6 @@ Vue + Vue Router 构建单页面应用非常简单，使用 Vue 可以通过组�
 #### ③ history 模式
 
 * 利用 window.history 对象的 history.pushState(state,title,url) 方法更改前端路由
-* 然后在 window 对象上监听 popstate 事件
 
 #### ③ hash 模式
 
@@ -367,7 +366,12 @@ export default {
   },
   methods: {
     judgeAbout() {
-      this.$router.push({ path: "/about", query: { title: "hha" } });
+      this.$router.push({
+        path: "/about",
+        query: {
+          title: "hha"
+        }
+      });
     }
   }
 };
@@ -494,7 +498,7 @@ export default router;
 ### (5) 组件内守卫
 
 ```javascript
-beforeRouteEnter(to,from,next)  //导航进入当前组件对应的路由前调用
+beforeRouteEnter(to,from,next)  //导航进入当前组件对应的路由前调用,不能访问 this
 beforeRouteUpdate(to,from,next) //路由改变但是当前组件被复用时调用,例如路由 /foo/:id 在 /foo/1 和 /foo/2 之间跳转
 beforeRouteLeave(to,from,next)  //导航离开当前组件对应的路由前调用
 ```
@@ -544,13 +548,13 @@ export default {
 
 * 导航被触发
 * 在失活的组件里调用 beforeRouteLeave 守卫
-* 调用全局 beforeEach 守卫
+* 调用全局前置守卫 beforeEach
 * 在重用的组件里调用 beforeRouteUpdate 守卫
-* 在路由配置里调用 beforeEnter 守卫
+* 在路由配置里调用路由独享守卫 beforeEnter
 * 在被激活的组件里调用 beforeRouteEnter 守卫
-* 调用全局 beforeResolve 守卫
-* 导航被确认 ( 此之前的所有守卫都可以使用next()导向其他路由 )
-* 调用全局 afterEach 钩子
+* 调用全局解析守卫 beforeResolve
+* 导航被确认 ( 此之前的所有守卫都可以使用 next() 导向其他路由 )
+* 调用全局后置钩子 afterEach
 * 触发 DOM 更新
 * 在被激活的组件里调用 beforeRouteEnter 守卫的 `next 参数函数的回调函数`
 * 在被激活的组件里调用`生命周期钩子`
