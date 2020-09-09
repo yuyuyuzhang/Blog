@@ -12,7 +12,7 @@ HTTP/2 由于采用二进制分帧进行多路复用，通常只使用一个 TCP
 
 2018 年 HTTP/3 将底层依赖的 TCP 改成 UDP，从而彻底解决了这个问题。UDP 相对于 TCP 而言最大的特点是传输数据时不需要建立连接，可以同时发送多个数据包，所以传输效率很高，缺点就是没有确认机制来保证对方一定能收到数据
 
-![HTTP协议的演变](../../../images/计算机网络/HTTP协议/HTTP3/HTTP协议的演变.png)
+![HTTP协议的演变](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP3/HTTP%E5%8D%8F%E8%AE%AE%E7%9A%84%E6%BC%94%E5%8F%98.png)
 
 ### (2) HTTP3 的特点
 

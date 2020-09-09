@@ -94,7 +94,7 @@ render 渲染函数的参数函数 createElement 返回的并不是一个实际�
 
 #### ③ diff 比较过程（v-for key 原理）
 
-![diff比较](../../../images/前端工程化/Vue/diff比较.jpg)
+![diff比较](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/diff%E6%AF%94%E8%BE%83.jpg)
 
 **diff 比较过程**
 
@@ -117,9 +117,9 @@ render 渲染函数的参数函数 createElement 返回的并不是一个实际�
 
 * 最大化利用节点，diff 比较时减少性能消耗，如下图，所有 Vnode tag 相同
 * 不加 kay 属性时，diff 比较如下
-  ![不加key](../../../images/前端工程化/Vue/不加key.jpg)
+  ![不加key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E4%B8%8D%E5%8A%A0key.jpg)
 * 加上 key 属性时，diff 比较如下
-  ![加上key](../../../images/前端工程化/Vue/加上key.jpg)
+  ![加上key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/%E5%8A%A0%E4%B8%8Akey.jpg)
 
 #### ④ 文档片段
 
