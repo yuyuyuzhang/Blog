@@ -8,9 +8,9 @@
 <script>
 //寄生组合式继承的基本模式
 function inheritPrototype(child, parent){
-  var prototype = Object.create(parent.prototype); //创建超类原型的实例
+  var prototype = Object.create(parent.prototype); //创建父类原型的实例
   prototype.constructor = child; //弥补因重写子类原型而失去的constructor属性
-  child.prototype = prototype; //将超类原型的实例指定为子类原型
+  child.prototype = prototype; //将父类原型的实例指定为子类原型
 }
 
 function Person(name, friends){ 
