@@ -7,7 +7,8 @@
 <body>
 
 
-  
+<!-- 必须先引入单独打包的第三方库 -->
+<script src="dist_DllPlugin/dll/vendor.dll.js"></script>
 <!-- 本地测试 —  本地加载HTML文件(比如一个file://路径的文件),将会遇到CORS错误，因为JS模块的安全性需要,需要通过服务器来测试 -->
 <script src="src/index.js" type="module"></script>
 <!-- <script src="dist_none/bundle.js"></script> -->

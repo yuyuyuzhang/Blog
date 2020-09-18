@@ -208,13 +208,10 @@ Vue + Vue Router 构建单页面应用非常简单，使用 Vue 可以通过组�
 
 Vue Router 默认 `hash 模式`
 
-* history.pushState() 方法可以设置与当前 URL `同源`的任意 URL
-* hash 只能设置与当前 URL `同文档`的 URL
-
 * history.pushState() 设置的新 URL 可以与旧 URL 一模一样，仍然会把新 URL 添加到 History 栈
 * hash 设置的新值必须与旧值不同，才会将新 URL 添加到 History 栈
 
-* history 模式下前端 URL 必须和 HTTP 请求 URL 完全一致，否则如果服务器缺少对子路由的处理，会返回 404 错误，因此 history 模式需要服务器配置支持，服务器需要增加一个覆盖所有情况的候选资源，如果 URL 匹配不到任何静态资源，服务器返回同一个 HTML 文档
+* history 模式下前端 URL 必须和 HTTP 请求 URL 完全一致，否则如果服务器缺少对子路由的处理，会返回 404 错误，因此 history 模式服务器需要增加一个覆盖所有情况的候选资源，如果 URL 匹配不到任何静态资源，服务器返回同一个 HTML 文档
 * hash 字符串不包含在 HTTP 请求 URL 中，对服务器完全无用，仅仅是用来`指导浏览器动作`的，浏览器读取到 URL 后，会自动根据 URL 的片段识别符滚动到文档指定位置，因此即使服务器没有做到对路由的全覆盖，也不会返回 404 错误
 
 router/index.js
@@ -547,17 +544,17 @@ export default {
 ### (6) 导航解析流程
 
 * 导航被触发
-* 在失活的组件里调用 beforeRouteLeave 守卫
-* 调用全局前置守卫 beforeEach
+* 将要离开的组件里调用 beforeRouteLeave 守卫
 * 在重用的组件里调用 beforeRouteUpdate 守卫
-* 在路由配置里调用路由独享守卫 beforeEnter
-* 在被激活的组件里调用 beforeRouteEnter 守卫
+* 调用全局前置守卫 beforeEach
+* 在路由配置文件将要进入的路由那里调用路由独享守卫 beforeEnter
+* 在激活的组件里调用 beforeRouteEnter 守卫
 * 调用全局解析守卫 beforeResolve
-* 导航被确认 ( 此之前的所有守卫都可以使用 next() 导向其他路由 )
+* 导航被确认，无法再更改，这一步之前的所有守卫都可以通过 `next()` 方法导向其他路由或者停止
 * 调用全局后置钩子 afterEach
 * 触发 DOM 更新
-* 在被激活的组件里调用 beforeRouteEnter 守卫的 `next 参数函数的回调函数`
-* 在被激活的组件里调用`生命周期钩子`
+* 在激活的组件里调用 beforeRouteEnter 守卫的 `next 参数函数的回调函数`
+* 在激活的组件里调用`生命周期钩子`
 
 ## 4. 滚动行为
 

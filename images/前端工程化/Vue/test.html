@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)file:///F:/Blog/demos/test.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>test</title>
+  <style>
+    .parent {
+      border: 1px solid blue;
+    }
+    .parent::after {
+      content: '';
+      clear: both
+    }
+    .child {
+      float: right;
+      border: 1px solid red;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="parent">
+  <div class="child"></div>
+</div>
+
+<script>
+</script>
+
+</body></html>

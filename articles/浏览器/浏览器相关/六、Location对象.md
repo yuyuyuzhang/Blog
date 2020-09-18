@@ -265,7 +265,7 @@ btn2.addEventListener('click', function(e){
 
 ## 4. Location 对象
 
-Location 对象表示当前浏览器窗口加载的`文档地址`
+Location 对象表示`当前浏览器窗口加载的文档地址`
 
 ```javascript
 定义：window.location

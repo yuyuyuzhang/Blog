@@ -6,7 +6,7 @@
 
 ### (1) Cookie 的由来
 
-**由来**：HTTP 协议是无状态协议，用户登陆 Web 页面后不会记录已登陆状态，那么每次跳转新页面都需要再次登陆，或者在每次的 HTTP 请求报文中附加参数来管理登陆状态，针对这种情况，引入了 Cookie 技术，Cookie 技术通过在 HTTP 请求报文中附加 Cookie 信息来控制客户端状态，Cookie 将数据保存在`客户端本地磁盘`
+**由来**：HTTP 协议是无状态协议，用户登陆 Web 页面后不会记录已登陆状态，那么每次跳转新页面都需要再次登陆，或者在每次的 HTTP 请求报文中附加参数来管理登陆状态，针对这种情况，引入了 Cookie 技术，Cookie 技术通过在 HTTP 请求报文中附加 Cookie 信息来控制客户端状态，Cookie 将数据以`文本文件`的形式保存在`客户端本地磁盘`
 
 **标准化**：HTTP 报文中与 Cookie 相关的字段有 2 个，响应报文的 Set-Cookie 字段、请求报文的 Cookie 字段，这两个字段都没有计入 HTTP 协议的 RFC 标准，属于 HTTP 报文首部的其他首部字段
 
@@ -64,7 +64,6 @@ Set-Cookie: sid=a3fWa; Domain=www.example.com; Path=/forms
 * Max-Age 属性指定从现在开始 Cookie 存在的秒数，过了指定时间浏览器将不再保留这个 Cookie
 * Expires 属性指定 Cookie 的过期时间，到了指定时间浏览器将不再保留这个 Cookie
 * 如果 Set-Cookie 字段同时指定 Max-Age 属性和 Expires 属性，那么 Max-Age 属性优先生效
-* 如果 Set-Cookie 字段没有指定 Max-Age 属性和 Expires 属性，那么这个 Cookie 的有效期仅限于维持浏览器会话的时间段内，通常限于浏览器应用程序关闭之前
 
 ```javascript
 Set-Cookie: sid=a3fWa; Max-Age=60; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
@@ -72,10 +71,10 @@ Set-Cookie: sid=a3fWa; Max-Age=60; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
 
 #### ④ Secure、HttpOnly 属性
 
-**XSS 攻击**：XSS 攻击是一种代码注入攻击，攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行，利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全
+**XSS 攻击**：`跨站脚本` XSS 是一种`代码注入攻击`，攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行，然后攻击者就可以获得用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全
 
-* Secure 属性指定浏览器只有在加密协议 HTTPS 下才将 Cookie 发送给服务器
-* HttpOnly 属性指定 Cookie 无法由 JS 脚本使用 `document.cookie` 获得，主要目的是为了防止跨站脚本攻击 XSS (Cross-site scripting) 对 Cookie 信息的窃取
+* 服务器的 Set-Cookie 字段指定 Secure 属性，浏览器只有在加密协议 HTTPS 下才将 Cookie 发送给服务器
+* 服务器的 Set-Cookie 字段指定 HttpOnly 属性，Cookie 无法由 JS 脚本使用 `document.cookie` 获得，主要目的是为了防止跨站脚本攻击 XSS (Cross-site scripting) 对 Cookie 信息的窃取
 
 ```javascript
 Set-Cookie: sid=hdhfhbg136254; Secure; HttpOnly
@@ -83,7 +82,9 @@ Set-Cookie: sid=hdhfhbg136254; Secure; HttpOnly
 
 #### ⑤ SameSite 属性
 
-**CSRF 攻击**：恶意网站设法伪造带有正确 Cookie 的 HTTP 请求，例如用户登陆银行网站，银行服务器返回一个 Cookie，用户又访问恶意网站，上面有一个表单，用户一旦被诱骗发送这个表单，银行网站就会收到带有正确 Cookie 的请求，这种由第三方网站引导发出的 Cookie，就被称为第三方 Cookie，Chrome 51 浏览器为 Cookie 新增了一个 SameSite 属性，用来限制第三方 Cookie 以防止 CSRF 攻击，SameSite 属性可以设置三个值
+**CSRF 攻击**：`跨站请求伪造` CSRF 是指黑客诱骗用户打开恶意网站，然后利用用户的登录状态发起跨站请求，例如用户先登陆银行网站，银行服务器返回一个 Cookie，用户又访问恶意网站，上面有一个表单，用户一旦被诱骗发送这个表单，银行网站就会收到带有正确 Cookie 的请求，这种由第三方网站引导发出的 Cookie，就被称为`第三方 Cookie`
+
+Chrome 51 浏览器为 Cookie 新增了一个 `SameSite 属性`，服务器的 Set-Cookie 字段通过指定 SameSite 属性用来限制第三方 Cookie 以防止 CSRF 攻击，SameSite 属性可以设置三个值
 
 * Strict 完全禁止第三方 Cookie，跨站点时任何情况下都不会发送 Cookie，换言之，只有当前网页的 URI 与请求 URI 完全一致，才会带上 Cookie
   
@@ -103,7 +104,7 @@ Set-Cookie: sid=hdhfhbg136254; Secure; HttpOnly
   |AJAX    |`$.get("...")`                      |发送|不发送|
   |Image   |`<img src="...">`                   |发送|不发送|
 
-* Chrome 计划默认设置 SameSite=Lax，这是可以通过设置 SameSite=None 显式关闭 SameSite 属性，不过前提是必须同时设置 Secure 属性，否则无效
+* Chrome 默认设置 SameSite=Lax，这时可以通过设置 SameSite=None 显式关闭 SameSite 属性，不过前提是必须同时设置 Secure 属性，否则无效
   
   ```javascript
   //无效

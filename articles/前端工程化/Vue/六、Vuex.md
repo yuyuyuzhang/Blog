@@ -181,7 +181,7 @@ mutations: {
 
 ① action 是`提交 mutation`
 
-② action 必须是`异步函数`，可以包含任意异步操作，action 函数接受一个与 store 实例具有相同属性和方法的 `context 对象`，因此可以调用 `context.commit()` 提交一个 mutation，也可以通过 `context.state` 或 `context.getters` 来获取 state 和 getters
+② action 通常是`异步函数`，可以包含任意异步操作，action 函数接受一个与 store 实例具有相同属性和方法的 `context 对象`，因此可以调用 `context.commit()` 提交一个 mutation，也可以通过 `context.state` 或 `context.getters` 来获取 state 和 getters
 
 ③ action 函数通过 `$store.dispatch(name, args)` 触发
 

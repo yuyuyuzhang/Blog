@@ -351,7 +351,7 @@ const vm = new Vue({
 
 * **property**：property 是指 `DOM 元素节点的属性`，只是一个字段
   
-  property 随用户输入改变，可以通过`点访问法`或`方括号访问法`直接访问和修改 DOM 元素节点的属性
+  property 随用户输入改变，可以通过`点访问法`或`方括号访问法`直接访问和修改
   
   ```html
   <input id="block" data-a="a" value="111" />
@@ -406,8 +406,8 @@ const vm = new Vue({
 .sync 修饰符属性绑定
 
 * Vue 仅`表单控件`使用 v-model 双向数据绑定
-* Vue 其他地方都是使用 v-bind、v-on 实现`父子组件之间的单向数据绑定`，数据自上而下流 prop，事件自下而上走 this.$emit
-* v-bind 加上 .sync 修饰符会扩展成一个更新父组件绑定值的 v-on 侦听器，子组件自动具有 update 方法更新父组件值
+* Vue 其他地方都是使用 v-bind、v-on 实现`父子组件之间的单向数据绑定`，数据自上而下流 prop，事件自下而上走 `this.$emit(事件名)`
+* v-bind 加上 .sync 修饰符，子组件会自动具有 `this.$emit("update:属性名", newVal)` 方法更新父组件值
   
   父组件代码如下
 
