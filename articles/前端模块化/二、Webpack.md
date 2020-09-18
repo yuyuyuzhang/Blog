@@ -1842,7 +1842,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 * npx webpack
   
-  ![watch_before](../../images/前端模块化/Webpack/watch_before.png)
+  ![watch_before](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/watch_before.png)
   
 * src/index.js
   
@@ -1874,7 +1874,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 * 手动刷新浏览器
   
-  ![watch_after](../../images/前端模块化/Webpack/watch_after.png)
+  ![watch_after](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/watch_after.png)
 
 #### ② 自动刷新浏览器（Live Reload）— devServer 服务器
 
