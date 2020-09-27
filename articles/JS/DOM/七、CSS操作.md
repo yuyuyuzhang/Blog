@@ -78,8 +78,8 @@ console.log(classList.toString());        //"one"
 Style 对象表示`元素的 style 属性指定的所有内联样式`，但不包含与嵌入样式表或外部样式表层叠而来的样式
 
 ```javascript
-定义：const style = elem.style           
-访问：style.css     
+定义：const style = elem.style
+访问：style.css
 属性：style.cssText                  //返回/设置style的css规则文本
      style.length                   //返回style声明的css规则个数
 方法：style.getPropertyPriority(css) //返回style中指定css规则的important字符串
@@ -112,8 +112,8 @@ CSSStyleDeclaration 对象表示`元素计算后的所有最终样式`，
 文档元素的最终样式是浏览器综合各种规则计算出来的，该对象是`动态`的，任何基于样式的修改都会`实时反映`
 
 ```javascript
-定义：const computedStyle = getComputedStyle(elem)   
-访问：computedStyle.css                  
+定义：const computedStyle = getComputedStyle(elem)
+访问：computedStyle.css
 属性：computedStyle.length                   //返回computedStyle声明的css规则个数
 方法：computedStyle.getPropertyPriority(css) //返回computedStyle中指定css规则的important字符串
 ```

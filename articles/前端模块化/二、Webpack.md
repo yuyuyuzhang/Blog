@@ -1842,7 +1842,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 * npx webpack
   
-  ![watch_before](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/watch_before.png)
+  ![watch_before](../../images/前端模块化/Webpack/watch_before.png)
   
 * src/index.js
   
@@ -1874,7 +1874,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 * 手动刷新浏览器
   
-  ![watch_after](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/watch_after.png)
+  ![watch_after](../../images/前端模块化/Webpack/watch_after.png)
 
 #### ② 自动刷新浏览器（Live Reload）— devServer 服务器
 
@@ -2533,119 +2533,578 @@ babel plugins 的 `babel-plugin-dynamic-import-node` 只做一件事，将所有
 
 ### (1) 减少执行编译的模块
 
-#### ① 剔除无需构建的模块
+#### ① 剔除类库中无需构建的模块
 
-有的依赖包，除了项目所需的模块内容外，还会附带一些多余的模块，例如 moment 包一般在构建时会自动引入 locale 目录下的多国语言包，但对于大多数情况而言，项目只需要引入本国语言包
+有的第三方库，除了项目所需的模块内容外，还会附带一些多余的模块
 
-Webpack 插件 `IgnorePlugin` 可以在构建模块时剔除需要排除的模块，从而提升构建速度，减少产物体积
+例如 moment 库主要是对时间进行格式化，并且支持多国语言，一般在项目中只需要引入本国语言包，但是 Webpack 构建时会自动引入 locale 目录下的所有多国语言包
 
-```javascript
-plugins: [
-  new webpack.IgnorePlugin({
-    resourceRegExp: /^\.\/locale$/,
-    contextRegExp: /moment$/
-  })
-]
-```
+Webpack 插件 `IgnorePlugin` 可以在编译时`忽略指定目录`，从而提升构建速度，减少产物体积
 
-#### ② 按需引入类库模块
+配置 IngorePlugin 插件前
 
-按需引入类库模块适用于工具类库性质的依赖包的优化，例如 lodash 包一般在项目中只用到少数几个方法，但在构建时却引入了整个依赖包
+* `npm install moment --save-dev`
 
-最佳的解决方式是在导入声明时只导入依赖的包内的特定模块，这样可以大大减少构建时间，以及产物体积
+* index.js
+  
+  ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
 
-#### ③ 单独构建框架模块
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
 
-将项目依赖的框架等模块单独构建打包，与普通构建流程区分开，例如我们想引用一个库，通过 import 等方式导入，但是又不想让 Webpack 打包，就可以通过 DllPlugin/externals 配置，由用户环境提供这个库
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
 
-* DllPlugin：将第三方库和业务代码分开打包，先使用 DllPlugin 插件给第三方库打包，再使用 DllReferencePlugin 插件让业务代码引用第三方库
+  // 导入 .md 文件
+  import title from './title.md'
 
-  DllPlugin 一般只用于`开发环境`，生产环境下会使用代码分包 Code Splitting 来完成框架模块的拆分构建
+  // 添加 textarea 输入框
+  const text = document.createElement('textarea')
+  document.body.append(text)
 
-  使用 DllPlugin 插件给第三方库打包需要一个单独的配置文件，webpack.dll.config.js
+  // 测试 watch 模式
+  // console.log('watch 模式')
+
+  // head.js HMR 处理函数
+  let lastHeading = heading
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./head.js', function(){
+      console.log(222, createHeading)
+      document.body.removeChild(lastHeading)
+      lastHeading = createHeading()
+      document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
+    })
+  }
+
+  // IngorePlugin
+  import moment from 'moment'
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+  ```
+
+* webpack.config.js
+  
+  ```javascript
+  const webpack = require('webpack')
+  const path = require('path')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const config = {
+    mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
+    entry: {
+      app: './src/index.js'
+    },
+    output: { //devServer在内存中构建，不会产生dist文件夹写入磁盘
+      filename: 'bundle.js',
+      path: path.join(__dirname, 'dist_no_ingorePlugin')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [{
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提供构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
+    ],
+    devServer: {
+      port: '8081',
+      open: true,
+      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      overlay: { errors: true, warnings: false },
+    },
+    devtool: 'none' //构建速度很快，方便观察页面变化
+  }
+  module.exports = config
+  ```
+
+* npx webpack
+  
+  ![no_ingorePlugin](../../images/前端模块化/webpack/no_ingorePlugin.png)
+
+配置 IngorePlugin 插件后
+
+* index.js
+  
+  按照上述配置 Webpack 构建时忽略了包含 ./locale 字段的目录，但也导致使用时不能显示中文语言，因此需要手动引入
+  
+  ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
+
+  // 导入其他类型资源 ( 媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 导入 .md 文件
+  import title from './title.md'
+
+  // 添加 textarea 输入框
+  const text = document.createElement('textarea')
+  document.body.append(text)
+
+  // 测试 watch 模式
+  // console.log('watch 模式')
+
+  // head.js HMR 处理函数
+  let lastHeading = heading
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./head.js', function(){
+      console.log(222, createHeading)
+      document.body.removeChild(lastHeading)
+      lastHeading = createHeading()
+      document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
+    })
+  }
+
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+  ```
+
+* webpack.config.js
 
   ```javascript
   const webpack = require('webpack')
-  module.exports = {
+  const path = require('path')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const config = {
+    mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
     entry: {
-      react: ['react', 'react-dom', 'react-redux']
+      app: './src/index.js'
     },
-    output: {
-      filename: '[name].dll.js',
-      path: resolve('dist/dll'),
-      library: '[name]_dll_[hash]'
+    output: { //devServer在内存中构建，不会产生dist文件夹写入磁盘
+      filename: 'bundle.js',
+      path: path.join(__dirname, 'dist_ingorePlugin')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [{
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提供构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
     },
     plugins: [
-      new webpack.DllPlugin({
-        // 该动态链接库的全局变量名称，需要和 output.library 保持一致
-        name: '[name]_dll_[hash]',
-        // 该动态链接库的 manifest.json 文件名
-        path: path.join(__dirname, 'dist/dll', '[name].manifest.json')
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
       })
-    ]
+    ],
+    devServer: {
+      port: '8081',
+      open: true,
+      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      overlay: { errors: true, warnings: false },
+    },
+    devtool: 'none' //构建速度很快，方便观察页面变化
   }
+  module.exports = config
   ```
 
-  webpack.config.js
-
-  ```javascript
-
-  ```
-
-  index.html
-
-  ```html
-  ```
-
-  npm run dll
-
-  ![DllPlugin](../../images/前端模块化/webpack/DllPlugin.png)
-
-  npm run dev
-
-* externals 可以直接在配置文件 webpack.config.js 中配置
+* npx webpack
   
-  index.html 通过 CDN 引入 React 全家桶资源
+  ![ingorePlugin](../../images/前端模块化/webpack/ingorePlugin.png)
 
-  ```html
-  <script src="https://lib.baomitu.com/react/16.4.0-alpha.7926752/cjs/react.development.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.3.2/cjs/react-dom-server.browser.development.js"></script>
-  ```
+#### ② 按需引入类库模块内的导出
 
-  webpack.config.js
+按需引入类库模块适用于工具类库性质的依赖包的优化
 
+例如 lodash 库包含很多方法，但一般在项目中只用到少数几个方法，Webpack 构建时却引入了整个 lodash 库
+
+* `npm install lodash --save-dev`
+
+* index.js
+  
   ```javascript
-  module.exports = {
-    ...
-    externals : {
-      react: 'react',
-      redux: 'redux'
-    }
-    ...
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
+
+  // 导入其他类型资源 ( 多媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 导入 .md 文件
+  import title from './title.md'
+
+  // 添加 textarea 输入框
+  const text = document.createElement('textarea')
+  document.body.append(text)
+
+  // 测试 watch 模式
+  // console.log('watch 模式')
+
+  // head.js HMR 处理函数
+  let lastHeading = heading
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./head.js', function(){
+      console.log(222, createHeading)
+      document.body.removeChild(lastHeading)
+      lastHeading = createHeading()
+      document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
+    })
   }
+
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+
+  // 测试按需引入
+  import _ from 'lodash'; // 全部引入
+  const users = [
+    { 'user': 'barney', 'age': 36, 'active': true },
+    { 'user': 'fred', 'age': 40, 'active': false },
+    { 'user': 'pebbles', 'age': 1, 'active': true }
+  ]
+  const res = _.find(users, o => o.age < 40)
+  console.log('res', res)
   ```
 
-  组件
-
+* webpack.config.js
+  
   ```javascript
-  import React from 'react'
-  import { createStore, combineReducers, applyMiddleware } from 'redux'
+  const webpack = require('webpack')
+  const path = require('path')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const config = {
+    mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
+    entry: {
+      app: './src/index.js'
+    },
+    output: { //devServer在内存中构建，不会产生dist文件夹写入磁盘
+      filename: 'bundle.js',
+      path: path.join(__dirname, 'dist_no_lodash') //no_lodash && lodash
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [{
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提供构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'          //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+      })
+    ],
+    devServer: {
+      port: '8081',
+      open: true,
+      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      overlay: { errors: true, warnings: false },
+    },
+    devtool: 'none' //构建速度很快，方便观察页面变化
+  }
+  module.exports = config
   ```
+
+* npx webpack
+  
+  ![no_lodash](../../images/前端模块化/webpack/no_lodash.png)
+
+按需引入模块内导出：import 后跟文件路径，写到文件模块内导出的具体方法
+
+* index.js
+  
+  ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
+
+  // 导入其他类型资源 ( 多媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 导入 .md 文件
+  import title from './title.md'
+
+  // 添加 textarea 输入框
+  const text = document.createElement('textarea')
+  document.body.append(text)
+
+  // 测试 watch 模式
+  // console.log('watch 模式')
+
+  // head.js HMR 处理函数
+  let lastHeading = heading
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./head.js', function(){
+      console.log(222, createHeading)
+      document.body.removeChild(lastHeading)
+      lastHeading = createHeading()
+      document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
+    })
+  }
+
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+
+  // 测试按需引入
+  // import _ from 'lodash'; // 全部引入
+  import find from 'lodash/find'; //按需引入
+  const users = [
+    { 'user': 'barney', 'age': 36, 'active': true },
+    { 'user': 'fred', 'age': 40, 'active': false },
+    { 'user': 'pebbles', 'age': 1, 'active': true }
+  ]
+  const res = find(users, o => o.age < 40)
+  console.log('res', res)
+  ```
+
+* webpack.config.js
+  
+  和上述配置并无不同，除了输出目录改为 dist_lodash
+
+* npx webpack
+  
+  ![lodash](../../images/前端模块化/webpack/lodash.png)
 
 ### (2) 提高单个模块的构建速率
 
 #### ① Resolve
 
-resolve 配置指定构建时查找文件模块的规则
+resolve 选项配置模块如何解析
 
 ```javascript
 module.exports = {
   ...
   resolve: {
     alias: {
-      '@': path.join(__dirname, '..', 'src')
+      '@': path.join(__dirname, '..', 'src') // 创建 import/require 别名
     },
-    extensions: ['.js', '.json', '.vue']
+    extensions: ['.js', '.json', '.vue'] // 自动解析确定的扩展
   },
   ...
 }
@@ -2722,15 +3181,15 @@ parallel-webpack 针对多配置构建，Webpack 的配置文件可以是包含�
 
 ## 13. Webpack 打包阶段优化
 
-## 12. Webpack 高级特性
-
 ### (1) Tree Shaking
 
 Tree Shaking 的意思是摇树，伴随着摇树的动作，树上的枯枝和树叶就会掉落下来，Tree Shaking 摇掉的是项目中的`未引用代码 dead-code`
 
 Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功能搭配使用实现的效果，Webpack 使用`生产模式`打包时，会自动开启这组优化功能，检测未引用代码并自动移除
 
-#### ① 生产环境 production
+#### ① optimization.usedExports
+
+在生产环境以外的其他环境下，想要实现摇树功能，需要自行在配置文件 webpack.config.js 中配置 `optimization` 属性，该属性用来集中配置 Webpack 内置优化功能
 
 * src/compoennt.js
   
@@ -2786,109 +3245,28 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
     })
   }
 
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+
+  // 测试按需引入模块内导出
+  // import _ from 'lodash'; // 全部引入
+  import find from 'lodash/find'; //按需引入
+  const users = [
+    { 'user': 'barney', 'age': 36, 'active': true },
+    { 'user': 'fred', 'age': 40, 'active': false },
+    { 'user': 'pebbles', 'age': 1, 'active': true }
+  ]
+  const res = find(users, o => o.age < 40)
+  console.log('res', res)
+
   // Tree-shaking
   import { Button } from './component.js'
   document.body.appendChild(Button())
   ```
-
-* webpack.config.js
-  
-  ```javascript
-  const path = require('path')
-  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-  const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
-  const config = {
-    mode: 'production',
-    entry: {
-      app: './src/index.js'
-    },
-    output: {
-      filename: 'bundle.js',
-      path: path.join(__dirname, 'dist_treeShaking_prod')
-    },
-    resolve: {
-      alias: {
-        '@': path.join(__dirname, '..', 'src')
-      },
-      extensions: ['.js', '.json', '.vue']
-    },
-    module: {
-      rules: [{
-          test: /\.css$/, //正则匹配文件路径
-          use: [ //指定具体的loader,一组链式loader按相反顺序执行
-            'style-loader',
-            'css-loader'
-          ]
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          exclude: /(node_modules)/, //提高构建速度
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 20000,             //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
-              name: 'img/[name].[ext]', //文件名合并资源文件输出目录(相对dist目录)
-              publicPath: './'          //打包后引用地址(相对name)
-            }
-          }
-        },
-        {
-          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-          exclude: /(node_modules)/,
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 20000,
-              name: 'fonts/[name].[ext]',
-              publicPath: './'
-            }
-          }
-        },
-        {
-          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
-          exclude: /(node_modules)/,
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 20000,
-              name: 'media/[name].[ext]',
-              publicPath: './'
-            }
-          }
-        },
-        {
-          test: /\.md$/,
-          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        }
-      ]
-    },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({
-        filename: 'index.html', //文件名
-        title: 'Webpack',       //title属性
-        meta: {                 //meta标签
-          viewPort: 'width=device-width'
-        }
-      }),
-      new RemoveCommentsPlugin()
-    ],
-    devtool: 'none' //构建速度很快，方便观察页面变化
-  }
-  module.exports = config
-  ```
-
-* npx webpack --mode=production
-* dist_treeShaking_prod/bundle.js
-  
-  从搜索结果来看，并不包含 `document.createElement('a')`，说明生产环境下确实会自动开启摇树功能
-
-  ![treeShaking_prod](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/treeShaking_prod.png)
-
-#### ② optimization.usedExports
-
-在生产环境以外的其他环境下，想要实现摇树功能，需要自行在配置文件 webpack.config.js 中配置 `optimization` 属性，该属性用来集中配置 Webpack 内置优化功能
 
 * webpack.config.js
   
@@ -2973,7 +3351,10 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
           viewPort: 'width=device-width'
         }
       }),
-      new RemoveCommentsPlugin()
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      })
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
@@ -2988,7 +3369,7 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
 
   ![treeShaking_usedExports](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/treeShaking_usedExports.png)
 
-#### ③ optimization.minimize
+#### ② optimization.minimize
 
 * webpack.config.js
   
@@ -3073,7 +3454,10 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
           viewPort: 'width=device-width'
         }
       }),
-      new RemoveCommentsPlugin()
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      })
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
@@ -3089,7 +3473,7 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
 
   ![treeShaking_prod](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/treeShaking_prod.png)
 
-#### ④ optimization.concatenateModules
+#### ③ optimization.concatenateModules
 
 * dist_treeShaking_none_usedExports/bundle.js
   
@@ -3180,7 +3564,10 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
           viewPort: 'width=device-width'
         }
       }),
-      new RemoveCommentsPlugin()
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      })
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
@@ -3196,7 +3583,7 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
   
   ![treeShaking_none_concatenateModules](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/treeShaking_none_concatenateModules.png)
 
-#### ⑤ Tree Shaking 与 babel-loader
+#### ④ Tree Shaking 与 babel-loader
 
 `Tree-shaking 实现的前提是 ES6 Modules`，Tree-shaking 通过 ES6 Modules 的 `export、import` 判断模块成员是否被引用，从而识别出`未引用代码 dead-code`，也就是说最终交给 Webpack 打包的代码，必须是以 ES6 Modules 的方式组织的模块化
 
@@ -3288,6 +3675,24 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
       // undefined.f()
     })
   }
+
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+
+  // 测试按需引入模块内导出
+  // import _ from 'lodash'; // 全部引入
+  import find from 'lodash/find'; //按需引入
+  const users = [
+    { 'user': 'barney', 'age': 36, 'active': true },
+    { 'user': 'fred', 'age': 40, 'active': false },
+    { 'user': 'pebbles', 'age': 1, 'active': true }
+  ]
+  const res = find(users, o => o.age < 40)
+  console.log('res', res)
 
   // Tree-shaking
   import { Button } from './component.js'
@@ -3381,7 +3786,10 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
           viewPort: 'width=device-width'
         }
       }),
-      new RemoveCommentsPlugin()
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      })
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
@@ -3480,7 +3888,10 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
           viewPort: 'width=device-width'
         }
       }),
-      new RemoveCommentsPlugin()
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      })
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
@@ -3583,6 +3994,24 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
       // undefined.f()
     })
   }
+
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+
+  // 测试按需引入模块内导出
+  // import _ from 'lodash'; // 全部引入
+  import find from 'lodash/find'; //按需引入
+  const users = [
+    { 'user': 'barney', 'age': 36, 'active': true },
+    { 'user': 'fred', 'age': 40, 'active': false },
+    { 'user': 'pebbles', 'age': 1, 'active': true }
+  ]
+  const res = find(users, o => o.age < 40)
+  console.log('res', res)
 
   // Tree-shaking
   import { Button } from './component.js'
@@ -3721,7 +4150,10 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
           viewPort: 'width=device-width'
         }
       }),
-      new RemoveCommentsPlugin()
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      })
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
@@ -3738,7 +4170,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
   
   ![sideEffects_none_numPad](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/sideEffects_none_numPad.png)
 
-### (3) 按需加载
+### (3) 按需引入模块
 
 Webpack 会将所有代码打包到`一个 bundle.js 文件`中，这会导致打包结果过大，绝大多数情况下，应用程序刚开始运行时，并非所有模块都是必须的，如果所有模块都被打包到一个 bundle.js 文件，即使应用程序一开始只需要一到两个模块工作，也必须将 bundle.js 文件整体加载进来，前端应用程序一般都是运行在浏览器，因此这种情况会浪费大量流量和带宽，也会导致浏览器响应速度变慢
 
@@ -3809,6 +4241,24 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
       // undefined.f()
     })
   }
+
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+
+  // 测试按需引入模块内导出
+  // import _ from 'lodash'; // 全部引入
+  import find from 'lodash/find'; //按需引入
+  const users = [
+    { 'user': 'barney', 'age': 36, 'active': true },
+    { 'user': 'fred', 'age': 40, 'active': false },
+    { 'user': 'pebbles', 'age': 1, 'active': true }
+  ]
+  const res = find(users, o => o.age < 40)
+  console.log('res', res)
 
   // Tree-shaking
   import { Button } from './component.js'
@@ -3926,7 +4376,10 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
           viewPort: 'width=device-width'
         }
       }),
-      new RemoveCommentsPlugin()
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      })
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
@@ -4089,6 +4542,9 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
         }
       }),
       new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
         chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
@@ -4224,6 +4680,9 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
         }
       }),
       new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
         chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
@@ -4372,6 +4831,9 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
         }
       }),
       new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
         chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
@@ -4523,6 +4985,9 @@ const config = {
       }
     }),
     new RemoveCommentsPlugin(),
+    new webpack.IgnorePlugin({ //构建时忽略指定目录
+      resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+    }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
       chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
@@ -4587,7 +5052,7 @@ const config = {
 module.exports = config
 ```
 
-## 13. 开发环境和生产环境
+## 14. 开发环境和生产环境
 
 ### (1) mode
 
@@ -4751,6 +5216,9 @@ module.exports = (env, argv) => {
           }
         }),
         new RemoveCommentsPlugin(),
+        new webpack.IgnorePlugin({ //构建时忽略指定目录
+          resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+        })
       ],
     }
 
