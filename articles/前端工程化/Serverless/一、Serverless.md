@@ -20,7 +20,7 @@ Serverless 不但提供了运行代码的环境，还能自动实现负载均衡
 
 以阿里云的函数计算为例，费用包括调用次数、执行时间、公网流量，如下所示
 
-![阿里云收费](../../../images/前端工程化/Serverless/阿里云收费.png)
+![阿里云收费](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Serverless/%E9%98%BF%E9%87%8C%E4%BA%91%E6%94%B6%E8%B4%B9.png)
 
 #### ③ 深度绑定
 
@@ -54,7 +54,7 @@ BaaS 相对综合一点，它提供了一系列后端常用服务，比如数据
 
 `HTTP 函数`负责接收 github 发出的 webhook 请求，收到请求后使用内部模块调用一个`事件函数`执行具体的操作
 
-![github自动部署](../../../images/前端工程化/Serverless/github自动部署.png)
+![github自动部署](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Serverless/github%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2.png)
 
 ### (1) HTTP 函数
 

@@ -1842,7 +1842,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 * npx webpack
   
-  ![watch_before](../../images/前端模块化/Webpack/watch_before.png)
+  ![watch_before](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/watch_before.png)
   
 * src/index.js
   
@@ -1874,7 +1874,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 * 手动刷新浏览器
   
-  ![watch_after](../../images/前端模块化/Webpack/watch_after.png)
+  ![watch_after](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/watch_after.png)
 
 #### ② 自动刷新浏览器（Live Reload）— devServer 服务器
 
@@ -2691,7 +2691,7 @@ Webpack 插件 `IgnorePlugin` 可以在编译时`忽略指定目录`，从而提
 
 * npx webpack
   
-  ![no_ingorePlugin](../../images/前端模块化/webpack/no_ingorePlugin.png)
+  ![no_ingorePlugin](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/no_ingorePlugin.png)
 
 配置 IngorePlugin 插件后
 
@@ -2848,7 +2848,7 @@ Webpack 插件 `IgnorePlugin` 可以在编译时`忽略指定目录`，从而提
 
 * npx webpack
   
-  ![ingorePlugin](../../images/前端模块化/webpack/ingorePlugin.png)
+  ![ingorePlugin](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/ingorePlugin.png)
 
 #### ② 按需引入类库模块内的导出
 
@@ -3019,7 +3019,7 @@ Webpack 插件 `IgnorePlugin` 可以在编译时`忽略指定目录`，从而提
 
 * npx webpack
   
-  ![no_lodash](../../images/前端模块化/webpack/no_lodash.png)
+  ![no_lodash](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/no_lodash.png)
 
 按需引入模块内导出：import 后跟文件路径，写到文件模块内导出的具体方法
 
@@ -3089,7 +3089,7 @@ Webpack 插件 `IgnorePlugin` 可以在编译时`忽略指定目录`，从而提
 
 * npx webpack
   
-  ![lodash](../../images/前端模块化/webpack/lodash.png)
+  ![lodash](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/lodash.png)
 
 ### (2) 提高单个模块的构建速率
 
