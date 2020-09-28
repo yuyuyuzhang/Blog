@@ -1759,6 +1759,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
   const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const config = {
     mode: 'none', //不做任何额外工作的原始打包，方便阅读打包后的JS文件代码
+    watch: true, //开启watch模式
     entry: {
       app: './src/index.js'
     },
@@ -1878,7 +1879,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 #### ② 自动刷新浏览器（Live Reload）— devServer 服务器
 
-Webpack 的 `devServer` 服务器就是一种通信机制，用来连接`浏览器预览页面`与`本地监控代码变更的进程`，实现本地代码变更后的浏览器自动刷新，Webpack devServer 里 `watch 模式默认开启`
+Webpack 的 `devServer` 服务器就是一种 `WebSocket` 通信机制，用来连接`浏览器预览页面`与`本地监控代码变更的进程`，实现本地代码变更后的浏览器自动刷新，Webpack devServer 里 `watch 模式默认开启`，本地代码变更时，将变更内容推送到浏览器
 
 **缺陷**：但是 devServer 自动刷新页面会`丢失页面的操作状态`
 
