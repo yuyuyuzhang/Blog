@@ -168,9 +168,9 @@ JS 系列之设计模式 进行中......
 
 ## JS 系列之设计模式
 
-## 前端工程化系列之前端开发的发展历程
+<!-- ## 前端工程化系列之前端开发的发展历程
 
-[前端开发的发展历程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.md)
+[前端开发的发展历程](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.md) -->
 
 ## 前端工程化系列之 Vue
 
