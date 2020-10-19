@@ -115,10 +115,10 @@ JS 系列之设计模式 进行中......
 4. [元素节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%9B%9B%E3%80%81%E5%85%83%E7%B4%A0%E8%8A%82%E7%82%B9.md)
 5. [文本节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%BA%94%E3%80%81%E6%96%87%E6%9C%AC%E8%8A%82%E7%82%B9.md)
 6. [属性节点](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%85%AD%E3%80%81%E5%B1%9E%E6%80%A7%E8%8A%82%E7%82%B9.md)
-7. [CSS操作](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%B8%83%E3%80%81CSS%E6%93%8D%E4%BD%9C.md)
+7. [CSS 操作](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%B8%83%E3%80%81CSS%E6%93%8D%E4%BD%9C.md)
 8. [节点集合](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%85%AB%E3%80%81%E8%8A%82%E7%82%B9%E9%9B%86%E5%90%88.md)
 9. [节点范围](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E4%B9%9D%E3%80%81%E8%8A%82%E7%82%B9%E8%8C%83%E5%9B%B4.md)
-10. [元素&文档&窗口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%8D%81%E3%80%81%E5%85%83%E7%B4%A0%26%E6%96%87%E6%A1%A3%26%E7%AA%97%E5%8F%A3.md)
+10. [元素 & 文档 & 窗口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%8D%81%E3%80%81%E5%85%83%E7%B4%A0%26%E6%96%87%E6%A1%A3%26%E7%AA%97%E5%8F%A3.md)
 11. [MutationObserver API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%8D%81%E4%B8%80%E3%80%81MutationObserver%20API.md)
 12. [IntersectionObserver API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/DOM/%E5%8D%81%E4%BA%8C%E3%80%81IntersectionObserver%20API.md)
 
