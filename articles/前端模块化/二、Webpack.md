@@ -1719,7 +1719,7 @@ Webpack 将开发阶段编写的源代码打包成客户端浏览器实际运行
 
 #### ① 保存后自动编译（Auto Compile）— watch 模式
 
-Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续监控源文件内容是否发生变化，当源文件内容发生变更后自动再次执行该流程实现自动编译，直到用户主动退出
+Webpack 的 `watch 模式`在`打包后并未退出当前 node 进程`，而是继续监控源文件内容是否发生变化，当源文件内容发生变更后自动再次执行该流程实现自动编译，直到用户主动退出
 
 **缺陷**：通过 watch 模式，开发者无需每次手动执行打包，但问题并未解决，在浏览器预览时我们仍然需要`手动刷新页面`后才能看到变更后的效果
 
@@ -1879,7 +1879,7 @@ Webpack 的 `watch 模式`在`打包后并未退出当前进程`，而是继续�
 
 #### ② 自动刷新浏览器（Live Reload）— devServer 服务器
 
-Webpack 的 `devServer` 服务器就是一种 `WebSocket` 通信机制，用来连接`浏览器预览页面`与`本地监控代码变更的进程`，实现本地代码变更后的浏览器自动刷新，Webpack devServer 里 `watch 模式默认开启`，本地代码变更时，将变更内容推送到浏览器
+Webpack 的 `devServer` 服务器就是一种 `WebSocket` 通信机制，用来连接`浏览器预览页面`与`本地监控代码变更的 node 进程`，实现本地代码变更后的浏览器自动刷新，Webpack devServer 里 `watch 模式默认开启`，本地代码变更时，将变更内容推送到浏览器
 
 **缺陷**：但是 devServer 自动刷新页面会`丢失页面的操作状态`
 
@@ -2047,7 +2047,7 @@ Webpack 的 `devServer` 服务器就是一种 `WebSocket` 通信机制，用来�
 
 Webpack 的 `HMR` 就是为了解决 devServer 页面刷新导致的状态丢失问题
 
-### (3) HMR 应用
+### (2) HMR 应用
 
 HMR 指的是在`应用程序运行过程`中，开发者修改了某个模块的代码，Webpack 实时替换掉这个修改的模块，而无需完全刷新整个应用，那么应用的运行状态就不会因此而改变
 
@@ -2435,11 +2435,11 @@ HMR 指的是在`应用程序运行过程`中，开发者修改了某个模块�
   
   ![HMR_js_hotOnly](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/HMR_js_hotOnly.gif)
 
-### (4) HMR 原理
+### (3) HMR 原理
 
 Webpack HMR 完整功能主要包含了 3 方面的技术
 
-* watch 模式：对本地源代码文件变更的监控进程
+* watch 模式：对本地源代码文件变更的监控 node 进程
 * devServer 服务器：浏览器预览页面与本地服务器的 `WebSocket 通信`，本地代码变更时，将变更内容推送到浏览器
 * HMR 功能：模块解析与替换
 
@@ -2454,7 +2454,7 @@ Webpack HMR 完整功能主要包含了 3 方面的技术
 * 而第十步是决定 HMR 成功与否的关键步骤，在该步骤中，HotModulePlugin 将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用
 * 最后一步，当 HMR 失败后，回退到 live reload 操作，也就是进行浏览器刷新来获取最新打包代码
 
-### (5) 路由懒加载导致 HMR 慢
+### (4) 路由懒加载导致 HMR 慢
 
 Webpack 4 更好地利用缓存提高了编译速度，但是当项目中`路由懒加载`的页面多了之后 （50+），模块热替换慢的问题会很明显
 
@@ -5053,10 +5053,6 @@ const config = {
 module.exports = config
 ```
 
-## 14. Webpack 增量构建
-
-
-
 ## 14. 开发环境和生产环境
 
 ### (1) mode
@@ -5371,3 +5367,23 @@ module.exports = (env, argv) => {
 * npm run serve
   
   ![config_one效果](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/config_one%E6%95%88%E6%9E%9C.png)
+
+## 15. Webpack 增量构建
+
+Webpack 增量构建就是`只编译打包改动后的文件`的操作
+
+### (1) devServer
+
+开发环境的 devServer 状态下，Webpack 会进行一次初始化构建，构建完成后启动服务并进入到等待更新的状态，当本地文件有变更时，Webpack 瞬间将变更文件编译，并将编译后的文件通过 Websocket 推送到浏览器
+
+### (2) 生产环境下 watch 配置
+
+devServer 模式下默认开启 watch 配置，watch 配置下初始构建完成后并不会退出当前 node 进程，因此构建上下文的对象包括上次构建的缓存数据对象都可以保存在内存中，供下次构建时重复使用
+
+### (3) 生产环境下 cache 配置
+
+cache 配置的源码文件只要涉及到 2 个文件 CachePlugin.js、Compilation.js，
+
+## 16. Webpack 5 优化细节
+
+

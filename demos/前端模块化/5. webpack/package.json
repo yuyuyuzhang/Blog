@@ -10,8 +10,7 @@
   ],
   "scripts": {
     "serve": "webpack-dev-server --mode development --env development",
-    "build": "webpack --mode production --env production",
-    "dll": "webpack --config webpack.dll.config.js"
+    "build": "webpack --mode production --env production"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
