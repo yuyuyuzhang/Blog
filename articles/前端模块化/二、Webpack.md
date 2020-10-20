@@ -3274,6 +3274,7 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
   属性 optimization 配置 `usedExports=true`，可以实现打包结果中模块只导出外部用到的成员（标记枯树枝、树叶）
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -3368,7 +3369,7 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
 * npx webpack --mode none
 * dist_treeShaking_none_usedExports/bundle.js
 
-  ![treeShaking_usedExports](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/treeShaking_usedExports.png)
+  ![treeShaking_none_usedExports](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/treeShaking_none_usedExports.png)
 
 #### ② optimization.minimize
 
@@ -3377,6 +3378,7 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
   属性 optimization 配置 `minimize=true`，可以实现压缩打包结果（摇下枯树枝、树叶）
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -3487,6 +3489,7 @@ Webpack Tree-shaking 功能并不是指某一个配置选项，而是一组功�
   属性 optimization 配置 `concatenateModules=true`，可以实现尽可能合并所有模块到一个函数中（合并可用树枝、树叶）
 
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -3709,6 +3712,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
 * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -3811,6 +3815,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
 * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -4073,6 +4078,7 @@ Tree Shaking 配置 `optimization.usedExports` 可以实现打包结果中的模
 * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -4299,6 +4305,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
 * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -4421,11 +4428,9 @@ MiniCSSExtractPlugin 插件只负责将 CSS 代码提取到单独的 CSS 文件�
   
   Webpack 建议将压缩插件配置到 `optimization.minimizer`，便于 minimize 选项的统一控制
 
-* `npm i terser-webpack-plugin --save-dev`
+* `npm i uglifyjs-webpack-plugin --save-dev`
   
-  我们配置了插件 OptimizeCSSAssetsWebpackPlugin 到 optimization.minimizer 之后，Webpack 会认为我们需要使用自定义压缩插件，Webpack 内置的 JS 压缩插件就会被覆盖掉，因此需要重新下载引入
-
-* webpack.config.js
+  我们配置了插件 OptimizeCSSAssetsWebpackPlugin 到 optimization.minimizer 之后，Webpack 会认为我们需要使用自定义压缩插件，Webpack 内置的 JS 压缩插件就会被覆盖掉，因此需要重新下载引入一个 JS 文件压缩插件
 
 ### (5) 缓存
 
@@ -4460,14 +4465,15 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
 
   * webpack.config.js
   
-   ```javascript
+  ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
   const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin');
   const config = {
     mode: 'none',
     entry: {
@@ -4484,16 +4490,17 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
       extensions: ['.js', '.json', '.vue']
     },
     module: {
-      rules: [{
+      rules: [
+        {
           test: /\.css$/, //正则匹配文件路径
           use: [ //指定具体的loader,一组链式loader按相反顺序执行
-            'style-loader',
+            MiniCssExtractPlugin.loader, //通过MiniCssExtractPlugin插件将样式提取成单独的CSS文件通过<link>标签嵌入HTML文件
             'css-loader'
           ]
         },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          exclude: /(node_modules)/, //提高构建速度
+          exclude: /(node_modules)/, //提供构建速度
           use: {
             loader: 'url-loader',
             options: {
@@ -4511,7 +4518,7 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
             options: {
               limit: 20000, 
               name: 'fonts/[name].[hash].[ext]',
-              publicPath: './'
+              publicPath: '../'
             }
           }
         },
@@ -4544,7 +4551,8 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
       }),
       new RemoveCommentsPlugin(),
       new webpack.IgnorePlugin({ //构建时忽略指定目录
-        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
       }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
@@ -4553,21 +4561,15 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
     ],
     devtool: 'none', //构建速度很快，方便观察页面变化
     optimization: {
-      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
-      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
-      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
-      sideEffects: true,         //无副作用打包
+      usedExports: true,        //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: true,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: true, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,        //无副作用打包
       minimizer: [
-        new TerserWebpackPlugin(), //Webpack内置JS压缩插件
+        // new UglifyJsWebpackPlugin(),    
         new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
       ]
     },
-    devServer: {
-      port: '8081',
-      open: true,
-      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-      overlay: { errors: true, warnings: false },
-    }
   }
   module.exports = config
   ```
@@ -4596,14 +4598,14 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
   * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
   const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-  const TerserWebpackPlugin = require('terser-webpack-plugin')
-  const webpack = require('webpack')
+  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin');
   const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
   const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
   const config = {
@@ -4613,7 +4615,7 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
     },
     output: {
       filename: 'js/[name].[chunkhash].js',
-      path: path.join(__dirname, 'dist_moduleId_chunkId')
+      path: path.join(__dirname, 'dist_moduleId_chunkId_111')
     },
     resolve: {
       alias: {
@@ -4625,7 +4627,7 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
       rules: [{
           test: /\.css$/, //正则匹配文件路径
           use: [ //指定具体的loader,一组链式loader按相反顺序执行
-            'style-loader',
+            MiniCssExtractPlugin.loader,
             'css-loader'
           ]
         },
@@ -4649,7 +4651,7 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
             options: {
               limit: 20000, 
               name: 'fonts/[name].[hash].[ext]',
-              publicPath: './'
+              publicPath: '../'
             }
           }
         },
@@ -4682,7 +4684,8 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
       }),
       new RemoveCommentsPlugin(),
       new webpack.IgnorePlugin({ //构建时忽略指定目录
-        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
       }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
@@ -4713,7 +4716,7 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
       concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
       sideEffects: true,         //无副作用打包
       minimizer: [
-        new TerserWebpackPlugin(), //Webpack内置JS压缩插件
+        // new UglifyJsWebpackPlugin(), //压缩JS文件
         new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
       ]
     },
@@ -4746,15 +4749,15 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
 * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
   const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
   const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
-  const webpack = require('webpack')
   const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
   const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
   const config = {
@@ -4764,7 +4767,7 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
     },
     output: {
       filename: 'js/[name].[chunkhash].js',
-      path: path.join(__dirname, 'dist_manifest')
+      path: path.join(__dirname, 'dist_manifest_111')
     },
     resolve: {
       alias: {
@@ -4776,7 +4779,7 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
       rules: [{
           test: /\.css$/, //正则匹配文件路径
           use: [ //指定具体的loader,一组链式loader按相反顺序执行
-            'style-loader',
+            MiniCssExtractPlugin.loader,
             'css-loader'
           ]
         },
@@ -4800,7 +4803,7 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
             options: {
               limit: 20000, 
               name: 'fonts/[name].[hash].[ext]',
-              publicPath: './'
+              publicPath: '../'
             }
           }
         },
@@ -4833,7 +4836,8 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
       }),
       new RemoveCommentsPlugin(),
       new webpack.IgnorePlugin({ //构建时忽略指定目录
-        resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
       }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
@@ -4867,7 +4871,7 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
       concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
       sideEffects: true,         //无副作用打包
       minimizer: [
-        new TerserWebpackPlugin(), //Webpack内置JS压缩插件
+        // new UglifyJsWebpackPlugin(), //压缩JS文件
         new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
       ],
       runtimeChunk: 'single' //提取manifest
@@ -4900,15 +4904,15 @@ Webpack 4 代码分包策略如下
 webpack.config.js
 
 ```javascript
+const webpack = require('webpack')
 const path = require('path')
 const { CleanWebpackPlugin} = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-const TerserWebpackPlugin = require('terser-webpack-plugin')
+// const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
-const webpack = require('webpack')
 const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
 const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
 const config = {
@@ -4927,10 +4931,11 @@ const config = {
     extensions: ['.js', '.json', '.vue']
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.css$/, //正则匹配文件路径
         use: [ //指定具体的loader,一组链式loader按相反顺序执行
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader'
         ]
       },
@@ -4954,7 +4959,7 @@ const config = {
           options: {
             limit: 20000, 
             name: 'fonts/[name].[hash].[ext]',
-            publicPath: './'
+            publicPath: '../'
           }
         }
       },
@@ -4987,7 +4992,8 @@ const config = {
     }),
     new RemoveCommentsPlugin(),
     new webpack.IgnorePlugin({ //构建时忽略指定目录
-      resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
@@ -5021,39 +5027,758 @@ const config = {
     concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
     sideEffects: true,         //无副作用打包
     minimizer: [
-      new TerserWebpackPlugin(), //Webpack内置JS压缩插件
+      // new UglifyJsWebpackPlugin(), //压缩JS文件
       new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
     ],
-    runtimeChunk: 'single' //提取manifest
-  },
-  splitChunks: { //codeSplitting
-    chunks: 'all',
-    cacheGroups: {
-      libs: { //基础类库
-        name: 'chunk-libs',
-        test: /[\\/]node_modules[\\]/,
-        priority: 10,
-        chunks: 'initial' //只打包初始时依赖的第三方
-      },
-      elementUI: { //UI组件库
-        name: 'chunk-elementUI', //elementUI单独拆包
-        test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
-        priority: 20,
-      },
-      commons: { //自定义组件/函数
-        name: 'chunk-commons',
-        test: path.resolve(__dirname, 'src/components'),
-        priority: 5,
-        minChunks: 3, //最小共用次数
-        reuseExistingChunk: true
+    runtimeChunk: 'single', //提取manifest
+    splitChunks: { //codeSplitting
+      chunks: 'all',
+      cacheGroups: {
+        libs: { //基础类库
+          name: 'chunk-libs',
+          test: /[\\/]node_modules[\\]/,
+          priority: 10,
+          chunks: 'initial' //只打包初始时依赖的第三方
+        },
+        elementUI: { //UI组件库
+          name: 'chunk-elementUI', //elementUI单独拆包
+          test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+          priority: 20,
+        },
+        commons: { //自定义组件/函数
+          name: 'chunk-commons',
+          test: path.resolve(__dirname, 'src/components'),
+          priority: 5,
+          minChunks: 3, //最小共用次数
+          reuseExistingChunk: true
+        }
       }
     }
-  }
+  },
 }
 module.exports = config
 ```
 
-## 14. 开发环境和生产环境
+## 14. Webpack 生产环境下增量构建
+
+Webpack 增量构建就是`只编译打包改动后的文件`的操作
+
+### (1) devServer
+
+开发环境的 devServer 状态下，Webpack 会进行一次初始化构建，构建完成后启动服务并进入到等待更新的状态，当本地文件有变更时，Webpack 瞬间将`变更文件`编译，并将编译后的文件通过 `Websocket` 推送到浏览器，因此开发环境下 derServer 就是增量构建
+
+* webpack.config.js
+  
+  ```javascript
+  const webpack = require('webpack')
+  const path = require('path')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
+  const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+  const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
+  const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
+  const config = {
+    mode: 'none',
+    entry: {
+      app: './src/index.js'
+    },
+    output: {
+      filename: 'js/[name].[chunkhash].js',
+      path: path.join(__dirname, 'dist_add_devServer')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            MiniCssExtractPlugin.loader,
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'                 //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[hash].[ext]',
+              publicPath: '../'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+      }),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+        chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+      }),
+      new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
+      new webpack.NamedChunksPlugin(chunk => { //固定chunkId
+        if (chunk.name) {
+          return chunk.name;
+        }
+        const modules = Array.from(chunk.modulesIterable);
+        if (modules.length > 1) {
+          const hash = require("hash-sum");
+          const joinedHash = hash(modules.map(m => m.id).join("_"));
+          let len = nameLength;
+          while (seen.has(joinedHash.substr(0, len))) len++;
+          seen.add(joinedHash.substr(0, len));
+          return `chunk-${joinedHash.substr(0, len)}`;
+        } else {
+          return modules[0].id;
+        }
+      }),
+      new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
+        inline: /runtime\..*\.js$/
+      })
+    ],
+    devtool: 'none', //构建速度很快，方便观察页面变化
+    devServer: {
+      port: '8081',
+      open: true,
+      // hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面,HMR会影响chunkhash contenthash
+      overlay: { errors: true, warnings: false },
+    },
+    optimization: {
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
+      minimizer: [
+        // new UglifyJsWebpackPlugin(), //Webpack内置JS压缩插件
+        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+      ],
+      runtimeChunk: 'single', //提取manifest
+      splitChunks: { //codeSplitting
+        chunks: 'all',
+        cacheGroups: {
+          libs: { //基础类库
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\]/,
+            priority: 10,
+            chunks: 'initial' //只打包初始时依赖的第三方
+          },
+          elementUI: { //UI组件库
+            name: 'chunk-elementUI', //elementUI单独拆包
+            test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+            priority: 20,
+          },
+          commons: { //自定义组件/函数
+            name: 'chunk-commons',
+            test: path.resolve(__dirname, 'src/components'),
+            priority: 5,
+            minChunks: 3, //最小共用次数
+            reuseExistingChunk: true
+          }
+        }
+      }
+    },
+  }
+  module.exports = config
+  ```
+
+* npx webpack-dev-server
+  
+  ![add_derServer_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_1.png)
+
+* src/index.js
+  
+  ```javascript
+  import createHeading from './head.js'
+  const heading = createHeading()
+  document.body.append(heading)
+
+  // 导入其他类型资源 ( CSS、图片、字体 )
+  import './style.css'
+
+  // 导入其他类型资源 ( 多媒体 )
+  import movie from '../public/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 导入 .md 文件
+  import title from './title.md'
+
+  // 添加 textarea 输入框
+  const text = document.createElement('textarea')
+  document.body.append(text)
+
+  // 测试 watch 模式
+  // console.log('watch 模式')
+
+  // head.js HMR 处理函数
+  let lastHeading = heading
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./head.js', function(){
+      console.log(222, createHeading)
+      document.body.removeChild(lastHeading)
+      lastHeading = createHeading()
+      document.body.append(lastHeading)
+
+      // 运行时错误
+      // undefined.f()
+    })
+  }
+
+  // IngorePlugin
+  import moment from 'moment'
+  import('moment/locale/zh-cn') //手动引入所需的语言包
+  moment.locale('zh-cn');
+  let r = moment().endOf('day').fromNow();
+  console.log(r)
+
+  // 测试按需引入模块内导出
+  // import _ from 'lodash'; // 全部引入
+  import find from 'lodash/find'; //按需引入
+  const users = [
+    { 'user': 'barney', 'age': 36, 'active': true },
+    { 'user': 'fred', 'age': 40, 'active': false },
+    { 'user': 'pebbles', 'age': 1, 'active': true }
+  ]
+  const res = find(users, o => o.age < 40)
+  console.log('res', res)
+
+  // Tree-shaking
+  import { Button } from './component.js'
+  document.body.appendChild(Button())
+
+  // sideEffects
+  // 虽然只希望载入 Link 模块，但实际上载入的是 common/index.js 文件，
+  // index.js 文件中又载入了 common 目录下的所有组件模块，这会导致所有组件模块都被加载执行
+  import { Link } from './commons/index.js'
+  document.body.appendChild(Link())
+
+  // sideEffects 必要的副作用
+  import './numPad.js'
+  console.log((8).pad(3))
+
+  // 按需加载
+  const btn1 = document.createElement('button')
+  const btn2 = document.createElement('button')
+  btn1.innerHTML = '显示按钮'
+  btn2.innerHTML = '显示链接'
+  document.body.append(btn1)
+  document.body.append(btn2)
+  btn1.addEventListener('click', function(e){
+    import('./importDemand/buttonA.js')
+      .then(({Button}) => {
+        document.body.append(Button())
+      })
+  })
+  btn2.addEventListener('click', function(e){
+    import('./importDemand/buttonB.js')
+      .then(({Button}) => {
+        document.body.appendChild(Button())
+      })
+  })
+
+  // 测试增量构建
+  console.log('增量构建')
+  ```
+
+* 保存，查看
+  
+  ![add_derServer_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_2.png)
+
+### (2) 生产环境下 watch 配置
+
+devServer 模式下默认开启 watch 配置，watch 配置下初始构建完成后并不会退出当前 node 进程，因此构建上下文的对象包括上次构建的缓存数据对象都可以保存在内存中，供下次构建时重复使用，如果在生产环境下开启 watch 配置是否能实现增量构建呢，如下所示
+
+watch 配置的源码在 webpack/lib/Watching.js 文件
+
+```javascript
+...
+_go() {
+  ...
+  this.compiler.hooks.watchRun.callAsync(this.compiler, err => {
+    const onCompiled = (err, compilation) => {
+      ...
+    }
+    this.compiler.compile(onCompiled);
+  }
+}
+```
+
+* webpack.config.js
+  
+  ```javascript
+  const webpack = require('webpack')
+  const path = require('path')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
+  const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+  const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
+  const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
+  const config = {
+    mode: 'none',
+    watch: true, //watch配置测试增量构建
+    entry: {
+      app: './src/index.js'
+    },
+    output: {
+      filename: 'js/[name].[chunkhash].js',
+      path: path.join(__dirname, 'dist_add_watch')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            MiniCssExtractPlugin.loader,
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'                 //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[hash].[ext]',
+              publicPath: '../'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+      }),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+        chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+      }),
+      new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
+      new webpack.NamedChunksPlugin(chunk => { //固定chunkId
+        if (chunk.name) {
+          return chunk.name;
+        }
+        const modules = Array.from(chunk.modulesIterable);
+        if (modules.length > 1) {
+          const hash = require("hash-sum");
+          const joinedHash = hash(modules.map(m => m.id).join("_"));
+          let len = nameLength;
+          while (seen.has(joinedHash.substr(0, len))) len++;
+          seen.add(joinedHash.substr(0, len));
+          return `chunk-${joinedHash.substr(0, len)}`;
+        } else {
+          return modules[0].id;
+        }
+      }),
+      new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
+        inline: /runtime\..*\.js$/
+      })
+    ],
+    devtool: 'none', //构建速度很快，方便观察页面变化
+    devServer: {
+      port: '8081',
+      open: true,
+      // hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面,HMR会影响chunkhash contenthash
+      overlay: { errors: true, warnings: false },
+    },
+    optimization: {
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
+      minimizer: [
+        // new UglifyJsWebpackPlugin(), //Webpack内置JS压缩插件
+        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+      ],
+      runtimeChunk: 'single', //提取manifest
+      splitChunks: { //codeSplitting
+        chunks: 'all',
+        cacheGroups: {
+          libs: { //基础类库
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\]/,
+            priority: 10,
+            chunks: 'initial' //只打包初始时依赖的第三方
+          },
+          elementUI: { //UI组件库
+            name: 'chunk-elementUI', //elementUI单独拆包
+            test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+            priority: 20,
+          },
+          commons: { //自定义组件/函数
+            name: 'chunk-commons',
+            test: path.resolve(__dirname, 'src/components'),
+            priority: 5,
+            minChunks: 3, //最小共用次数
+            reuseExistingChunk: true
+          }
+        }
+      }
+    },
+  }
+  module.exports = config
+  ```
+
+* npx webpack
+  
+  ![add_watch_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_1.png)
+
+* src/index.js
+
+* npx webpack
+  
+  如下图所示，虽然构建时间大幅减少，但是构建模块数量并没有减少，因此并未实现增量构建
+  
+  ![add_watch_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_2.png)
+
+### (3) 生产环境下 cache 配置
+
+cache 配置的源码文件主要涉及到 2 个文件 CachePlugin.js、Compilation.js
+
+webpack/lib/CachePlugin.js
+
+* 主要是将 CachePlugin 插件的 cache 属性传入 compilation 实例
+
+```javascript
+...
+compiler.hooks.thisCompilation.tap("CachePlugin", compilation => {
+  compilation.cache = cache;
+  ...
+}
+```
+
+webpack/lib/Compilation.js
+
+* 编译阶段添加 module 时，若命中缓存 module，直接跳过该 module 的编译过程
+* 创建 chunk 产物代码阶段，若命中缓存 chunk，直接跳过该 chunk 产物代码的生成过程
+
+```javascript
+...
+addModule(module, cacheGroup) {
+  ...
+  if (this.cache && this.cache[cacheName]) {
+    const cacheModule = this.cache[cacheName];
+    ...
+    //缓存模块存在情况下判断是否需要rebuild
+    rebuild = ...
+    if (!rebuild) {
+      ...
+      //无须rebuild情况下返回cacheModule，并标记build:false
+      return {
+		module: cacheModule,
+		issuer: true,
+		build: false,
+		dependencies: true
+	  }      
+    }
+    ...
+  }
+  if (this.cache) {
+    this.cache[cacheName] = module;
+  }
+  ...
+  //无缓存或需要rebuild情况下返回module，并标记build:true
+  return {
+	module: module,
+	issuer: true,
+	build: true,
+	dependencies: true
+  };
+}
+...
+createChunkAssets() {
+  ...
+  if ( this.cache && this.cache[cacheName] && this.cache[cacheName].hash === usedHash ) {
+    source = this.cache[cacheName].source;
+  } else {
+	source = fileManifest.render();
+    ...
+  }
+}
+```
+
+测试过程如下
+
+* webpack.config.js
+  
+  ```javascript
+  const webpack = require('webpack')
+  const path = require('path')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
+  const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+  const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
+  const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
+  const config = {
+    mode: 'none',
+    watch: true, //watch配置测试增量构建
+    cache: true, //cache配置测试增量构建
+    entry: {
+      app: './src/index.js'
+    },
+    output: {
+      filename: 'js/[name].[chunkhash].js',
+      path: path.join(__dirname, 'dist_add_watch_cache')
+    },
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, '..', 'src')
+      },
+      extensions: ['.js', '.json', '.vue']
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/, //正则匹配文件路径
+          use: [ //指定具体的loader,一组链式loader按相反顺序执行
+            MiniCssExtractPlugin.loader,
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
+              name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
+              publicPath: './'                 //打包后引用地址(相对name)
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'fonts/[name].[hash].[ext]',
+              publicPath: '../'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000, 
+              name: 'media/[name].[hash].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.md$/,
+          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
+        }
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+      new RemoveCommentsPlugin(),
+      new webpack.IgnorePlugin({ //构建时忽略指定目录
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+      }),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
+        chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
+      }),
+      new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
+      new webpack.NamedChunksPlugin(chunk => { //固定chunkId
+        if (chunk.name) {
+          return chunk.name;
+        }
+        const modules = Array.from(chunk.modulesIterable);
+        if (modules.length > 1) {
+          const hash = require("hash-sum");
+          const joinedHash = hash(modules.map(m => m.id).join("_"));
+          let len = nameLength;
+          while (seen.has(joinedHash.substr(0, len))) len++;
+          seen.add(joinedHash.substr(0, len));
+          return `chunk-${joinedHash.substr(0, len)}`;
+        } else {
+          return modules[0].id;
+        }
+      }),
+      new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
+        inline: /runtime\..*\.js$/
+      })
+    ],
+    devtool: 'none', //构建速度很快，方便观察页面变化
+    devServer: {
+      port: '8081',
+      open: true,
+      // hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面,HMR会影响chunkhash contenthash
+      overlay: { errors: true, warnings: false },
+    },
+    optimization: {
+      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
+      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
+      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
+      sideEffects: true,         //无副作用打包
+      minimizer: [
+        // new UglifyJsWebpackPlugin(), //Webpack内置JS压缩插件
+        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+      ],
+      runtimeChunk: 'single', //提取manifest
+      splitChunks: { //codeSplitting
+        chunks: 'all',
+        cacheGroups: {
+          libs: { //基础类库
+            name: 'chunk-libs',
+            test: /[\\/]node_modules[\\]/,
+            priority: 10,
+            chunks: 'initial' //只打包初始时依赖的第三方
+          },
+          elementUI: { //UI组件库
+            name: 'chunk-elementUI', //elementUI单独拆包
+            test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+            priority: 20,
+          },
+          commons: { //自定义组件/函数
+            name: 'chunk-commons',
+            test: path.resolve(__dirname, 'src/components'),
+            priority: 5,
+            minChunks: 3, //最小共用次数
+            reuseExistingChunk: true
+          }
+        }
+      }
+    },
+  }
+  module.exports = config
+  ```
+
+* npx webpack
+  
+  ![add_watch_cache_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_1.png)
+
+* src/index.js
+
+* npx webpack
+  
+  如下图所示，不但构建时间大幅减少，并且再次构建模块数只有 1 个，这就实现了生产环境下的增量构建
+  
+  ![add_watch_cache_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_2.png)
+
+## 15. 开发环境和生产环境
 
 ### (1) mode
 
@@ -5133,23 +5858,26 @@ module.exports = (env, argv) => {
 * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
   const path = require('path')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
   const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
   const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
-  const webpack = require('webpack')
   const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
   const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
   module.exports = (env, argv) => {
-    console.log(env)
     //公共配置
     const config = {
       entry: {
         app: './src/index.js'
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js',
+        path: path.join(__dirname, 'dist_config_one')
       },
       resolve: {
         alias: {
@@ -5162,7 +5890,7 @@ module.exports = (env, argv) => {
           {
             test: /\.css$/, //正则匹配文件路径
             use: [ //指定具体的loader,一组链式loader按相反顺序执行
-              'style-loader',
+              MiniCssExtractPlugin.loader,
               'css-loader'
             ]
           },
@@ -5186,7 +5914,7 @@ module.exports = (env, argv) => {
               options: {
                 limit: 20000, 
                 name: 'fonts/[name].[hash].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -5218,44 +5946,9 @@ module.exports = (env, argv) => {
         }),
         new RemoveCommentsPlugin(),
         new webpack.IgnorePlugin({ //构建时忽略指定目录
-          resourceRegExp: /^\.\/locale$/,       contextRegExp: /moment$/
-        })
-      ],
-    }
-
-    // 开发环境下的特殊配置
-    if (env === 'development') {
-      config.mode = 'development'
-      config.devtool = 'cheap-eval-module-source-map',
-      config.devServer = {
-        port: '8081',
-        open: true,
-        hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-        overlay: { errors: true, warnings: false },
-      },
-      config.plugins = [
-        ...config.plugins,
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify('development')
+          resourceRegExp: /^\.\/locale$/,
+          contextRegExp: /moment$/
         }),
-        new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
-      ]
-    }
-
-    // 生产环境下的特殊配置
-    if (env === 'production') {
-      config.mode = 'production'
-      config.devtool = 'none',
-      config.output = {
-        filename: 'js/[name].[chunkhash].js',
-        path: path.join(__dirname, 'dist_config_one')
-      },
-      config.plugins = [
-        ...config.plugins,
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify('production')
-        }),
-        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
           filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
           chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
@@ -5280,10 +5973,10 @@ module.exports = (env, argv) => {
         new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
           inline: /runtime\..*\.js$/
         })
-      ]
-      config.optimization = {
+      ],
+      optimization: {
         minimizer: [
-          new TerserWebpackPlugin(), //Webpack内置JS压缩插件
+          // new UglifyJsWebpackPlugin(), //压缩JS文件
           new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
         ],
         runtimeChunk: 'single', //提取manifest
@@ -5311,6 +6004,38 @@ module.exports = (env, argv) => {
           }
         }
       }
+    }
+
+    // 开发环境下的特殊配置
+    if (env === 'development') {
+      config.mode = 'development'
+      config.devtool = 'cheap-eval-module-source-map',
+      config.devServer = {
+        port: '8081',
+        open: true,
+        // hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false },
+      },
+      config.plugins = [
+        ...config.plugins,
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('development')
+        }),
+        // new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
+      ]
+    }
+
+    // 生产环境下的特殊配置
+    if (env === 'production') {
+      config.mode = 'production'
+      config.devtool = 'none',
+      config.plugins = [
+        ...config.plugins,
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new CleanWebpackPlugin(),
+      ]
     }
     return config
   }
@@ -5367,23 +6092,3 @@ module.exports = (env, argv) => {
 * npm run serve
   
   ![config_one效果](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/config_one%E6%95%88%E6%9E%9C.png)
-
-## 15. Webpack 增量构建
-
-Webpack 增量构建就是`只编译打包改动后的文件`的操作
-
-### (1) devServer
-
-开发环境的 devServer 状态下，Webpack 会进行一次初始化构建，构建完成后启动服务并进入到等待更新的状态，当本地文件有变更时，Webpack 瞬间将变更文件编译，并将编译后的文件通过 Websocket 推送到浏览器
-
-### (2) 生产环境下 watch 配置
-
-devServer 模式下默认开启 watch 配置，watch 配置下初始构建完成后并不会退出当前 node 进程，因此构建上下文的对象包括上次构建的缓存数据对象都可以保存在内存中，供下次构建时重复使用
-
-### (3) 生产环境下 cache 配置
-
-cache 配置的源码文件只要涉及到 2 个文件 CachePlugin.js、Compilation.js，
-
-## 16. Webpack 5 优化细节
-
-

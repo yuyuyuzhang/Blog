@@ -87,3 +87,6 @@ btn2.addEventListener('click', function(e){
       document.body.appendChild(Button())
     })
 })
+
+// 测试增量构建
+console.log('增量构建')

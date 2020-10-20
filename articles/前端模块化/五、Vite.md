@@ -24,7 +24,7 @@ import('https://cdn.jsdelivr.net/npm/lodash-es@4.17.15/slice.js').then((module) 
 
 如下图所示，在没有任何构建工具的情况下，在页面中引入带有 type="module" 属性的 JS 脚本，浏览器会在加载入口模块时依次加载所有依赖模块
 
-![es_module](../../images/前端模块化/Vite/Native-ESM.png)
+![Native-ESM](../../images/前端模块化/Vite/Native-ESM.png)
 
 #### ① ES6 Module 注意事项
 
@@ -68,7 +68,5 @@ Vite 是 Vue 作者尤雨溪最新推出的基于 Native-ESM 的 Web 构建工�
 * **代理**：Vite 支持在自定义配置文件中配置代理，将部分请求代理到第三方服务
 * **环境变量**：Vite 支持通过 mode 指定构建模式为 development、production，相应模式下自动读取 dotenv 类型的环境变量配置文件
 * **生产环境打包**：Vite 支持在生产环境下使用 Rollup 打包，并且支持传入自定义配置
-
-## 3. 
 
 ①②③④⑤⑥⑦⑧⑨⑩
