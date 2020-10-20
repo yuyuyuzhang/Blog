@@ -5233,7 +5233,7 @@ Webpack 增量构建就是`只编译打包改动后的文件`的操作
 
 * npx webpack-dev-server
   
-  ![add_derServer_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_1.png)
+  ![add_devServer_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_devServer_1.png)
 
 * src/index.js
   
@@ -5334,7 +5334,7 @@ Webpack 增量构建就是`只编译打包改动后的文件`的操作
 
 * 保存，查看
   
-  ![add_derServer_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_2.png)
+  ![add_devServer_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_devServer_2.png)
 
 ### (2) 生产环境下 watch 配置
 
@@ -5522,7 +5522,7 @@ _go() {
 
 * npx webpack
   
-  ![add_watch_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_1.png)
+  ![add_watch_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_watch_1.png)
 
 * src/index.js
 
@@ -5530,7 +5530,7 @@ _go() {
   
   如下图所示，虽然构建时间大幅减少，但是构建模块数量并没有减少，因此并未实现增量构建
   
-  ![add_watch_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_2.png)
+  ![add_watch_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_watch_2.png)
 
 ### (3) 生产环境下 cache 配置
 
@@ -5768,7 +5768,7 @@ createChunkAssets() {
 
 * npx webpack
   
-  ![add_watch_cache_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_1.png)
+  ![add_watch_cache_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_watch_cache_1.png)
 
 * src/index.js
 
@@ -5776,7 +5776,7 @@ createChunkAssets() {
   
   如下图所示，不但构建时间大幅减少，并且再次构建模块数只有 1 个，这就实现了生产环境下的增量构建
   
-  ![add_watch_cache_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_derServer_2.png)
+  ![add_watch_cache_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/add_watch_cache_2.png)
 
 ## 15. 开发环境和生产环境
 
