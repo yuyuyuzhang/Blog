@@ -10,13 +10,11 @@
 ### (2) 编译
 
 * 编译风格
-  * `nested`：嵌套缩进的 CSS 代码（`默认`）
-  * `expanded`：没有嵌套缩进的 CSS 代码
-  * `compact`：简洁格式的 CSS 代码
+  * `expanded`：嵌套缩进的 CSS 代码
   * `compressed`：压缩的 CSS 代码（常用于`生产环境`）
-* 指定编译风格：`sass --style compressed test.scss`
-* 在屏幕上显示编译后的 CSS 代码：`sass test.scss`
+* 在终端输出显示编译后的 CSS 代码：`sass test.scss`
 * 保存编译后的 CSS 文件：`sass test.scss test.css`
+* 指定编译风格：`sass test.scss test.css --style compressed`
 
 ### (3) 监听
 
@@ -28,13 +26,13 @@
 
 ### (1) 注释
 
-* 单行注释：只保留在 SASS 源文件，编译后被省略
+* 单行注释：只保留到 SASS 源文件，编译后被省略
 
     ```scss
     // comment
     ```
 
-* 多行注释：会保留到编译后的 CSS 文件
+* 多行注释：保留到 SASS 源文件、`expanded` 编译后的 CSS 文件
 
     ```scss
     /*
@@ -42,7 +40,7 @@
      */
     ```
 
-* 重要多行注释：即使是压缩模式编译，也会保留注释到编译后的 CSS 文件，通常用于声明版权信息
+* 重要多行注释：保留到 SASS 源文件、`expanded/compressed` 编译后的 CSS 文件，通常用于`声明版权信息`
 
     ```scss
     /*!
