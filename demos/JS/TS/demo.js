@@ -1,22 +1,13 @@
 "use strict";
-var a = undefined;
-var b;
-b = undefined;
-function f(x) {
-    console.log(x);
-}
-f();
-f(undefined);
-f(void 1);
-var c = null;
-var d = undefined;
-console.log(c.name);
-console.log(c.getName());
-var e;
-e = 'aaa';
-e = 111;
-var g;
-g = 'aaa';
-g = 111;
-var h = Symbol.for('name');
+var Color;
+(function (Color) {
+    Color[Color["red"] = 4] = "red";
+    Color[Color["blue"] = 3] = "blue";
+    Color[Color["green"] = 4] = "green";
+})(Color || (Color = {}));
+;
+console.log(Color['red'] === 4);
+console.log(4 === Color['red']);
+console.log(Color['green'] === 4);
+console.log(4 === Color['green']);
 //# sourceMappingURL=demo.js.map
