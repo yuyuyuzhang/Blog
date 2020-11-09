@@ -1,21 +1,6 @@
 {
-  // "files": [], //ts 管理的文件路径
-  // "include": [], //ts 包含的文件
-  // "exclude": [], //ts 排除的文件
-  // "compileOnSave": true, //保存时自动编译
-  "compilerOptions": { //编译配置
-    "target": "es5", //输出代码 ES 版本
-    "strict": true, //严格模式
-    "allowSyntheticDefaultImports": true, // 允许引入没有默认导出的模块
-    "module": "es2015", //指定模块生成方式
-    "allowJs": true, //可以逐步将项目的 js 代码转换成 ts 代码
-    "sourceMap": true, //生成对应的 map 文件
-    "preserveConstEnums": true, //不去除枚举声明
-    "removeComments": true, //去除注释    
-    "lib": [ //引入库定义文件
-      "dom",
-      "es5",
-      "es2015"
-    ]
-  }
+    "compilerOptions": {
+        "strict": true,
+        "watch": true
+    }
 }
