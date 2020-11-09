@@ -33,7 +33,7 @@ CSS 仅推荐使用 link 标签，不推荐使用 @import
 
     最终所有 SASS 文件会被编译成一个 CSS 文件，包含所有 SASS 文件代码
 
-    ![sass_@import]()
+    ![sass_@import](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/SASS/sass_%40import.png)
 
 * 导入 CSS 文件：效果等同于 `CSS 的 @import`
   * a.scss
@@ -57,4 +57,4 @@ CSS 仅推荐使用 link 标签，不推荐使用 @import
 
     最终只会将 SASS 文件编译成一个 CSS 文件，导入的 CSS 文件仍然是单独的 CSS 文件，需要进行单独的 HTTP 请求
 
-    ![css_@import]()
+    ![css_@import](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/SASS/css_%40import.png)
