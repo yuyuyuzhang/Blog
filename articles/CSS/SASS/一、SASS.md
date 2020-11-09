@@ -4,8 +4,8 @@
 
 ### (1) 安装
 
-* npm install sass
-* SASS 文件的后缀为 .scss，意为 `Sassy CSS`
+* `npm install sass`
+* SASS 原本是没有花括号的缩进语法，但是对于熟悉 CSS 的前端人员不友好，因此 `SASS 3` 改成了花括号语法的 `SCSS（Sassy CSS）`，因此 SASS 和 SCSS 没有区别，可以说 SCSS 是 SASS 的一种升级，从此之后 SASS 文件的后缀为 `.scss`
 
 ### (2) 编译
 

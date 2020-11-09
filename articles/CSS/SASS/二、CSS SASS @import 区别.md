@@ -58,7 +58,3 @@ CSS 仅推荐使用 link 标签，不推荐使用 @import
     最终只会将 SASS 文件编译成一个 CSS 文件，导入的 CSS 文件仍然是单独的 CSS 文件，需要进行单独的 HTTP 请求
 
     ![css_@import]()
-
-## 3. SASS
-
-SASS 原本是没有花括号的缩进语法，但是对于熟悉 CSS 的前端人员不友好，因此 SASS 3 改成了花括号语法的 SCSS（Sassy CSS），因此 SASS 和 SCSS 没有区别，可以说 SCSS 是 SASS 的一种升级
