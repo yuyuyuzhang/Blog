@@ -165,6 +165,11 @@ CSS 系列之 SASS 已完成
 
 ## JS 系列之 TS
 
+1. [数据类型]()
+2. [函数]()
+3. [接口]()
+4. [类]()
+
 ## JS 系列之函数式编程
 
 1. [定时器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0/%E4%B8%80%E3%80%81%E5%AE%9A%E6%97%B6%E5%99%A8.md)

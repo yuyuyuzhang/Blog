@@ -145,18 +145,18 @@
 
 
 //将父类断言为具体的子类
-class ApiError extends Error {
-    code: number = 0;
-}
-class HttpError extends Error {
-    statusCode: number = 200;
-}
-function isApiError(error: Error): boolean {
-    if (typeof (error as ApiError).code === 'number') {
-        return true;
-    }
-    return false;
-}
+// class ApiError extends Error {
+//     code: number = 0;
+// }
+// class HttpError extends Error {
+//     statusCode: number = 200;
+// }
+// function isApiError(error: Error): boolean {
+//     if (typeof (error as ApiError).code === 'number') {
+//         return true;
+//     }
+//     return false;
+// }
 
 
 //将 any 断言为具体类型
@@ -169,3 +169,155 @@ function isApiError(error: Error): boolean {
 //     return (window as any).cache[key];
 // }
 // const data = getCacheData('tom') as String;
+
+
+//字符串字面量类型
+// type Events = 'click' | 'scroll' | 'keyup';
+// function handler(e: Events): void {
+//     console.log(1)
+// }
+// handler('click');
+// handler('mouseup'); //error: Argument of type '"mouseup"' is not assignable to parameter of type 'Events'
+
+
+//类型别名
+// type Names = String;
+// function getName(x: Names): void {
+//     console.log(x)
+// }
+// getName('haha');
+
+
+//接口的重复声明
+// interface Cat {
+//     name: string
+// }
+// interface Cat {
+//     name: string, //error: Subsequent variable declarations must have the same type
+//     weight: number,
+//     getName(x: string): string
+// }
+
+
+//类的属性
+// class Person {
+//     static id = 1;
+// }
+// const doctor = new Person()
+// // console.log(doctor.id); //静态属性定义在类上，不能在实例上访问
+// console.log(Person.id);    //1
+
+
+//实例属性
+// class Person {
+//     constructor(private name: string, protected age: number, public job: string, readonly id: number){
+//         this.name = name;
+//         this.age = age;
+//         this.job = job;
+//         this.id = id
+//     }
+//     getName(){
+//         console.log(this.name)
+//     }
+//     getAge(){
+//         console.log(this.age)
+//     }
+//     private get1(){
+//         console.log(1)
+//     }
+//     protected get2(){
+//         console.log(2)
+//     }
+//     get3(){
+//         console.log(3);
+//         this.get1();
+//         this.get2();
+//     }
+// }
+// class Doctor extends Person {
+//     constructor(name: string, age: number, job: string, id: number){
+//         super(name, age, job, id)
+//     };
+//     // getNameChild(){
+//     //     console.log(this.name); //error: 私有属性只能在 Person 类中访问
+//     // }
+//     getAgeChild(){
+//         console.log(this.age);
+//     }
+//     get4Child(){
+//         console.log(4);
+//         // this.get1(); //error: 私有属性只能在 Person 类中访问
+//         this.get2();
+//         this.get3();
+//     }
+// }
+// const doctor = new Doctor('张三', 20, 'doctor', 1);
+// // console.log(doctor.name); //error: 私有属性只能在 Person 类中访问
+// // console.log(doctor.age);  //error: 保护属性只能在 Person 类及其子类中访问
+// console.log(doctor.job);     //'doctor'
+// // doctor.id = 2;            //error: 只读属性不可写
+// console.log(doctor.id);      //1
+// doctor.getName();            //'张三'
+// doctor.getAge();             //20
+// doctor.getAgeChild();        //'doctor'
+// // doctor.get1();            //error: 私有属性只能在 Person 类中访问
+// // doctor.get2();            //error: 保护属性只能在 Person 类及其子类中访问
+// doctor.get3();               //3 1 2
+// doctor.get4Child();          //4 2 3 1 2
+
+
+//抽象类
+// abstract class Person {
+//     constructor(public name: string){
+//         this.name = name;
+//     }
+//     protected abstract getName(): void
+// }
+// class Doctor extends Person {
+//     constructor(public name: string){
+//         super(name);
+//     }
+//     getName(){
+//         console.log(this.name);
+//     }
+// }
+// // const person = new Person('张三'); //error: 抽象类不允许实例化
+// const doctor = new Doctor('张三');
+// doctor.getName(); //'张三'
+
+
+//接口可以抽象不同类的共有特性
+// interface Alarm {
+//     alert(): void
+// }
+// interface Light {
+//     lightOn(): void,
+//     lightOff(): void
+// }
+// class Door implements Door {
+//     alert(): void {
+//         console.log('door alert')
+//     }
+// }
+// //一个类可以实现多个接口
+// class Car implements Alarm, Light {
+//     alert(): void {
+//         console.log('car alert')
+//     }
+//     lightOn(): void  {
+//         console.log('car lighton')
+//     }
+//     lightOff(): void {
+//         console.log('car lightoff')
+//     }
+// }
+
+
+//接口之间可以继承
+// interface Alarm {
+//     alert(): void
+// }
+// interface LightAlarm extends Alarm {
+//     lighton(): void,
+//     lightOff(): void
+// }
