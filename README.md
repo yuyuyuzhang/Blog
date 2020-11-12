@@ -165,10 +165,10 @@ CSS 系列之 SASS 已完成
 
 ## JS 系列之 TS
 
-1. [数据类型]()
-2. [函数]()
-3. [接口]()
-4. [类]()
+1. [数据类型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
+2. [函数](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%BA%8C%E3%80%81%E5%87%BD%E6%95%B0.md)
+3. [接口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%B8%89%E3%80%81%E6%8E%A5%E5%8F%A3.md)
+4. [类](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E5%9B%9B%E3%80%81%E7%B1%BB.md)
 
 ## JS 系列之函数式编程
 
