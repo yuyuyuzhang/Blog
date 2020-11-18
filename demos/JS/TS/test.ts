@@ -65,6 +65,81 @@
 // var directions = [Color.red];
 
 
+//高级类型
+// interface inter1 {
+//     name: string,
+//     f(): void
+// }
+// interface inter2 {
+//     name: string,
+//     g(): void
+// }
+// //交叉类型
+// const crossObj: inter1 & inter2 = {
+//     name: 'haha',
+//     f() { },
+//     g() { }
+// }
+// //联合类型
+// const unionObj1: inter1 | inter2 = {
+//     name: 'hehe',
+//     f() {
+//         console.log(1)
+//     },
+// }
+// const unionObj2: inter1 | inter2 = {
+//     name: 'hehe',
+//     g() {
+//         console.log(2)
+//     },
+// }
+
+
+
+//将联合类型断言为具体类型
+// function isString(x: number | string): boolean {
+//     if(typeof (x as string).charAt === 'function'){
+//         return true;
+//     }
+//     return false;
+// }
+
+
+//将父类断言为具体的子类
+// class ApiError extends Error {
+//     code: number = 0;
+// }
+// class HttpError extends Error {
+//     statusCode: number = 200;
+// }
+// function isApiError(error: Error): boolean {
+//     if (typeof (error as ApiError).code === 'number') {
+//         return true;
+//     }
+//     return false;
+// }
+
+
+//将 any 断言为具体类型
+// window.a = 1; //error: Property 'a' does not exist on type 'Window & typeof globalThis'.
+// (window as any).a = 1;
+
+
+//将任意类型断言为 any
+// function getCacheData(key: string): any {
+//     return (window as any).cache[key];
+// }
+// const data = getCacheData('tom') as String;
+
+
+//类型别名
+// type Names = String;
+// function getName(x: Names): void {
+//     console.log(x)
+// }
+// getName('haha');
+
+
 //函数声明
 // function f(x: number, y: number): number {
 //     return x + y
@@ -133,59 +208,6 @@
 //         return x.split('').reverse().join('');
 //     }
 // }
-
-
-//将联合类型断言为具体类型
-// function isString(x: number | string): boolean {
-//     if(typeof (x as string).charAt === 'function'){
-//         return true;
-//     }
-//     return false;
-// }
-
-
-//将父类断言为具体的子类
-// class ApiError extends Error {
-//     code: number = 0;
-// }
-// class HttpError extends Error {
-//     statusCode: number = 200;
-// }
-// function isApiError(error: Error): boolean {
-//     if (typeof (error as ApiError).code === 'number') {
-//         return true;
-//     }
-//     return false;
-// }
-
-
-//将 any 断言为具体类型
-// window.a = 1; //error: Property 'a' does not exist on type 'Window & typeof globalThis'.
-// (window as any).a = 1;
-
-
-//将任意类型断言为 any
-// function getCacheData(key: string): any {
-//     return (window as any).cache[key];
-// }
-// const data = getCacheData('tom') as String;
-
-
-//字符串字面量类型
-// type Events = 'click' | 'scroll' | 'keyup';
-// function handler(e: Events): void {
-//     console.log(1)
-// }
-// handler('click');
-// handler('mouseup'); //error: Argument of type '"mouseup"' is not assignable to parameter of type 'Events'
-
-
-//类型别名
-// type Names = String;
-// function getName(x: Names): void {
-//     console.log(x)
-// }
-// getName('haha');
 
 
 //接口的重复声明
@@ -321,3 +343,87 @@
 //     lighton(): void,
 //     lightOff(): void
 // }
+
+
+//any 类型：会丢失传入类型与返回类型相同的必要信息
+// function createArr1(length: number, value: any): Array<any> {
+//     const result = []
+//     for(let i=0; i<length; i++){
+//         result[i] = value
+//     }
+//     return result
+// }
+// createArr1(3, 'a'); //Array ['a', 'a', 'a']
+
+
+//泛型参数：用来捕获用户传入的参数类型，能保证传入类型与返回类型相同的必要信息不丢失
+// function createArr2<T>(length: number, value: T): Array<T> {
+//     const result: T[] = [];
+//     for(let i=0; i<length; i++){
+//         result[i] = value
+//     }
+//     return result
+// }
+// createArr2(3, 'b'); //Array ['b', 'b', 'b']
+
+
+//泛型参数的默认类型：当未指定泛型参数的类型也无法推测出时，使用默认类型
+// function createArr3<T = string>(length: number, value: T): Array<T> {
+//     const result: T[] = [];
+//     for(let i=0; i<length; i++){
+//         result[i] = value
+//     }
+//     return result
+// }
+
+
+//多个泛型参数：泛型参数支持同时使用多个
+// function swap<T, U>(tuple: [T, U]): [U, T] {
+//     return [tuple[1], tuple[0]]
+// }
+// swap([1, 'a']); //Array ['a', 1]
+
+
+//无法事先知道泛型参数的具体类型，因此不能随意操作泛型参数的属性和方法
+// function getLength1<T>(arg: T): number {
+//     return arg.length; //error: Property 'length' does not exist on type 'T'
+// }
+
+
+//泛型约束：使用接口约束泛型的形状
+// interface superT {
+//     length: number
+// }
+// function getLength2<T extends superT>(arg: T): number {
+//     return arg.length
+// }
+
+
+//泛型接口：使用含泛型的接口定义函数的形状
+// interface CreateArr {
+//     <T>(length: number, value: T): Array<T>
+// }
+// const createArr: CreateArr = function<T>(length: number, value: T): Array<T> {
+//     const result: T[] = [];
+//     for(let i=0; i<length; i++){
+//         result[i] = value
+//     }
+//     return result
+// }
+// createArr(3, 'a'); //Array ['a', 'a', 'a']
+
+
+//泛型类：将泛型用于类的类型定义
+// interface superT {
+//     length: number
+// }
+// class AddNum<T extends superT> {
+//     constructor(public value: T){
+//         this.value = value
+//     }
+//     getLength(){
+//         return this.value.length;
+//     }
+// }
+// const addNum = new AddNum<string>('aaa');
+// addNum.getLength(); //3
