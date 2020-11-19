@@ -170,8 +170,8 @@ CSS 系列之 SASS 已完成
 3. [接口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%B8%89%E3%80%81%E6%8E%A5%E5%8F%A3.md)
 4. [类](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E5%9B%9B%E3%80%81%E7%B1%BB.md)
 5. [泛型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%BA%94%E3%80%81%E6%B3%9B%E5%9E%8B.md)
-<!-- 6. [声明文件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E5%85%AD%E3%80%81%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6.md) -->
-<!-- 7. [工程配置](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%B8%83%E3%80%81%E5%B7%A5%E7%A8%8B%E9%85%8D%E7%BD%AE.md) -->
+6. [声明文件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E5%85%AD%E3%80%81%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6.md)
+7. [工程配置](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%B8%83%E3%80%81%E5%B7%A5%E7%A8%8B%E9%85%8D%E7%BD%AE.md)
 
 ## JS 系列之函数式编程
 
