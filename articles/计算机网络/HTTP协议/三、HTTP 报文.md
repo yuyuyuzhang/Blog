@@ -12,11 +12,11 @@
 
 **HTTP 请求报文**
 
-![HTTP请求报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png)
+![HTTP请求报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png)
 
 **HTTP 响应报文**
 
-![HTTP响应报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png)
+![HTTP响应报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png)
 
 ## 2. HTTP 报文编码
 
@@ -61,7 +61,7 @@ HTTP 报文的媒体类型也就是 MIME 类型，常见的媒体类型如下
 
 ④ identity (不进行编码)
 
-![内容编码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/%E5%86%85%E5%AE%B9%E7%BC%96%E7%A0%81.png)
+![内容编码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%86%85%E5%AE%B9%E7%BC%96%E7%A0%81.png)
 
 ### (4) 分块传输编码
 
@@ -69,7 +69,7 @@ HTTP 报文的媒体类型也就是 MIME 类型，常见的媒体类型如下
 
 **原理**：HTTP 协议中有一种被称为传输编码的功能，只定义作用于分块传输编码中，服务器通过分块传输编码将实体主体分成多个块，每一块用十六进制标记大小，最后一块用 0 来标记，客户端逐一收到每个分块后，负责解码，恢复到编码前的实体主体
 
-![分块传输编码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81.png)
+![分块传输编码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81.png)
 
 ## 3. HTTP 多部分对象集合
 
@@ -89,9 +89,9 @@ HTTP 报文的媒体类型也就是 MIME 类型，常见的媒体类型如下
 
 **原理**：范围请求就是指定下载的实体范围，通过 HTTP 请求报文的 `Range` 字段指定资源的字节范围，服务器返回状态码为 `206 Partial Content` 的响应报文，针对多重范围的范围请求，服务器会通过 `Content-type` 字段标明 `multipart/byteranges` 后返回响应报文，如果服务器无法响应范围请求，会返回状态码为 `200 OK` 的包含完整内容的响应报文
 
-![字节范围](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/%E5%AD%97%E8%8A%82%E8%8C%83%E5%9B%B4.png)
+![字节范围](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%AD%97%E8%8A%82%E8%8C%83%E5%9B%B4.png)
 
-![范围请求](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/%E8%8C%83%E5%9B%B4%E8%AF%B7%E6%B1%82.png)
+![范围请求](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E8%8C%83%E5%9B%B4%E8%AF%B7%E6%B1%82.png)
 
 ## 5. HTTP 内容协商
 
@@ -104,7 +104,7 @@ HTTP 报文的媒体类型也就是 MIME 类型，常见的媒体类型如下
 * Accept-Encoding：客户端用户代理支持的内容编码及优先级
 * Accept-language：客户端用户代理支持的自然语言及优先级
   
-![内容协商](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86.png)
+![内容协商](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86.png)
 
 ### (1) 服务器驱动协商
 

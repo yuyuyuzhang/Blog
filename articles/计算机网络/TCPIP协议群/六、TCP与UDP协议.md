@@ -86,8 +86,11 @@ TCP 协议采用面向有连接的传输方式，应用程序不用顾虑网络�
 
 * 如果一定时间内接收端主机未收到确认应答，则认为数据已经丢失，进行重发，这种情况下有可能是数据丢失，也有可能是确认应答丢失  
   * 数据丢失
+  
   ![数据丢失](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1.png)
+  
   * 确认应答丢失
+  
   ![确认应答丢失](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%A1%AE%E8%AE%A4%E5%BA%94%E7%AD%94%E4%B8%A2%E5%A4%B1.png)
 
 **序列号**

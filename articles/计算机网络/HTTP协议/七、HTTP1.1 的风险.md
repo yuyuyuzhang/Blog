@@ -25,7 +25,7 @@ HTTP 通信是不加密的通信，所有信息明文传播，带来了三大风
 * 互联网是由能连接到全世界的网络组成的，无论世界上哪个角落的服务器在和客户端通信时，通信线路上的某些网络设备、光缆、计算机等都不可能是个人的私有物，所以不排除某个通信环节遭到恶意窥视的可能
 * 窃听同一数据链路上的通信并不是难事，只需要收集互联网上流动的`数据帧`，对于收集来的数据帧的解析工作，可以交给那些`抓包工具`或者嗅探器工具
   
-![被窃听的互联网](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP1.1%E7%9A%84%E9%A3%8E%E9%99%A9/%E8%A2%AB%E7%AA%83%E5%90%AC%E7%9A%84%E4%BA%92%E8%81%94%E7%BD%91.png)
+![被窃听的互联网](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E8%A2%AB%E7%AA%83%E5%90%AC%E7%9A%84%E4%BA%92%E8%81%94%E7%BD%91.png)
 
 ### (2) HTTP 没有加密技术
 
@@ -41,7 +41,7 @@ HTTP 协议不存在加密技术，无法对通信过程中传输的报文进行
 
 ② 服务器的 Content-MD5 字段用于让客户端校验响应报文是否完整，Content-MD5 字段是服务器对响应报文主体执行 MD5 算法后再通过 Base64 编码得到的值，客户端在收到响应报文后，对响应报文主体执行相同的 MD5 算法后，得到的值与响应报文的 Content-MD5 字段解码后的值进行对比，用于校验响应报文主体在传输过程中是否保持完整
 
-![Content-MD5](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Content-MD5.png)
+![Content-MD5](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Content-MD5.png)
 
 ### (2) HTTP 无法百分百确认明文的完整性
 
@@ -67,7 +67,7 @@ HTTP 协议通信需要确认客户端和服务器的身份，否则会导致以
 
 ④ 服务器收到认证信息后，如验证通过，则返回状态码 200 OK
 
-![BASIC](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/BASIC.png)
+![BASIC](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/BASIC.png)
 
 ### (3) Digest 认证
 
@@ -79,7 +79,7 @@ HTTP 协议通信需要确认客户端和服务器的身份，否则会导致以
 
 ④ 服务器收到认证信息后，如验证通过，则返回状态码 200 OK
 
-![DIGEST](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/DIGEST.png)
+![DIGEST](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DIGEST.png)
 
 ### (4) 基于表单认证
 
@@ -87,7 +87,7 @@ HTTP 协议通信需要确认客户端和服务器的身份，否则会导致以
 
 ② 基于表单认证通过后，需要通过 Cookie 管理认证状态
 
-![基于表单认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/%E5%9F%BA%E4%BA%8E%E8%A1%A8%E5%8D%95%E8%AE%A4%E8%AF%81.png)
+![基于表单认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E4%BA%8E%E8%A1%A8%E5%8D%95%E8%AE%A4%E8%AF%81.png)
 
 ### (5) HTTP 无法百分百确认通信方的身份
 

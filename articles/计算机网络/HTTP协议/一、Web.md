@@ -43,7 +43,7 @@ WWW 当初是指用来浏览超文本的客户端应用程序的名称，现在�
 #### ③ 互联网资源地址类型
 
 * **绝对 URI**：资源的完整地址，格式如下
-  ![绝对URL](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BB%9D%E5%AF%B9URL.png)
+  ![绝对URL](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E7%BB%9D%E5%AF%B9URL.png)
 * **绝对 URL**：等于绝对 URI
 * **相对 URL**：从浏览器基本 URI 处指定的 URL
 
@@ -57,7 +57,7 @@ WWW 当初是指用来浏览超文本的客户端应用程序的名称，现在�
 
 HTTP/1.1 协议允许一台 Web 服务器通过`网址名称对应的虚拟主机功能`搭建多个 Web 站点，互联网上，域名通过 DNS 服务器映射到 IP 地址之后访问 Web 服务器，可见当请求发送到 Web 服务器时已经是 IP 地址的形式了，因此当一台 Web 服务器内托管了多个域名时，收到请求就必须弄清楚是访问哪个域名，因此发送 HTTP 请求时必须在 `Host` 首部字段指定带域名的主机名的完整 URI，请求首部字段 Host 是 HTTP/1.1 协议规定的唯一必须包含在请求内的字段
 
-![Host](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Host.png)
+![Host](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Host.png)
 
 ### (2) IP 地址对应
 
@@ -75,7 +75,7 @@ HTTP/1.1 协议允许一台 Web 服务器通过`网址名称对应的虚拟主�
 
 代理是一种具有转发功能的`应用程序`，扮演了客户端和服务器中间人的角色，接收客户端发送的请求并转发给服务器，接收服务器返回的响应并转发给客户端
 
-![代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E4%BB%A3%E7%90%86.png)
+![代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%A3%E7%90%86.png)
 
 #### ② 代理服务器
 
@@ -83,13 +83,13 @@ HTTP/1.1 协议允许一台 Web 服务器通过`网址名称对应的虚拟主�
 
 HTTP 通信过程中，可级联多台代理服务器，请求和响应的转发会经过数台类似锁链一样连接起来的代理服务器，转发时需要附加 `Via` 首部字段以标记经过的代理服务器信息
 
-![代理服务器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
+![代理服务器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
 
 #### ③ 缓存资源
 
 代理转发响应时，会预先将资源的副本保存在代理服务器上，当再次收到对相同资源的请求时，就可以不从源服务器获取资源，而是将之前缓存的资源作为响应返回，利用代理服务器缓存资源可以减少网络带宽
 
-![缓存代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BC%93%E5%AD%98%E4%BB%A3%E7%90%86.png)
+![缓存代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E7%BC%93%E5%AD%98%E4%BB%A3%E7%90%86.png)
 
 ### (2) 代理的分类
 
@@ -102,7 +102,7 @@ HTTP 通信过程中，可级联多台代理服务器，请求和响应的转发
 * B 向 C 借到钱再给 A，C 不知道 A 的存在
 * 这样 A 就通过 B 向 C 借到了钱
 
-![正向代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86.png)
+![正向代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86.png)
 
 #### ② 反向代理
 
@@ -115,7 +115,7 @@ HTTP 通信过程中，可级联多台代理服务器，请求和响应的转发
 * A 以为钱是 B 的，A 不知道 C 的存在
 * 这样 B 就用 C 的钱借给了 A
 
-![反向代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png)
+![反向代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png)
 
 ### (3) 代理如何获取客户端请求
 
@@ -127,7 +127,7 @@ HTTP 通信过程中，可级联多台代理服务器，请求和响应的转发
 
 Chrome 浏览器 — 设置 — 高级 — 系统 — 打开您计算机的代理设置
 
-![chrome浏览器配置代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86.png)
+![chrome浏览器配置代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86.png)
 
 #### ② 修改网络
 
@@ -141,7 +141,7 @@ Chrome 浏览器 — 设置 — 高级 — 系统 — 打开您计算机的代�
 
 源服务器上配置向客户端发送 HTTP 重定向响应，将客户端请求重定向到代理
 
-![代理如何获取流量](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E4%BB%A3%E7%90%86%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E6%B5%81%E9%87%8F.png)
+![代理如何获取流量](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%A3%E7%90%86%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E6%B5%81%E9%87%8F.png)
 
 ### (4) 代理转发报文首部字段
 
@@ -163,7 +163,7 @@ HTTP 报文首部字段因`代理是否可以转发给源服务器`，分为逐�
 
 HTTP 请求报文和 HTTP 响应报文通过通用首部字段 Connection 来指明代理无需转发给源服务器的逐跳首部字段
 
-![Connection控制逐跳首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/Connection%E6%8E%A7%E5%88%B6%E9%80%90%E8%B7%B3%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
+![Connection控制逐跳首部字段](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Connection%E6%8E%A7%E5%88%B6%E9%80%90%E8%B7%B3%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png)
 
 ### (5) 代理认证
 
@@ -175,7 +175,7 @@ HTTP 请求报文和 HTTP 响应报文通过通用首部字段 Connection 来指
 
 服务器的 Proxy-Authenticate 字段用于客户端与代理服务器之间的认证，将代理服务器要求的认证信息发送给客户端
 
-![代理认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E4%BB%A3%E7%90%86%E8%AE%A4%E8%AF%81.png)
+![代理认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%A3%E7%90%86%E8%AE%A4%E8%AF%81.png)
 
 ## 4. 网关
 
@@ -185,7 +185,7 @@ HTTP 请求报文和 HTTP 响应报文通过通用首部字段 Connection 来指
 
 **网关服务器**：网关服务器是部署了`网关应用程序`的服务器
 
-![网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BD%91%E5%85%B3.png)
+![网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E7%BD%91%E5%85%B3.png)
 
 ### (2) 网关的分类
 
@@ -197,13 +197,13 @@ HTTP 请求报文和 HTTP 响应报文通过通用首部字段 Connection 来指
 
 例如前后端分离项目，前端项目使用 HTTPS，后端项目使用 HTTP，那么前后端之间就可以部署一个`客户端网关`
 
-![客户端网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BD%91%E5%85%B3.png)
+![客户端网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BD%91%E5%85%B3.png)
 
 #### ② 服务器网关
 
 服务器网关使用 HTTP 协议与客户端通信，使用其他协议与服务器通信
 
-![服务器网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E5%85%B3.png)
+![服务器网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E5%85%B3.png)
 
 ### (3) 网关如何获取客户端流量
 
@@ -215,27 +215,27 @@ HTTP 请求报文和 HTTP 响应报文通过通用首部字段 Connection 来指
 
 隧道是一种确保客户端和服务器进行安全通信的应用程序，隧道本身不会解析 HTTP 请求和 HTTP 响应，而是保持原样转发给客户端和服务器，隧道会在通信双方断开连接时结束
 
-![隧道](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E9%9A%A7%E9%81%93.png)
+![隧道](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E9%9A%A7%E9%81%93.png)
 
 ### (2) CONNECT 建立 HTTP 隧道
 
 CONNECT 方法主要用于与代理服务器通信时建立 Web 隧道，实现通过隧道进行 TCP 通信，主要使用 SSL、TLS 协议将通信内容加密后经隧道传输
   
-![CONNECT方法](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E8%AF%B7%E6%B1%82%E8%A1%8C/CONNECT%E6%96%B9%E6%B3%95.png)
+![CONNECT方法](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/CONNECT%E6%96%B9%E6%B3%95.png)
 
 CONNECT 方法的请求·响应如下
   
-![CONNECT方法请求响应](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E8%AF%B7%E6%B1%82%E8%A1%8C/CONNECT%E6%96%B9%E6%B3%95%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94.png)
+![CONNECT方法请求响应](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/CONNECT%E6%96%B9%E6%B3%95%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94.png)
 
 ### (3) SSL 隧道
 
 #### ① HTTPS 客户端网关
 
-![HTTPS网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/HTTPS%E7%BD%91%E5%85%B3.png)
+![HTTPS网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE/HTTPS%E7%BD%91%E5%85%B3.png)
 
 #### ② SSL 隧道
 
-![SSL隧道](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/SSL%E9%9A%A7%E9%81%93.png)
+![SSL隧道](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/SSL%E9%9A%A7%E9%81%93.png)
 
 #### ③ HTTPS 客户端网关和 SSL 隧道的对比
 
@@ -251,7 +251,7 @@ HTTPS 客户端网关需要支持完整的 SSL 实现
 
 代理服务器转发响应时，会预先将资源的副本保存在代理服务器上，当再次收到对相同资源的请求时，就可以不从源服务器获取资源，而是将之前缓存的资源作为响应返回
 
-![缓存代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BC%93%E5%AD%98%E4%BB%A3%E7%90%86.png)
+![缓存代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E7%BC%93%E5%AD%98%E4%BB%A3%E7%90%86.png)
 
 ### (2) 客户端缓存
 
@@ -261,7 +261,7 @@ HTTPS 客户端网关需要支持完整的 SSL 实现
 
 即使存在缓存，也会因为客户端的要求、缓存的有效期等因素，向源服务器确认缓存资源的有效性，若判断缓存失效，需要再次向源服务器请求更新后的资源，无论是缓存代理还是客户端缓存，都存在过期的可能
 
-![客户端缓存过期](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98%E8%BF%87%E6%9C%9F.png)
+![客户端缓存过期](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98%E8%BF%87%E6%9C%9F.png)
 
 ### (4) 缓存行为控制
 
@@ -269,17 +269,17 @@ HTTP 报文的`通用首部字段 Cache-Control` 用于控制缓存行为，Cach
 
 #### ① 缓存请求指令
 
-![缓存请求指令](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BC%93%E5%AD%98%E8%AF%B7%E6%B1%82%E6%8C%87%E4%BB%A4.png)
+![缓存请求指令](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E7%BC%93%E5%AD%98%E8%AF%B7%E6%B1%82%E6%8C%87%E4%BB%A4.png)
 
 * **no-store**：客户端的 no-store 指令代表客户端不允许缓存请求
 
 * **no-cache**：客户端的 no-cache 指令代表客户端不接受缓存的资源，只接收从源服务器返回的资源
   
-  ![no-cache](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/no-cache.png)
+  ![no-cache](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/no-cache.png)
 
 * **max-age**：客户端的 max-age 指令代表缓存资源的缓存时间如果小于指定数值，客户端就可以接受缓存资源
   
-  ![max-age](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/max-age.png)
+  ![max-age](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/max-age.png)
 
 * **max-stale**：客户端的 max-stale 指令代表缓存资源即使过期，只要仍小于指定时间，依然会被客户端接收
 
@@ -289,13 +289,13 @@ HTTP 报文的`通用首部字段 Cache-Control` 用于控制缓存行为，Cach
 
 #### ② 缓存响应指令
 
-![缓存响应指令](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E7%BC%93%E5%AD%98%E5%93%8D%E5%BA%94%E6%8C%87%E4%BB%A4.png)
+![缓存响应指令](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E7%BC%93%E5%AD%98%E5%93%8D%E5%BA%94%E6%8C%87%E4%BB%A4.png)
 
 * **public**：服务器的 public 指令代表响应可以被`客户端和代理服务器`缓存
 
 * **private**：服务器的 private 指令代表响应只能被`客户端`缓存，不包括代理服务器
   
-  ![private](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/private.png)
+  ![private](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/private.png)
 
 * **s-maxage**：服务器的 s-maxage 指令代表资源保存为缓存的`最长相对时间`，`这段时间内即命中强缓存`，`代理服务器`无需进行协商缓存向源服务器发送请求确认有效性，s-maxage 指令只适用于`供多客户端使用的公共代理服务器`，也就是说 s-maxage 指令对于向同一客户端重复返回响应的代理服务器来说没有任何作用
   
@@ -305,7 +305,7 @@ HTTP 报文的`通用首部字段 Cache-Control` 用于控制缓存行为，Cach
   
   通用首部字段 Cache-Control 的 max-age 指令优先级高于实体首部字段 Expires
   
-  ![max-age](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/max-age.png)
+  ![max-age](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/max-age.png)
 
 * **must-revalidate**：服务器的 must-revalidate 指令要求`代理服务器`在向客户端返回缓存之前必须进行`协商缓存`，向源服务器发送请求确认缓存有效性，若无法连通源服务器，则返回状态码 `504 Gateway Timeout`
 
@@ -313,7 +313,7 @@ HTTP 报文的`通用首部字段 Cache-Control` 用于控制缓存行为，Cach
 
 * **no-cache**：服务器的 no-cache 指令代表`客户端`每次使用缓存前必须进行`协商缓存`，向源服务器发送请求确认缓存有效性
   
-  ![no-cache](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/no-cache.png)
+  ![no-cache](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/no-cache.png)
 
 * **no-store**：服务器的 no-store 指令代表源服务器`不允许使用缓存`，每次都要重新请求数据
 
@@ -321,6 +321,6 @@ HTTP 报文的`通用首部字段 Cache-Control` 用于控制缓存行为，Cach
 
 HTTP 报文的`通用首部字段 Warning` 用于告知用户与缓存相关的警告
 
-![Warning](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/Warning.png)
+![Warning](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Warning.png)
 
-![警告码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/Web/%E8%AD%A6%E5%91%8A%E7%A0%81.png)
+![警告码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E8%AD%A6%E5%91%8A%E7%A0%81.png)

@@ -43,7 +43,7 @@
 
 如下图所示，stream1 的流由一对请求消息和响应消息组成，请求消息由一个 HEADERS 帧组成，响应消息由一个 HEADERS 帧和 DATA 帧组成，这三个帧都属于流 stream1
 
-![流、消息、帧](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP2/%E6%B5%81%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E5%B8%A7.png)
+![流、消息、帧](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E6%B5%81%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E5%B8%A7.png)
 
 ### (2) 流 ID
 
@@ -55,7 +55,7 @@
 
 帧首部一共 `8 字节`，如下所示
 
-![帧首部](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP2/%E5%B8%A7%E9%A6%96%E9%83%A8.png)
+![帧首部](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%B8%A7%E9%A6%96%E9%83%A8.png)
 
 * **长度 ( 16 bit )**：当前帧负载的长度，最大可以携带 $2^{16}$ - 1 也就是 65535 字节 64 KB 的数据
 * **类型**：当前帧类型
@@ -85,13 +85,13 @@
 
 ② HTTP1.1 报文首部由请求行和首部字段组成，首部字段起到通信过程中传递额外信息的作用，首部字段间使用`回车换行符 crlf` 分割，首部字段由字段名和字段值构成，中间使用`冒号 :` 分割
 
-![HTTP请求报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E6%8A%A5%E6%96%87/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png)
+![HTTP请求报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png)
 
 ### (2) HTTP2 报文
 
 HTTP2 性能增强的核心全在于二进制分帧层，其定义了如何封装 HTTP 消息并在客户端和服务器之间传输
 
-![二进制分帧层](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP2/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%88%86%E5%B8%A7%E5%B1%82.png)
+![二进制分帧层](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%88%86%E5%B8%A7%E5%B1%82.png)
 
 ## 4. 首部压缩
 
@@ -107,7 +107,7 @@ HTTP1.1 中报文首部是通过`纯文本形式`发送的，通常会给每个�
 
 ③ 如下图所示，第二个请求只需发送变化的首部字段键值对，其他首部字段键值对没有变化则无需发送，这样就可以避免传输冗余的首部，从而减少每个请求的开销
 
-![首部表](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP2/%E9%A6%96%E9%83%A8%E8%A1%A8.png)
+![首部表](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E9%A6%96%E9%83%A8%E8%A1%A8.png)
 
 ## 5. 多向请求与响应
 
@@ -119,7 +119,7 @@ HTTP1.1 通过持久连接和管线化实现`多向请求`
 
 只要一端没有明确提出断开连接，则一直保持 TCP 连接状态，支持持久连接旨在建立 1 次 TCP 连接后多次 HTTP 请求和响应的交互
   
-![持久连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%8D%8F%E8%AE%AE/%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5.png)
+![持久连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5.png)
 
 #### ② 管线化
 
@@ -127,7 +127,7 @@ HTTP1.1 通过持久连接和管线化实现`多向请求`
   
 * **队头阻塞**：管线化限定了客户端接收响应的顺序必须一一对应客户端发送请求的顺序，如下图所示，如果请求 1 阻塞，即使服务器已经处理完请求 2，也必须等待请求 1 处理完，然后先返回响应 1，再返回响应 2，这就是队头阻塞，第一个请求阻塞，后面的请求都需要等待
   
-![管线化](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%8D%8F%E8%AE%AE/%E7%AE%A1%E7%BA%BF%E5%8C%96.png)
+![管线化](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E7%AE%A1%E7%BA%BF%E5%8C%96.png)
 
 * **解决队头堵塞**：HTTP1.1 想要解决队头阻塞，真正实现并行发送多个请求，必须使用`多个 TCP 连接`，每个 TCP 连接只交付一个 HTTP 响应
 
@@ -141,7 +141,7 @@ HTTP2 采用二进制分帧层，客户端和服务器可以将 HTTP 消息分�
 
 如下图所示，一个 TCP 连接上有 3 个请求与响应并行交换，客户端向服务器发送 stream5 的一个 DATA 帧，服务器向客户端乱序返回 stream1 和 stream3 的一系列帧
 
-![多向请求与响应](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP2/%E5%A4%9A%E5%90%91%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94.png)
+![多向请求与响应](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%A4%9A%E5%90%91%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94.png)
 
 * 一个 TCP 连接上有 3 个活动的流
 * 3 个流的流 ID 都是奇数，说明都是客户端发起的，当前连接上没有服务器推送的流
@@ -251,7 +251,7 @@ HTTP2 新增服务器推送功能，服务器可以针对一个客户端请求�
 
 服务器推送的资源直接进入`客户端缓存`，就像客户端请求了似的，整个过程对于运行在浏览器的 Web 应用来说好像不存在，不存在客户端 API 或 JS 回调函数等通知机制用于确认资源何时到达
 
-![服务器推送](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP2/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81.png)
+![服务器推送](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81.png)
 
 ### (3) 机制
 
