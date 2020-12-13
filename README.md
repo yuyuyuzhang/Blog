@@ -44,14 +44,16 @@ CSS 系列之 SASS 已完成
 
 ## 计算机和操作系统系列
 
-1. [计算机组成](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%80%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90.md)
-2. [操作系统](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%8C%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.md)
-3. [CPU 管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%89%E3%80%81CPU%20%E7%AE%A1%E7%90%86.md)
-4. [内存管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%9B%9B%E3%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.md)
-5. [IO 设备管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%94%E3%80%81IO%20%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86.md)
-6. [文件管理](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%85%AD%E3%80%81%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86.md)
-7. [操作系统接口](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%B8%83%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%8E%A5%E5%8F%A3.md)
-<!-- 8. [服务器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%85%AB%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8.md) -->
+1. [计算]()
+2. [计算机的诞生]()
+3. [计算机的组成]()
+4. [操作系统]()
+5. [CPU 管理]()
+6. [内存管理]()
+7. [IO 设备管理]()
+8. [文件管理]()
+9. [操作系统接口]()
+<!-- 10. [服务器]() -->
 
 ## 数据库系列
 
@@ -87,14 +89,17 @@ CSS 系列之 SASS 已完成
 
 ## 浏览器系列之浏览器相关
 
-1. [浏览器组成和渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90%E5%92%8C%E6%B8%B2%E6%9F%93.md)
-2. [浏览器缓存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98.md)
-3. [Window 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%89%E3%80%81Window%E5%AF%B9%E8%B1%A1.md)
-4. [Screen 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%9B%9B%E3%80%81Screen%E5%AF%B9%E8%B1%A1.md)
-5. [Navigator 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%94%E3%80%81Navigator%E5%AF%B9%E8%B1%A1.md)
-6. [Location 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AD%E3%80%81Location%E5%AF%B9%E8%B1%A1.md)
-7. [History 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%83%E3%80%81History%E5%AF%B9%E8%B1%A1.md)
-8. [Notification 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E5%85%AB%E3%80%81Notification%E5%AF%B9%E8%B1%A1.md)
+1. [浏览器内核和渲染模式]()
+2. [浏览器组成和渲染]()
+3. [浏览器缓存]()
+4. [Window 对象]()
+5. [Screen 对象]()
+6. [Navigator 对象]()
+7. [Location 对象]()
+8. [History 对象]()
+9. [Notification 对象]()
+<!-- 10. [Geolocation API]()
+11. [二进制数组]() -->
 
 ## 浏览器系列之浏览器通信
 

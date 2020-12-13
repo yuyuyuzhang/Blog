@@ -10,7 +10,7 @@
 
 #### ① 单一主机名
 
-单一主机名是为每台计算机赋予的唯一主机名 (实际上并不唯一)，用来替换不便于用户记忆的 IP 地址
+单一主机名是为每台计算机赋予的唯一主机名（实际上并不唯一），用来替换不便于用户记忆的 IP 地址
 
 #### ② 域名
 
@@ -65,7 +65,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ③ 所有域名服务器都必须注册根域名服务器的 IP 地址，因为根据 IP 地址进行检索时，需要从根域名服务器开始按顺进行
 
-![域名服务器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
+![域名服务器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
 
 ### (3) 域名检索
 
@@ -75,7 +75,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ② 用户在浏览器地址栏输入一个域名，浏览器向这个用户的`上网接入商`发出域名请求，接入商的域名服务器 DNS 查询域名数据库，找到该域名对应的 IP 地址，接入商的服务器去这个 IP 地址对应的服务器上抓取网页内容，然后传输给发出请求的浏览器
 
-![域名检索](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/%E5%9F%9F%E5%90%8D%E6%A3%80%E7%B4%A2.png)
+![域名检索](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E5%9F%9F%E5%90%8D%E6%A3%80%E7%B4%A2.png)
 
 ## 2. ARP 协议
 
@@ -91,7 +91,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ③ 每发送一个 IP 报文都要进行一次 ARP 请求会造成不必要的网络流量，通常的做法是将每次 ARP 请求获取到的 MAC 地址缓存到下一次 ARP 请求完成
 
-![ARP协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/ARP%E5%8D%8F%E8%AE%AE.png)
+![ARP协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/ARP%E5%8D%8F%E8%AE%AE.png)
 
 ### (2) RARP 协议
 
@@ -101,7 +101,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ② 先架设一台 RARP 服务器，在服务器上注册嵌入式设备的 MAC 地址和 IP 地址，再将嵌入式设备接入到网络，插电启动设备时，设备会向 RARP 服务器发送一条信息，表明自身的 MAC 地址，并且请求自身的 IP 地址，然后设备根据 RARP 服务器的返回结果设置自己的 IP 地址
 
-![RARP协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/RARP%E5%8D%8F%E8%AE%AE.png)
+![RARP协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/RARP%E5%8D%8F%E8%AE%AE.png)
 
 ### (3) 代理 ARP
 
@@ -117,7 +117,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ② 主机 A 向主机 B 发送 IP 报文，由于某种原因，途中的路由器 2 未能发现主机 B 的存在，那么路由器 2 就会向主机 A 发送一个 ICMPv4 包，说明发往主机 B 的 IP 报文未能成功，主机 A 分解 ICMPv4 包的首部和数据域得知发生问题的具体原因
 
-![ICMPv4协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/ICMPv4%E5%8D%8F%E8%AE%AE.png)
+![ICMPv4协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/ICMPv4%E5%8D%8F%E8%AE%AE.png)
 
 ### (2) ICMPv6 协议
 
@@ -127,7 +127,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ② 同一局域网/广播域/子网内的主机 A 需要向主机 D 发送 IP 报文，通过路由控制表主机 A 可以知道主机 D 的 IP 地址，主机 A 在子网内`组播`发送一个邻居请求消息，只有`支持 IPv6` 的路由器和主机才会收到这个组播消息，主机 D 通过邻居宣告消息告知主机 A 自己的 MAC 地址
 
-![ICMPv6协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/ICMPv6%E5%8D%8F%E8%AE%AE.png)
+![ICMPv6协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/ICMPv6%E5%8D%8F%E8%AE%AE.png)
 
 ## 4. DHCP 协议
 
@@ -141,7 +141,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ③ 为了避免 DHCP 服务器遇到故障，导致子网内所有主机都无法进行 TCP/IP 通信，通常会架设两台及以上的 DHCP 服务器，不过启动多个 DHCP 服务器，可能会导致分配的 IP 地址相互冲突
 
-![DHCP协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/DHCP%E5%8D%8F%E8%AE%AE.png)
+![DHCP协议](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/DHCP%E5%8D%8F%E8%AE%AE.png)
 
 ### (2) DHCP 中继器
 
@@ -165,13 +165,13 @@ console.log(document.domain); //"sina.com.cn"
 
 ③ 私有 IP 结合 NAT 技术已经成为解决 IPv4 地址分配问题的主流方案，现在很多学校、公司内部正在采用每个主机配置私有 IP，路由器配置全局 IP 的方式
 
-![NAT技术](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/NAT%E6%8A%80%E6%9C%AF.png)
+![NAT技术](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/NAT%E6%8A%80%E6%9C%AF.png)
 
 ### (2) NAPT
 
 **由来**：当私有网络中的多台主机都要连接互联网时，仅仅转换 IP 地址会担心全局 IP 是否够用的问题，因此产生了包含端口号一起转换的技术 NAPT，这样可以将私有网络中的私有 IP 都转换为同一个全局 IP，但是端口号不同
 
-![NAPT技术](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/NAPT%E6%8A%80%E6%9C%AF.png)
+![NAPT技术](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/NAPT%E6%8A%80%E6%9C%AF.png)
 
 ## 6. IPv4 和 IPv6 通信
 
@@ -179,13 +179,13 @@ console.log(document.domain); //"sina.com.cn"
 
 **由来**：IPv4 报文首部和 IPv6 报文首部不同，那么 IPv4 地址的主机和 IPv6 地址的主机之间就无法相互通信，NAT-PT 正是将 IPv6 报文首部转换成 IPv4 报文首部的一种技术
 
-![NAT-PT技术](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/NAT-PT%E6%8A%80%E6%9C%AF.png)
+![NAT-PT技术](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/NAT-PT%E6%8A%80%E6%9C%AF.png)
 
 ### (4) IP 隧道
 
 **由来**：IPv4 报文首部和 IPv6 报文首部不同，那么支持 IPv4 的子网和支持 IPv6 的子网之间就无法相互通信，IP 隧道正是将支持 IPv6 的子网发来的 IP 报文统合成一个数据，再追加一个 IPv4 报文首部之后转发给支持 IPv4 的子网的技术
 
-![IP隧道](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/IP%E9%9A%A7%E9%81%93.png)
+![IP隧道](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E9%9A%A7%E9%81%93.png)
 
 ## 7. Mobile IP
 
@@ -199,4 +199,4 @@ console.log(document.domain); //"sina.com.cn"
 
 ④ 外部代理：所有需要接入网络的移动设备都需要它
 
-![MobileIP](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/MobileIP.png)
+![MobileIP](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/MobileIP.png)

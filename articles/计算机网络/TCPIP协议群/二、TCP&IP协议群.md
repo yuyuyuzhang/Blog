@@ -16,7 +16,7 @@ TCP/IP 协议群是利用 IP 进行通信时必须用到的协议群的统称
 
 ④ 路由控制协议 (网络层)：RIP、OSPF、BGP
 
-![TCPIP协议群](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4.png)
+![TCPIP协议群](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4.png)
 
 ## 2. TCP/IP协议群的标准化
 
@@ -41,7 +41,7 @@ TCP/IP 协议群在制定某个协议规范的过程中会考虑这个协议实�
 
 下图是部分 STD 编号：
 
-![TCPIP规范](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E8%A7%84%E8%8C%83.png)
+![TCPIP规范](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E8%A7%84%E8%8C%83.png)
 
 ## 3. 物理层
 
@@ -65,7 +65,7 @@ TCP/IP 协议群在制定某个协议规范的过程中会考虑这个协议实�
 
 **作用**：数据链路层主要负责将一组电信号，传输给物理的连接在同一传输介质上的设备（计算机、交换机、路由器）
 
-![数据链路层通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E9%80%9A%E4%BF%A1.png)
+![数据链路层通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E9%80%9A%E4%BF%A1.png)
 
 ### (1) 交换机
 
@@ -109,7 +109,7 @@ TCP/IP 协议群在制定某个协议规范的过程中会考虑这个协议实�
 
 **作用**：网络层主要负责路由寻址
 
-![网络层通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%BD%91%E7%BB%9C%E5%B1%82%E9%80%9A%E4%BF%A1.png)
+![网络层通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%BD%91%E7%BB%9C%E5%B1%82%E9%80%9A%E4%BF%A1.png)
 
 ### (1) 路由器
 
@@ -133,7 +133,7 @@ IP 协议采用面向无连接的传输方式，在发送 IP 报文之前，无�
 
 * IPv4 地址以 8 个比特为一组，每组以 . 隔开，再转成十进制表示
 
-![IPv4地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/IPv4%E5%9C%B0%E5%9D%80.png)
+![IPv4地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv4%E5%9C%B0%E5%9D%80.png)
 
 #### ③ ipv6 地址
 
@@ -141,7 +141,7 @@ IP 协议采用面向无连接的传输方式，在发送 IP 报文之前，无�
 
 * IPv6 地址以 16 位比特为一组，每组以 : 隔开，出现连续的 0 时，可以将这些 0 省略，以 :: 隔开，一个 IPv6 地址中最多允许 2 个 :: 号，再转成十六进制表示
 
-![IPv6地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IP%E5%8D%8F%E8%AE%AE/IPv6%E5%9C%B0%E5%9D%80.png)
+![IPv6地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv6%E5%9C%B0%E5%9D%80.png)
 
 #### ④ 主机
 
@@ -254,7 +254,7 @@ UDP 协议是一种面向无连接的传输层协议
 
 用户在一种叫做浏览器的软件上借助鼠标和键盘就可以轻松上网，浏览器中既可以显示文字、图片、动画等信息，还能播放声音以及运行程序
 
-![浏览器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/Web%E6%B5%8F%E8%A7%88%E5%99%A8.png)
+![浏览器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/Web%E6%B5%8F%E8%A7%88%E5%99%A8.png)
 
 ### (2) 电子邮件 (SMTP)
 
@@ -280,19 +280,19 @@ UDP 协议是一种面向无连接的传输层协议
 * application/octet-stream
 * ...
 
-![电子邮件](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6.png)
+![电子邮件](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6.png)
 
 ### (3) 文件传输 (FTP)
 
 文件传输是指将保存在其他计算机硬盘的文件下载到本地硬盘，或者将本地硬盘上的文件上传到其他计算机硬盘，文件传输使用的协议是 FTP 协议，传输过程可以选择用二进制方式还是文本方式
 
-![文件传输](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93.png)
+![文件传输](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93.png)
 
 ### (4) 远程登录 (TELNET、SSH)
 
 远程登录是指登录到远程的计算机上，使那台计算机上的程序得以运行的一种功能，TCP/IP 网络中远程登录常用 TELNET、SSH 两种协议
 
-![远程登录](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95.png)
+![远程登录](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95.png)
 
 ### (5) 网络管理 (SNMP)
 
@@ -302,4 +302,4 @@ UDP 协议是一种面向无连接的传输层协议
 
 ## 8. TCP/IP 网络通信
 
-![TCPIP网络通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1.png)
+![TCPIP网络通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCPIP%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1.png)
