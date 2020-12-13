@@ -89,9 +89,13 @@ HTTP 报文的媒体类型也就是 MIME 类型，常见的媒体类型如下
 
 **原理**：范围请求就是指定下载的实体范围，通过 HTTP 请求报文的 `Range` 字段指定资源的字节范围，服务器返回状态码为 `206 Partial Content` 的响应报文，针对多重范围的范围请求，服务器会通过 `Content-type` 字段标明 `multipart/byteranges` 后返回响应报文，如果服务器无法响应范围请求，会返回状态码为 `200 OK` 的包含完整内容的响应报文
 
-![字节范围](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%AD%97%E8%8A%82%E8%8C%83%E5%9B%B4.png)
+* 字节范围
+  
+  ![字节范围](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E5%AD%97%E8%8A%82%E8%8C%83%E5%9B%B4.png)
 
-![范围请求](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E8%8C%83%E5%9B%B4%E8%AF%B7%E6%B1%82.png)
+* 范围请求
+  
+  ![范围请求](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E8%8C%83%E5%9B%B4%E8%AF%B7%E6%B1%82.png)
 
 ## 5. HTTP 内容协商
 

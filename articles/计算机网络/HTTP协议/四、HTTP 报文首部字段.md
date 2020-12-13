@@ -22,7 +22,7 @@
 
 客户端的 User-Agent 字段用于告知服务器，客户端浏览器的用户代理字符串，表示浏览器厂商和版本信息
 
-![User-Agent](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E6%8A%A5%E6%96%87%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5/User-Agent.png)
+![User-Agent](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/User-Agent.png)
 
 ### (2) Accept
 

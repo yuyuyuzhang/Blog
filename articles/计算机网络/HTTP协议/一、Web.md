@@ -231,7 +231,7 @@ CONNECT 方法的请求·响应如下
 
 #### ① HTTPS 客户端网关
 
-![HTTPS网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE/HTTPS%E7%BD%91%E5%85%B3.png)
+![HTTPS网关](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTPS%E7%BD%91%E5%85%B3.png)
 
 #### ② SSL 隧道
 

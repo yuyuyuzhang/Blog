@@ -22,7 +22,7 @@ HTTPS 采用`混合加密方式`，即客户端和服务器通过公开密钥加
 
 ③ 客户端将要发送的数据通过自身的共享密钥加密之后再发送，服务器收到密文后，使用客户端的共享密钥将密文解密恢复成原文
 
-![混合加密方式](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F.png)
+![混合加密方式](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B7%B7%E5%90%88%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F.png)
 
 ### (2) 公钥证书
 
@@ -34,7 +34,7 @@ HTTPS 采用`混合加密方式`，即客户端和服务器通过公开密钥加
 
 ③ 然后服务器将这份公钥证书发送给客户端，收到证书的客户端，使用数字证书认证机构的公钥 (浏览器开发商发布版本时，事先内部植入常用认证机构的公钥) 对证书上的数字签名进行验证，一旦验证通过，就可以证明这个公钥是可以信赖的
 
-![证书](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AF%81%E4%B9%A6.png)
+![证书](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%AF%81%E4%B9%A6.png)
 
 ## 3. HTTPS 的完整性校验
 
@@ -53,7 +53,7 @@ HTTPS 使用加密技术，能够避免窃听风险、篡改风险，则无需�
 
 SSL 服务器认证是利用 SSL 证书完成认证的方式，客户端凭借 SSL 证书可确认访问的服务器真实存在且规范，并且服务器背后运营的企业真实存在
 
-![SSL服务器认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/SSL%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%A4%E8%AF%81.png)
+![SSL服务器认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SSL%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%A4%E8%AF%81.png)
 
 ### (2) SSL 客户端认证
 
@@ -72,7 +72,7 @@ SSL 客户端认证是利用客户端证书完成认证的方式，服务器凭�
 * 用户选择将要发送的客户端证书后，客户端将选择好的证书信息以 Client Certificate 报文方式发送给服务器
 * 服务器验证客户端证书通过后，领取证书内的`客户端的公钥`，然后开始 HTTPS 加密通信
 
-![SSL客户端认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/SSL%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81.png)
+![SSL客户端认证](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SSL%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%A4%E8%AF%81.png)
 
 ### (3) 双因素认证
 

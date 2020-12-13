@@ -1,4 +1,4 @@
-# 五、HTTP 响应报文状态码
+# 六、HTTP 响应报文状态码
 
 [[_TOC_]]
 
@@ -40,7 +40,7 @@
 
 * 表示服务器成功执行了客户端发来的范围请求，返回的响应报文中包含指定范围的实体内容
 
-![206](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%E7%8A%B6%E6%80%81%E7%A0%81/
+![206](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/206.png)
 #### ④ 301 Moved Permanently
 
 * 表示`永久性重定向` (URI 不会再次改变)，请求的资源已经被永久分配了新的 URI，希望客户端按照响应报文的 `Location` 字段提示的 URI 重新请求
