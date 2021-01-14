@@ -43,13 +43,13 @@ window.closed           //返回布尔值,表示当前窗口是否关闭
 window.isSecureContext  //返回布尔值,表示当前窗口是否处于加密环境,https协议则是加密,否则不是
 window.devicePixelRatio //返回数值,表示一个CSS像素由多少个物理像素组成,数值大表示用户正在使用高清屏幕
 窗口属性：
-window.frames           //返回当前文档所有框架窗口构成的类数组对象
-window.length           //返回当前文档包含的框架窗口总数
-window.frameElement     //返回当前框架窗口所在的元素节点
-window.self             //返回当前框架窗口(只读)
-window.parent           //返回当前框架窗口的父窗口,没有则返回自身
-window.top              //返回当前框架窗口的顶层窗口
-window.opener           //返回打开当前窗口的父窗口,没有则返回null
+window.frames           //返回当前文档所有框架构成的类数组对象
+window.length           //返回当前文档包含的框架总数
+window.frameElement     //返回当前窗口所在的元素节点
+window.self             //返回当前窗口(只读)
+window.top              //返回当前窗口的顶层窗口
+window.parent           //返回当前窗口的父窗口,没有则返回自身
+window.opener           //返回打开当前窗口的窗口,没有则返回null
 位置大小属性：
 window.innerWidth       //返回文档在当前窗口中可见部分的宽度(包括滚动条)
 window.innerHeight      //返回文档在当前窗口中可见部分的高度

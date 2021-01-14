@@ -1,8 +1,6 @@
-# 四、Web 攻击
+# 四、Web 漏洞攻防
 
-[[_TOC_]]
-
-## 1. 跨站脚本（Cross Site Scripting，XSS）
+## 1. XSS 攻击
 
 ### (1) XSS
 
@@ -39,7 +37,9 @@ DOM 型 XSS 是指恶意代码无需经过服务器，直接在浏览器上运�
 Set-Cookie: sid=hdhfhbg136254; Secure; HttpOnly
 ```
 
-## 2. 跨站请求伪造（Cross-site Request Forgery，CSRF/XSRF）
+## 2. SQL 注入
+
+## 3. CSRF 漏洞
 
 ### (1) CSRF
 
@@ -77,7 +77,11 @@ Chrome 51 浏览器为 Cookie 新增了一个 `SameSite 属性`，服务器的 S
   Set-Cookie: sid=abc123; SameSite=None; Secure;
   ```
 
-## 3. 点击劫持（ClickJacking）
+## 4. SSRF 漏洞
+
+## 5. XXE 漏洞
+
+## 6. ClickJacking
 
 ### (1) ClickJacking
 
@@ -90,3 +94,17 @@ ClickJacking 的攻击原理主要是利用 iframe，因此可以通过设置响
 * DENY：不允许在任何 iframe 中引用，即便是相同域名页面的 iframe 也不行
 * SAMEORIGIN：允许在相同域名页面的 iframe 中引用
 * ALLOW-FROM [URL]：允许在指定来源的 iframe 中引用
+
+## 7. 反序列化漏洞
+
+## 8. 文件上传漏洞
+
+## 9. 命令与代码注入
+
+## 10. 文件包含
+
+## 11. 逻辑漏洞
+
+## 12. 内外渗透
+
+①②③④⑤⑥⑦⑧⑨⑩

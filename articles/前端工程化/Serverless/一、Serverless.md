@@ -2,353 +2,144 @@
 
 [[_TOC_]]
 
-## 1. Serverless
+## 1. Serverless 的兴起
 
-### (1) Serverless
+Serverless 的兴起史就是`云计算的发展史`，即物理机时代、虚拟机时代、容器时代、Serverless 时代
 
-Serverless 翻译成中文就是`无服务器`的意思，无服务器的意思是开发者无需考虑服务器环境搭建和维护等问题，只需要专注于开发，Serverless 不是框架，而是一种`软件的部署方式`
+### (1) 物理机时代
 
-传统的应用程序需要部署在服务器或虚拟机上，安装运行环境之后以`进程`的方式启动，Serverless 可以省略这个过程，直接使用云厂商提供的运行环境，由云厂商管理、由事件触发、以无状态的方式运行在容器内
+#### ① 物理机时代的发展历程
 
-### (2) Serverless 特点
+![物理机时代的发展历程]()
 
-#### ① 免维护
+#### ② 物理机时代的网站部署架构
 
-Serverless 不但提供了运行代码的环境，还能自动实现负载均衡、弹性压缩等高级功能，极大地降低了服务搭建的复杂性，有效提高开发和迭代速度
+物理机时代如果想开发上线一个电商网站，需要以下步骤
 
-#### ② 费用
+* 购买一台服务器（物理机）
+* 找个机房给服务器通电并连上网线
+* 在服务器上安装操作系统
+* 在服务器上安装数据库和网站环境
+* 部署网站
+* 测试
 
-以阿里云的函数计算为例，费用包括调用次数、执行时间、公网流量，如下所示
+此时网站架构属于`单机版的单体架构`，数据库、应用、Nginx 等服务全都部署在一台自己管理的服务器上
 
-![阿里云收费](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Serverless/%E9%98%BF%E9%87%8C%E4%BA%91%E6%94%B6%E8%B4%B9.png)
+![物理机时代的网站部署架构]()
 
-#### ③ 深度绑定
+物理机时代网站上线和稳定运行面临的最大问题就是`服务器等硬件问题`
 
-使用某个云厂商的 Serverless 时，一般会包括多种产品例如函数计算、对象存储、数据库等等，这些产品和云厂商深度绑定，因此如果要进行项目迁移，成本相对于部署在服务器上会增加很多
+* 服务器的购买、场地、电力、网络等开销
+* 负责服务器的维护
+* 停电导致网络中断，服务器也会随之停机，网站就无法访问了
+* 服务器的 CPU 烧毁后，数据如何迁移、新旧环境如何保持一致、如何保证网站持续可用等等问题
 
-#### ④ 运行时长限制
+由此诞生了虚拟机技术，让开发者无需关注`底层硬件`
 
-通常云厂商对于 Serverless 中的`函数执行时间`是有限制的，例如阿里云的函数计算产品，超过`最大执行时长`需要单独申请调整时长上限，或者自行将超时函数拆分成粒度更小的函数，但这种方式会增加一定的开发成本
+### (2) 虚拟机时代
 
-#### ⑤ 冷启动
+#### ① 虚拟机时代的发展历程
 
-函数是`按需执行`的，首次执行会创建`运行容器`，一般创建时间在几百毫秒，在延迟敏感的业务场景下需要优化
+通过虚拟化技术，将一台物理机分割成多台虚拟机提供给多用户使用，充分利用硬件资源，对于开发者来说，直接在云平台购买虚拟机，比起购买服务器成本更低
 
-## 2. Serverless 架构
+* **基础设施即服务 LaaS**：云厂商卖的硬件等基础设施
+* **平台即服务 PaaS**：云厂商卖的中间件、数据库平台
 
-### (1) 函数即服务（Function-as-a-Service，Faas）
+![虚拟机时代的发展历程]()
 
-一个函数就是一个服务，函数可以由任何语言编写
+#### ② 虚拟机时代的网站部署架构
 
-可以理解为，你写了一个实现业务的函数，然后把这个函数丢给 Serverless 容器，Serverless 容器就会自动把这个函数映射到一个服务上面，然后你就可以直接通过 HTTP 调用这个服务接口，也就是调用这个函数了
+有了虚拟机技术之后就可以将电商网站迁移到云厂商提供的虚拟机上，再也不用担心断电断网和硬件故障，解决了物理机时代网站上线和稳定运行面临的最大问题（服务器等硬件问题）
 
-### (2) 后端即服务（Backend-as-a-Service，BaaS）
+为了降低服务器负载，还可以将数据库迁移到云厂商提供的云数据库，云数据库有专门的服务器，还提供了`备份容灾`，比在自己的服务器上安装数据库更稳定性能更强
 
-集成了许多中间件技术，例如数据库服务、缓存、网关
+这样一来，服务器就只负责处理用户请求，将计算和存储分离开，既降低了系统负载，也提升了数据安全性，并且单机应用升级成了`集群应用`，通过`负载均衡`将用户流量均匀分配到每台服务器上
 
-BaaS 相对综合一点，它提供了一系列后端常用服务，比如数据或文件的存储、消息推送、账户系统等等
+![虚拟机时代的网站部署架构]()
 
-## 3. 阿里云 Serverless 实例
+虚拟机时代网站上线和稳定运行面临的最大问题就是`运行环境问题`
 
-使用阿里云函数计算实现代码自动部署，当 github 仓库中某个分支有新的提交时，拉去最新代码并编译，然后将编译后的代码部署到 OSS 存储的静态服务器上
+* 在服务器扩容过程中，例如购买服务器时很可能之前的型号没有了，只有新的型号，并且每次扩容一台服务器，都需要在新服务器上初始化软件环境和配置，需要保证所有服务器运行环境一致，这是个非常复杂还容易出错的工作
+* 总的来说，虚拟机时代可以让开发者无需关注`底层硬件`，但还是需要关注`运行环境`
 
-`HTTP 函数`负责接收 github 发出的 webhook 请求，收到请求后使用内部模块调用一个`事件函数`执行具体的操作
+由此诞生了容器技术，让开发者无需关注`运行环境`
 
-![github自动部署](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Serverless/github%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2.png)
+### (3) 容器时代
 
-### (1) HTTP 函数
+#### ① 容器时代的发展历程
 
-考虑到可扩展性，对每个项目仓库使用了单独的配置文件，具体到代码中就是调用 `getOSSConfigFile()` 函数从 OSS 存储上读取仓库相关的配置文件信息，然后通过 `invokeFunction()` 函数调用事件函数并传递配置信息
+2013 年 Docker 的发布，代表容器技术替代了虚拟化技术，云计算进入了容器时代
 
-```javascript
-/**
- * ACCOUNT_ID 主账号ID
- * ACCESS_KEY_ID 访问 bucket 所需要的 key
- * ACCESS_KEY_SECRET 访问 bucket 所需要的 secret
- * REGION bucket 所在的 region
- * BUCKET 用于存储配置文件的 bucket
- */
-const {
-  ACCOUNT_ID,
-  ACCESS_KEY_ID,
-  ACCESS_KEY_SECRET,
-  REGION,
-  BUCKET
-} = process.env
-const FCClient = require('@alicloud/fc2');
-const OSS = require('ali-oss')
-const getRawBody = require('raw-body')
+容器就是将应用程序代码和运行环境打包到一起，这样代码就可以在任何地方运行，容器技术让开发者无需关注`运行环境`，容器技术产生之后，开发者在服务器上部署的就不再是应用，而是`容器`，当容器多了之后，诞生了`容器编排技术 Kubernetes`来管理多个容器
 
-/**
- * 从 OSS 存储上读取仓库相关的配置文件信息
- * @param {string} filePath 函数计算配置文件路径
- */
-const getOSSConfigFile = async (filePath) => {
-  try {
-    const client = new OSS({
-      region: REGION,
-      accessKeyId: ACCESS_KEY_ID,
-      accessKeySecret: ACCESS_KEY_SECRET,
-      bucket: BUCKET
-    });
-    const result = await client.get(filePath);
-    const content = result.content ? result.content.toString() : '{}'
-    return JSON.parse(content)
-  } catch(e) {
-    console.error(e)
-    return {}
-  }
-}
+开发者不仅使用容器，还需要使用 Kubernetes 管理容器集群，基于 Kubernetes 和云厂商提供的弹性能力，可以实现`网站的自动弹性伸缩`，当流量洪峰到来时，自动弹出更多资源，当流量低谷时，自动释放多余资源
 
-exports.handler = (req, resp) => {
-  getRawBody(req, async (e, payload) => {
-    const body = JSON.parse(payload)
-    if (e) {
-      console.error(e)
-      resp.setStatusCode(400)
-      resp.send('请求体解析失败')
-      return
-    }
-    let cfg
-    try {
-      let config
-      config = await getOSSConfigFile(`/config/${body.repository.name}.json`) || {}
-      cfg = config.action[body.action]
-      if (!cfg) {
-        console.error(config.action, body.action)
-        throw Error('未找到对应仓库的配置信息.')
-      }
-    } catch (e) {
-      console.error(e)
-      resp.setStatusCode(500)
-      resp.send(e.message)
-      return
-    }
-    if (cfg) {
-      const client = new FCClient(ACCOUNT_ID, {
-        accessKeyID: ACCESS_KEY_ID,
-        accessKeySecret: ACCESS_KEY_SECRET,
-        region: cfg.region
-      });
+![容器时代的发展历程]()
 
-      // 调用事件函数并传递配置信息
-      client.invokeFunction(cfg.service, cfg.name, JSON.stringify(cfg)).catch(console.error)
-      resp.send(`client.invokeFunction(${cfg.service}, ${cfg.name}, ${JSON.stringify(cfg)})`)
-    }
-  })
-}
-```
+#### ② 容器时代的网站部署架构
 
-### (2) 事件函数
+容器时代部署网站的方式如下
 
-前面讲 `Serverless 函数冷启动`问题的时候提到过，函数执行完成后会存活一段时间，在这段时间内再次调用会执行之前创建的函数，短时间内重复执行的话会因为已经存在目录导致拉取失败，所以创建了随机目录并修改工作目录到随机目录下以获取写权限
+* 搭建 Kubernetes 集群
+* 构建容器镜像
+* 部署镜像
 
-然后再根据配置文件中的信息，`串行加载`对应的执行模块并传入参数
+![容器时代的网站部署架构]()
 
-```javascript
-const fs = require('fs')
+虚拟机时代网站上线和稳定运行面临的最大问题就是`运维问题`
 
-/**
- * @param {*} event
- *   {
- *     repo     仓库地址
- *     region   bucket 所在区域
- *     bucket   编译后部署的bucket
- *     command  编译命令
- *   }
- * @param {*} context
- * @param {*} callback
- */
-exports.handler = async (event, context, callback) => {
-  const {events} = Buffer.isBuffer(event) ? JSON.parse(event.toString()) : event
-  let dir = Math.random().toString(36).substr(6)
+* 使用容器技术，开发者需要规划节点和 Pod 的 CPU、内存、磁盘等资源，需要编写复杂的 YAML 去部署 Pod 和服务，需要经常排查 Pod 出现的异常，这需要专业的运维知识，于是渐渐从开发工程师变成了 `Kubernetes 运维工程师`
+* 瞬时流量远超预期时，例如电商网站面临双十一零点订单，集群虽然感知到了需要弹出更多的资源，但服务器弹出需要一定时间，没来得及应对这种瞬时流量，由于`不支持秒级弹性`导致网站崩溃
 
-  // 设置随机临时工作目录，避免容器未销毁的情况下，重复拉取仓库失败
-  const workDir = `/tmp/${dir}`
+由此诞生了 Serverless 技术，让开发者无需关注`运维`，只专注于`产品开发`
 
-  // 为了保证后续流程能找到临时工作目录，设置为全局变量
-  global.workDir = workDir
-  try {
-    fs.mkdirSync(workDir)
-  } catch(e) {
-    console.error(e)
-    return
-  }
-  process.chdir(workDir);
-  try {
-    await events.reduce(async (acc, cur) => {
-      await acc
-      return require(`./${cur.module}`)(cur)
-    }, Promise.resolve())
-    callback(null, `自动部署成功.`);
-  } catch(e) {
-    callback(e)
-  }
-}
-```
+### (4) Serverless 时代
 
-自动化实现拉取代码会碰见一些麻烦的细节问题
+#### ① Serverless 时代的发展历程
 
-* 身份认证问题：私有仓库只能通过`密钥文件`或`账户密码`的方式认证访问权限
-  * 账户密码：通过账户密码的形式登陆，需要模拟终端交互，这个实现成本相对较高
-  * 密钥文件：采用配置 ssh key 的方式，具体实现是根据前面传入的配置信息，找到私钥文件所在地址并下载到本地，但因为权限问题，不能直接保存到当前用户的 .ssh 目录下
-* 终端交互问题：首次进行 git clone 操作的时候，终端会出现一个是否添加 known hosts 的提示，需要键盘输入 Y、N 来继续后续操作，具体实现是使用 shell 脚本来关闭这个提示
-  
-  ```shell
-  #!/bin/sh
-  ID_RSA=/tmp/id_rsa
-  exec /usr/bin/ssh -o StrictHostKeyChecking=no -o GSSAPIAuthentication=no -i $ID_RSA "$@"
-  ```
+Serverless 翻译成中文就是`无服务器`的意思，无服务器的意思是开发者无需考虑服务器环境搭建和维护等问题，只需专注于开发，Serverless 是一种`软件部署方式`
 
-解决了身份认证问题和终端交互问题之后，剩下的逻辑就比较简单了，执行 git clone 命令拉取仓库代码就行，为了加快速下载速度，可以通过设置 `--depth 1` 这个参数来指定只拉取最新提交的代码
+传统的应用程序需要部署在服务器或虚拟机上，安装运行环境之后以`进程`的方式启动，Serverless 直接使用云厂商提供的运行环境，由云厂商管理、由事件触发、以无状态的方式运行在`容器`内
 
-```javascript
-const OSS = require('ali-oss')
-const cp = require('child_process')
-const { BUCKET, REGION, ACCESS_KEY_ID, ACCESS_KEY_SECRET } = process.env
-const shellFile = 'ssh.sh'
-/**
- * 
- * @param {string} repoURL 代码仓库地址
- * @param {string} repoKey 访问代码仓库所需要的密钥文件路径
- * @param {string} branch  分支名称
- */
-const downloadRepo = async ({repoURL, repoKey, branch='master'}, retryTimes = 0) => {
-  try {
-    console.log(`Download repo ${repoURL}`);
-    process.chdir(global.workDir)
-    const client = new OSS({
-      accessKeyId: ACCESS_KEY_ID,
-      accessKeySecret: ACCESS_KEY_SECRET,
-      region: REGION,
-      bucket: BUCKET
-    });
-    await client.get(repoKey, `./id_rsa`);
-    await client.get(shellFile, `./${shellFile}`);
-    cp.execSync(`chmod 0600 ./id_rsa`);
-    cp.execSync(`chmod +x ./${shellFile}`);
-    cp.execSync(`GIT_SSH="./${shellFile}" git clone -b ${branch} --depth 1 ${repoURL}`);
-    console.log('downloaded');
-  } catch (e) {
-    console.error(e);
-    if (retryTimes < 2) {
-      downloadRepo({repoURL, repoKey, branch}, retryTimes++);
-    } else {
-      throw e
-    }
-  }
-};
-module.exports = downloadRepo
-```
+Serverless 是一个`尚处于发展阶段`的技术，现阶段的实现主要是基于 BaaS、FaaS 的方案
 
-安装依赖并构建这个步骤没有太多复杂的地方，通过子进程调用 `yarn install --check-files` 命令，然后执行 package.json 文件中配置的脚本任务即可，具体代码如下
+* **后端即服务 BaaS**：将后端能力封装成了服务，并以接口的形式提供，例如数据库、文件存储等
+* **函数即服务 FaaS**：提供运行函数代码的能力，并具有`自动弹性伸缩`，基于 FaaS 我们的应用组成就不再是集众多功能于一身的集合体，而是`一个个独立的函数`，每个函数实现各自的业务逻辑，并且能够通过 BaaS 调用各种后端接口，进而以更低开发成本实现复杂的业务逻辑
 
-```javascript
-const cp = require('child_process')
+![Serverless 时代的发展历程]()
 
-const install = (repoName, retryTimes = 0) => {
-  try {
-    console.log('Install dependencies.');
-    cp.execSync(`yarn install --check-files`);
-    console.log('Installed.');
-    retryTimes = 0
-  } catch (e) {
-    console.error(e.message);
-    if (retryTimes < 2) {
-      console.log('Retry install...');
-      install(repoName, ++retryTimes);
-    } else {
-      throw e
-    }
-  }
-}
-const build = (command, retryTimes = 0) => {
-  try {
-    console.log('Build code.')
-    cp.execSync(`${command}`);
-    console.log('Built.');
-  } catch (e) {
-    console.error(e.message);
-    if (retryTimes < 2) {
-      console.log('Retry build...');
-      build(command, ++retryTimes);
-    } else {
-      throw e
-    }
-  }
-};
+#### ② Serverless 时代的网站部署架构
 
-module.exports = ({
-  repoName,
-  command
-}) => {
-  const {
-    workDir
-  } = global
-  process.chdir(`${workDir}/${repoName}`)
-  install(repoName)
-  build(command)
-}
-```
+我们通过网关承接用户流量，并将流量转发到 FaaS 平台运行的函数中，每个函数都是一个特定的接口，实现单一业务逻辑，并且基于 BaaS 实现复杂业务功能，函数本身也可以调用其他微服务
 
-最后上传部署可以根据不同的场景编写不同的模块，比如有的可能部署在 OSS 存储上，会需要调用 OSS 对应的 SDK 进行上传，有的可能部署在某台服务器上，需要通过 scp 命令来传输，以下实例是部署到 OSS 存储
+总的来说，基于 Serverless 开发者就只需关注`业务逻辑`的开发，应用部署时无需关注`服务器、环境环境、运维`，应用也天然具备`秒级弹性`的自动弹性伸缩，并且实现了按需使用，按量付费，能够进一步节约成本
 
-由于未找到阿里云 OSS SDK 中上传目录的功能，所以只能通过深度遍历的方式来逐个将文件进行上传，考虑编译后生成地文件数量并不多，这里没有做并发数限制，而是将全部文件进行批量上传
+![Serverless 时代的网站部署架构]()
 
-```javascript
-const path = require('path');
-const OSS = require('ali-oss');
-// 遍历函数
-const traverse = (dirPath, arr = []) => {
-  var filesList = fs.readdirSync(dirPath);
-  for (var i = 0; i < filesList.length; i++) {
-    var fileObj = {};
-    fileObj.name = path.join(dirPath, filesList[i]);
-    var filePath = path.join(dirPath, filesList[i]);
-    var stats = fs.statSync(filePath);
-    if (stats.isDirectory()) {
-      traverse(filePath, arr);
-    } else {
-      fileObj.type = path.extname(filesList[i]).substring(1);
-      arr.push(fileObj);
-    }
-  }
-  return arr
-}
-/**
- * 
- * @param {string} repoName
- * 
- */
-const deploy = ({ dist = '', source, region, accessKeyId, accessKeySecret, bucket, repoName }, retryTimes = 0) => new Promise(async (res) => {
-  const { workDir } = global
-  console.log('Deploy.');
-  try {
-    const client = new OSS({
-      region,
-      accessKeyId,
-      accessKeySecret,
-      bucket
-    });
-    process.chdir(`${workDir}/${repoName}`)
-    const root = path.join(process.cwd(), source)
-    let files = traverse(root, []);
-    await Promise.all(files.map(({ name }, index) => {
-      const remotePath = path.join(dist, name.replace(root + '/', ''));
-      console.log(`[${index}] uploaded ${name} to ${remotePath}`);
-      return client.put(remotePath, name);
-    }));
-    res();
-    console.log('Deployed.');
-  } catch (e) {
-    console.error(e);
-    if (retryTimes < 2) {
-      console.log('Retry deploy.');
-      deploy({ dist, source, region, accessKeyId, accessKeySecret, bucket }, ++retryTimes);
-    } else {
-      throw e
-    }
-  }
-})
-module.exports = deploy
-```
+## 2. Serverless 的定义
+
+### (1) 广义的 Serverless
+
+广义的 Serverless 是指应用程序构建和运行时`无需关注服务器的一种架构思想`
+
+* Serverless 翻译成中文就是`无服务器`的意思，无服务器的意思是开发者无需考虑服务器环境搭建和维护等问题，只需专注于开发，Serverless 是一种`软件部署方式`
+* 传统的应用程序需要部署在服务器或虚拟机上，安装运行环境之后以`进程`的方式启动，Serverless 直接使用云厂商提供的运行环境，由云厂商管理、由事件触发、以无状态的方式运行在`容器`内
+
+### (2) 狭义的 Serverless
+
+狭义的 Serverless 是指现阶段 Serverless 主流的技术实现，即 `BaaS 和 FaaS 的组合`，之所以说是狭义的，是因为 Serverless 架构正在持续发展中，未来可能会有更好的技术方案
+
+## 3. Serverless 的特点
+
+### (1) 优点
+
+* **免维护**：开发者无需关注服务器、运行环境、运维，只需专注于业务逻辑开发
+* **秒级弹性**：Serverless 让应用天然支持秒级弹性的自动弹性伸缩
+* **费用**：Serverless 实现了按需使用、按量付费，进一步节约成本
+
+### (2) 缺点
+
+* **深度绑定**：使用某个云厂商的 Serverless 时，一般会包括多种产品例如函数计算、对象存储、数据库等等，这些产品和云厂商深度绑定，因为现在 Serverless 还`没有一个统一的标准`，各个云厂商实现的 Serverless 产品都不一样，因此如果需要进行项目迁移，成本相对于部署在服务器上会增加很多
+* **函数冷启动**：Serverless 应用函数运行前需要`初始化函数执行环境`，这个过程需要耗费一定时间，因为函数不是持续在线的，而是运行时才启动，在延迟敏感的业务场景下需要优化
+* **函数通信效率低**：传统的 MVC 架构模式中 View 层方法调用 Model 层方法都是在`内存调用`的，而 Serverless 应用中函数之间完全独立，如果两个函数的数据有依赖，需要进行通信、交换数据，就要进行函数之间的 `HTTP 调用`，HTTP 调用相比内存调用数据交互效率低了很多，这个问题的`本质是 FaaS 还没有较好的数据通信方案或协议`
+* **开发调试复杂**：Serverless 架构正处于飞速发展的阶段，其开发、调试、部署工具链并不完善，另外应用依赖的第三方云服务也很难进行调试，想要在本地开发调试 Serverless 应用还是比较复杂

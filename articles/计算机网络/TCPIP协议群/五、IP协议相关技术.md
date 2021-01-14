@@ -4,9 +4,9 @@
 
 ## 1. DNS
 
-**由来**：在浏览器访问网页时，用户通常输入应用层提供的地址，但是主机在网络层是根据 IP 地址通信，所以需要一种将应用层地址映射为 IP 地址的功能
+**由来**：在浏览器访问网页时，用户通常输入`应用层地址（主机名、域名）`，但是主机在网络层是根据 IP 地址通信，所以需要一种将应用层地址（主机名、域名）映射为 IP 地址的功能
 
-### (1) 主机名&域名
+### (1) 主机名 & 域名
 
 #### ① 单一主机名
 
@@ -59,7 +59,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ### (2) 域名服务器 DNS
 
-① 域名服务器 DNS (Domain Name Server) 是进行域名和与之对应的 IP 地址相互转换的服务器
+① 域名服务器 DNS（Domain Name Server）是进行域名和与之对应的 IP 地址相互转换的服务器
 
 ② 从根域名服务器开始，各层域名服务器呈树状结构相互连接，每个域名服务器都了解该层下一层所有域名服务器的 IP 地址，所以若从根域名服务器开始追踪，可以访问世界上所有域名服务器
 
@@ -81,9 +81,9 @@ console.log(document.domain); //"sina.com.cn"
 
 ### (1) ARP 协议
 
-**由来**：计算机网络通信中，网络层的 IP 报文，最后都要在数据链路层封装成以太网数据帧，然后通过以太网协议发送，因此需要获取下一跳路由器或者接收方主机的 MAC 地址
+**由来**：计算机网络通信中，网络层的 IPv4 报文，最后都要在数据链路层封装成以太网数据帧，然后通过以太网协议发送，因此需要通过下一跳主机或路由器的 IP 地址获取其 MAC 地址
 
-**限制**：ARP (Address Resolution Protocol) 协议只适用于 IPv4 地址
+**限制**：ARP（Address Resolution Protocol）协议只适用于 IPv4 地址
 
 ① ARP 协议借助 ARP 请求和 ARP 响应两种类型的包，通过`广播`传输方式，确定下一跳路由器或者接收方主机的 MAC 地址，实现子网内的 IP 通信
 
@@ -97,7 +97,7 @@ console.log(document.domain); //"sina.com.cn"
 
 **由来**：平时我们可以通过个人电脑设置 IP 地址，还可以通过 DHCP 服务器自动分配获取 IP 地址，但是对于嵌入式设备来说，没有任何输入接口并且无法通过 DHCP 服务器动态获取 IP 地址，这种情况下，就需要 RARP 协议
 
-①  RARP (Reverse Address Resolution Protocol) 协议和 ARP 协议相反，是从 MAC 地址定位 IP 地址的一种协议
+①  RARP（Reverse Address Resolution Protocol）协议和 ARP 协议相反，是从 MAC 地址定位 IP 地址的一种协议
 
 ② 先架设一台 RARP 服务器，在服务器上注册嵌入式设备的 MAC 地址和 IP 地址，再将嵌入式设备接入到网络，插电启动设备时，设备会向 RARP 服务器发送一条信息，表明自身的 MAC 地址，并且请求自身的 IP 地址，然后设备根据 RARP 服务器的返回结果设置自己的 IP 地址
 
@@ -135,7 +135,7 @@ console.log(document.domain); //"sina.com.cn"
 
 ### (1) DHCP 工作原理
 
-① DHCP (Dynamic Host Configuration Protocol) 协议实现了自动设置 IP 地址，统一管理 IP 地址分配的功能，有了 DHCP 协议，计算机只要连接到网络，就可以自动获取 IP 地址，进行 TCP/IP 通信
+① DHCP（Dynamic Host Configuration Protocol）协议实现了自动设置 IP 地址，统一管理 IP 地址分配的功能，有了 DHCP 协议，计算机只要连接到网络，就可以自动获取 IP 地址，进行 TCP/IP 通信
 
 ② 首先架设一台 DHCP 服务器，然后将要分配的 IP 地址设置到 DHCP 服务器上，还需要设置相应的子网掩码、路由控制信息、DNS 服务器的地址等等
 
@@ -175,13 +175,13 @@ console.log(document.domain); //"sina.com.cn"
 
 ## 6. IPv4 和 IPv6 通信
 
-### (3) NAT-PT
+### (1) NAT-PT
 
 **由来**：IPv4 报文首部和 IPv6 报文首部不同，那么 IPv4 地址的主机和 IPv6 地址的主机之间就无法相互通信，NAT-PT 正是将 IPv6 报文首部转换成 IPv4 报文首部的一种技术
 
 ![NAT-PT技术](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/NAT-PT%E6%8A%80%E6%9C%AF.png)
 
-### (4) IP 隧道
+### (2) IP 隧道
 
 **由来**：IPv4 报文首部和 IPv6 报文首部不同，那么支持 IPv4 的子网和支持 IPv6 的子网之间就无法相互通信，IP 隧道正是将支持 IPv6 的子网发来的 IP 报文统合成一个数据，再追加一个 IPv4 报文首部之后转发给支持 IPv4 的子网的技术
 

@@ -8,7 +8,7 @@
 <script>
 //情况1：选择排序——重复遍历数组,每轮从数组中选择最小元素放在数组起始位置
 function selectSort(arr){
-  for(let i=0; i<arr.length; i++){
+  for(let i=0; i<arr.length-1; i++){
     for(let j=i+1; j<arr.length; j++){
       if(arr[i] > arr[j]){
         [arr[j], arr[i]] = [arr[i], arr[j]];
@@ -86,7 +86,7 @@ function mergeSort(arr){
         r++;
       }
     }
-    //left/right中某个数组全部成员均在result中
+    
     result = result.concat(left.slice(l, left.length));
     result = result.concat(right.slice(r, right.length));
     return result;
