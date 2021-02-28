@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>JS 引擎线程</title>
+</head>
+<body>
+<script>
+
+const worker = new Worker('Worker 线程.js')
+
+worker.postMessage('work start')
+
+//JS 引擎线程监听 Worker 线程返回的消息
+worker.addEventListener('message', function(e){
+  console.log(e.data)
+
+  //JS 引擎线程中关闭 Worker 线程
+  worker.postMessage('work done')
+  worker.terminate()
+})
+
+</script>
+</body>
+</html>

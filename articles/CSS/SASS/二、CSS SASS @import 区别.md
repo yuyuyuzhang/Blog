@@ -7,7 +7,6 @@ CSS 仅推荐使用 link 标签，不推荐使用 @import
 * link 是 HTML 标签，没有兼容性问题，@import 是 CSS3 新增语法，低版本浏览器不支持
 * link 加载 HTML 页面的同时加载，@import 是引用的 CSS 文件加载完后加载
 * @import 会产生一个新的 HTTP 请求，消耗服务器资源
-* 
 
 ## 2. SASS @import
 

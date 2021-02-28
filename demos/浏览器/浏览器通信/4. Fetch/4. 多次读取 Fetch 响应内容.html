@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>多次读取 Fetch 响应内容</title>
+</head>
+<body>
+<script>
+
+
+fetch('https://dummyimage.com/300.png')
+  .then(async res => {
+    const res1 = res.clone()
+    const res2 = res.clone()
+    const res3 = res.clone()
+
+    const text = await res1.text()
+    const buf = await res2.arrayBuffer()
+    const blob = await res3.blob()
+    console.log(text)
+    console.log(buf)
+    console.log(blob)
+  })
+  .catch(err => {})
+
+
+
+
+</script>
+</body>
+</html>

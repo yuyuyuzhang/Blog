@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>判断 Fetch 请求是否成功</title>
+</head>
+<body>
+<script>
+
+//方法一
+fetch('/user', {signal: controller.signal})
+  .then(res => {
+    if(res.ok){
+      console.log('fetch success')
+    } else{
+      throw new Error(res.statusText);
+    }
+  })
+  .catch(err => {})
+
+
+//方法二
+fetch('/user', {signal: controller.signal})
+  .then(res => {
+    if (res.status >= 200 && res.status < 300) {
+      console.log('fetch success')
+    } else {
+      throw new Error(res.statusText);
+    }
+  })
+  .catch(err => {})
+
+
+
+</script>
+</body>
+</html>

@@ -41,10 +41,10 @@ xhr.responseType    //返回/设置从服务器接收数据的类型
 xhr.timeout         //返回/设置多少毫秒后请求仍未得到结果就自动终止(0则没有时间限制)
 xhr.withCredentials //返回/设置跨域请求时,用户信息是否包含在请求中(默认false)
 回应状态：
-xhr.status          //返回服务器回应的HTTP状态码
-xhr.statusText      //返回服务器回应的状态提示信息
+xhr.status          //返回服务器响应的HTTP状态码
+xhr.statusText      //返回服务器响应的状态提示信息
 xhr.responseURL     //返回实际返回数据的服务器网址(会剥离片段识别符)
-xhr.response        //返回服务器回应的数据体
+xhr.response        //返回服务器响应的数据体
 xhr.upload          //返回一个对象,得知文件上传的进展
 ```
 
