@@ -27,16 +27,17 @@
 
 ### (1) 事件节点
 
-target 指向`触发事件的节点`
-
-currentTarget 指向`注册事件处理程序的节点`
-
-事件处理程序中的 this 指向`注册事件处理程序的节点`
+* target 指向`触发事件的节点`
+* currentTarget 指向`注册事件处理程序的节点`
+* 事件处理程序中的 this 指向`注册事件处理程序的节点`
 
 如下例所示，button 上没有注册事件处理程序，于是当 click 事件冒泡到了 document.body，在那里事件才真正得到处理
 
+```html
+<button id="btn">点击</button>
+```
+
 ```javascript
-//<button id="btn">点击</button>
 const btn = document.querySelector('#btn');
 document.body.addEventListener('click', function(e){
   console.log(e.target);        //<button id="btn">
@@ -49,8 +50,11 @@ document.body.addEventListener('click', function(e){
 
 通过检测 event.type 属性，得知发生的具体事件，从而执行相应的操作
 
+```html
+<button id="btn">点击</button>
+```
+
 ```javascript
-//<button id="btn">点击</button>
 const btn = document.querySelector('#btn');
 const handler = function(e){
   switch(e.type){
@@ -74,8 +78,11 @@ btn.addEventListener('mouseout', handler);
 
 通过 event.eventPhase 属性可以确定事件当前正处于事件流的哪个阶段，如下例所示，首先在捕获阶段触发 document.body 上注册的事件处理程序，然后在冒泡阶段触发按钮上注册的事件处理程序，接着再触发 document.body 上注册的事件处理程序，控制台依次输出：1 2 3
 
+```html
+<button id="btn">点击</button>
+```
+
 ```javascript
-//<button id="btn">点击</button>
 const btn = document.querySelector('#btn');
 btn.addEventListener('click', function(e){
   console.log(e.eventPhase);
@@ -92,8 +99,11 @@ document.body.addEventListener('click', function(e){
 
 e.preventDefault() 可以阻止事件的默认行为，如下例所示，链接的默认行为是单击时会跳转到指定的 URL，而取消默认行为则不会跳转
 
+```html
+<a href="https://fanyi.baidu.com">百度翻译</a>
+```
+
 ```javascript
-//<a href="https://fanyi.baidu.com">百度翻译</a>
 const link = document.querySelector('a');
 link.addEventListener('click', function(e){
   e.preventDefault();
@@ -104,8 +114,11 @@ link.addEventListener('click', function(e){
 
 e.stopPropagation() 和 e.stopImmediatePropagation() 都可以阻止事件在 DOM 中继续传播，即事件不会再向上冒泡，而后者比前者阻止的更加彻底
 
+```html
+<button id="btn">点击</button>
+```
+
 ```javascript
-//<button id="btn">点击</button>
 const btn = document.getElementById('btn');
 btn.addEventListener('click', function(e){
   console.log(1);               //正常:1 2 3

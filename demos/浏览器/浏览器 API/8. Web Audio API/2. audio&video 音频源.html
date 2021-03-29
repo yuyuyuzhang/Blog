@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>audio&video 音频源</title>
+</head>
+<body>
+
+<video id="video" src="./movie.mp4" width="300" height="200" controls ></video>
+<button id="btn">播放</button>
+<canvas id="canvas" width="300" height="150" style="border:1px solid red;"></canvas>
+
+<script>
+
+//a user gesture on the page
+const btn = document.getElementById('btn')
+btn.addEventListener('click', e => {
+  //播放
+  const video = document.getElementById('video')
+  video.play()
+
+  //音频可视化
+  const audioCtx = new AudioContext()
+  const source = audioCtx.createMediaElementSource(video)
+  const analyser = audioCtx.createAnalyser()
+  const canvas = document.getElementById('canvas')
+  const canvasCtx = canvas.getContext('2d')
+  source.connect(analyser)
+  analyser.connect(audioCtx.destination)
+
+  //绘图
+  draw()
+  function draw(){
+    const width = canvas.width
+    const height = canvas.height
+    const arr = new Uint8Array(128)
+    analyser.getByteFrequencyData(arr)
+    canvasCtx.clearRect(0, 0, width, height)
+    for(let i=0; i<arr.length; i++){
+      canvasCtx.fillRect(i*5, height-arr[i], 3, height);
+    }
+    requestAnimationFrame(draw)
+  }
+})
+
+</script>
+</body>
+</html>

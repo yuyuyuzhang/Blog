@@ -84,7 +84,7 @@ Fetch 接收以下 2 个参数，返回一个 Promise 实例
 * **第一个参数 url**：URL 字符串
 * **第二个参数 options**：配置对象，用于定制 HTTP 请求
 
-Fetch 请求配置对象 options 就是一个 Request 对象实例，因此以下 options API 也就是 Request 对象的 API
+Fetch 请求配置对象 options API 就是 Request 对象的 API
 
 ```javascript
 {

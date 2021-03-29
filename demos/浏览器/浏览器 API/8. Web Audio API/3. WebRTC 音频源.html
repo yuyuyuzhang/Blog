@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>WebRTC 音频源</title>
+</head>
+<body>
+
+<video id="video" width="300" height="200" controls></video>
+<input type="range" min="0" max="100" step="1" value="20" name="volume" id="volume" />
+
+<script>
+
+navigator.getUserMedia({
+  audio: true, //麦克风
+  video: true, //摄像头
+}, stream => {
+  //MediaStream
+  console.log(stream)
+  //MediaStreamTrack
+  console.log(stream.getTracks())
+  
+  const video = document.getElementById('video')
+  video.srcObject = stream //使用 src 属性报错：获取 MediaStream 404
+
+  const audioCtx = new AudioContext()
+  const source = audioCtx.createMediaStreamSource(stream)
+
+  //滤波器
+  const volume = document.getElementById('volume')
+  const biquadFilter = audioCtx.createBiquadFilter()
+  biquadFilter.type = "lowshelf"
+  biquadFilter.frequency.value = 1000
+  biquadFilter.gain.value = volume.value
+
+  source.connect(biquadFilter)
+  biquadFilter.connect(audioCtx.destination)
+
+  volume.addEventListener('input', e => {
+    biquadFilter.gain.value = volume.value
+  })
+}, err => console.log('您的浏览器不支持 WebRTC'))
+
+
+// navigator.mediaDevices.getUserMedia({
+//   audio: true, //麦克风
+//   video: true, //摄像头
+// }).then(stream => {
+//   const video = document.getElementById('video')
+//   video.srcObject = stream //使用 src 属性报错：获取 MediaStream 404 
+
+//   const audioCtx = new AudioContext()
+//   const source = audioCtx.createMediaStreamSource(stream)
+
+//   //滤波器
+//   const volume = document.getElementById('volume')
+//   const biquadFilter = audioCtx.createBiquadFilter()
+//   biquadFilter.type = "lowshelf"
+//   biquadFilter.frequency.value = 1000
+//   biquadFilter.gain.value = volume.value
+
+//   source.connect(biquadFilter)
+//   biquadFilter.connect(audioCtx.destination)
+
+//   volume.addEventListener('input', e => {
+//     biquadFilter.gain.value = volume.value
+//   })
+// })
+
+
+</script>
+</body>
+</html>

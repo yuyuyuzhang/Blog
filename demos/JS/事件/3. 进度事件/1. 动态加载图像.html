@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>动态加载图像</title>
+</head>
+<body>
+
+<button id="btn">添加图像</button>
+
+<script>
+
+function addImg(src){
+  const img = document.createElement('img');
+  document.body.append(img);
+
+  //加载完成则移除事件处理程序,避免二次加载
+  img.addEventListener('load', function(e){
+    img.removeEventListener('load', arguments.callee);
+  });
+
+  //设置src属性,此时开始加载图像
+  img.src = src;
+};
+
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function(){
+  addImg('cat.jpg')
+})
+
+
+</script>
+</body>
+</html>

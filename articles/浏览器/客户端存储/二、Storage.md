@@ -54,8 +54,8 @@ window.localStorage     //指向LocalStorage对象
 定义：const ls = window.localStorage     //指向LocalStorage对象
      const ss = window.sessionStorage   //指向SessionStorage对象
 属性：s.length             //返回保存的键值对个数
-方法：s.getItem(key)       //返回指定键名的键值
-     s.setItem(key,value) //无返回值,添加指定键值对
+方法：s.getItem(key)       //返回指定键名的键值,不存在返回null
+     s.setItem(key,value) //无返回值,添加指定键值对,已存在则更新键值
      s.removeItem(key)    //无返回值,删除指定键名对应的键值
      s.clear()            //返回undefined,清除保存的所有键值对
      s.key(index)         //返回指定索引处对应的键值
@@ -78,7 +78,7 @@ window.localStorage     //指向LocalStorage对象
 
 #### ④ s.clear()
 
-* 清除保存的所有键值对，返回undefined
+* 清除保存的所有键值对，返回 `undefined`
 
 #### ⑤ s.key(index)
 

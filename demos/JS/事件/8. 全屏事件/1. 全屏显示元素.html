@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全屏显示元素</title>
+</head>
+<body>
+
+<button id="btn">全屏显示按钮</button>
+
+
+<script>
+const btn = document.querySelector("#btn");
+btn.addEventListener('click', function(e){
+  btn.requestFullscreen();
+})
+document.addEventListener('fullscreenchange', function(e){
+  console.log(document.fullscreenElement);
+})
+
+</script>
+</body>
+</html>

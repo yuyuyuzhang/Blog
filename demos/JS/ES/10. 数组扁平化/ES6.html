@@ -6,9 +6,28 @@
 </head>
 <body>
 <script>
-//情况1
+
+//情况1：arr.flat()
 function flatten(arr){
-  var array = [];
+  return arr.flat(Infinity)
+}
+
+//情况2：扩展运算符...
+function faltten(arr){
+  while(arr.some(item => Array.isArray(item))){
+    arr = [].concat(...arr)
+  }
+  return arr
+}
+
+//情况3：arr.split()联合arr.toString()
+function flatten(arr){
+  return arr.toString.split(',')
+}
+
+//情况4：普通递归实现
+function flatten(arr){
+  let array = [];
   arr.forEach(item => {
     if(!Array.isArray(item)){
       array.push(item)
@@ -19,10 +38,11 @@ function flatten(arr){
   return array;
 }
 
-//情况2
+//情况5：arr.reduce()函数迭代
 function flatten(arr){
   return arr.reduce((prev, cur) => prev.concat(Array.isArray(cur) ? flatten(cur) : cur), [])
 }
+
 
 
 var arr = [1, '2', [3, '4', [5]], 1];

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>分享视频文件</title>
+</head>
+<body>
+
+<video width="300" height="200" controls>
+  <source src="movie.mp4" type="video/mp4">
+</video>
+<button id="btn">分享视频文件</button>
+
+<script>
+
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function(e){
+  if(navigator.canShare && navigator.canShare({files: ['./movie.mp4']})){
+    navigator.share({
+      files: ['./movie.mp4'],
+      title: 'movie',
+    })
+    .then(res => console.log('分享成功'))
+    .catch(err => console.log('分享失败'));
+  } else{
+    console.log('该文件无法被分享')
+  }
+})
+
+
+
+</script>
+</body>
+</html>

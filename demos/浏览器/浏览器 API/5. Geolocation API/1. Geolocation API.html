@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>Geolocation API</title>
+</head>
+<body>
+
+
+
+<script>
+
+if(!navigator.geolocation){
+  console.log('您的浏览器不支持 Geolocation API')
+} else{
+  const target = {
+    latitude : 0,
+    longitude: 0
+  }
+
+  const watchId = navigator.geolocation.watchPosition(function(position){
+    const coords = position.coords
+    if(coords.latitude === target.latitude && coords.longitude === target.longitude){
+      console.log('您已经到达指定位置')
+      navigator.geolocation.clearWatch(watchId)
+    } else{
+      //输出用户当前地理位置
+      console.log('您的当前地理位置如下：')
+      console.log('经度：' + coords.latitude)
+      console.log('维度：' + coords.longitude)
+      console.log('误差：' + coords.accuracy + '米')
+    }
+  }, function(positionError){
+    console.log(positionError.code + '：' + positionError.message)
+  }, {
+    enableHighAccuracy: true,
+    timeout: 60000,
+    maximumAge: 0
+  })
+}
+
+
+
+</script>
+</body>
+</html>

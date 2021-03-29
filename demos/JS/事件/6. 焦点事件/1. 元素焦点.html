@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>元素焦点</title>
+</head>
+<body>
+
+<form>
+  <div>
+    <label>姓名：</label>
+    <input id="name" type="text" placeholder="请输入姓名" />
+  </div>
+  <div>
+    <label>备注：</label>
+    <input id="remark" type="text" placeholder="请输入备注" />
+  </div>
+</form>
+
+<script>
+
+const name = document.getElementById('name')
+const remark = document.getElementById('remark')
+
+window.addEventListener('load', function(e){
+  name.focus()
+})
+name.addEventListener('keyup', function(e){
+  //用户输入姓名且按下 Enter 键,备注输入框自动获得焦点
+  if(e.target.value !== '' && e.key === 'Enter'){
+    remark.focus()
+  }
+})
+
+name.addEventListener('focus', function(e){
+  console.log('name focus')
+})
+remark.addEventListener('focus', function(e){
+  console.log('remark focus') 
+})
+
+
+
+</script>
+</body>
+</html>

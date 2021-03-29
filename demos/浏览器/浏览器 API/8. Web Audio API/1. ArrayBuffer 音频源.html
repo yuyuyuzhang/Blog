@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>ArrayBuffer 音频源</title>
+</head>
+<body>
+
+<button id="btn">点击</button>
+
+<script>
+
+//a user gesture on the page
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function(e){
+  //创建 AudioContext
+  const audioCtx = new AudioContext()
+  fetch('./movie.mp4')
+    .then(res => res.arrayBuffer())
+    .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
+    .then(audioBuffer => {
+      const source = audioCtx.createBufferSource()
+      source.buffer = audioBuffer //将内存中的一段音频数据放入这个音源节点
+      source.connect(audioCtx.destination) //将音源连接到音频目的地
+      source.start(audioCtx.currentTime) //开始播放声音
+    })
+})
+
+
+</script>
+</body>
+</html>

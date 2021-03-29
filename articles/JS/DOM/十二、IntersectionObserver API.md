@@ -70,19 +70,6 @@ IntersectionObserverEntry 对象表示`目标元素的信息`
 希望实现某些静态资源 ( 比如图片 )，只有用户向下滚动，进入视口时才加载，这样可以节省带宽，提高网页性能
 
 ```html
-<style>
-  .image-lazy {
-    width: 680px;
-    height: 400px;
-    overflow-y: auto;
-    border: 1px solid red;
-  }
-  .image-lazy img {
-    width: 680px;
-    height: 500px;
-  }
-</style>
-
 <div class="image-lazy">
   <img src="" data-src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg" />
   <img src="" data-src="https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg" />
@@ -92,6 +79,19 @@ IntersectionObserverEntry 对象表示`目标元素的信息`
   <img src="" data-src="https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg" />
   <img src="" data-src="https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg" />
 </div>
+```
+
+```css
+.image-lazy {
+  width: 680px;
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid red;
+}
+.image-lazy img {
+  width: 680px;
+  height: 500px;
+}
 ```
 
 ```javascript
@@ -123,23 +123,23 @@ query('.image-lazy img').forEach(item => observer.observe(item))
 无限滚动加载时，最好在页面底部有一个底部栏，一旦底部栏可见，就表示滚动到达了底部，从而加载新的条目放在底部栏前面，这样做的好处是无需再一次调用 observe() 方法，现有的 IntersectionObserver 可以保持使用
 
 ```html
-<style>
-  .image-lazy {
-    width: 680px;
-    height: 400px;
-    overflow-y: auto;
-    border: 1px solid red;
-  }
-  .image-lazy img {
-    width: 680px;
-    height: 500px;
-  }
-</style>
-
 <div class="image-lazy">
   <img src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg" />
   <div class="footerScroll">底部栏</div>
 </div>
+```
+
+```css
+.image-lazy {
+  width: 680px;
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid red;
+}
+.image-lazy img {
+  width: 680px;
+  height: 500px;
+}
 ```
 
 ```javascript

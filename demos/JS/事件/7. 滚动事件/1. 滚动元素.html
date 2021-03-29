@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滚动元素</title>
+    <style>
+      #block {
+        border: 1px solid red;
+        width: 200px;
+        height: 100px;
+        overflow-y: auto;
+      }
+    </style>
+</head>
+<body>
+
+<div id="block"></div>
+<button id="btn">点击</button>
+
+<script>
+const container = document.getElementById('block');
+const btn = document.querySelector("#btn");
+btn.addEventListener('click', function(e){
+  const div = document.createElement('div');
+  div.textContent = 'hahhahahahha';
+  container.append(div)
+  div.scrollIntoView(true);
+
+  //监听父元素的滚动
+  container.addEventListener('scroll', function(e){
+    console.log(e.target.scrollTop)
+  })
+})
+
+</script>
+</body>
+</html>

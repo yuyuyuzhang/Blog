@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>FontFace API</title>
+</head>
+<body>
+
+
+<p id="txt" style="font-family: 宋体;">我是小可爱</p>
+<button id="btn">加载并应用字体</button>
+
+<script>
+
+const btn = document.getElementById("btn")
+btn.addEventListener('click', async e => {
+  const font = new FontFace('TJS', 'url(./TJS.ttf)')
+  await font.load()
+  document.fonts.add(font) //将字体对象添加到页面
+  document.getElementById('txt').style.fontFamily = 'TJS'
+
+  console.log(document.fonts)
+})
+
+
+</script>
+</body>
+</html>

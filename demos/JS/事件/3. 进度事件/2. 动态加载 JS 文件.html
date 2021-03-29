@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>动态加载 JS 文件</title>
+</head>
+<body>
+
+<button id="btn">添加 JS</button>
+
+<script>
+
+function addScript(src){
+  const script = document.createElement('script');
+
+  //加载完成则移除事件处理程序,避免二次加载
+  script.addEventListener('load', function(e){
+    script.removeEventListener('load', arguments.callee);
+  });
+
+  //设置src属性且节点被添加到文档,此时开始加载JS文件
+  script.src = src;
+  document.body.append(script);
+}
+
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function(){
+  addScript('a.js')
+})
+
+
+</script>
+</body>
+</html>

@@ -16,7 +16,9 @@
 
 数据库系列 进行中......
 
-浏览器系列之浏览器相关已完结
+浏览器系列之浏览器模型已完结
+
+浏览器系列之浏览器 API 进行中......
 
 浏览器系列之浏览器通信已完结
 
@@ -39,6 +41,8 @@ JS 系列之设计模式 进行中......
 CSS 系列之 CSS 进行中......
 
 CSS 系列之 SASS 已完成
+
+Web Components 系列进行中......
 
 前端模块化系列已完结
 
@@ -76,7 +80,7 @@ CSS 系列之 SASS 已完成
 
 ## 计算机网络系列之 HTTP 协议
 
-1. [Web](d)
+1. [Web]()
 2. [HTTP 协议]()
 3. [HTTP 报文]()
 4. [HTTP 报文首部字段]()
@@ -85,7 +89,6 @@ CSS 系列之 SASS 已完成
 7. [HTTP1.1 的风险]()
 8. [HTTPS]()
 9. [HTTP2]()
-<!-- 10. [HTTP3]() -->
 
 ## 计算机网络系列之网络安全
 
@@ -104,13 +107,14 @@ CSS 系列之 SASS 已完成
 ## 数据库系列
 
 1. [数据库](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93.md)
-<!-- 2. [SQL](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BA%8C%E3%80%81SQL.md) -->
+<!-- 2. [MySQL]()
+3. [MongoDB]() -->
 
-## 浏览器系列之浏览器相关
+## 浏览器系列之浏览器模型
 
-1. [浏览器内核和渲染模式](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%E5%92%8C%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F.md)
-2. [浏览器组成和渲染](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%BA%8C%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%84%E6%88%90%E5%92%8C%E6%B8%B2%E6%9F%93.md)
-3. [浏览器缓存](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E4%B8%89%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98.md)
+1. [浏览器内核和渲染模式]()
+2. [浏览器组成和渲染]()
+3. [浏览器缓存]()
 4. [Window 对象]()
 5. [Screen 对象]()
 6. [Navigator 对象]()
@@ -119,12 +123,22 @@ CSS 系列之 SASS 已完成
 9. [Notification 对象]()
 10. [ArrayBuffer 对象]()
 11. [Blob 对象]()
-12. [文件 API]()
-13. [表单 API]()
-14. [Web Worker]()
-<!-- 15. [Service Worker]()
-16. [Geolocation API]() -->
-17. [Clipboard API]()
+
+## 浏览器系列之浏览器 API
+
+1. [文件 API]()
+2. [表单 API]()
+3. [FontFace API]()
+4. [Intl.RelativeTimeFormat API]()
+5. [Geolocation API]()
+6. [Clipboard API]()
+7. [Web Share API]()
+8. [Web Audio API]()
+<!-- 9. [WebRTC API]() -->
+10. [Web Worker API]()
+<!-- 11. [Service Worker API]() -->
+<!-- 12. [Canvas API]() -->
+<!-- 13. [SVG API]() -->
 
 ## 浏览器系列之浏览器通信
 
@@ -134,7 +148,6 @@ CSS 系列之 SASS 已完成
 4. [Fetch]()
 5. [Server-Sent Events]()
 6. [WebSocket]()
-<!-- 7. [WebRTC]() -->
 
 ## 浏览器系列之客户端存储
 
@@ -159,14 +172,17 @@ CSS 系列之 SASS 已完成
 
 ## JS 系列之事件
 
-1. [事件模型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%80%E3%80%81%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B.md)
+1. [事件模型]()
 2. [Event 对象]()
-3. [进度事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%89%E3%80%81%E8%BF%9B%E5%BA%A6%E4%BA%8B%E4%BB%B6.md)
-4. [文档事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%9B%9B%E3%80%81%E6%96%87%E6%A1%A3%E4%BA%8B%E4%BB%B6.md)
-5. [窗口事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%BA%94%E3%80%81%E7%AA%97%E5%8F%A3%E4%BA%8B%E4%BB%B6.md)
-6. [鼠标事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AD%E3%80%81%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6.md)
-7. [拖动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%83%E3%80%81%E6%8B%96%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
-8. [键盘事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AB%E3%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6.md)
+3. [进度事件]()
+4. [文档事件]()
+5. [窗口大小事件]()
+6. [焦点事件]()
+7. [滚动事件]()
+8. [全屏事件]()
+9. [鼠标事件]()
+10. [拖动事件]()
+11. [键盘事件]()
 
 ## JS 系列之 ES5
 
@@ -218,6 +234,10 @@ CSS 系列之 SASS 已完成
 1. [SASS](https://github.com/yuyuyuzhang/Blog/blob/master/articles/CSS/SASS/Sass.md)
 2. [CSS SASS @import 区别](https://github.com/yuyuyuzhang/Blog/blob/master/articles/CSS/SASS/%E4%BA%8C%E3%80%81CSS%20SASS%20%40import%20%E5%8C%BA%E5%88%AB.md)
 
+## Web Components 系列
+
+<!-- 1. [Web Components]() -->
+
 ## 前端模块化系列
 
 1. [前端模块化](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96.md)
@@ -243,8 +263,8 @@ CSS 系列之 SASS 已完成
 
 ## 前端工程化系列之 Docker
 
-1. [Docker]()
+<!-- 1. [Docker]() -->
 
 ## 前端工程化系列之 Serverless
 
-1. [Serverless](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Serverless/%E4%B8%80%E3%80%81Serverless.md)
+<!-- 1. [Serverless](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Serverless/%E4%B8%80%E3%80%81Serverless.md) -->

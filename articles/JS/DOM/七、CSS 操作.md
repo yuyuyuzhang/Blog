@@ -30,15 +30,18 @@ StyleSheet 对象表示`一张样式表`，可以是 link 元素的外部样式�
      sheet.deleteRule(n)         //无返回值,移除sheet中索引n处的CSS规则
 ```
 
+```html
+<style id="myStyle">
+  .red {
+    color: red;
+  }
+  .big {
+    font-weight: bold;
+  }
+</style>
+```
+
 ```javascript
-//<style id="myStyle">
-//  .red {
-//    color: red;
-//  }
-//  .big {
-//    font-weight: bold;
-//  }
-//</style>
 const style = document.getElementById('myStyle');
 const sheet = style.sheet;
 
@@ -59,8 +62,11 @@ classList 对象操作`元素的 class 类`，可以给元素添加删除类
      classList.contains(class) //返回布尔值,元素是否包含指定class
 ```
 
+```html
+<div id="block" class="one"></div>
+```
+
 ```javascript
-//<div id="block" class="one"></div>
 const div = document.getElementById("block");
 const classList = div.classList;
 
@@ -90,8 +96,11 @@ Style 对象表示`元素的 style 属性指定的所有内联样式`，但不�
 
 使用短划线的 CSS 属性名必须转换成`驼峰大小写`形式
 
+```html
+<div id="block" style="font-size:14px;color:red;">haha</div>
+```
+
 ```javascript
-//<div id="block" style="font-size:14px;color:red;">haha</div>
 const div = document.getElementById("block");
 const style = div.style;
 
@@ -118,11 +127,16 @@ CSSStyleDeclaration 对象表示`元素计算后的所有最终样式`，
 方法：computedStyle.getPropertyPriority(css) //返回computedStyle中指定css规则的important字符串
 ```
 
+```html
+<style>
+  #block {
+    width:20px;
+  }
+</style>
+<div id="block" style="font-size:14px;color:red;">haha</div>
+```
+
 ```javascript
-//#block {
-//  width:20px;
-//}
-//<div id="block" style="font-size:14px;color:red;">haha</div>
 const div = document.querySelector('#block');
 const computedStyle = getComputedStyle(div);
 

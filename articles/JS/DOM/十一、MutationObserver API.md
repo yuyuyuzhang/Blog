@@ -69,8 +69,11 @@ MutationRecord 对象表示`变动记录`，包含与变动相关的所有信息
      record.oldValue        //返回该次变动元素节点变动前的值(attribute,characterData)
 ```
 
+```html
+<div id="block" style="width:20px;">abc</div>
+```
+
 ```javascript
-//<div id="block" style="width:20px;">abc</div>
 const callback = (records, observer) => {
   records.map(record => {
     console.log('record type: ' + record.type);

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>定制校验信息</title>
+  <style>
+    input,
+    input:valid {
+        border-color: #ccc;
+    }
+
+    input:invalid {
+        border-color: red;
+    }
+  </style>
+</head>
+<body>
+
+<form id="form">
+  <div>
+      <label for="name">用户名：</label>
+      <input type="text" id="name" name="userName" required />
+  </div>
+  <div>
+      <label for="password">密码</label>
+      <input type="number" id="password" name="userPassword" minlength="6" maxlength="6" />
+  </div>
+  <button id="submitBtn">提交</button>
+</form>
+
+
+<script>
+
+const name = document.getElementById('name')
+name.addEventListener('invalid', function(e){
+  event.target.setCustomValidity('invalid');
+  console.log(e.target.validationMessage)
+})
+name.addEventListener('valid', function(e){
+  event.target.setCustomValidity('valid ');
+  console.log(e.target.validationMessage)
+})
+
+</script>
+</body>
+</html>

@@ -6,23 +6,43 @@
 </head>
 <body>
 <script>
-//浅拷贝：Object属性值、Array元素若为基本类型，则拷贝值，若为引用类型，则拷贝引用
-//深拷贝：Object属性值、Array元素无论为基本类型/引用类型，均拷贝值
+//浅拷贝：Object 属性值、Array 元素若为基本类型，则拷贝值，若为引用类型，则拷贝引用
+//深拷贝：Object 属性值、Array 元素无论为基本类型/引用类型，均拷贝值
 
 
-//浅拷贝：仅适用于Array
+//浅拷贝：仅适用于 Array
 function copy(arr){
   return arr.slice();
 }
 
-//浅拷贝：仅适用于Array
+//浅拷贝：仅适用于 Array
 function copy(arr){
   return arr.concat();
 }
 
-//浅拷贝：仅适用于Object
+//浅拷贝：仅适用于 Object
 function copy(obj){
   return Object.assign({}, obj);
+}
+
+//浅拷贝：仅适用于 Object
+function copy(obj){
+  return {...obj}
+}
+
+//浅拷贝：适用于 Array、Object
+function copy(obj){
+  if(typeof obj === 'object' && obj !== null){
+    const result = Array.isArray(obj) ? [] : {}
+    for(let prop in obj){
+      if(obj.hasOwnProperty(prop)){
+        result[prop] = obj[prop]
+      }
+    }
+    return result
+  } else{
+    return obj
+  }
 }
 
 
@@ -47,7 +67,7 @@ console.log(newF);    //Function  ƒ(){}
 
 newObj.a.b.c = 2;
 console.log(newObj);  //Object {a: {b: {c: 2}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
-console.log(obj);     //Object {a: {b: {c: 1}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
+console.log(obj);     //Object {a: {b: {c: 2}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
 </script>
 </body>
 </html>

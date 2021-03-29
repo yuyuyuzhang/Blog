@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滚动当前文档</title>
+    <style>
+      body {
+        height: 1000px;
+        overflow-y: auto;
+      }
+    </style>
+</head>
+<body>
+
+<button id="btn1">scrollTo100</button>
+
+<script>
+
+const btn1 = document.getElementById('btn1')
+btn1.addEventListener('click', function(e){
+  window.scrollTo(0, 100); 
+})
+
+//监听文档的滚动
+document.addEventListener('scroll', function(e){
+  console.log(window.pageYOffset); //100
+});
+
+</script>
+</body>
+</html>

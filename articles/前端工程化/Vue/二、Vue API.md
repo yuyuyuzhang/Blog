@@ -123,7 +123,7 @@ Vue.directive(name,define) //全局注册一个指令,组件引用后使用
 
 #### ① Vue.extend(options)
 
-Vue.extend 基于 Vue 基础实例构造器 ( new Vue )，生成一个 Vue 扩展实例构造器，参数是一个包含组件选项的对象
+Vue.extend 基于 Vue 基础实例构造器（new Vue），生成一个 Vue 扩展实例构造器，参数是一个包含组件选项的对象
 
 Vue.component 的原理就是`自动调用`实例构造器生成组件实例，然后将组件实例挂载到`自定义元素`上
 

@@ -6,8 +6,8 @@
 </head>
 <body>
 <script>
-//浅拷贝：Object属性值、Array元素若为基本类型，则拷贝值，若为引用类型，则拷贝引用
-//深拷贝：Object属性值、Array元素无论为基本类型/引用类型，均拷贝值
+//浅拷贝：Object 属性值、Array 元素若为基本类型，则拷贝值，若为引用类型，则拷贝引用
+//深拷贝：Object 属性值、Array 元素无论为基本类型/引用类型，均拷贝值
 
 
 //深拷贝：适用于所有数据类型
@@ -69,9 +69,9 @@ console.log(newDate); //Date      Wed Oct 30 2019 14:02:20 GMT+0800 (中国标�
 console.log(newReg);  //RegExp    /1/g
 console.log(newF);    //Function  ƒ(){}
 
-newObj.a.b.c = 2;
-console.log(newObj);  //Object {a: {b: {c: 2}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
-console.log(obj);     //Object {a: {b: {c: 1}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
+// newObj.a.b.c = 2;
+// console.log(newObj);  //Object {a: {b: {c: 2}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
+// console.log(obj);     //Object {a: {b: {c: 1}}, d: Wed Oct 30 2019 14:02:20 GMT+0800 (中国标准时间), f: /1/g, f: function(){}};
 
 </script>
 </body>

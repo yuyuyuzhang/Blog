@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>相对时间</title>
+</head>
+<body>
+
+
+
+<script>
+
+const rtfEn = new Intl.RelativeTimeFormat('en');
+const rtfZh = new Intl.RelativeTimeFormat('zh');
+
+console.log(rtfEn.format(-5, 'month')) //5 months ago
+console.log(rtfZh.format(-5, 'month')) //5 个月前
+
+
+</script>
+</body>
+</html>

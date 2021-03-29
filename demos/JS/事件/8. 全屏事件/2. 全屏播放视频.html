@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全屏播放视频</title>
+</head>
+<body>
+
+<video width="300" height="200" controls>
+  <source src="movie.mp4" type="video/mp4">
+</video>
+<button id="btn">全屏播放视频</button>
+
+
+<script>
+
+const video = document.getElementsByTagName('video')[0]
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function(e){
+  video.requestFullscreen()
+})
+
+video.addEventListener('fullscreenchange', function(e){
+  console.log('fullscreen success')
+})
+
+</script>
+</body>
+</html>
