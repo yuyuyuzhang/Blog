@@ -59,17 +59,17 @@ ArrayBuffer 对象作为内存区域可以存放`多种类型的数据`，视图
 
 TypedArray 视图包括如下 9 种类型
 
-|数据类型|字节长度|含义               |对应的C语言类型|
-|-------|-------|-------------------|--------------|
-|Int8   |1|8位有符号整数             |signed char   |
-|Uint8  |1|8位无符号整数             |unsigned char |
-|Uint8C |1|8位无符号整数(自动过滤溢出)|unsigned char |
-|Int16  |2|16位有符号整数            |short         |
-|Uint16 |2|16位无符号整数            |unsigned short|
-|Int32  |4|32位有符号整数            |int           |
-|Uint32 |4|32位无符号整数            |unsigned int  |
-|Float32|4|32位浮点数                |float         |
-|Float64|8|64位浮点数                |double        |
+| 数据类型 | 字节长度 | 含义                        | 对应的C语言类型 |
+| -------- | -------- | --------------------------- | --------------- |
+| Int8     | 1        | 8位有符号整数               | signed char     |
+| Uint8    | 1        | 8位无符号整数               | unsigned char   |
+| Uint8C   | 1        | 8位无符号整数(自动过滤溢出) | unsigned char   |
+| Int16    | 2        | 16位有符号整数              | short           |
+| Uint16   | 2        | 16位无符号整数              | unsigned short  |
+| Int32    | 4        | 32位有符号整数              | int             |
+| Uint32   | 4        | 32位无符号整数              | unsigned int    |
+| Float32  | 4        | 32位浮点数                  | float           |
+| Float64  | 8        | 64位浮点数                  | double          |
 
 ### (2) TypedArray 构造函数
 
@@ -113,7 +113,7 @@ console.log(tv2.byteLength)
 console.log(tv2.length)
 ```
 
-![TypedArray(buffer)]()
+![TypedArray(buffer)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(buffer).png)
 
 #### ② TypedArray(length)
 
@@ -140,7 +140,7 @@ tv[1] = 20;
 tv[2] = tv[0] + tv[1];
 ```
 
-![TypedArray(length)]()
+![TypedArray(length)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(length).png)
 
 #### ③ TypedArray(typedArray)
 
@@ -171,7 +171,7 @@ console.log(tv1)
 console.log(tv2)
 ```
 
-![TypedArray(typedArray)]()
+![TypedArray(typedArray)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(typedArray).png)
 
 #### ④ TypedArray(array)
 
@@ -196,7 +196,7 @@ const tv = new Uint16Array([1, 2, 3, 4]);
 console.log(tv)
 ```
 
-![TypedArray(array)]()
+![TypedArray(array)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(array).png)
 
 ### (3) TypedArray 属性和方法
 
@@ -242,7 +242,7 @@ console.log(tv1)
 console.log(tv2)
 ```
 
-![TypedArray 字节序]()
+![TypedArray 字节序](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray%20%E5%AD%97%E8%8A%82%E5%BA%8F.png)
 
 **确定计算机字节序**：可通过如下方法确定计算机字节序，true 为小端字节序，false 为大端字节序
 
@@ -320,7 +320,7 @@ const tv = Float32Array.of(0.151, -8, 3.7)
 console.log(tv)
 ```
 
-![TypedArray.of()]()
+![TypedArray.of()](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray.of().png)
 
 #### ⑦ TypedArray.from()
 
@@ -329,7 +329,7 @@ const tv = Uint16Array.from([0, 1, 2])
 console.log(tv)
 ```
 
-![TypedArray.from()]()
+![TypedArray.from()](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray.from().png)
 
 #### ⑧ typedArray.subarray()
 
@@ -341,7 +341,7 @@ console.log(tv1)
 console.log(tv2)
 ```
 
-![typedArray.subarray()]()
+![typedArray.subarray()](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/typedArray.subarray().png)
 
 #### ⑨ typedArray.set()
 
@@ -354,7 +354,7 @@ console.log(tv1)
 console.log(tv2)
 ```
 
-![typedArray.set()]()
+![typedArray.set()](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/typedArray.set().png)
 
 ### (4) TypedArray 复合视图
 
@@ -379,16 +379,16 @@ const tv3 = new Float32Array(buffer, 20, 1); //字节 20 到字节 23，1 个 32
 
 DataView 视图支持`除 Uint8C 外`的其他 8 种
 
-|数据类型|字节长度|含义               |对应的C语言类型|
-|-------|-------|-------------------|--------------|
-|Int8   |1|8位有符号整数             |signed char   |
-|Uint8  |1|8位无符号整数             |unsigned char |
-|Int16  |2|16位有符号整数            |short         |
-|Uint16 |2|16位无符号整数            |unsigned short|
-|Int32  |4|32位有符号整数            |int           |
-|Uint32 |4|32位无符号整数            |unsigned int  |
-|Float32|4|32位浮点数                |float         |
-|Float64|8|64位浮点数                |double        |
+| 数据类型 | 字节长度 | 含义           | 对应的C语言类型 |
+| -------- | -------- | -------------- | --------------- |
+| Int8     | 1        | 8位有符号整数  | signed char     |
+| Uint8    | 1        | 8位无符号整数  | unsigned char   |
+| Int16    | 2        | 16位有符号整数 | short           |
+| Uint16   | 2        | 16位无符号整数 | unsigned short  |
+| Int32    | 4        | 32位有符号整数 | int             |
+| Uint32   | 4        | 32位无符号整数 | unsigned int    |
+| Float32  | 4        | 32位浮点数     | float           |
+| Float64  | 8        | 64位浮点数     | double          |
 
 ### (2) DataView 构造函数
 
@@ -448,4 +448,4 @@ dv.setFloat32(6, 2.5, true); //小端字节序：从第7个字节开始写入值
 console.log(dv)
 ```
 
-![dataView实例方法]()
+![dataView实例方法](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/dataView%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95.png)

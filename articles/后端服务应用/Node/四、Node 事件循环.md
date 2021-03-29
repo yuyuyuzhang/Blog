@@ -17,7 +17,7 @@ Node 事件循环原理的核心流程图如下，这一流程包含 6 个阶段
 * **check**：执行 setInmmediate 回调函数，并不是立即执行，而是当 poll 阶段没有新的事件处理时执行
 * **close callbacks**：执行一些关闭的回调函数，例如 socket.on('close', ...)
 
-![Node事件循环原理流程图]()
+![Node事件循环原理流程图](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/Node%20%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E5%8E%9F%E7%90%86%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
 ```javascript
 const fs = require('fs');

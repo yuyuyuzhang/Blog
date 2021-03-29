@@ -30,11 +30,11 @@ XSS 漏洞通常指`网站对用户输入未作有效过滤，攻击者可以将
   ?>
   ```
 
-  ![反射型XSS]()
+  ![反射型XSS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS.png)
 
 * Chrome 浏览器 F12 查看网页源码，可以发现输入代码被解析执行了
 
-  ![反射型XSS_F12]()
+  ![反射型XSS_F12](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%B0%84%E5%9E%8BXSS_F12.png)
 
 #### ② 存储型 XSS（持久型跨站脚本）
 
@@ -42,7 +42,7 @@ XSS 漏洞通常指`网站对用户输入未作有效过滤，攻击者可以将
 
 存储型 XSS 经常出现在一些可以发表评论的地方，如帖子、博客等，DVWA 靶场就有一个典型的存储型 XSS 案例，是一个留言本的功能，支持用户发表评论，将用户输入的数据直接存储到数据库，并输出到页面上，这个过程因为未做任何过滤，导致了 XSS 存储型漏洞
 
-![DVWA靶场的存储型XSS]()
+![DVWA靶场的存储型XSS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DVWA%E9%9D%B6%E5%9C%BA%E7%9A%84%E5%AD%98%E5%82%A8%E5%9E%8BXSS.png)
 
 * 以 DVWA 靶场的存储型 XSS 为例，存储型 XSS 只需要让用户访问包含恶意代码的页面
 
@@ -65,11 +65,11 @@ XSS 漏洞通常指`网站对用户输入未作有效过滤，攻击者可以将
   ?>
   ```
 
-  ![存储型XSS]()
+  ![存储型XSS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AD%98%E5%82%A8%E5%9E%8BXSS.png)
 
 * 从 POST 请求获取 mtxMessage txtName 参数后，虽然经过一定过滤才插入到数据库，但是括号不会被过滤，在其他地方将其输出到页面就会被解析，我们在 Message 中输入 `<script>alert(1)</script>`，点击提交即可触发漏洞
 
-  ![存储型XSS_F12]()
+  ![存储型XSS_F12](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AD%98%E5%82%A8%E5%9E%8BXSS_F12.png)
 
 #### ③ DOM 型 XSS
 
@@ -77,17 +77,17 @@ DOM 型 XSS 是基于文档对象类型 DOM 的一种漏洞，不经过服务器
 
 DOM 型 XSS 是指`攻击者通过 JS 代码获取当前页面 URL`，进行处理后动态更新到页面的一种漏洞。由于客户端 JS 可以访问浏览器页面中的 DOM 对象，因此能够决定如何处理当前页面的 URL，比如获取 URL 的相关数据进行处理，然后动态更新到页面上，这导致 DOM 型 XSS 漏洞代码常位于网页的 JS 代码
 
-![Pikachu靶场的DOM型XSS]()
+![Pikachu靶场的DOM型XSS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Pikachu%E9%9D%B6%E5%9C%BA%E7%9A%84DOM%E5%9E%8BXSS.png)
 
 * 以 Pikachu 靶场的 DOM 型 XSS 为例，只有一个文本输入框加一个按钮，查看按钮回调函数如下
 
-  ![DOM型XSS]()
+  ![DOM型XSS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DOM%E5%9E%8BXSS.png)
 
-  ![DOM型XSS_回调]()
+  ![DOM型XSS_回调](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DOM%E5%9E%8BXSS_%E5%9B%9E%E8%B0%83.png)
 
 * 直接利用 JS 伪协议构造链接来触发 JS 代码的执行
 
-  ![DOM型XSS_触发]()
+  ![DOM型XSS_触发](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DOM%E5%9E%8BXSS_%E8%A7%A6%E5%8F%91.png)
 
 ### (2) XSS 攻击
 
@@ -97,7 +97,7 @@ Cookie 是服务器提供的存储在客户端的数据，允许 JS 脚本通过
 
 * 以百度网站为例，F12 console 标签页输入 document.cookie 可以访问当前百度域名下的 Cookie
 
-![百度Cookie]()
+![百度Cookie](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%99%BE%E5%BA%A6Cookie.png)
 
 #### ② 蠕虫攻击
 
@@ -228,7 +228,7 @@ XSS 蠕虫攻击的实现正是得益于 `AJAX` 的出现，AJAX 正是 Web2.0 �
 * **正向分析**：污点就是用户可控的输入数据，正向分析就是追踪污点的传播过程，检测是否传播给危险的输出函数例如 echo、eval 等
 * **反向分析**：先查看一些危险的输出函数例如 echo、eval 等，再回溯它的参数传递，判断是否有未经过滤的用户输入数据
 
-![污点分析流程]()
+![污点分析流程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B.png)
 
 #### ② 黑盒测试（无源码）
 
@@ -262,7 +262,7 @@ XSS 蠕虫攻击的实现正是得益于 `AJAX` 的出现，AJAX 正是 Web2.0 �
 
 如何根据`不同输出位置`采取不同的 XSS 防御方案？
 
-![XSS_输出检查]()
+![XSS_输出检查](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/XSS_%E8%BE%93%E5%87%BA%E6%A3%80%E6%9F%A5.png)
 
 #### ③ 防御 DOM XSS
 
@@ -270,7 +270,7 @@ DOM XSS 是一种特殊的 XSS 类型，不太适合前面介绍的防御方法
 
 * 根据`不同输出位置`采取不同的 XSS 防御方案
 
-  ![DOM型XSS防御]()
+  ![DOM型XSS防御](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DOM%E5%9E%8BXSS%E9%98%B2%E5%BE%A1.png)
 
 * 不允许获取 Cookie
   * 服务器的 Set-Cookie 字段指定 `Secure` 属性，浏览器只有在加密协议 HTTPS 下才将 Cookie 发送给服务器
@@ -288,7 +288,7 @@ CSRF 是由于`未校验请求来源，导致攻击者可在第三方站点，�
 
 例如用户先登陆银行网站，银行服务器返回一个 Cookie，用户又访问恶意网站，上面有一个表单，用户一旦被诱骗发送这个表单，银行网站就会收到带有正确 Cookie 的请求，这种由第三方网站引导发出的 Cookie，就被称为`第三方 Cookie`
 
-![SCRF原理]()
+![SCRF原理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/CSRF%E5%8E%9F%E7%90%86.jpg)
 
 #### ① CSRF 读
 
@@ -302,11 +302,11 @@ CSRF 是由于`未校验请求来源，导致攻击者可在第三方站点，�
 
 * 如下重置密码页面
 
-  ![重置密码]()
+  ![重置密码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81.png)
 
   输入新密码后，提交的同时抓包
 
-  ![重置密码抓包]()
+  ![重置密码抓包](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81%E6%8A%93%E5%8C%85.png)
 
 * 直接构造以下链接发给受害者，受害者点击链接后，新密码就会被重置为你设置的密码
 
@@ -335,7 +335,7 @@ CSRF 防御方案的关键思路就是`令请求参数不可预测`
 
 在一些重要的敏感操作上设置验证码，例如短信、图片等
 
-![验证码]()
+![验证码](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E9%AA%8C%E8%AF%81%E7%A0%81.png)
 
 #### ② Token 验证
 
@@ -355,15 +355,15 @@ Chrome 51 浏览器为 Cookie 新增了一个 `SameSite 属性`，服务器的 `
 
 * Lax 是大多数情况下不发送 Cookie，如下表格所示
   
-  |请求类型|示例|正常情况|Lax|
-  |-------|----|-------|---|
-  |链接    |`<a href="..."></a>`                |发送|发送|
-  |预加载  |`<link rel="prerender" href="..."/>`|发送|发送|
-  |GET表单 |`<form method="GET" action="...`    |发送|发送|
-  |POST表单|`<form method="POST" action="...">` |发送|不发送|
-  |iframe  |`<iframe src="..."></iframe>`       |发送|不发送|
-  |AJAX    |`$.get("...")`                      |发送|不发送|
-  |Image   |`<img src="...">`                   |发送|不发送|
+  | 请求类型 | 示例                                 | 正常情况 | Lax    |
+  | -------- | ------------------------------------ | -------- | ------ |
+  | 链接     | `<a href="..."></a>`                 | 发送     | 发送   |
+  | 预加载   | `<link rel="prerender" href="..."/>` | 发送     | 发送   |
+  | GET表单  | `<form method="GET" action="...`     | 发送     | 发送   |
+  | POST表单 | `<form method="POST" action="...">`  | 发送     | 不发送 |
+  | iframe   | `<iframe src="..."></iframe>`        | 发送     | 不发送 |
+  | AJAX     | `$.get("...")`                       | 发送     | 不发送 |
+  | Image    | `<img src="...">`                    | 发送     | 不发送 |
 
 * Chrome 默认设置 SameSite=Lax，这时可以通过设置 SameSite=None 显式关闭 SameSite 属性，不过前提是必须同时设置 Secure 属性，否则无效
   
@@ -383,7 +383,7 @@ SSRF 是指`攻击者向服务器发送包含恶意 URL 链接的请求`，借�
 
 SSRF 常用于`攻击者无法访问到的网络区域`，例如服务器所在的内网、受防火墙保护的主机等等
 
-![SSRF原理]()
+![SSRF原理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SSRF%E5%8E%9F%E7%90%86.png)
 
 SSRF 的危害如下
 
@@ -445,18 +445,18 @@ SSRF 的危害如下
 
 `BurpSuite` 工具默认提供 `Collaborator Server` 功能用于实现 DNS 解析，在一些无回显的安全测试中，会将解析日志返回给 BurpSuite
 
-![Burp Collaborator]()
+![Burp Collaborator](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Burp%20Collaborator.png)
 
 Burp Collaborator 原理如下图所示，先利用 SSRF 漏洞让目标应用向 Burp 提供的 DNS 解析服务器 Burp Collaborator Server 发起请求，然后 Burp Collaborator Server 会查询对应的 DNS 请求记录并返回给 BurpSuite，从而帮助测试者判断 SSRF 漏洞是否存在
 
-![Burp Collaborator原理]()
+![Burp Collaborator原理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Burp%20Collaborator%E5%8E%9F%E7%90%86.png)
 
 Burp Collaborator 使用过程如下
 
 * 先打开 Burp Collaborator Client
-  ![Burp Collaborator Client]()
+  ![Burp Collaborator Client](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Burp%20Collaborator%20Client.png)
 * 点击 Copy to clipboard 获取生成的域名，我这里生成的是 c3g9ga6x5zdxijo5d3aifxv6nxtnhc.burpcollaborator.net
-  ![Copy to clipboard]()
+  ![Copy to clipboard](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Copy%20to%20clipboard.png)
 
 * 利用生成的域名构造如下链接
 
@@ -466,7 +466,7 @@ Burp Collaborator 使用过程如下
   ```
 
 * 访问后回到 Burp Collaborator client，点击 Poll now 就可以看到 DNS 请求记录，这说明存在 SSRF 漏洞
-  ![Poll now]()
+  ![Poll now](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Poll%20now.png)
 
 ### (4) SSRF 防御方案
 
@@ -738,7 +738,7 @@ MySQL 常用的延时注入方法中较实用的有以下 3 种
 
 * Chrome 浏览器的 Network 标签内可以看到该请求刚好延时 5 秒钟，说明确实存在漏洞
 
-  ![基于时间延迟盲注]()
+  ![基于时间延迟盲注](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%BB%B6%E8%BF%9F%E7%9B%B2%E6%B3%A8.png)
 
 #### ⑥ 内联/嵌套查询注入（Inline queries，Q）
 
@@ -770,7 +770,7 @@ SAST 是通过`分析应用程序源代码`以提早发现安全漏洞
 
 SAST 的工作流程如下
 
-![SAST工作流程]()
+![SAST工作流程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SAST%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
 
 SAST 在产品形式上主要体现为`代码审计系统`等，PHP 的商业 SAST 产品有 RIPS、CheckMax 等，其中以 RIPS 审计能力最强，目前还没有比它更优秀的 PHP 代码审计产品
 
@@ -780,7 +780,7 @@ DAST 是`对应用程序进行黑盒分析`，通常在测试或运行阶段分�
 
 DAST 的工作流程如下
 
-![DAST工作流程]()
+![DAST工作流程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DAST%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
 
 DAST 在产品形式上主要体现为`漏洞扫描器`，著名的商业产品有 Acunetix Web Vulnerability Scanner（AWVS）、AppScan，还有国内长亭在 GitHub 上放出的 xray，这些都是许多白帽子喜欢用的扫描器
 
@@ -790,7 +790,7 @@ IAST `融合了 DAST 和 SAST 的优势`，漏洞检出率极高、误报率极�
 
 IAST 的工作流程如下
 
-![IAST工作流程]()
+![IAST工作流程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/IAST%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
 
 IAST 产品有百度的 OpenRASP-IAST，它是在 OpenRASP 的基础上引入了 DAST 扫描器，组合成完整的 IAST。除此之外，AWVS AcuSensor 和 AppScan 也都引入 IAST 技术，支持在服务端部署 Agent 去监控程序并采集信息，再提供给扫描器进行进一步的扫描
 
@@ -898,7 +898,7 @@ RASP 除了可以检测漏洞外，它本身也可以提供类似 WAF 的防御�
 
 不同文件格式有不同文件头，可以在文件前面加个图片文件头，看是否可以绕过限制
 
-![文件头]()
+![文件头](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%96%87%E4%BB%B6%E5%A4%B4.png)
 
 #### ⑥ 后缀别名绕过
 

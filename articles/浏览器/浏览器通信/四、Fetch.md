@@ -327,4 +327,4 @@ fetch('https://dummyimage.com/300.png')
   .catch(err => {})
 ```
 
-![多次读取响应内容]()
+![多次读取响应内容](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/%E5%A4%9A%E6%AC%A1%E8%AF%BB%E5%8F%96%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9.png)

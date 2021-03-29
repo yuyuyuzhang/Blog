@@ -17,7 +17,7 @@
 
 2020 年的 HackerOne 黑客报告中，统计过白帽子们最喜欢用的软硬件工具如下
 
-![渗透测试工具]()
+![渗透测试工具](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7.png)
 
 由统计可知，89% 的白帽子都会使用 `BurpSuite`，涉及 Web 渗透的常用工具功能都集中在代理抓包和漏洞扫描上，BurpSuite 两者兼具，还有丰富的插件，并集成了很多渗透测试的常用功能，是手动挖掘漏洞的必备神器
 
@@ -28,19 +28,19 @@
 * BurpSuite 分为收费的企业版和专业版，免费的社区版，社区版主要是一些代理抓包改包的基本功能，专业版则包含漏洞扫描器、插件商店等功能，专业版一年收费 399 美元，相当于 2600 元左右，网上可以找破解版下载
   官网下载地址：https://portswigger.net/burp/
 * BurpSuite 安装完成后，按照下图所示查看 BurpSuite 的代理设置
-  ![BurpSuite代理设置]()
+  ![BurpSuite代理设置](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/BurpSuite%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png)
 * 使用 BurpSuite 前需要配置浏览器代理，这样才能将 HTTP/HTTPS 请求转发到 BurpSuite 上进行分析与测试，我们可以使用 Chrome 插件 `Proxy SwitchyOmega` 来快速切换代理，插件安装之后按照下图配置
-  ![SwitchyOmega_BurpSuite]()
+  ![SwitchyOmega_BurpSuite](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SwitchyOmega_BurpSuite.png)
 * 插件配置完成后就可以在 Chrome 浏览器右上角的插件栏中点击 Proxy SwitchyOmega 插件图标，选择创建的 BurpSuite 情景模式开启 BurpSuite 代理，或者选择`系统代理`关闭 BurpSuite 代理
-  ![BurpSuite开启代理]()
+  ![BurpSuite开启代理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/BurpSuite%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86.png)
 
 #### ② BurpSuite 的使用
 
 * BurpSuite 是一个无需安装的软件，下载完成后直接从`命令行`启动即可，或者直接双击执行 `burpSuite.jar` 文件启动
 * 打开 Proxy 功能下的 Intercept 选项卡，确认拦截功能为 Interception is on 状态，如果显示为 Intercept is off 则点击开启拦截功能
-  ![BurpSuite开启拦截]()
+  ![BurpSuite开启拦截](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/BurpSuite%E5%BC%80%E5%90%AF%E6%8B%A6%E6%88%AA.png)
 * 打开浏览器输入要访问的 URL 并回车，将会看到数据流量经过 Burp Proxy 并暂停，直到你点击 `Forward` 才会继续传输下去，如果你点击了 `Drop` 则这次通过的数据将会被丢失不再继续处理，点击 Forward 之后将会看到这次请求返回的所有数据
-  ![BurpSuite拦截请求]()
+  ![BurpSuite拦截请求](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/BurpSuite%E6%8B%A6%E6%88%AA%E8%AF%B7%E6%B1%82.png)
 * BurpSuite 具体使用方式如下
   BurpSuite 实战指南：https://t0data.gitbooks.io/burpsuite/content/chapter3.html
 
@@ -54,15 +54,13 @@
 ### (2) Web 漏洞 CTF 在线练习环境
 
 * 网络信息安全攻防学习平台：http://hackinglab.cn/index.php
-  ![网络信息安全攻防学习平台]()
+  ![网络信息安全攻防学习平台](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Websec%20CTF%20%E7%BB%83%E4%B9%A0%E5%B9%B3%E5%8F%B0.png)
 * Websec CTF 练习平台：http://www.websec.fr/
-  ![Websec CTF 练习平台]()
+  ![Websec CTF 练习平台](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Websec%20CTF%20%E7%BB%83%E4%B9%A0%E5%B9%B3%E5%8F%B0.png)
 * XCTF 攻防世界：https://adworld.xctf.org.cn
-  ![XCTF 攻防世界]()
+  ![XCTF 攻防世界](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/XCTF%20%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C.png)
 * SQL 注入挑战平台：http://redtiger.labs.overthewire.org
-  ![SQL 注入挑战平台]()
-* XSS 挑战平台：http://prompt.ml/
-  ![XSS 挑战平台]()
+  ![SQL 注入挑战平台](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SQL%20%E6%B3%A8%E5%85%A5%E6%8C%91%E6%88%98%E5%B9%B3%E5%8F%B0.png)
 
 ## 4. 法律法规：如何合法进行渗透测试
 

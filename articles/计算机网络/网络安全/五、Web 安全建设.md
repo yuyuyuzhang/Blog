@@ -10,17 +10,17 @@ Apache 是世界使用排名第一的 Web 服务器软件，由于其跨平台�
 
 Apache 安装后会有如下图所示的默认页面，安装后仅用于测试，用于生产环境中时需要删除 `icons` 和 `manual` 两个目录文件，以避免不必要的信息泄露
 
-![Apache默认页面]()
+![Apache默认页面](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Apache%E9%BB%98%E8%AE%A4%E9%A1%B5%E9%9D%A2.png)
 
 #### ② 关闭目录浏览功能
 
 Apache 默认允许目录浏览，如果目录下找不到可浏览器的页面，就会出现目录浏览问题，造成信息泄露
 
-![Apache在线浏览目录]()
+![Apache在线浏览目录](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Apache%E5%9C%A8%E7%BA%BF%E6%B5%8F%E8%A7%88%E7%9B%AE%E5%BD%95.png)
 
 Ubuntu 是通过修改 Apache 配置文件 `/etc/apache2/apache2.conf`，其他平台大多是叫 `httpd.conf` 的配置文件名，修改 Indexes 为 `－Indexes`
 
-![Apache关闭目录浏览]()
+![Apache关闭目录浏览](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Apache%E5%85%B3%E9%97%AD%E7%9B%AE%E5%BD%95%E6%B5%8F%E8%A7%88.png)
 
 #### ③ 开启访问日志
 
@@ -31,9 +31,9 @@ Apache 默认开启访问日志，需要确认下配置文件是否开启 Custom
 /etc/apache2/sites-available/000-default.conf
 ```
 
-![Apache开启访问日志]()
+![Apache开启访问日志](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Apache%E5%BC%80%E5%90%AF%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97.png)
 
-![Apache访问日志文件]()
+![Apache访问日志文件](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Apache%E8%AE%BF%E9%97%AE%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6.png)
 
 #### ④ 不以 ROOT 启动 Apache
 
@@ -192,7 +192,7 @@ access_log /backup/nginx_logs/access.log combined;
 
 SDL 的核心理念就是`将安全集成到软件开发的每个阶段`，从需求、设计、编码、测试、发布的每个阶段都加入相应的安全工作，以提升软件安全质量
 
-![SDL]()
+![SDL](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SDL.png)
 
 SDL 更强调安全人员的工作，并未关注运维问题，同时现在企业越来越强调敏捷快速地开发产品，按照 SDL 的流程很难适应这种快速迭代的研发流程，由此促进了 DevSecOps 的诞生
 
@@ -202,16 +202,16 @@ SDL 更强调安全人员的工作，并未关注运维问题，同时现在企�
 
 DevOps 是`开发`和`运维`两词的缩写，是一套最佳实践方法论，旨在软件的开发生命周期中促进专业 IT 人员（产品、研发、测试、运维）之间的协作和交流，最终实现`持续集成 CI`（集成各个开发团队成员工作以及时发现错误）、`持续部署 CD`（保证快速且经常发布）、`持续反馈`（收集相关反馈帮助优化产品）
 
-![DevOps]()
+![DevOps](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DevOps.png)
 
 #### ② DevSecOps
 
 DevSecOps 正是在 DevOps 的 CI/CD 过程中嵌入`安全工作`，整合开发、安全、运维等各项工作，强调安全是整个 IT 团队（开发、安全、运维等工作人员）的责任，而不仅仅是安全人员的工作，且需要贯穿整个研发生命周期的每个环节
 
-![DevSecOps]()
+![DevSecOps](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/DevSecOps.png)
 
 #### ③ SDL 与 DevSecOps 对比
 
 SDL 与 DevSecOps 并不冲突，只是 DevSecOps 更进一步强调自动化融入流程，安全责任属于每个人，自建更适合自己企业的安全文化
 
-![SDL与DevSecOps对比]()
+![SDL与DevSecOps对比](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/SDL%E4%B8%8EDevSecOps%E5%AF%B9%E6%AF%94.png)

@@ -89,7 +89,7 @@ Web Audio API 用于操作声音，可以让网页发出声音
 * 选择音频目的地
 * 连接音频源和音频目的地，输出音效
 
-![Web Audio 流程]()
+![Web Audio 流程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/Web%20Audio%20%E6%B5%81%E7%A8%8B.svg)
 
 ## 3. AudioContext 对象
 

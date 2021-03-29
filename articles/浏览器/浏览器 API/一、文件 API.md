@@ -46,7 +46,7 @@ fileBtn.addEventListener('change', function(e){
 })
 ```
 
-![文件上传]()
+![文件上传](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.png)
 
 ### (3) 文件拖动
 
@@ -81,8 +81,6 @@ target.addEventListener("drop", function(e) {
   reader.readAsDataURL(files[0])
 });
 ```
-
-![文件拖动]()
 
 ## 3. FileReader 对象
 
@@ -137,10 +135,10 @@ fileBtn.addEventListener('change', function(e){
 })
 ```
 
-![readAsBinaryString]()
+![readAsBinaryString](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsBinaryString.png)
 
-![readAsArrayBuffer]()
+![readAsArrayBuffer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsArrayBuffer.png)
 
-![readAsText]()
+![readAsText](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsText.png)
 
-![readAsDataURL]()
+![readAsDataURL](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsDataURL.png)

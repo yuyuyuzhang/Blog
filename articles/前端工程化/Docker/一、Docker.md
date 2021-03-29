@@ -24,7 +24,7 @@ Docker 是一个用于`开发、发布、运行应用程序的开放平台`，Do
 * **公共镜像仓库**：Docker 官方的公共镜像仓库是 `Docker Hub`，不仅拥有很多应用程序或者操作系统的官方镜像，还拥有很多组织或者个人开发的镜像，都可以供我们免费下载、存放、研究、使用
 * **私有镜像仓库**：用户还可以创建自己的私有镜像仓库
 
-![镜像、容器、仓库关系图]()
+![镜像、容器、仓库关系图](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Docker/%E9%95%9C%E5%83%8F%E3%80%81%E5%AE%B9%E5%99%A8%E3%80%81%E4%BB%93%E5%BA%93%E5%85%B3%E7%B3%BB%E5%9B%BE.png)
 
 ## 2、 Docker 架构
 
@@ -38,7 +38,7 @@ Docker 是一个用于`开发、发布、运行应用程序的开放平台`，Do
 
 Docker 在容器战争中改变了一些技术架构，最终形成了如下的`客户端/服务端的 CS 架构`，客户端负责发送操作指令，服务端负责接收和处理指令
 
-![Docker架构]()
+![Docker架构](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Docker/Docker%E6%9E%B6%E6%9E%84.png)
 
 * **Docker 客户端**：Docker 用户与 Docker 服务端交互有多种方式，`Docker 命令`、`Restful API` 等
 * **Docker 服务端**：Docker 服务端是 Docker 所有后台服务的统称，其中后台管理进程 dockerd 负责响应和处理来自 Docker 用户的请求，然后将客户端的请求转化为 Docker 的具体操作，例如镜像、容器、网络和挂载卷等具体对象的操作和管理
