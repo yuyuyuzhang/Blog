@@ -1,4 +1,4 @@
-# 十、Web Worker
+# 十、Web Worker API
 
 ## 1. JS 引擎线程
 
@@ -30,7 +30,7 @@ JS 引擎线程作为一个单线程为什么能够实现异步？
 
 随着电脑计算能力的增强，尤其是多核 CPU 的出现，JS 引擎单线程模型无法充分发挥计算机的计算能力，带来很大的不便
 
-Web Worker 就是为 JS 语言创造多线程环境，`允许 JS 引擎线程创建 Wroker 线程`，将一些任务分配给 Worker 线程运行，JS 引擎线程运行的同时，Wroker 线程在后台运行，两者互不干扰，Worker 线程完成计算任务再将结果返回给 JS 引擎线程，这样的好处是一些计算密集型或高延迟任务可以交给 Worker 线程运行，JS 引擎线程能够保持流畅不被阻塞或拖慢
+Web Worker 就是为 JS 语言创造多线程环境，`允许 JS 引擎线程创建 Wroker 线程`，将一些任务分配给 Worker 线程运行，JS 引擎线程运行的同时，Wroker 线程在后台运行，两者互不干扰，Worker 线程完成计算任务再将结果返回给 JS 引擎线程，这样的好处是一些`计算密集型或高延迟任务`可以交给 Worker 线程运行，JS 引擎线程能够保持流畅不被阻塞或拖慢
 
 Werker 线程一旦被创建，就会始终运行，不会被 JS 引擎线程上的活动打断，这样有利于随时响应 JS 引擎线程的通信，但也导致了 Worker 线程比较耗费资源，不应该过度使用，而且一旦使用完毕就应该关闭
 
@@ -38,11 +38,11 @@ Werker 线程一旦被创建，就会始终运行，不会被 JS 引擎线程上
 
 #### ① 同源限制
 
-分配给 Worker 线程运行的脚本文件，必须与 JS 引擎线程`同源（协议、域名、端口）`
+分配给 Worker 线程运行的 JS 脚本文件，必须与 JS 引擎线程`同源（协议、域名、端口）`
 
 #### ② 全局对象限制
 
-Worker 线程所在的全局对象是 `WorkerGlobalScope`，不同于 JS 引擎线程所在的全局对象 `Window`，因此很多接口拿不到例如 window、parent 等等，WorkerGlobalScope 对象上只定义了 `navigator、location` 接口
+Worker 线程所在的全局对象是 `WorkerGlobalScope`，不同于 JS 引擎线程所在的全局对象 `Window`，因此很多接口拿不到，例如 window、parent 等，WorkerGlobalScope 对象上只定义了 `navigator、location` 接口
 
 #### ③ DOM 限制
 

@@ -200,6 +200,7 @@ RTCPeerConnection 对象的主要任务是创建对等连接，可以轻松地�
      RTCPeerConnection.getTransceivers()        //
      RTCPeerConnection.addTransceiver()         //
 
+     ICE API：
      RTCPeerConnection.addIceCandidate()        //
      RTCPeerConnection.restartIce()             //
      

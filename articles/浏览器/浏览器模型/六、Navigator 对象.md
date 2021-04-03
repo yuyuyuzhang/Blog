@@ -7,33 +7,80 @@
 Navigator 对象表示`当前浏览器信息`，包含与浏览器相关的各种信息
 
 ```javascript
-属性：navigator.userAgent            //返回浏览器的user agent字符串,表示浏览器厂商和版本信息
+属性：navigator.platform             //返回运行浏览器的操作系统平台
+     浏览器：
      navigator.appCodeName          //返回浏览器代码名
-     navigator.appName              //返回浏览器名称
-     navigator.appVersion           //返回浏览器平台和版本信息
-     navigator.platform             //返回运行浏览器的操作系统平台
-     navigator.onLine               //返回布尔值,表示浏览器当前是否在线
+     navigator.appName              //返回浏览器官方名称
+     navigator.appVersion           //返回浏览器版本信息 
      navigator.language             //返回浏览器的首选语言(只读)
-     navigator.languages            //返回用户可以接受的语言的数组
-     navigator.plugins              //返回PluginArray实例,表示浏览器安装的插件
-     Cookie 属性：
+     navigator.languages            //返回浏览器提供的用户可以接受的语言数组
+     navigator.userAgent            //返回浏览器的用户代理字符串,表示浏览器厂商和版本信息
+     navigator.onLine               //返回布尔值,浏览器当前是否在线
      navigator.cookieEnabled        //返回布尔值,浏览器是否启用cookie
-     WebRTC API
-     navigator.getUserMedia         //返回 getUserMedia API
+     浏览器插件：
+     navigator.plugins              //返回PluginArray实例,表示浏览器安装的插件
+
+     用户属性：
+     navigator.userActivation
+     
+     navigator.deviceMemory //返回当前设备的大概内存
+     navigator.doNotTrack //返回用户是否允许网址、广告等跟踪
+     navigator.hardwareConcurrency //返回当前浏览器环境拥有的CPU核心数
+     navigator.hid
+     navigator.keyboard
+     navigator.maxTouchPoints
+     navigator.mediaCapabilities
+     navigator.mediaDevices
+     navigator.mediaSession
+     navigator.mimeTypes
+     navigator.scheduling
+     navigator.serial
+     
+     navigator.vendor
+     navigator.vendorSub
+     navigator.wakeLock
+     navigator.webdriver
+     navigator.webkitPersistentStorage
+     navigator.webkitTemporaryStorage
+     navigator.xr
+
+     navigator.locks
+          
      ServiceWorker API：
      navigator.serviceWorker        //返回 Service Worker API
      Geolocation API：
      navigator.geoloacation         //返回一个 Geolocation API
      Clipboard API：
      navigator.clipboard            //返回一个 Clipboard API
-     Offline API：
-     navigator.online               //返回布尔值,浏览器是否在线
-     Web Share API：
-     navigator.share(options)       //返回一个Promise实例,Web Share API 分享网页或文件
+     StorageManager API：
+     navigator.storage
+     USB API：
+     navigator.usb
+     permission API：
+     navigator.permissions
+     NetworkInformation API：
+     navigator.connection
 方法：navigator.javaEnabled()        //返回布尔值,浏览器是否启用java
      navigator.taintEnabled()       //返回布尔值,浏览器是否启用数据污点
      Beacon API：
-     navigator.sendBeacon(url,data) //返回布尔值,浏览器是否成功向服务器发送数据,用户卸载网页时,浏览器向服务器发送异步请求并携带少量数据
+     navigator.sendBeacon(url,data) //返回布尔值,浏览器是否成功向服务器发送数据,用户卸载网页时浏览器向服务器发送异步请求并携带少量数据
+     Web Share API：
+     navigator.share(options)       //返回一个Promise实例,Web Share API 分享网页或文件
+     WebRTC API
+     navigator.getUserMedia()         //返回 getUserMedia API
+
+     navigator.unregisterProtocolHandler()
+     navigator.canShare()
+     navigator.clearAppBadge()
+     navigator.getBattery()
+     navigator.getGamepads()
+     navigator.getInstalledRelatedApps()
+     navigator.registerProtocolHandler()
+     navigator.requestMIDIAccess()
+     navigator.requestMediaKeySystemAccess()
+     navigator.setAppBadge()
+     navigator.vibrate()
+     navigator.webkitGetUserMedia()
 ```
 
 属性实例

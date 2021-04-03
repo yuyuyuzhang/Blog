@@ -269,23 +269,25 @@ Location 对象表示`当前浏览器窗口加载的文档地址`
 
 ```javascript
 定义：window.location
-属性：location.href         //完整URL
-     location.origin       //源(协议、主机、端口)
-     location.protocol     //协议(包含:)
-     location.host         //主机、端口
-     location.hostname     //主机(服务器名+域名)
-     location.port         //端口
-     location.pathname     //URL路径
-     location.search       //查询字符串(从?开始)
-     location.hash         //片段识别符(从#开始)
+属性：location.href            //完整URL
+     location.origin          //源(协议、主机、端口)
+     location.protocol        //协议(包含:)
+     location.host            //主机、端口
+     location.hostname        //主机(服务器名+域名)
+     location.port            //端口
+     location.pathname        //URL路径
+     location.search          //查询字符串(从?开始)
+     location.hash            //片段识别符(从#开始)
      用户信息：
-     location.username     //用户名
-     location.password     //密码
+     location.username        //用户名
+     location.password        //密码
+     来源：
+     location.ancestorOrigins //返回当前浏览器窗口加载的文档的所有祖先来源
 方法：重载：
-     location.reload(bool) //无返回值,浏览器重载该文档(默认false,true:向服务器请求,false:从缓存中加载)
+     location.reload(bool)    //无返回值,浏览器重载该文档(默认false,true:向服务器请求,false:从缓存中加载)
      重定向：
-     location.assign(url)  //无返回值,浏览器重定向到新文档
-     location.replace(url) //无返回值,浏览器重定向到新文档,替换当前文档的浏览记录
+     location.assign(url)     //无返回值,浏览器重定向到新文档
+     location.replace(url)    //无返回值,浏览器重定向到新文档,替换当前文档的浏览记录
 ```
 
 ### (1) 属性应用

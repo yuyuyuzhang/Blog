@@ -1,4 +1,4 @@
-# 十一、Service Worker
+# 十一、Service Worker API
 
 ## 1. Service Worker
 
@@ -9,28 +9,70 @@ Service Worker 充当`浏览器和服务器之间的代理服务器`，如果网
 * Service Worker 基于 `Web Worker`
 * Service Worker 完全`异步`，无法访问同步 API：XHR、Storage，可以访问异步 API：IndexedDB
 * Service Worker 只能由 `HTTPS` 承载，毕竟将修改网络请求的能力暴露给中间人攻击十分危险
+* Service Worker 脚本必须与当前网址`同源（协议、域名、端口）`，不允许跨域脚本
 * Service Worker 在 Web Worker 的基础上增加了`离线缓存`的能力，创建了有效的离线体验，将不常更新的内容缓存在服务器，提高浏览体验
 * Service Worker 可以让开发者自己管理缓存的内容及版本
 
-## 2. Service Worker 的使用
+## 2. Cache API
 
-### (1) 登记
+Cache API 为 Request/Response 对象提供缓存机制，例如作为 Service Worker 生命周期的一部分
+
+一个源可以拥有多个命名的 Cache 对象，
+
+```javascript
+定义：const cache = CacheStorage.open(cacheName)
+方法：cache.keys(request,options)     //返回Promise实例,
+     cache.macth(request,options)    //返回Promise实例,
+     cache.macthAll(request,options) //返回Promise实例,
+     cache.add(request)              //
+     cache.addAll(requests)          //
+     cache.put(request,response)     //
+     cache.delete(request,options)   //
+     
+```
+
+## 2. ServiceWorkerContainer
+
+```javascript
+定义：const serviceWorkerCon = navigator.serviceWorker
+属性：serviceWorkerCon.controller         //返回
+方法：serviceWorkerCon.ready()            //返回Promise实例,
+     serviceWorkerCon.register(path,options) //返回Promise实例,注册指定的Service Worker脚本
+     serviceWorkerCon.startMessages()    //
+     serviceWorkerCon.getRegistration()  //
+     serviceWorkerCon.getRegistrations() //
+
+
+事件：
+controllerchange //
+message          //
+messageerror     //
+```
+
+## 3. Service Worker 的使用
+
+### (1) 注册
 
 使用 Service Worker 的第一步，就是告诉浏览器，需要注册一个 Service Worker 脚本
 
-* Service Worker 脚本必须是从 `HTTPS` 协议加载的，因为将 Service Worker 修改网络请求的能力暴露给中间人攻击十分危险
-* Service Worker 脚本必须与当前网址`同源（协议、域名、端口）`，不允许跨域脚本
-* Service Worker 默认只对`根目录 /`生效，如果要改变生效范围，需要修改配置对象 options 的 scope 属性
+* Service Worker 脚本文件路径是相对于`根目录`的，而非当前 JS 文件目录
+* Service Worker 默认只对`根目录`生效，如果要改变生效范围，需要修改配置对象 options 的范围属性 scope
+
+用一个源下，可以注册多个 Service Worker，但每个 Service Worker 的 scope 必须不同
+
+默认情况下，Service Worker 每 24 小时被下载一次，如果下载的是最新文件，就会被重新注册和安装，但不会被激活，当所有页面都不再使用旧的而是使用最新的 Service Worker 时就会被激活，这对于开发非常不方便，因此可以在控制台 F12 的 Service Worker 中勾选 `Update on reload`，选中后每次刷新页面都会得到最新文件
 
 ```javascript
-navigator.serviceWorker.register('serverWorker.js', {scope})
+navigator.serviceWorker.register('serverWorker.js', { scope: './' })
+  .then(reg => {
+      console.log(reg) //ServiceWorkerRegistration 实例
+  })
+  .catch(err => console.log('error'))
 ```
 
 ### (2) 安装
 
-Service Worker 登记成功后，剩下的都是 Service Worker 脚本的工作
-
-* Service Worker 登记后就会触发 Service Worker 脚本的 `install 事件`
+Service Worker 注册成功后浏览器会自动安装，安装完成后会触发 Service Worker 脚本的 `install 事件`
 
 serviceWorker.js
 
@@ -45,30 +87,18 @@ this.addEventListener('install', e => {
 
 ### (3) 激活
 
-Service Worker 安装完成后，Service Worker 就会等待激活
-
-* Service Worker 激活后就会触发 Service Worker 脚本的 `activate 事件`
+Service Worker 安装完成后就会等待激活，激活成功后会触发 Service Worker 脚本的 `activate 事件`
 
 ```javascript
 this.addEventListener('activate', e => {
-    let cacheWhitelist = ['products-v2']
-
     //e.waitUntil() 指定 activate 事件完成后的回调函数
-    e.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if(cacheWhitelist.indexOf(cacheName) === -1){
-                        return caches.delete(cacheName)
-                    }
-                })
-            )
-        })
-    )
+    e.waitUntil(() => {
+        console.log('激活完成')
+    })
 })
 ```
 
-## 3. Service Worker 与网页的通信
+### (4) 通信
 
 serviceWorker.js
 
@@ -141,4 +171,6 @@ cat.jpg
 
 如果需要删除离线存储的 Web 应用，只需要删除 manifest 文件即可
 
-### (2) Service Worker
+### (2) Cache API
+
+### (2) Service Worker API

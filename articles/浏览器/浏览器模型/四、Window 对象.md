@@ -7,14 +7,14 @@ window 对象表示`浏览器窗口`，浏览器中 window 对象具有双重角
 ## 1. Window 对象属性
 
 ```javascript
-组件属性：
+窗口组件：
 window.locationbar      //返回窗口的地址栏对象
 window.menubar          //返回窗口的菜单栏对象
 window.scrollbars       //返回窗口的滚动条对象
 window.statusbar        //返回窗口的状态栏对象
 window.toolbar          //返回窗口的工具栏对象
 window.personalbar      //返回窗口的用户安装的个人工具栏对象
-原理属性：
+浏览器 API：
 window.console          //指向console对象
 window.document         //指向document对象
 window.screen           //指向screen对象
@@ -24,14 +24,13 @@ window.URLSearchParams  //指向URLSearchParams对象
 window.location         //指向location对象
 window.history          //指向history对象
 window.Natification     //指向Natification对象
-应用属性：
 window.arrayBuffer      //指向ArrayBuffer对象
 window.blob             //指向Blob对象
 window.file             //指向File对象
 window.fileList         //指向FileList对象
 window.fileReader       //指向FileReader对象
 window.formData         //指向FormData对象
-存储属性：
+客户端存储：
 document.cookie         //指向cookie
 window.sessionStorage   //指向SessionStorage对象
 window.localStorage     //指向LocalStorage对象
@@ -88,10 +87,10 @@ window.moveBy(x,y)                              //无返回值,移动当前窗�
 窗口缩放方法：
 window.resizeTo(x,y)                            //无返回值,缩放当前窗口至指定宽高
 window.resizeBy(x,y)                            //无返回值,缩放当前窗口指定水平位移量x,垂直位移量y
-焦点方法：
+窗口焦点方法：
 window.focus()                                  //无返回值,当前窗口获得焦点(位于其他窗口之前),触发focus事件
 window.blur()                                   //无返回值,当前窗口失去焦点,触发blur事件
-推迟方法：
+渲染推迟方法：
 window.requestAnimationFrame(callback)          //返回整数n,推迟callback到浏览器下次重流时执行
 window.requestIdleCallback(callback,options)    //返回整数n,推迟callback到系统资源空闲时执行,配置对象options仅timeout属性,
                                                 //指定推迟执行的最大毫秒数
