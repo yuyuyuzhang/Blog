@@ -24,7 +24,7 @@ import('https://cdn.jsdelivr.net/npm/lodash-es@4.17.15/slice.js').then((module) 
 
 如下图所示，在没有任何构建工具的情况下，在页面中引入带有 type="module" 属性的 JS 脚本，浏览器会在加载入口模块时依次加载所有依赖模块
 
-![Native-ESM](../../images/前端模块化/Vite/Native-ESM.png)
+![Native-ESM](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Vite/Native-ESM.png)
 
 #### ① ES6 Module 注意事项
 

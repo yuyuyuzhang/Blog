@@ -25,7 +25,7 @@ Parcel 是一款完全零配置的前端打包器，开发者只需要了解 Rar
   
 通过 npm 安装 parcel，会产生 node_modules 依赖文件夹和 package-lock.json 文件
 
-![安装](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E5%AE%89%E8%A3%85.png)
+![安装](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E5%AE%89%E8%A3%85.png)
 
 ### (2) 打包
 
@@ -33,19 +33,19 @@ Parcel 是一款完全零配置的前端打包器，开发者只需要了解 Rar
   
 通过参数 entry 指定打包入口文件，Parcel 和 Webpack 一样支持以`任意类型文件`作为打包入口，但是 Parcel 官方建议使用 `HTML 文件`作为打包入口，官方理由是 HTML 文件是应用在浏览器运行时的入口
 
-![打包](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E6%89%93%E5%8C%85.png)
+![打包](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E6%89%93%E5%8C%85.png)
 
 Parcel 打包结果与 Webpack 相似，JS 文件代码都是不易阅读的
 
 dist/src.a2b27638.js
 
-![src](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/src.png)
+![src](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/src.png)
 
 ### (3) 本地服务器
 
 打包执行完成后，Parcel 不仅打包了应用，还同时启动了一个本地服务器，就和 Webpack Dev Server 一样
 
-![启动服务器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
+![启动服务器](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
 
 ## 3. 生产模式打包
 
@@ -82,7 +82,7 @@ Parcel 同样支持导入其他类型的资源模块，并且是`完全零配置
   
   重新打包，浏览器打开本地服务 http://localhost:1234
 
-  ![导入其他类型资源文件](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E5%AF%BC%E5%85%A5%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6.png)
+  ![导入其他类型资源文件](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E5%AF%BC%E5%85%A5%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6.png)
 
 ## 5. 自动安装依赖
 
@@ -90,7 +90,7 @@ Parcel 同样支持导入其他类型的资源模块，并且是`完全零配置
 
 Parcel 支持自动安装依赖，开发一个项目时，项目代码中只管正常导入模块，`保存文件后` Parcel 会自动安装导入模块
 
-![自动安装依赖](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96.gif)
+![自动安装依赖](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/parcel/%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96.gif)
 
 ## 6. 动态导入
 
