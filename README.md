@@ -118,20 +118,19 @@ CSS 系列之 SASS 已完成
 6. [Navigator 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E5%85%AD%E3%80%81Navigator%20%E5%AF%B9%E8%B1%A1.md)
 7. [Location 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E4%B8%83%E3%80%81Location%20%E5%AF%B9%E8%B1%A1.md)
 8. [History 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E5%85%AB%E3%80%81History%20%E5%AF%B9%E8%B1%A1.md)
-9. [Notification 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E4%B9%9D%E3%80%81Notification%20%E5%AF%B9%E8%B1%A1.md)
-10. [ArrayBuffer 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E5%8D%81%E3%80%81ArrayBuffer%20%E5%AF%B9%E8%B1%A1.md)
-11. [Blob 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E5%8D%81%E4%B8%80%E3%80%81Blob%20%E5%AF%B9%E8%B1%A1.md)
+9.  [ArrayBuffer 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E4%B9%9D%E3%80%81ArrayBuffer%20%E5%AF%B9%E8%B1%A1.md)
+10. [Blob 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E5%8D%81%E3%80%81Blob%20%E5%AF%B9%E8%B1%A1.md)
+11. [File、FileList、FileReader 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E5%8D%81%E4%B8%80%E3%80%81File%E3%80%81FileList%E3%80%81FileReader%20%E5%AF%B9%E8%B1%A1.md)
+12. [FormData 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E5%8D%81%E4%BA%8C%E3%80%81FormData%20%E5%AF%B9%E8%B1%A1.md)
 
 ## 浏览器系列之浏览器 API
 
-1. [文件 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%80%E3%80%81%E6%96%87%E4%BB%B6%20API.md)
-2. [表单 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E3%80%81%E8%A1%A8%E5%8D%95%20API.md)
-3. [FontFace API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%89%E3%80%81FontFace%20API.md)
-4. [Intl.RelativeTimeFormat API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%9B%9B%E3%80%81Intl.RelativeTimeFormat%20API.md)
-5. [Geolocation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%94%E3%80%81Geolocation%20API.md)
-6. [Clipboard API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AD%E3%80%81Clipboard%20API.md)
-7. [Web Share API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%83%E3%80%81Web%20Share%20API.md)
-8. [Web Audio API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AB%E3%80%81Web%20Audio%20API.md)
+1. [FontFace API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%89%E3%80%81FontFace%20API.md)
+2. [Intl.RelativeTimeFormat API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%9B%9B%E3%80%81Intl.RelativeTimeFormat%20API.md)
+3. [Geolocation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%94%E3%80%81Geolocation%20API.md)
+4. [Clipboard API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AD%E3%80%81Clipboard%20API.md)
+5. [Web Share API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%83%E3%80%81Web%20Share%20API.md)
+6. [Web Audio API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AB%E3%80%81Web%20Audio%20API.md)
 <!-- 9. [WebRTC API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B9%9D%E3%80%81WebRTC%20API.md) -->
 10. [Web Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E3%80%81Web%20Worker%20API.md)
 <!-- 11. [Service Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%80%E3%80%81Service%20Worker%20API.md) -->
@@ -150,8 +149,10 @@ CSS 系列之 SASS 已完成
 ## 浏览器系列之客户端存储
 
 1. [Cookie](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%B8%80%E3%80%81Cookie.md)
-2. [Storage](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%BA%8C%E3%80%81Storage.md)
-3. [IndexedDB](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%B8%89%E3%80%81IndexedDB.md)
+2. [Cache](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%BA%8C%E3%80%81Cache.md)
+3. [Web Storage](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%B8%89%E3%80%81Web%20Storage.md)
+4. [IndexedDB](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E5%9B%9B%E3%80%81IndexedDB.md)
+5. [StorageManager](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/%E4%BA%94%E3%80%81StorageManager%20API.md)
 
 ## JS 系列之 DOM
 
@@ -174,13 +175,13 @@ CSS 系列之 SASS 已完成
 2. [Event 对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%BA%8C%E3%80%81Event%20%E5%AF%B9%E8%B1%A1.md)
 3. [进度事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%89%E3%80%81%E8%BF%9B%E5%BA%A6%E4%BA%8B%E4%BB%B6.md)
 4. [文档事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%9B%9B%E3%80%81%E6%96%87%E6%A1%A3%E4%BA%8B%E4%BB%B6.md)
-5. [窗口大小事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%BA%94%E3%80%81%E7%AA%97%E5%8F%A3%E5%A4%A7%E5%B0%8F%E4%BA%8B%E4%BB%B6.md)
-6. [焦点事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AD%E3%80%81%E7%84%A6%E7%82%B9%E4%BA%8B%E4%BB%B6.md)
-7. [滚动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%83%E3%80%81%E6%BB%9A%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
-8. [全屏事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AB%E3%80%81%E5%85%A8%E5%B1%8F%E4%BA%8B%E4%BB%B6.md)
-9. [鼠标事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B9%9D%E3%80%81%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6.md)
-10. [拖动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E3%80%81%E6%8B%96%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
-11. [键盘事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E4%B8%80%E3%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6.md)
+5. [鼠标事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%BA%94%E3%80%81%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6.md)
+6. [拖动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AD%E3%80%81%E6%8B%96%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
+7. [键盘事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B8%83%E3%80%81%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6.md)
+8. [窗口大小事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%85%AB%E3%80%81%E7%AA%97%E5%8F%A3%E5%A4%A7%E5%B0%8F%E4%BA%8B%E4%BB%B6.md)
+9. [焦点事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E4%B9%9D%E3%80%81%E7%84%A6%E7%82%B9%E4%BA%8B%E4%BB%B6.md)
+10. [滚动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E3%80%81%E6%BB%9A%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
+11. [画中画事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E4%BA%8C%E3%80%81%E7%94%BB%E4%B8%AD%E7%94%BB%E4%BA%8B%E4%BB%B6.md)
 
 ## JS 系列之 ES5
 
