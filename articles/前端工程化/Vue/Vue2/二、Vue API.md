@@ -34,7 +34,7 @@ activated(){}                //被 keep-alive 缓存的组件激活时调用
 deactivated(){}              //被 keep-alive 缓存的组件停用时调用
 ```
 
-![Vue实例生命周期](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue%E5%AE%9E%E4%BE%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png)
+![Vue实例生命周期]()
 
 ### (3) 实例
 
@@ -455,7 +455,7 @@ export default {
 </script>
 ```
 
-![filters](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/filters.png)
+![filters]()
 
 #### ⑤ Vue.directive(name,options)
 
