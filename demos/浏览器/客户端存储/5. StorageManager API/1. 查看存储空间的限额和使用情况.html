@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>查看存储空间的限额和使用情况</title>
+</head>
+<body>
+  
+
+
+<script>
+
+const f = async (spaceRequired) => {
+  const storageInfo = await navigator.storage.estimate()
+  console.log(storageInfo) //{quote: 64424506982, usage: 0, usageDetails: {}}
+
+  //quota：配额, usage：已使用, usageDetails：使用细节
+  if(storageInfo.quota - storageInfo.usage >= spaceRequired){
+    console.log('存储空间足够')
+  } else{
+    console.log('存储空间不足')
+  }
+}
+f()
+
+</script>
+</body>
+</html>

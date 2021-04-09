@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>检索键盘布局图</title>
+</head>
+<body>
+
+
+<script>
+
+const f = async () => {
+  const keyboardLayoutMap = await navigator.keyboard.getLayoutMap()
+
+  console.log(keyboardLayoutMap.has('KeyA')) //true
+  console.log(keyboardLayoutMap.get('KeyB')) //'b'
+ 
+  //遍历键值对
+  for(let item of keyboardLayoutMap.keys()){
+    console.log(item)
+  }
+}
+f()
+
+</script>
+</body>
+</html>

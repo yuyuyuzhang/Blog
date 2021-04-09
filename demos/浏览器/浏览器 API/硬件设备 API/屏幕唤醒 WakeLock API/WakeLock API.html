@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>wakeLock API</title>
+</head>
+<body>
+  
+<input/>
+
+<script>
+
+
+const f = async () => {
+  const wakeLockSreen = await navigator.wakeLock.request('screen')
+  wakeLockSreen.addEventListener('release', e => {
+    console.log('已释放唤醒锁')
+  })
+
+  //1s 后释放唤醒锁
+  setTimeout(() => {
+    wakeLockSreen.release()
+  }, 1000);
+}
+f()
+
+
+
+</script>
+</body>
+</html>

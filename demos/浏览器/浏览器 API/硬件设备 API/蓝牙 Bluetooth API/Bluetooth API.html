@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>Bluetooth API</title>
+</head>
+<body>
+  
+<button id="btn">点击</button>
+
+<script>
+
+const f = async () => {
+  const isBluetooth = await navigator.bluetooth.getAvailability()
+  if(isBluetooth){
+    const bluetoothDevices = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true
+    })
+    console.log(bluetoothDevices)
+  }
+}
+
+const btn = document.getElementById('btn')
+btn.addEventListener('click', f)
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -44,12 +44,14 @@ navigator.getUserMedia({
 }, err => console.log('您的浏览器不支持 WebRTC'))
 
 
-// navigator.mediaDevices.getUserMedia({
-//   audio: true, //麦克风
-//   video: true, //摄像头
-// }).then(stream => {
+// const f = async () => {
+//   const stream = await navigator.mediaDevices.getUserMedia({
+//      audio: true, //麦克风
+//      video: true  //摄像头
+//   })
+
 //   const video = document.getElementById('video')
-//   video.srcObject = stream //使用 src 属性报错：获取 MediaStream 404 
+//   video.srcObject = stream //使用 src 属性报错：获取 MediaStream 404
 
 //   const audioCtx = new AudioContext()
 //   const source = audioCtx.createMediaStreamSource(stream)
@@ -67,7 +69,8 @@ navigator.getUserMedia({
 //   volume.addEventListener('input', e => {
 //     biquadFilter.gain.value = volume.value
 //   })
-// })
+// }
+// f()
 
 
 </script>

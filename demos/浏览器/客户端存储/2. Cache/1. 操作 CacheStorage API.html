@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>操作 CacheStorage API</title>
+</head>
+<body>
+  
+
+
+<script>
+
+const f = async () => {
+  const cache1 = await window.caches.open('cache1')
+  console.log(await cache1.addAll(['./cat.jpg', './movie.mp4'])) //undefined
+  console.log(await cache1.keys('./cat.jpg'))   //[Request]
+  console.log(await cache1.keys())              //[Request, Request]
+  console.log(await cache1.match('./cat.jpg'))  //Response
+  console.log(await cache1.matchAll())          //[Response, Response]
+  console.log(await cache1.delete('./cat.jpg')) //true
+}
+f()
+
+</script>
+</body>
+</html>

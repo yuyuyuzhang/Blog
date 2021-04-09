@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>画中画事件</title>
+</head>
+<body>
+  
+<video id="video" src="movie.mp4" controls width="300" height="200" ></video>
+<button id="btn">画中画</button>
+
+<script>
+
+const btn = document.getElementById('btn')
+btn.addEventListener('click', async e => {
+  const video = document.getElementById('video')
+  const pipWindow = await video.requestPictureInPicture()
+
+  video.addEventListener('enterpictureinpicture', pipWindow => {
+    console.log('进入画中画模式')
+  })
+  video.addEventListener('leavepictureinpicture', e => {
+    console.log('离开画中画模式')
+  })
+  
+  pipWindow.addEventListener('resize', e => {
+    console.log(e)
+  })
+})
+
+
+
+</script>
+</body>
+</html>

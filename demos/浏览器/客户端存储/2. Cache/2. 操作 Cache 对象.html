@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>操作 Cache 对象</title>
+</head>
+<body>
+  
+
+
+<script>
+
+const f = async () => {
+  //创建多个 Cache 对象
+  const cacheNames = ['cache1', 'cache2', 'cache3']
+  await Promise.all(cacheNames.map(cacheName => window.caches.open(cacheName)))
+
+  console.log(await window.caches.delete('cache1')) //true
+  console.log(await window.caches.has('cache1'))    //false
+  console.log(await window.caches.keys())           //Array ['cache1', 'cache3']
+
+  console.log(await window.caches.match('./cat.jpg')) //undefined
+  const cache1 = await window.caches.open('cache1')
+  await cache1.add('./cat.jpg')
+  console.log(await window.caches.match('./cat.jpg')) //Response
+}
+f()
+
+</script>
+</body>
+</html>

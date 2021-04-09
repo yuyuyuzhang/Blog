@@ -6,104 +6,83 @@
 
 Navigator 对象表示`当前浏览器信息`，包含与浏览器相关的各种信息
 
+### (1) Navigator 对象属性
+
 ```javascript
-属性：navigator.platform             //返回运行浏览器的操作系统平台
-     浏览器：
-     navigator.appCodeName          //返回浏览器代码名
-     navigator.appName              //返回浏览器官方名称
-     navigator.appVersion           //返回浏览器版本信息 
-     navigator.language             //返回浏览器的首选语言(只读)
-     navigator.languages            //返回浏览器提供的用户可以接受的语言数组
-     navigator.userAgent            //返回浏览器的用户代理字符串,表示浏览器厂商和版本信息
-     navigator.onLine               //返回布尔值,浏览器当前是否在线
-     navigator.cookieEnabled        //返回布尔值,浏览器是否启用cookie
-     浏览器插件：
-     navigator.plugins              //返回PluginArray实例,表示浏览器安装的插件
-
-     用户属性：
-     navigator.userActivation
-     
-     navigator.deviceMemory //返回当前设备的大概内存
-     navigator.doNotTrack //返回用户是否允许网址、广告等跟踪
-     navigator.hardwareConcurrency //返回当前浏览器环境拥有的CPU核心数
-     navigator.hid
-     navigator.keyboard
-     navigator.maxTouchPoints
-     navigator.mediaCapabilities
-     navigator.mediaDevices
-     navigator.mediaSession
-     navigator.mimeTypes
-     navigator.scheduling
-     navigator.serial
-     
-     navigator.vendor
-     navigator.vendorSub
-     navigator.wakeLock
-     navigator.webdriver
-     navigator.webkitPersistentStorage
-     navigator.webkitTemporaryStorage
-     navigator.xr
-
-     navigator.locks
-          
-     ServiceWorker API：
-     navigator.serviceWorker        //返回 Service Worker API
-     Geolocation API：
-     navigator.geoloacation         //返回一个 Geolocation API
-     Clipboard API：
-     navigator.clipboard            //返回一个 Clipboard API
-     StorageManager API：
-     navigator.storage
-     USB API：
-     navigator.usb
-     permission API：
-     navigator.permissions
-     NetworkInformation API：
-     navigator.connection
-方法：navigator.javaEnabled()        //返回布尔值,浏览器是否启用java
-     navigator.taintEnabled()       //返回布尔值,浏览器是否启用数据污点
-     Beacon API：
-     navigator.sendBeacon(url,data) //返回布尔值,浏览器是否成功向服务器发送数据,用户卸载网页时浏览器向服务器发送异步请求并携带少量数据
-     Web Share API：
-     navigator.share(options)       //返回一个Promise实例,Web Share API 分享网页或文件
-     WebRTC API
-     navigator.getUserMedia()         //返回 getUserMedia API
-
-     navigator.unregisterProtocolHandler()
-     navigator.canShare()
-     navigator.clearAppBadge()
-     navigator.getBattery()
-     navigator.getGamepads()
-     navigator.getInstalledRelatedApps()
-     navigator.registerProtocolHandler()
-     navigator.requestMIDIAccess()
-     navigator.requestMediaKeySystemAccess()
-     navigator.setAppBadge()
-     navigator.vibrate()
-     navigator.webkitGetUserMedia()
+主机信息：
+navigator.platform                //返回当前主机运行当前浏览器的操作系统平台(不推荐使用)
+navigator.hardwareConcurrency     //返回当前主机的CPU核心数
+navigator.deviceMemory            //返回当前主机的大概内存
+navigator.maxTouchPoints          //返回当前主机能够支持的同时最大触摸点数
+浏览器信息：
+navigator.appCodeName             //返回当前浏览器代码名(不推荐使用)
+navigator.appName                 //返回当前浏览器官方名称(不推荐使用)
+navigator.appVersion              //返回当前浏览器版本信息(不推荐使用)
+navigator.language                //返回当前浏览器的首选语言(只读)
+navigator.languages               //返回当前浏览器提供的用户可以接受的语言数组
+navigator.userAgent               //返回当前浏览器的用户代理字符串,表示浏览器厂商和版本信息
+navigator.product                 //返回当前浏览器的引擎名称(不推荐使用)
+navigator.productSub              //返回当前浏览器的编译版本号(不推荐使用)
+navigator.vendor                  //返回当前浏览器的浏览器供应商名称
+navigator.vendorSub               //返回当前浏览器的浏览器供应商供应的浏览器版本号(不推荐使用)
+浏览器状态：
+navigator.onLine                  //返回布尔值,当前浏览器当前是否在线
+navigator.cookieEnabled           //返回布尔值,当前浏览器是否启用cookie
+navigator.webdriver               //返回布尔值,当前浏览器的用户代理是否自动化控制
+navigator.doNotTrack              //返回用户是否允许网址、广告跟踪    
+navigator.plugins                 //返回PluginArray对象,当前浏览器安装的所有插件列表
+navigator.mimeTypes               //返回MimeTypeArray对象,当前浏览器识别的MIME类型列表
+硬件设备 API：
+navigator.keyboard                //返回Keyboard对象,键盘
+navigator.bluetooth               //返回Bluetooth对象,蓝牙
+navigator.usb                     //返回USB对象,USB
+多媒体 API：
+navigator.mediaCapabilities       //返回MediaCapabilities对象,
+navigator.mediaDevices            //返回MediaDevices对象,
+navigator.mediaSession            //返回MediaSession对象,
+浏览器 API：
+navigator.geoloacation            //返回 Geolocation API
+navigator.clipboard               //返回 Clipboard API
+navigator.serviceWorker           //返回 Service Worker API
+navigator.permissions             //返回 Permissions API
+navigator.locks                   //返回 LockManager API
+navigator.serial                  //返回 Web Serial API
+navigator.connection              //返回 NetworkInformation API
+navigator.scheduling              //返回 Scheduling API
+navigator.userActivation          //返回 UserActivation API
+navigator.hid                     //返回 HID API
+navigator.storage                 //返回 StorageManager API
+navigator.credentials             //返回 CredentialsContainer API
+navigator.presentation            //返回 Presentation API
+navigator.wakeLock                //返回 WakeLock API
+navigator.xr                      //返回 XRSystem API
+navigator.webkitPersistentStorage //返回 DeprecatedStorageQuota API
+navigator.webkitTemporaryStorage  //返回 DeprecatedStorageQuota API
 ```
 
-属性实例
+### (2) Navigator 对象方法
 
 ```javascript
-console.log(navigator.userAgent);      //Mozilla/5.0(Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0
-console.log(navigator.appCodeName);    //Mozilla
-console.log(navigator.appName);        //Netscape
-console.log(navigator.appVersion);     //5.0 (Windows)
-console.log(navigator.platform);       //Win64
-console.log(navigator.cookieEnabled);  //true
-console.log(navigator.onLine);         //false(浏览器离线=用户离线,true:浏览器在线!=用户在线,浏览器连接局域网,局域网不能连接外网)
-console.log(navigator.language);       //zh-CN
-console.log(navigator.languages);      //Array ["zh-CN","zh","zh-TW","zh-HK","en-US","en"]
-
-const plugins = navigator.plugins;
-console.log(plugins);                  //PluginArray { ... }
-for(let i=0; i<plugins.length; i++){
-  console.log(navigator.plugins[i].name);
-  console.log(navigator.plugins[i].filename);
-  console.log(navigator.plugins[i].description);
-  console.log(navigator.plugins[i].version);
-}
+浏览器信息：
+navigator.javaEnabled()                 //返回布尔值,浏览器是否启用java
+navigator.taintEnabled()                //返回布尔值,浏览器是否启用数据污点
+硬件设备 API：
+navigator.getBattery()                  //返回Promise实例,Battery Status API 当前主机的电量信息
+多媒体 API：
+navigator.getUserMedia()                //返回获取到的多媒体设备,WebRTC getUserMedia 当前浏览器获取多媒体设备麦克风和摄像头
+浏览器 API：
+navigator.sendBeacon(url,data)          //返回布尔值,用户卸载网页时浏览器是否成功向服务器发送异步请求并携带少量数据
+navigator.vibrate(pattern)              //返回布尔值,是否成功使当前设备产生间隔频率的震动(设备不支持震动则方法无效,已存在震动则取代前一个震动)
+navigator.canShare({files})             //返回布尔值,目标文件files是否可以被分享
+navigator.share(options)                //返回Promise实例,Web Share API 分享网页或文件
+navigator.getInstalledRelatedApps()     //
+navigator.setAppBadge()                 //
+navigator.clearAppBadge()               //
+navigator.getGamepads()                 //返回连接的所有游戏手柄
+navigator.requestMIDIAccess()           //返回 Web MIDI API
+navigator.requestMediaKeySystemAccess() //返回Promise实例,请求访问多媒体密钥系统
+navigator.registerProtocolHandler()     //注册协议
+navigator.unregisterProtocolHandler()   //取消注册协议
 ```
 
 ## 2. 客户端检测

@@ -42,11 +42,3 @@ if(screen.width <= 800 && screen.height <= 600){
   window.location.replace('big.html')
 }
 ```
-
-## 2. 多屏幕信息
-
-如果一个主机有多个显示器，Screen 对象只会告知你当前屏幕的信息，但是我们可以通过 `Multi-Screen Window Placement API` 获取所有屏幕的信息，使用之前需要`向用户申请权限`
-
-```javascript
-window.getScreens() //返回Promise实例,当前主机连接的所有屏幕数组
-```

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>请求使用当前网站 persistent box 的权限</title>
+</head>
+<body>
+  
+
+
+<script>
+
+const f = async (spaceRequired) => {
+  Promise.all([
+    navigator.storage.persist(),
+    navigator.permissions.query({name: 'persistent-storage'})
+  ]).then(([persistent, permission]) => {
+    if(!persistent){
+      console.log('best-effort box')
+    } else if(permission.state === 'granted'){
+      console.log('persistent box and you can use it')
+    } else if(permission.state === 'prompt'){
+      navigator.storage.persisted().then(persistentAndUse => {
+        persistentAndUse ? 
+        console.log('persistent but you can use it') : 
+        console.log('persistent but you can not use it')
+      })
+    } else if(permission.state === 'denied') {
+      console.log('persistent and you can not use it')
+    }
+  })
+}
+f()
+
+
+</script>
+</body>
+</html>
