@@ -22,7 +22,7 @@
 </div>
 ```
 
-![真实DOM]()
+![真实DOM](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E7%9C%9F%E5%AE%9EDOM.png)
 
 ## 2. 虚拟 DOM
 
@@ -94,7 +94,7 @@ render 渲染函数的参数函数 createElement 返回的并不是一个实际�
 
 #### ③ diff 比较过程（v-for key 原理）
 
-![diff比较]()
+![diff比较](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/diff%E6%AF%94%E8%BE%83.jpg)
 
 **diff 比较过程**
 
@@ -117,9 +117,9 @@ render 渲染函数的参数函数 createElement 返回的并不是一个实际�
 
 * 最大化利用节点，diff 比较时减少性能消耗，如下图，所有 Vnode tag 相同
 * 不加 kay 属性时，diff 比较如下
-  ![不加key]()
+  ![不加key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%B8%8D%E5%8A%A0key.jpg)
 * 加上 key 属性时，diff 比较如下
-  ![加上key]()
+  ![加上key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E5%8A%A0%E4%B8%8Akey.jpg)
 
 #### ④ 文档片段
 
@@ -228,7 +228,7 @@ const vm = new Vue({
 </script>
 ```
 
-![v-show&v-if]()
+![v-show&v-if](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/v-show%26v-if.png)
 
 ### (3) v-for
 
@@ -368,7 +368,7 @@ const vm = new Vue({
   console.log(div.attributes) //NamedNodeMap {0: id, 1: data-a, 2: value, length: 3}
   ```
 
-  ![attribute]()
+  ![attribute](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/attribute.png)
 
 * .prop 修饰符属性绑定，作为一个 `property` 属性绑定
   
@@ -401,7 +401,7 @@ const vm = new Vue({
   </script>
   ```
 
-  ![.prop修饰符]()
+  ![.prop修饰符](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/.prop%E4%BF%AE%E9%A5%B0%E7%AC%A6.png)
 
 .sync 修饰符属性绑定
 
