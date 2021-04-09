@@ -23,7 +23,7 @@
 * **Origin2**：还没有开始存储任何数据，所有都是空余空间 free
 * **Origin3**：被 IndexexDB 占满了，没有任何空余空间 free
 
-![storage units（box）]()
+![storage units（box）](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/storage%20units%EF%BC%88box%EF%BC%89.png)
 
 ### (1) best-effort box
 

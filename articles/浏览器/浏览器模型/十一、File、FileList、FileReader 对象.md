@@ -46,7 +46,7 @@ fileBtn.addEventListener('change', function(e){
 })
 ```
 
-![文件上传](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.png)
+![文件上传]()
 
 ### (3) 文件拖动
 
@@ -135,10 +135,10 @@ fileBtn.addEventListener('change', function(e){
 })
 ```
 
-![readAsBinaryString](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsBinaryString.png)
+![readAsBinaryString]()
 
-![readAsArrayBuffer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsArrayBuffer.png)
+![readAsArrayBuffer]()
 
-![readAsText](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsText.png)
+![readAsText]()
 
-![readAsDataURL](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/readAsDataURL.png)
+![readAsDataURL]()

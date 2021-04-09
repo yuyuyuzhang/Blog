@@ -78,4 +78,4 @@ const f = async () => {
 f()
 ```
 
-![Cache]()
+![Cache](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8/Cache.png)
