@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>光线事件</title>
+</head>
+<body>
+
+<script>
+
+window.addEventListener('devicelight', function(event) {
+  const body = document.body
+  if (event.value < 50) {
+    console.log('dark')
+    body.classList.add('darklight');
+    body.classList.remove('brightlight');
+  } else {
+    console.log('light')
+    body.classList.add('brightlight');
+    body.classList.remove('darklight');
+  }
+})
+
+</script>
+</body>
+</html>

@@ -26,17 +26,15 @@ Vue.config.productionTip = false;
 
 new Vue({
   el: "#app",
-  router, //router从根组件注入到所有子组件
-  store,  //vuex从根组件注入到所有子组件
+  router,
+  store,  // vuex 从根组件注入到所有子组件
   render: h => h(App)
 });
 ```
 
 ### (2) mudule
 
-使用单一状态树，应用的所有状态集中到一个比较大的对象，当应用变得非常复杂时，store 对象就可能变得十分臃肿
-
-Vuex 允许开发者将 store 分割成模块，每个模块拥有自己的 state、getter、mutation、action，甚至是嵌套子模块
+使用单一状态树，应用的所有状态集中到一个比较大的对象，当应用变得非常复杂时，store 对象就可能变得十分臃肿，Vuex 允许开发者将 store 分割成模块，每个模块拥有自己的 state、getter、mutation、action，甚至是嵌套子模块
 
 store/modules/config.js
 
@@ -73,13 +71,13 @@ export default store;
 
 ### (1) state
 
-① Vuex 的 state 类似于组件的 data 选项
+① Vuex 的 state 类似于组件的 `data` 选项
 
 ② Vuex 的状态存储是响应式的，从 store 实例中读取状态的最简单方法就是在组件的`计算属性`中返回某个状态，每当状态变化时，计算属性都会重新计算，并且触发 DOM 更新
 
 ### (2) getter
 
-① Vuex 的 getter 类似于组件的 computed 选项
+① Vuex 的 getter 类似于组件的 `computed` 选项
 
 ② getter 用于从 state 派生状态，例如对列表进行过滤并计数，getter 的返回值会根据依赖被`缓存`起来，只有依赖改变才会重新计算，getter 接受 state 作为第一个参数
 

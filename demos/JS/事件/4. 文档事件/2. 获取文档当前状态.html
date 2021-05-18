@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取文档当前状态</title>
+</head>
+<body>
+
+<script>
+
+//获取文档当前状态
+const getState = () => {
+  if (document.visibilityState === 'hidden') {
+    return 'Hidden'
+  } else if (document.hasFocus()) {
+    return 'Active'
+  } else{
+    return 'Passive'
+  }
+}
+console.log(getState()) //'Active'
+
+</script>
+</body>
+</html>

@@ -8,19 +8,20 @@
 </head>
 <body>
 
-<form method="post" enctype="multipart/form-data">
+<form id="form" method="post" enctype="multipart/form-data">
   <input type="file" id="fileInput" name="file" multiple>
-  <button id="submitBtn" onclick="return false;">上传</button>
+  
+  <button type="submit">上传</button>
 </form>
 
 <script>
 
 let file = null;
-
+const form = document.getElementById('form')
 const fileInput = document.getElementById('fileInput')
+
 fileInput.addEventListener('change', function(e){
   file = e.target.files[0]
-  console.log(file)
 
   //读取文件内容
   const reader = new FileReader()
@@ -30,8 +31,9 @@ fileInput.addEventListener('change', function(e){
   reader.readAsText(file)
 })
 
-const submitBtn = document.getElementById('submitBtn')
-submitBtn.addEventListener('click', function(e){
+form.addEventListener('submit', function(e){
+  e.preventDefault() //阻止默认操作
+  
   //将文件封装成表单数据
   const formData = new FormData()
   formData.set(file.name, file)

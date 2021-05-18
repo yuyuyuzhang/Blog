@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>NetworkInformation API</title>
+</head>
+<body>
+  
+<input type="checkbox" />
+
+<script>
+
+//浏览器是否在线
+console.log(navigator.onLine)
+
+//监听当前网络连接的变化
+const net = navigator.connection
+net.addEventListener('change', e => {
+  console.log(e.target)
+})
+
+</script>
+</body>
+</html>

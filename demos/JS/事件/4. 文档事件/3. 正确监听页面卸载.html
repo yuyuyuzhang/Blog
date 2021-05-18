@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正确监听页面卸载</title>
+</head>
+<body>
+
+
+
+<script>
+
+document.addEventListener('visibilitychange', function(e){
+  //涵盖页面可能被卸载的所有情况
+  if(document.visibilityState === 'hidden'){
+    
+  }
+})
+
+
+</script>
+</body>
+</html>

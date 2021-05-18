@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户修改表单后未提交就要离开当前页面</title>
+</head>
+<body>
+
+<a href="https://www.baidu.com/">百度</a>
+
+<script>
+
+//使用 beforeunload 卸载事件，浏览器不会缓存页面，点击后退按钮将重新向服务器请求页面
+window.addEventListener('beforeunload', e => {
+  //chrome 不显示自定义提示内容，而是显示固定内容
+  e.returnValue = '表格还未提交，确定要离开当前页面吗？'
+})
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>ResizeObserver API</title>
+</head>
+<body>
+  
+<div id="block" style="border:1px solid red;width:100%;height:100px;">aaa</div>
+
+<script>
+
+const div = document.getElementById('block');
+
+//MutationObserver
+const mutationObserver = new MutationObserver((records, observer) => {
+  records.map(record => {
+    console.log('record type: ' + record.type);
+    console.log('Previous value: ' + record.oldValue);
+  })
+})
+mutationObserver.observe(div, {
+  //观察目标节点的所有属性
+  'attribute': true,
+  'attributeOldValue': true,
+})
+
+
+//ResizeObserver
+const resizeObserver = new ResizeObserver(entries => {
+  console.log(entries)
+  console.log(entries[0])
+})
+resizeObserver.observe(div)
+
+
+</script>
+</body>
+</html>

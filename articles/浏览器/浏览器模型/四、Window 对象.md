@@ -64,10 +64,9 @@ window.fileList            //指向FileList对象
 window.fileReader          //指向FileReader对象
 window.formData            //指向FormData对象
 浏览器 API：
+window.performance         //返回Performance API,用于前端性能监控
 window.speechSynthesis     //返回Web Speech API,用于语音合成
 window.createImageBitmap   //返回Promise实例,将图像源裁剪为指定规格的像素矩阵
-window.performance         //返回Performance API,用于前端性能监控
-window.crypto              //返回Crypto API,用于网页访问某些加密服务
 ```
 
 ## 2. Window 对象方法

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文档生命周期</title>
+</head>
+<body>
+
+
+<script>
+
+//加载页面
+window.addEventListener('pageshow', e => {
+  console.log('pageshow')
+})
+window.addEventListener('DOMContentLoaded', e => {
+  console.log('DOMContentLoaded')
+})
+window.addEventListener('load', e => {
+  console.log('load')
+})
+
+//文档焦点
+window.addEventListener('focus', e => {
+  console.log('focus')
+})
+window.addEventListener('blur', e => {
+  console.log('blur')
+})
+
+//文档状态
+document.addEventListener('visiablitychange', e => {
+  console.log('visiablitychange')
+})
+document.addEventListener('freeze', e => {
+  console.log('freeze')
+})
+document.addEventListener('resume', e => {
+  console.log('resume')
+})
+
+//卸载页面
+window.addEventListener('beforeload', e => {
+  console.log('beforeload')
+})
+window.addEventListener('pagehide', e => {
+  console.log('pagehide')
+})
+window.addEventListener('upload', e => {
+  console.log('upload')
+})
+
+
+</script>
+</body>
+</html>

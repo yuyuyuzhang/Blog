@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>触摸事件</title>
+</head>
+<body>
+  
+<div style="font-size: 40px;">
+  <div>哈哈哈1</div>
+  <div>哈哈哈2</div>
+  <div>哈哈哈3</div>
+  <div>哈哈哈4</div>
+  <div>哈哈哈5</div>
+  <div>哈哈哈6</div>
+  <div>哈哈哈7</div>
+  <div>哈哈哈8</div>
+</div>
+
+<script>
+
+document.addEventListener('touchstart', e => {
+  console.log('用户手指触摸到屏幕')
+  console.log('touchstart:', e)
+  console.log('touchlist:', e.touches)
+  console.log('touch:', e.touches.item(0))
+})
+document.addEventListener('touchmove', e => {
+  console.log('用户手指在屏幕上移动')
+})
+document.addEventListener('touchend', e => {
+  console.log('用户手指离开屏幕')
+})
+
+</script>
+</body>
+</html>

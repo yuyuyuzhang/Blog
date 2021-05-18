@@ -165,10 +165,6 @@ xhr.send(JSON.stringify(data))
 
 xhr.responseURL 返回的服务器网址与 xhr.open() 方法指定的请求网址不一定相同，若服务器发生跳转，该属性返回`实际返回数据的服务器网址`，并且该属性会`剥离片段识别符`
 
-```javascript
-
-```
-
 ### (7) xhr.upload
 
 XMLHttpRequest 请求可以发送文件，文件发送以后，通过 xhr.upload 属性得到一个对象，监听这个对象的进度事件可以得知 AJAX 文件上传的进度
@@ -192,8 +188,29 @@ e.loaded           //返回整数,表示已经加载的量,默认0
 e.total            //返回整数,表示需要加载的总量,默认0
 ```
 
-```javascript
+实例
 
+```html
+<progress min="0" max="100" value="0">0% complete</progress>
+```
+
+```javascript
+const xhr = new XMLHttpRequest()
+xhr.open('POST', 'http://example.com', true)
+
+//请求设置
+xhr.setRequestHeader('Content-Type', 'application/json')
+
+//事件监听必须在调用xhr.send()发送请求之前
+const progressBar = document.querySelector('progress');
+xhr.upload.onprogress = function(e){
+  if(e.lengthComputable){
+    progressBar.value = (e.loaded / e.total) * 100;
+    progressBar.textContent = progressBar.value; //兼容不支持<progress>元素的老式浏览器
+  }
+};
+
+xhr.send(file)
 ```
 
 ## 3. XMLHttpRequest 方法

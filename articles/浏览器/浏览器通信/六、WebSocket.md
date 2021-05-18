@@ -69,7 +69,7 @@ Connection: Upgrade
 Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 ```
 
-## 2. 客户端实现
+## 3. 客户端实现
 
 ### (1) WebSocket 对象
 
@@ -159,7 +159,7 @@ function disconnect (e){
 }
 ```
 
-## 3. 服务器实现
+## 4. 服务器实现
 
 Node 服务器实例
 
@@ -175,6 +175,6 @@ wss.on('connection', function(ws){
 });
 ```
 
-## 4. HTTP & SSE & WebSocket 比较
+## 5. HTTP & SSE & WebSocket 比较
 
 ![HTTP&SSE&WebSocket比较](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E9%80%9A%E4%BF%A1/HTTP%26SSE%26WebSocket%E6%AF%94%E8%BE%83.png)

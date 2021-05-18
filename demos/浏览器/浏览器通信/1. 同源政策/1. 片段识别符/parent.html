@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>parent</title>
+</head>
+<body>
+
+<h1>我是父窗口</h1>
+<button id="btn">大</button>
+<iframe id="child" src="child.html"></iframe>
+
+<script>
+
+//向子窗口发送消息
+const btn = document.getElementById('btn')
+btn.addEventListener('click', e => {
+    const child = document.getElementById('child')
+    child.src += '#hash-bigCute'
+})
+
+//监听子窗口发送的消息
+window.addEventListener('hashchange', e => {
+    console.log(window.location.hash)
+})
+
+</script>
+</body>
+</html>

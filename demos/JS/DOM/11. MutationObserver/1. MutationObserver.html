@@ -2,24 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
+    <title>MutationObserver</title>
 </head>
 <body>
 
-<div id="block" style="width:20px;">abc</div>
-
+<div id="block" style="border:1px solid red;width:100%;height:100px;">aaa</div>
 
 <script>
-const callback = (records, observer) => {
+const div = document.getElementById('block');
+const mutationObserver = new MutationObserver((records, observer) => {
   records.map(record => {
     console.log('record type: ' + record.type);
     console.log('Previous value: ' + record.oldValue);
-  });
-}
-const observer = new MutationObserver(callback);
-
-const div = document.getElementById('block');
-const option = {
+  })
+})
+mutationObserver.observe(div, {
   //观察目标节点的子元素节点
   'childList': true,
 
@@ -31,14 +28,15 @@ const option = {
   'characterData': true,
   'characterDataOldValue': true,
   'subtree': true
-};
-observer.observe(div, option);
+})
 
-const span = document.createElement('span');
-div.append(span);                       //第1次输出,当前元素节点增加子元素节点
-span.append('我是小可爱');                //第2次输出,当前元素节点的子元素节点的变动
-div.style.setProperty('width', '30px'); //第3次输出,当前元素节点的属性值改变
-div.firstChild.appendData('haha');      //第4次输出,当前元素节点的子文本节点内容改变
+setTimeout(() => {
+  const span = document.createElement('span');
+  div.append(span);                       //第1次输出,当前元素节点增加子元素节点
+  span.append('我是小可爱');               //第2次输出,当前元素节点的子元素节点的变动
+  div.style.setProperty('width', '100px'); //第3次输出,当前元素节点的属性值改变
+  div.firstChild.appendData('haha');      //第4次输出,当前元素节点的子文本节点内容改变
+}, 1000)
 
 
 //第1次输出

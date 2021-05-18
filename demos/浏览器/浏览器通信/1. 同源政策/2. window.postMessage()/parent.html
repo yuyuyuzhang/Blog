@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>parent</title>
+</head>
+<body>
+
+<h1>我是父窗口</h1>
+<button id="btn">大</button>
+<iframe id="child" src="child.html"></iframe>
+
+<script>
+
+//向子窗口发送消息
+const btn = document.getElementById('btn')
+btn.addEventListener('click', e => {
+    window.postMessage('postMessage-bigCute', 'http://10.6.6.19:8080/child.html')
+})
+
+//监听子窗口发送的消息
+window.addEventListener('message', e => {
+    console.log(e.data)
+})
+
+</script>
+</body>
+</html>

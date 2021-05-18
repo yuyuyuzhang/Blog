@@ -38,5 +38,7 @@ homepage     //包的官网 URL
 author       //包的作者姓名
 contributors //包的其他贡献者姓名列表
 repository   //包的代码存放类型，svn、git
-dependencies //包的依赖包列表
 ```
+
+dependencies：生产环境  --save
+devDependencies：本地开发环境  --save-dev

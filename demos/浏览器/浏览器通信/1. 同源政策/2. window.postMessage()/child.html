@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>child</title>
+</head>
+<body>
+
+<h1>我是子窗口</h1>
+<button id="btn">小</button>
+
+<script>
+
+//向父窗口发送消息
+const btn = document.getElementById('btn')
+btn.addEventListener('click', e => {
+    window.postMessage('postMessage-smallCute', 'http://10.6.6.19:8080/parent.html')
+})
+
+//监听父窗口发送的消息
+window.addEventListener('message', e => {
+    console.log(e.data)
+})
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>表单元素</title>
+</head>
+<body>
+
+<form id="form">
+  <!-- 下拉选择框 -->
+  <select>
+    <optgroup label="四川">
+      <option value="成都">成都</option>
+      <option value="广元">广元</option>
+    </optgroup>
+    <optgroup label="江苏">
+      <option value="南京">南京</option>
+      <option value="镇江">镇江</option>
+    </optgroup>
+  </select>
+
+  <!-- 单选框 -->
+  <input type="radio" checked>
+
+  <!-- 复选框 -->
+  <input type="checkbox" checked>
+  
+  <!-- 文本框 -->
+  <input type="text" maxlength="20">
+  <textarea rows="3" maxlength="100"></textarea>
+  <input type="password">
+  <input type="search">
+  
+  <!-- 文件上传 -->
+  <input type="file" accept="" multiple>
+
+  <!-- 数字 -->
+  <input type="number" min="0" max="10" step="2">
+  <input type="range" min="0" max="10" step="1">
+
+  <!-- 日期 -->
+  <input type="week"> <!-- week、year -->
+  <input type="month"> <!-- month、year -->
+  <input type="time">
+  <input type="date">
+  <input type="datetime"> <!-- 基于 UTC 时区 -->
+  <input type="datetime-local"> <!-- 不带时区 -->
+  
+  <!-- 其他 -->
+  <input type="hidden">
+  <input type="color">
+  <input type="image" src="cat.jpg" width="20px" height="20px">
+  <input type="tel" pattern="">
+  <input type="email" pattern="">
+  <input type="url" pattern="">
+
+  <!-- 按钮 -->
+  <input type="button" value="按钮">
+  <input type="submit" value="提交">
+  <input type="reset" value="重置">
+  <button type="button">按钮</button>
+  <button type="submit">提交</button>
+  <button type="reset">重置</button>
+</form>
+
+<script>
+</script>
+</body>
+</html>

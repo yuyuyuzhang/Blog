@@ -265,11 +265,12 @@ Fetch 请求成功后，得到一个 Response 对象，对应服务器的 HTTP �
      response.clone()       //返回response副本,供多次读取
 
 
-response.type：basic          //同源请求
-              cors            //跨域请求
-              error           //网络错误
-              opaque          //请求的type设置为no-cors
-              opaqueredicrect //请求的redirect设置为manual
+response.type：
+basic           //同源请求
+cors            //跨域请求
+error           //网络错误
+opaque          //请求的type设置为no-cors
+opaqueredicrect //请求的redirect设置为manual
 ```
 
 ### (1) 判断 Fetch 请求是否成功

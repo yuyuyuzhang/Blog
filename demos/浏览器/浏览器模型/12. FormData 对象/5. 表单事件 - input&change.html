@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>表单事件 - input/change</title>
+</head>
+<body>
+
+<form id="form">
+  <select id="select">
+    <optgroup label="四川">
+      <option value="成都">成都</option>
+      <option value="广元">广元</option>
+    </optgroup>
+    <optgroup label="江苏">
+      <option value="南京">南京</option>
+      <option value="镇江">镇江</option>
+    </optgroup>
+  </select>
+
+  <input type="radio" id="radio">
+  <input type="checkbox" id="checkbox">
+  <input type="file" id="file">
+
+  <input type="text" id="text"/>
+  <textarea id="textarea"></textarea>
+</form>
+
+<script>
+
+const form = document.getElementById('form')
+const select = document.getElementById('select')
+const radio = document.getElementById('radio')
+const checkbox = document.getElementById('checkbox')
+const file = document.getElementById('file')
+const text = document.getElementById('text')
+const textarea = document.getElementById('textarea')
+select.addEventListener('input', e => {
+  console.log('select input')
+})
+select.addEventListener('change', e => {
+  console.log('select change')
+})
+radio.addEventListener('input', e => {
+  console.log('radio input')
+})
+radio.addEventListener('change', e => {
+  console.log('radio change')
+})
+checkbox.addEventListener('input', e => {
+  console.log('checkbox input')
+})
+checkbox.addEventListener('change', e => {
+  console.log('checkbox change')
+})
+file.addEventListener('input', e => {
+  console.log('file input')
+})
+file.addEventListener('change', e => {
+  console.log('file change')
+})
+text.addEventListener('input', e => {
+  console.log('text input')
+})
+text.addEventListener('change', e => {
+  console.log('text change')
+})
+textarea.addEventListener('input', e => {
+  console.log('textarea input')
+})
+textarea.addEventListener('change', e => {
+  console.log('textarea change')
+})
+form.addEventListener('input', e => {
+  console.log('form input')
+})
+form.addEventListener('change', e => {
+  console.log('form change')
+})
+
+</script>
+</body>
+</html>

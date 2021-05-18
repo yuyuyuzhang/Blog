@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>表单事件 - select</title>
+</head>
+<body>
+
+<input type="text" id="textInput" value="haaa还是水水水水水水水水">
+<input type="password" id="passwordInput" value="111222">
+<textarea id="textarea">是否合格看大家都看开</textarea>
+
+<script>
+
+const textInput = document.getElementById('textInput')
+const passwordInput = document.getElementById('passwordInput')
+const textarea = document.getElementById('textarea')
+textInput.addEventListener('select', e => {
+  const selectVal = e.target.value.substring(e.target.selectionStart, e.target.selectionEnd)
+  console.log('textInput:', selectVal)
+})
+passwordInput.addEventListener('select', e => {
+  const selectVal = e.target.value.substring(e.target.selectionStart, e.target.selectionEnd)
+  console.log('passwordInput:', selectVal)
+})
+textarea.addEventListener('select', e => {
+  const selectVal = e.target.value.substring(e.target.selectionStart, e.target.selectionEnd)
+  console.log('textarea:', selectVal)
+})
+
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>判断文档第一次加载还是从缓存加载</title>
+</head>
+<body>
+
+
+
+<script>
+
+window.addEventListener('pageshow', function(e){
+  if(e.persisted){
+    console.log('当前文档第一次加载');
+  } else{
+    console.log('当前文档从缓存中加载');
+  }
+});
+
+
+</script>
+</body>
+</html>

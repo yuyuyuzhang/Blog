@@ -49,7 +49,7 @@ config：
 withCredentials //指定是否开启xhr.withCredentials属性
 ```
 
-#### source.readyState 属性
+#### sse.readyState 属性
 
 * **0**：连接还未建立，断线正在重连
 * **1**：连接已经建立，可以接收数据
@@ -60,9 +60,9 @@ withCredentials //指定是否开启xhr.withCredentials属性
 默认情况下服务器推送数据时在 EventSource 实例上触发 message 事件，但是开发者还可以`自定义事件`，这种情况下就不会触发 message 事件，而是触发自定义事件
 
 ```javascript
-source.onopen    //SSE连接建立时触发
-source.onmessage //SSE连接建立后,服务器推送数据时触发
-source.onerror   //SSE连接出错时触发
+sse.onopen    //SSE连接建立时触发
+sse.onmessage //SSE连接建立后,服务器推送数据时触发
+sse.onerror   //SSE连接出错时触发
 ```
 
 事件对象继承了 Event 对象

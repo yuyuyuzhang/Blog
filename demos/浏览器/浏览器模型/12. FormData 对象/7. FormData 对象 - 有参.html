@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>FormData 对象 - 有参</title>
+</head>
+<body>
+
+<form id="form">
+  <label for="birth">籍贯</label>
+  <select name="birth" id="birth">
+    <optgroup label="四川">
+      <option value="成都">成都</option>
+      <option value="广元">广元</option>
+    </optgroup>
+    <optgroup label="江苏">
+      <option value="南京">南京</option>
+      <option value="镇江">镇江</option>
+    </optgroup>
+  </select><br>
+
+  <label for="woman">女</label><input type="radio" name="gender" id="woman" value="woman" checked>
+  <label for="man">男</label><input type="radio" name="gender" id="man" value="man"><br>
+
+  <label for="study">学习</label><input type="checkbox" name="likes" id="study" value="study" checked>
+  <label for="draw">绘画</label><input type="checkbox" name="likes" id="draw" value="draw" checked>
+  <label for="sleep">睡觉</label><input type="checkbox" name="likes" id="sleep" value="sleep"><br>
+
+  <label for="file">文件</label><input type="file" name="file" id="file" multiple><br>
+
+  <button type="submit">提交</button>
+  <button type="reset">重置</button>
+</form>
+
+<script>
+
+const form = document.getElementById('form')
+form.addEventListener('submit', e => {
+  e.preventDefault() //阻止默认操作
+
+  const formData = new FormData(form)
+  for(let item of formData.entries()){
+    console.log(item)
+  }
+})
+
+
+
+</script>
+</body>
+</html>

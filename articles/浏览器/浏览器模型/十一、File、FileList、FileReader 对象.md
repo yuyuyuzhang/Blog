@@ -2,8 +2,6 @@
 
 ## 1. File 对象
 
-### (1) File 对象
-
 File 对象表示`一个文件`，用来读写文件信息
 
 File 对象`继承了 Blob 对象`，所有可以使用 Blob 对象的场合都可以使用 File 对象
@@ -32,17 +30,17 @@ FileList 对象表示`一组文件`，是一个`类数组对象`，每个成员�
 
 ### (2) 文件上传
 
-使用 e.target.files 获取上传的文件列表，`change` 事件监听文件上传
+使用 e.target.files 获取上传的文件列表，`input/change` 事件监听文件上传
 
 ```html
-<input id="file" type="file">
+<input type="file" id="file">
 ```
 
 ```javascript
-const fileBtn = document.getElementById('fileBtn')
-fileBtn.addEventListener('change', function(e){
-  const files = e.target.files
-  console.log(files)
+const file = document.getElementById('file')
+file.addEventListener('input', function(e){
+  const file = e.target.files[0]
+  console.log(file)
 })
 ```
 
@@ -103,35 +101,34 @@ FileReader 对象表示`文件读取器`，用于读取 `File 对象`或者 `Blo
 ### (2) FileReader 事件
 
 ```javascript
-loadstart //读取操作开始时触发
-progress  //读取操作进行中时触发
-loadend   //读取操作结束时触发
-load      //读取操作成功完成时触发
-error     //读取操作发生错误时触发
-abort     //用户终止读取操作时触发
+fr.onloadstart //读取操作开始时触发
+fr.onprogress  //读取操作进行中时触发
+fr.onloadend   //读取操作结束时触发
+fr.onload      //读取操作成功完成时触发
+fr.onerror     //读取操作发生错误时触发
+fr.onabort     //用户终止读取操作时触发
 ```
 
 ### (3) 读取上传文件内容
 
 ```html
-<input id="file" type="file">
+<input type="file" id="file">
 ```
 
 ```javascript
-const fileBtn = document.getElementById('fileBtn')
-fileBtn.addEventListener('change', function(e){
-  const files = e.target.files
-  console.log(files)
+const file = document.getElementById('file')
+file.addEventListener('input', function(e){
+  const file = e.target.files[0]
 
   //读取文件内容
   const reader = new FileReader()
   reader.addEventListener('load', function(e){
     console.log(e.target.result)
   })
-  // reader.readAsBinaryString(files[0])
-  // reader.readAsArrayBuffer(files[0])
-  reader.readAsText(files[0])
-  // reader.readAsDataURL(files[0])
+  // reader.readAsBinaryString(file)
+  // reader.readAsArrayBuffer(file)
+  reader.readAsText(file)
+  // reader.readAsDataURL(file)
 })
 ```
 

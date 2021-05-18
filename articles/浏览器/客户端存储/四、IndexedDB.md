@@ -101,7 +101,6 @@ IDBRequest 对象表示`一个操作数据库的请求`
 ```javascript
 定义：const request = indexedDB.open(name,version)   //打开数据库的请求
      const request = indexedDB.deleteDatabase(name) //删除数据库的请求
-     //操作数据记录的请求
 属性：request.source      //返回当前请求的来源
      request.readyState  //返回当前请求的操作状态(pending:进行中,done:完成)
      request.result      //返回IDBDatabase对象,表示当前请求成功后连接的数据库？？？

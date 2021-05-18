@@ -6,9 +6,7 @@
 
 浏览器地址栏的 URL 变化时，会请求对应的网络资源，而负责响应这个网络资源的服务就称为路由
 
-默认情况下，浏览器地址栏 URL 变化时，会向服务器发起新的请求
-
-前端路由的核心基础就是修改浏览器地址栏 URL 时，不向服务器发起请求
+默认情况下，浏览器地址栏 URL 变化时，会向服务器发起新的请求，前端路由的核心基础就是`修改浏览器地址栏 URL 时，不向服务器发起请求`
 
 根据浏览器提供的 API，前端路由有以下两种实现方式
 
@@ -23,7 +21,7 @@ History 对象保存了当前浏览器窗口浏览过的所有文档地址，由
 ```javascript
 定义：window.history
 属性：history.length                       //返回当前浏览器窗口的访问过的文档数量(包括当前文档)
-    history.state                         //返回History栈中顶层文档的state对象
+     history.state                         //返回History栈中顶层文档的state对象
 方法：状态方法：
      history.pushSate(state,title,url)    //无返回值,向history对象添加一条最新浏览记录,地址栏立刻变化,但是不会跳转
      history.replaceSate(state,title,url) //无返回值,替换history对象的当前浏览记录,地址栏立刻变化,但是不会跳转
@@ -32,8 +30,6 @@ History 对象保存了当前浏览器窗口浏览过的所有文档地址，由
      history.forward()                    //无返回值,当前浏览器窗口加载下一个访问文档(浏览器前进键)
      history.go(n)                        //无返回值,当前浏览器窗口加载指定文档(以当前文档为基准,n=0则刷新当前文档,n>0则前进)
 ```
-
-state 对象
 
 * 将要添加的浏览记录相关联的状态对象，浏览器会将这个状态对象序列化以后保存在`本地`，载入这个记录时可以拿到这个对象，不需要这个对象可以填 `null`，主要用于 popstate 事件，popstate 事件触发时 state 对象会传入该事件回调函数
 
@@ -60,6 +56,7 @@ history.back()/forward()/go(n)
 * 用户点击浏览器后退和前进按钮，会在 window 对象上触发 popstate 事件
 * 调用 back()、forward()、go() 方法时，会在 window 对象上触发 popstate 事件
 * 调用 pushState()、replaceState() 方法时，不会触发 popstate 事件
+* 由于改变片段识别符会改变 History 对象的浏览记录，因此会在 `window` 对象上触发 `popstate` 事件，并且先触发 popstate 事件，后触发 hashchange 事件
 
 Event对象相关属性如下
 
@@ -123,7 +120,7 @@ history.replaceState(null, '', 'https://wangdoc.com/javascript/bom/same-origin.h
 
 #### ① 片段识别符
 
-片段识别符是 URL 的锚，代表文档中的一个位置，# 号后面的字符就是该位置的标识符
+片段识别符是 `URL 的锚`，代表文档中的一个位置，# 号后面的字符就是该位置的标识符
 
 ```javascript
 url.hash
@@ -187,9 +184,11 @@ btn2.addEventListener('click', function(e){
 
 ## 2. Vue Router
 
-Vue Router 是 Vue 的官方路由管理器，和 Vue 的核心深度集成
+Vue Router 是 Vue 的官方路由管理器，与 Vue 的核心深度集成
 
 Vue + Vue Router 构建单页面应用非常简单，使用 Vue 可以通过组合组件来构建应用程序，使用 Vue Router 可以将组件映射到路由，告诉 Vue Router 在哪里渲染组件
+
+Vue Router 3.x 版本是一个`类`
 
 ### (1) 路由模式
 
@@ -217,6 +216,7 @@ Vue Router 默认 `hash 模式`
 router/index.js
 
 ```javascript
+// Vue Router 3.x 版本是一个类
 import Vue from "vue";
 import VueRouter from "vue-router";
 

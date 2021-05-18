@@ -23,7 +23,7 @@ navigator.languages               //返回当前浏览器提供的用户可以�
 navigator.userAgent               //返回当前浏览器的用户代理字符串,表示浏览器厂商和版本信息
 navigator.product                 //返回当前浏览器的引擎名称(不推荐使用)
 navigator.productSub              //返回当前浏览器的编译版本号(不推荐使用)
-navigator.vendor                  //返回当前浏览器的浏览器供应商名称
+navigator.vendor                  //返回当前浏览器的浏览器供应商名称(不推荐使用)
 navigator.vendorSub               //返回当前浏览器的浏览器供应商供应的浏览器版本号(不推荐使用)
 浏览器状态：
 navigator.onLine                  //返回布尔值,当前浏览器当前是否在线
@@ -32,32 +32,29 @@ navigator.webdriver               //返回布尔值,当前浏览器的用户代�
 navigator.doNotTrack              //返回用户是否允许网址、广告跟踪    
 navigator.plugins                 //返回PluginArray对象,当前浏览器安装的所有插件列表
 navigator.mimeTypes               //返回MimeTypeArray对象,当前浏览器识别的MIME类型列表
+客户端存储：
+navigator.storage                 //返回 StorageManager API
 硬件设备 API：
 navigator.keyboard                //返回Keyboard对象,键盘
 navigator.bluetooth               //返回Bluetooth对象,蓝牙
 navigator.usb                     //返回USB对象,USB
 多媒体 API：
-navigator.mediaCapabilities       //返回MediaCapabilities对象,
-navigator.mediaDevices            //返回MediaDevices对象,
-navigator.mediaSession            //返回MediaSession对象,
+navigator.mediaCapabilities       //返回MediaCapabilities对象,表示浏览器对指定多媒体格式的支持能力
+navigator.mediaDevices            //返回MediaDevices对象,表示可用的多媒体设备
+navigator.mediaSession            //返回MediaSession对象,表示媒体会话（移动端）
 浏览器 API：
+navigator.connection              //返回 NetworkInformation API
+navigator.credentials             //返回 Credentials API
+navigator.permissions             //返回 Permissions API
+navigator.wakeLock                //返回 WakeLock API
+navigator.serial                  //返回 Web Serial API
+navigator.locks                   //返回 Web Locks API
+navigator.presentation            //返回 Presentation API
+navigator.hid                     //返回 Web HID API
+navigator.xr                      //返回 WebXR API
+navigator.serviceWorker           //返回 Service Worker API
 navigator.geoloacation            //返回 Geolocation API
 navigator.clipboard               //返回 Clipboard API
-navigator.serviceWorker           //返回 Service Worker API
-navigator.permissions             //返回 Permissions API
-navigator.locks                   //返回 LockManager API
-navigator.serial                  //返回 Web Serial API
-navigator.connection              //返回 NetworkInformation API
-navigator.scheduling              //返回 Scheduling API
-navigator.userActivation          //返回 UserActivation API
-navigator.hid                     //返回 HID API
-navigator.storage                 //返回 StorageManager API
-navigator.credentials             //返回 CredentialsContainer API
-navigator.presentation            //返回 Presentation API
-navigator.wakeLock                //返回 WakeLock API
-navigator.xr                      //返回 XRSystem API
-navigator.webkitPersistentStorage //返回 DeprecatedStorageQuota API
-navigator.webkitTemporaryStorage  //返回 DeprecatedStorageQuota API
 ```
 
 ### (2) Navigator 对象方法
@@ -73,16 +70,11 @@ navigator.getUserMedia()                //返回获取到的多媒体设备,WebR
 浏览器 API：
 navigator.sendBeacon(url,data)          //返回布尔值,用户卸载网页时浏览器是否成功向服务器发送异步请求并携带少量数据
 navigator.vibrate(pattern)              //返回布尔值,是否成功使当前设备产生间隔频率的震动(设备不支持震动则方法无效,已存在震动则取代前一个震动)
+navigator.getGamepads()                 //返回所有已连接的游戏手柄数组
 navigator.canShare({files})             //返回布尔值,目标文件files是否可以被分享
 navigator.share(options)                //返回Promise实例,Web Share API 分享网页或文件
-navigator.getInstalledRelatedApps()     //
-navigator.setAppBadge()                 //
-navigator.clearAppBadge()               //
-navigator.getGamepads()                 //返回连接的所有游戏手柄
-navigator.requestMIDIAccess()           //返回 Web MIDI API
-navigator.requestMediaKeySystemAccess() //返回Promise实例,请求访问多媒体密钥系统
-navigator.registerProtocolHandler()     //注册协议
-navigator.unregisterProtocolHandler()   //取消注册协议
+navigator.setAppBadge(number)           //返回Promise实例,设置当前应用程序图标上的徽章
+navigator.clearAppBadge()               //返回Promise实例,清除当前应用程序图标上的徽章
 ```
 
 ## 2. 客户端检测
