@@ -146,8 +146,6 @@ const btn = document.getElementById('btn')
 btn.addEventListener('click', f)
 ```
 
-![Bluetooth API]()
-
 ## 3. USB API
 
 USB API 用于 `USB`

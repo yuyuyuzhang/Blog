@@ -34,8 +34,6 @@ const f = async () => {
 f()
 ```
 
-![查询锁]()
-
 ## 3. Lock 对象
 
 ```javascript
