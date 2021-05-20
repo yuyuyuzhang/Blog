@@ -3067,11 +3067,11 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: 'js/[name].[chunkhash].js',
-      path: path.join(__dirname, 'dist_config_one')
+      path: path.join(__dirname, 'dist_aaa')
     },
     resolve: {
       alias: {
-        '@': path.join(__dirname, '..', 'src')
+        '@': path.join(__dirname, 'src')
       },
       extensions: ['.js', '.json', '.vue']
     },
@@ -3166,10 +3166,10 @@ module.exports = (env, argv) => {
     ],
     optimization: {
       minimizer: [
-        // new UglifyJsWebpackPlugin(), //压缩JS文件
-        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
+        // new UglifyJsWebpackPlugin(), //压缩 JS 文件，无法解析 ES6 语法
+        new OptimizeCssAssetsWebpackPlugin() //压缩 CSS 文件
       ],
-      runtimeChunk: 'single', //提取manifest
+      runtimeChunk: 'single', //提取 manifest
       splitChunks: { //codeSplitting
         chunks: 'all',
         cacheGroups: {
@@ -3180,8 +3180,8 @@ module.exports = (env, argv) => {
             chunks: 'initial' //只打包初始时依赖的第三方
           },
           elementUI: { //UI组件库
-            name: 'chunk-elementUI', //elementUI单独拆包
-            test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于libs和app不然会被打包进libs或app
+            name: 'chunk-elementUI', //elementUI 单独拆包
+            test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于 libs/app 不然会被打包进 libs/app
             priority: 20,
           },
           commons: { //自定义组件/函数
@@ -3203,7 +3203,7 @@ module.exports = (env, argv) => {
     config.devServer = {
       port: '8081',
       open: true,
-      // hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
       overlay: { errors: true, warnings: false },
     },
     config.plugins = [
@@ -3211,7 +3211,7 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('development')
       }),
-      // new webpack.HotModuleReplacementPlugin(), //HMR特性必需的插件
+      // new webpack.HotModuleReplacementPlugin(), //HMR 特性必需的插件，与 chunkhash/contenthash 冲突
     ]
   }
 
