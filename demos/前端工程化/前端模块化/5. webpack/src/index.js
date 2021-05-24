@@ -2,25 +2,15 @@ import createHeading from './head.js'
 const heading = createHeading()
 document.body.append(heading)
 
-// 导入 CSS 文件
-import './assets/style.css'
+// 保存后自动编译打包 - watch
+// console.log('watch 模式')
 
-// // 导入多媒体文件
-// import movie from '../public/movie.mp4'
-// const video = document.createElement('video')
-// video.src = movie
-// video.controls = 'controls'
-// document.body.append(video)
-
-// // 导入 .md 文件
-// import title from './title.md'
-
-// // 添加 textarea 输入框
-// const text = document.createElement('textarea')
-// document.body.append(text)
-
-// // 测试 watch 模式
-// // console.log('watch 模式')
+// 保存后自动编译打包且自动刷新浏览器 - devServer
+const text = document.createElement('textarea')
+document.body.append(text)
+text.style.color = 'blue'
+console.log(111)
+// console.log(222)
 
 // // head.js HMR 处理函数
 // let lastHeading = heading
@@ -35,6 +25,19 @@ import './assets/style.css'
 //     // undefined.f()
 //   })
 // }
+
+// 导入 CSS 文件
+// import './assets/style.css'
+
+// // 导入多媒体文件
+// import movie from '../public/movie.mp4'
+// const video = document.createElement('video')
+// video.src = movie
+// video.controls = 'controls'
+// document.body.append(video)
+
+// // 导入 .md 文件
+// import title from './title.md'
 
 // // IngorePlugin
 // import moment from 'moment'

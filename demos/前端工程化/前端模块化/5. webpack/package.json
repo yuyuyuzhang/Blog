@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "serve": "webpack serve --node-env=development",
-    "build": "webpack --node-env=production"
+    "build": "webpack --node-env=production",
+    "watch": "webpack --node-env=production --watch --open Chrome.exe"
   },
   "devDependencies": {
     "css-loader": "^5.2.5",

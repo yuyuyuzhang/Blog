@@ -1,53 +1,51 @@
 const webpack = require('webpack')
-const path = require('path')
 
-const resolve = dir => path.join(__dirname, '..', dir)
+const path = require('path')
+const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
 module.exports = (env, argv) => {
   const config = {
+    target: 'web',
     mode: argv.nodeEnv,
     devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
-    context: path.resolve(__dirname, './'), // 设置项目根目录为环境上下文
+    context: pathResolve('./'), // 设置项目根目录为环境上下文
     entry: {
       app: './src/index.js' // 相对 context 配置
     },
     output: {
       filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-      path: resolve('dist'), // 输出目录
+      path: pathResolve('./dist'), // 输出目录
       publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
     },
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': pathJoin('src')
       },
       extensions: ['.js', '.vue', '.json'],
     },
-    module: {
-      rules: [
-        {
-          test: /\.css$/i, // 正则匹配文件路径
-          include: [resolve('src')],
-          // exclude: /(node_modules)/, //提高构建速度
-          use: ["style-loader", "css-loader"] // 一组链式 loader 按相反顺序执行
-        },
-      ]
-    }
+    plugins: []
   }
 
   // 开发环境
   if (argv.nodeEnv === 'development') {
+    config.target = 'web'
     config.devServer = {
       port: '8081',
       // open: true,
-      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      // hot: true,
+      // hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
       overlay: { errors: true, warnings: false },
+      // contentBase: pathJoin('./dist'),
     }
     // config.plugins = [
     //   ...config.plugins,
-    //   // new webpack.HotModuleReplacementPlugin(), //HMR 特性必需的插件，与 chunkhash/contenthash 冲突
+    //   // new webpack.NamedModulesPlugin(),
+    //   new webpack.HotModuleReplacementPlugin(),
     // ]
   }
 
+  console.log(config.target)
   return config
 }
 
