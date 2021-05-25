@@ -1,40 +1,40 @@
-import createHeading from './head.js'
-const heading = createHeading()
-document.body.append(heading)
+const Title = document.createElement('h2')
+Title.textContent = 'Hello Webpack'
+document.body.append(Title)
 
-// 保存后自动编译打包 - watch
-// console.log('watch 模式')
+import createTextarea from './components/textarea.js'
+const Textarea = createTextarea()
+document.body.append(Textarea)
 
-// 保存后自动编译打包且自动刷新浏览器 - devServer
-const text = document.createElement('textarea')
-document.body.append(text)
-text.style.color = 'blue'
-console.log(111)
-// console.log(222)
-
-// // head.js HMR 处理函数
-// let lastHeading = heading
+// HMR 处理函数
+// let lastTextarea = Textarea
 // if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
-//   module.hot.accept('./head.js', function(){
-//     console.log(222, createHeading)
-//     document.body.removeChild(lastHeading)
-//     lastHeading = createHeading()
-//     document.body.append(lastHeading)
-
-//     // 运行时错误
-//     // undefined.f()
+//   module.hot.accept('./components/textarea.js', () => {
+//     const value = lastTextarea.value
+//     document.body.removeChild(lastTextarea)
+//     lastTextarea = createTextarea()
+//     lastTextarea.value = value
+//     document.body.append(lastTextarea)
 //   })
 // }
 
-// 导入 CSS 文件
-// import './assets/style.css'
+// 加载 CSS 模块
+import './style/index.css'
 
-// // 导入多媒体文件
-// import movie from '../public/movie.mp4'
-// const video = document.createElement('video')
-// video.src = movie
-// video.controls = 'controls'
-// document.body.append(video)
+// 加载多媒体模块
+import movie from './assets/movie.mp4'
+const video = document.createElement('video')
+video.src = movie
+video.controls = 'controls'
+document.body.append(video)
+
+// 加载 JSON 模块
+import Person from './assets/data1.json'
+console.log(Person)
+
+// 加载 XML 模块
+import Info from './assets/data2.xml'
+console.log(Info)
 
 // // 导入 .md 文件
 // import title from './title.md'

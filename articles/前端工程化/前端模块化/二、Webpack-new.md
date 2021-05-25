@@ -29,8 +29,8 @@ Webpack 本质上是一个现代 JS 应用程序的静态模块打包器，Webpa
   * CommonJS require()
   * css/sass/less 文件中的 @import
   * 样式文件、HTML 文件中的图片链接 image url
-* **chunk**：Webpack 处理过程中根据 module 依赖关系生成的 chunk 文件
-* **bundle**：Webpack 处理好 chunk 文件后，最终输出的可在浏览器直接运行的 bundle 文件
+* **chunk**：Webpack 处理过程中根据 module 依赖关系生成 chunk 文件
+* **bundle**：Webpack 处理好 chunk 文件后，最终输出可在浏览器直接运行的 bundle 文件
 
 ### (2) hash vs chunkhash vs contenthash
 
@@ -65,7 +65,7 @@ Webpack 从配置文件定义的入口 `entry` 开始，`递归`地构建一个�
 
   初始化项目，生成 package.json 文件，管理项目依赖的 npm 包
 
-* 项目根目录添加 .gitignore 文件，配置忽略的不提交到 git 的目录和文件
+* 项目根目录添加 .gitignore 文件，配置忽略而无需提交到 git 的目录和文件
 
   ```gitignore
   .DS_Store
@@ -388,7 +388,7 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-      path: pathResolve('./dist'), // 输出目录
+      path: pathJoin('./dist'), // 输出目录
       publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
     },
   }
@@ -426,7 +426,7 @@ module.exports = (env, argv) => {
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathResolve('./dist'), // 输出目录
+        path: pathJoin('./dist'), // 输出目录
         publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
@@ -440,7 +440,7 @@ module.exports = (env, argv) => {
 }
 ```
 
-## 5. 浏览器热更新 devServer
+## 5. 浏览器热更新
 
 浏览器热更新是指本地开发的同时打开浏览器预览，当文件代码发生变化时，`浏览器自动更新页面内容`的技术，有以下 2 种更新方式
 
@@ -483,7 +483,7 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathResolve('./dist'), // 输出目录
+        path: pathJoin('./dist'), // 输出目录
         publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
@@ -506,38 +506,55 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
   }
   ```
 
+* src/components/textarea.js
+
+  ```javascript
+  export default () => {
+    const element = document.createElement('textarea')
+    return element 
+  }
+  ```
+
 * src/index.js
 
   ```javascript
-  import createHeading from './head.js'
-  const heading = createHeading()
-  document.body.append(heading)
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
   ```
 
 * npm run watch
   
   ![dist_watch_before1]()
 
+  修改 index.html 文件 script 标签 src 属性为打包后的 js 文件路径，`http-server` 打开查看效果
+
   ![dist_watch_before2]()
   
-* src/index.js
+* src/components/textarea.js
 
-  修改 index.js 文件代码，测试 watch 模式
+  修改 textarea.js 模块代码，测试 watch 模式
   
   ```javascript
-  import createHeading from './head.js'
-  const heading = createHeading()
-  document.body.append(heading)
+  export default () => {
+    const element = document.createElement('textarea')
 
-  // 保存后自动编译打包 - watch
-  console.log('watch 模式')
+    // 保存后自动编译打包 - watch
+    console.log('watch 模式')
+    
+    return element 
+  }
   ```
 
 * 保存后自动编译
 
   ![dist_watch_after1]()
 
-* F5 手动刷新浏览器
+  由于修改代码会导致 JS 文件名中的 chunkhash 改变，因此需要再次修改 index.html 文件 script 标签 src 属性，http-server 打开查看效果，需要手动刷新页面才能看到新的效果
   
   ![dist_watch_after2]()
 
@@ -553,6 +570,10 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
 
 > devServer 自动刷新页面会`丢失页面的操作状态`
 
+* npm i html-webpack-plugin -D
+
+  devServer 需要 `html-webpack-plugin` 插件才能实现自动刷新浏览器，后续在插件 Plugin 章节说明原因
+
 * webpack.config.js
   * 前端：http://localhost:8081
   * 代理：http://localhost:8081/api/users
@@ -560,6 +581,7 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
   
   ```javascript
   const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -576,7 +598,7 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathResolve('./dist'), // 输出目录
+        path: pathJoin('./dist'), // 输出目录
         publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
@@ -585,6 +607,15 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
         },
         extensions: ['.js', '.vue', '.json'],
       },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
     }
 
     // 开发环境：devServer
@@ -611,51 +642,36 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
   }
   ```
 
-* src/index.js
-  
-  文件添加 textarea 输入框
-  
-  ```javascript
-  import createHeading from './head.js'
-  const heading = createHeading()
-  document.body.append(heading)
-
-  // 
-  const text = document.createElement('textarea')
-  document.body.append(text)
-  ```
-
 * npm run serve
 
   浏览器页面上 textarea 输入框输入 ddddd...
 
   ![serve_devServer_before]()
 
-* src/index.js
+* src/components/textarea.js
 
-  ```javascript
-  import createHeading from './head.js'
-  const heading = createHeading()
-  document.body.append(heading)
-
-  // 
-  const text = document.createElement('textarea')
-  document.body.append(text)
-  ```
+  修改 textarea.js 模块代码，测试 devServer
   
-  修改文件代码，Ctrl + S 保存文件，观察浏览器页面变化如下，可得知 devServer 刷新页面会丢失操作状态
+  ```javascript
+  export default () => {
+    const element = document.createElement('textarea')
 
-  ![serve_devServer_after]()
+    // 保存后自动编译打包且自动刷新浏览器 - devServer
+    element.style.color = 'red'
+    
+    return element 
+  }
+  ```
+
+  Ctrl + S 保存文件代码，终端重新编译打包如下
+
+  ![serve_devServer_after1]()
+
+  观察浏览器页面变化如下，可得知 devServer 自动刷新页面会丢失操作状态
+
+  ![serve_devServer_after2]()
 
 ### (3) 模块热替换（Hot Module Replacement，HMR）— HMR
-
-见下一章节
-
-## 6. 模块热替换 HMR
-
-模块热替换（hot module replacement，HMR）功能就是在应用程序运行过程中替换、添加、删除模块，而无需重新加载整个页面的技术
-
-Webpack 的 `HMR` 就是为了解决 devServer 刷新页面导致的状态丢失问题
 
 Webpack HMR 完整功能主要包含了以下 3 方面的技术
 
@@ -663,56 +679,19 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
 * **devServer 服务器**：浏览器预览页面与本地服务器的 `WebSocket 通信`，本地代码变更时，将变更内容推送到浏览器
 * **HMR 功能**：模块解析与替换
 
-### (1) HMR 的 CSS 应用
+模块热替换（hot module replacement，HMR）功能就是在应用程序运行过程中替换、添加、删除模块，而无需重新加载整个页面的技术，Webpack HMR 就是为了解决 devServer 刷新页面导致的状态丢失问题
 
-### (2) HMR 的 JS 应用
-
-### (3) HMR 的 JS 处理函数
-
-### (4) hotOnly
-
-## 7. 加载器 loader
-
-Webpack 提供 loader 机制实现除 JS 模块外的其他类型资源模块的加载，从而实现项目的整体模块化
-
-loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像转换为 data URL，`loader 可以在 import 模块时预处理文件`，因此 loader 类似于其他构建工具中的任务 task
-
-### (1) 加载 CSS
-
-* npm i css-loader -D
-  
-  css-loader 的作用就是`将 CSS 模块转换为 JS 模块`，但是并没有使用这个模块
-
-* npm i style-loader -D
-
-  style-loader 的作用就是将 css-loader 转换后的 JS 模块通过 `<style>` 标签追加到页面
-
-* src/assets/style.css
-
-  ```css
-  body {
-    color: red;
-  }
-  ```
-
-* src/index.js
-
-  ```javascript
-  import createHeading from './head.js'
-  const heading = createHeading()
-  document.body.append(heading)
-
-  // 导入 CSS 文件
-  import './assets/style.css'
-  ```
-
-* webpack.config.js
+* webpack.config.js 文件配置 HMR 需要配置 2 处地方
+  * devServer `hot` 属性设置为 true
+  * devServer `hotOnly` 属性设置为 true，避免 JS 文件 HMR 处理函数出现错误导致回退到自动刷新页面
+  * 通过 webpack 模块加载 `HotModuleReplacementPlugin` 插件
 
   ```javascript
   const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
 
   const path = require('path')
-  const pathResolve = dir => path.join(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
   const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
@@ -726,7 +705,156 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathResolve('./dist'), // 输出目录
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![serve_hmr_before]()
+
+* src/components/textarea.js
+
+  修改 textarea.js 模块代码，触发模块热替换 HMR
+
+  ```javascript
+  export default () => {
+    const element = document.createElement('textarea')
+
+    // 触发 HMR
+    element.style.color = 'red'
+
+    return element 
+  }
+  ```
+
+* src/index.js
+  * 开发者编写的 JS 文件是没有任何规律的，导出的可能是一个对象/字符串/函数，使用时也各不相同，Webpack 面对这些毫无规律的 JS 文件，无法实现一个通用所有情况的 HMR 方案
+  * 因此 JS 文件要实现 HMR 需要`开发者调用插件 HotModuleReplacementPlugin API 手动处理`
+  * CSS 等其他资源文件无需开发者手动实现 HMR 处理函数，因为相应的 loader 集成了 HMR 功能，例如 css-loader、vue-loader 等
+
+  ```javascript
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
+
+  // HMR 处理函数
+  let lastTextarea = Textarea
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./components/textarea.js', () => {
+      const value = lastTextarea.value
+      document.body.removeChild(lastTextarea)
+      lastTextarea = createTextarea()
+      lastTextarea.value = value
+      document.body.append(lastTextarea)
+    })
+  }
+  ```
+
+* 操作步骤同上，保存文件代码后观察页面变化如下
+
+  ![serve_hmr_after]()
+
+## 6. 加载器 loader
+
+Webpack 提供 loader 机制实现除 JS 模块外的其他类型资源模块的加载，从而实现项目的整体模块化
+
+loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像转换为 data URL，`loader 可以在 import 模块时预处理模块`，因此 loader 类似于其他构建工具中的任务 task
+
+### (1) 加载 CSS
+
+* npm i css-loader -D
+  
+  css-loader 的作用就是`将 CSS 模块转换为 JS 模块`，但是并没有使用这个模块
+
+* npm i style-loader -D
+
+  style-loader 的作用就是将 css-loader 转换后的 JS 模块通过 `<style>` 标签追加到页面
+
+* src/style/index.css
+
+  ```css
+  body {
+    color: red;
+  }
+  ```
+
+* src/index.js
+
+  ```javascript
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
+
+  // 加载 CSS 模块
+  import './assets/style.css'
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
         publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
@@ -738,21 +866,36 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       module: {
         rules: [
           {
-            test: /\.css$/i, // 正则匹配文件路径
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
         ]
-      }
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
     }
 
-    // 开发环境
+    // 开发环境：devServer
     if (argv.nodeEnv === 'development') {
       config.devServer = {
         port: '8081',
         open: true,
-        hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        hot: true,
+        hotOnly: true,
         overlay: { errors: true, warnings: false },
       }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
     }
 
     return config
@@ -763,31 +906,879 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
 
   ![serve_css_style_loader]()
 
-* npm run build
-
-  ![dist_css_style_loader]()
-
 ### (2) 加载图片
 
 * npm i file-loader -D
+
+  file-loader 将指定资源文件`拷贝至输出目录`
+
 * npm i url-loader -D
+
+  当文件小于限定大小时，url-loader 将文件转换为 `DataURL`，否则 url-loader 使用 `file-loader` 将文件拷贝至输出目录
+
+* src/style/index.css
+
+  ```css
+  body {
+    background: url('../assets/cat.jpg');
+    color: red;
+  }
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          //打包后引用地址（相对 name）
+              }
+            }
+          },
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![serve_file_url_loader_image]()
 
 ### (3) 加载字体
 
+* src/style/index.css
+
+  ```css
+  @font-face {
+    font-family: 'myFont';
+    src: url('../assets/TJS.ttf');
+  }
+  body {
+    background: url('../assets/cat.jpg');
+    font-family: 'myFont';
+    color: red;
+  }
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          //打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![serve_file_url_loader_font]()
+
 ### (4) 加载多媒体
 
-## 8. 插件 plugin
+* src/index.js
+
+  ```javascript
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
+
+  // 加载 CSS 模块
+  import './style/index.css'
+
+  // 加载多媒体模块
+  import movie from './assets/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          //打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![serve_file_url_loader_media]()
+
+### (5) 加载数据
+
+Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 是 Webpack 内置的无需 loader 处理，XML 文件需要 xml-loader 处理
+
+* npm i xml-loader -D
+
+* src/index.js
+
+  ```javascript
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
+
+  // 加载 CSS 模块
+  import './style/index.css'
+
+  // 加载多媒体模块
+  import movie from './assets/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 加载 JSON 模块
+  import Person from './assets/data1.json'
+  console.log(Person)
+
+  // 加载 XML 模块
+  import Info from './assets/data2.xml'
+  console.log(Info)
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          //打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![serve_xml_loader]()
+
+## 7. 插件 plugin
 
 loader 机制是为了完成项目中其他类型资源模块的加载，从而实现项目的整体模块化
 
-plugin 机制是为了解决项目中除资源模块打包以外的其他自动化工作，因此 plugin 的能力范围更广用途更多，`plugin 是一个具有 apply 方法的 JS 对象`，apply 方法会被 webpack `compiler` 调用，并且在整个编译生命周期都可以访问 compiler 对象
+plugin 机制是为了解决项目中除资源模块打包以外的其他自动化工作，因此 plugin 的能力范围更广用途更多
 
-* 打包之前自动清除 dist 目录
-* 打包时自动生成使用打包结果的 HTML 文件到 dist 目录
-* 打包时将`无需 file-loader 处理的`资源文件拷贝到输出目录（一般放在 static 文件夹），绝大多数情况下都使用 file-loader 而非 copyWebpackPlugin
-* 压缩打包后输出的文件
+### (1) clean-webpack-plugin
 
-## 9. 缓存
+Webpack 每次打包的结果都是直接覆盖到 dist 目录，因此打包之前 dist 目录就可能存在上次打包遗留的文件，再次打包时只能覆盖同名文件，故而已经移除的资源文件就会一直积累在里面，导致部署上线时出现多余文件，这显然非常不合理
+
+clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
+
+* npm i clean-webpack-plugin -D
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          //打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+        ]
+      },
+      plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+### (2) html-webpack-plugin
+
+HTML 文件一般是单独存放在项目根目录下，这会导致以下 2 个问题
+
+* 项目发布时需要同时发布项目根目录下的 HTML 文件和 dist 目录下的打包结果，并且需要修改 HTML 文件下的引用为打包后的文件路径
+* 打包结果的输出目录或者文件名改变，需要手动修改 HTML 文件中对应的 script 标签的 src 属性，其他类型资源文件通过 loader 加载到 JS 文件代码，loader 内置该功能因此无需手动修改
+
+html-webpack-plugin 插件能够在 Webpack 打包的同时，`自动生成使用打包结果的 HTML 文件到 dist 目录`，让 HTML 文件也参与到整个项目的构建过程
+
+* 项目发布时只需要发布 dist 目录
+* 新生成的 HTML 文件中 script 标签是 html-webpack-plugin 插件自动引入的，因此可以确保 JS 文件的路径和名称正确
+
+html-webpack-plugin 插件的使用如下
+
+* npm i html-webpack-plugin -D
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          //打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+        ]
+      },
+      plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+### (3) copy-webpack-plugin
+
+copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理的资源文件拷贝到输出目录（一般放在 static 文件夹）
+
+* npm i copy-webpack-plugin -D
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'), // 输出目录
+        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, // 正则匹配文件路径
+            exclude: /(node_modules)/, //提高构建速度
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+            exclude: /(node_modules)/, //提高构建速度
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          //打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+        ]
+      },
+      plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', //文件名
+          title: 'Webpack',       //title属性
+          meta: {                 //meta标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run build
+
+  ![dist_copy_webpack_plugin]()
+
+## 8. 缓存
 
 ### (1) moduleId vs chunkId
 

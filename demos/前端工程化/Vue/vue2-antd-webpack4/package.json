@@ -2,8 +2,9 @@
   "name": "vue2-antd-webpack2",
   "version": "1.0.0",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --mode=development --env=development",
-    "build": "webpack --config webpack.config.js --mode=production --env=production"
+    "dev": "webpack-dev-server --node-env=development",
+    "build": "webpack --node-env=production",
+    "watch": "webpack --node-env=production --watch"
   },
   "dependencies": {
     "ant-design-vue": "^1.7.5",

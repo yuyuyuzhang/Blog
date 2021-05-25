@@ -1,4 +1,7 @@
 const webpack = require('webpack')
+const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -24,30 +27,104 @@ module.exports = (env, argv) => {
       },
       extensions: ['.js', '.vue', '.json'],
     },
-    plugins: []
+    module: {
+      rules: [
+        {
+          test: /\.css$/, // 正则匹配文件路径
+          exclude: /(node_modules)/, //提高构建速度
+          use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
+          exclude: /(node_modules)/, //提高构建速度
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+              name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
+              publicPath: './'          //打包后引用地址（相对 name）
+            }
+          }
+        },
+        {
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'fonts/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          exclude: /(node_modules)/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 20000,
+              name: 'media/[name].[ext]',
+              publicPath: './'
+            }
+          }
+        },
+        {
+          test: /\.xml$/,
+          use: 'xml-loader'
+        },
+      ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: 'index.html', //文件名
+        title: 'Webpack',       //title属性
+        meta: {                 //meta标签
+          viewPort: 'width=device-width'
+        }
+      }),
+    ]
   }
+
+  // watch 模式
+  // if (argv.watch) {
+  //   config.watchOptions = {
+  //     aggregateTimeout: 300, // 将指定延迟内的所有更改都聚合到这次的重新构建
+  //     ignored: /node_modules/, // 不监听 node_modules 文件夹，避免占用大量 CPU 和内存
+  //   }
+  // }
 
   // 开发环境
   if (argv.nodeEnv === 'development') {
     config.target = 'web'
     config.devServer = {
-      port: '8081',
+      port: '8082',
       // open: true,
-      // hot: true,
-      // hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      hot: true,
+      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
       overlay: { errors: true, warnings: false },
-      // contentBase: pathJoin('./dist'),
     }
-    // config.plugins = [
-    //   ...config.plugins,
-    //   // new webpack.NamedModulesPlugin(),
-    //   new webpack.HotModuleReplacementPlugin(),
-    // ]
+    config.plugins = [
+      ...config.plugins,
+      new webpack.HotModuleReplacementPlugin(),
+    ]
   }
 
-  console.log(config.target)
+  // 生产环境
+  if (argv.nodeEnv === 'production') {
+    config.plugins = [
+      ...config.plugins,
+      new CopyWebpackPlugin([
+        { from: pathResolve('./static'), to: '' }
+      ])
+    ]
+  }
+
   return config
 }
+
 
 // module.exports = () => {
 //   //公共配置

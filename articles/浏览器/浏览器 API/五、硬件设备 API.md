@@ -21,10 +21,18 @@ WakeLockSentinel 对象表示`唤醒锁`，目前只针对`屏幕`
 
 
 事件：
-release //当前唤醒锁释放时触发
+wakeLockSreen.onrelease //当前唤醒锁释放时触发
 ```
 
-### (2) 实例
+### (2) WakeLock 事件
+
+```javascript
+const wakeLockSreen = await navigator.wakeLock.request('screen')
+
+wakeLockSreen.onrelease //当前唤醒锁释放时触发
+```
+
+### (3) 实例
 
 ```javascript
 const f = async () => {

@@ -2,15 +2,21 @@
   "name": "webpack-project",
   "version": "1.0.0",
   "scripts": {
-    "serve": "webpack serve --node-env=development",
+    "serve": "webpack serve --node-env=development --inline --progress",
     "build": "webpack --node-env=production",
-    "watch": "webpack --node-env=production --watch --open Chrome.exe"
+    "watch": "webpack --node-env=production --watch"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.5",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
     "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "xml-loader": "^1.2.1"
   }
 }

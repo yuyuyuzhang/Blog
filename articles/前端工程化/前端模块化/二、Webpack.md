@@ -825,8 +825,8 @@ plugin 机制是为了解决项目中除资源模块打包以外的其他自动�
 
 * 打包之前自动清除 dist 目录
 * 打包时自动生成使用打包结果的 HTML 文件到 dist 目录
-* 打包时将`无需 file-loader 处理的`资源文件拷贝到输出目录（一般放在 static 文件夹），绝大多数情况下都使用 file-loader 而非 copyWebpackPlugin
-* 压缩打包后输出的文件
+* 打包时将`无需通过 file-loader 处理的`资源文件拷贝到输出目录（一般放在 static 文件夹），绝大多数情况下都使用 file-loader 而非 copyWebpackPlugin
+* 压缩打包后输出的文件代码
 
 ### (1) clean-webpack-plugin
 

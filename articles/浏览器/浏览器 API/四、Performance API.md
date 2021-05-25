@@ -2,7 +2,7 @@
 
 ## 1. Performance 对象
 
-Performance API 用于前端性能监控
+Performance API 用于`前端性能监控`
 
 ```javascript
 定义：const performance = window.performance
@@ -26,7 +26,7 @@ Performance API 用于前端性能监控
      
 
 事件：
-resourcetimingbufferfull //
+.onresourcetimingbufferfull //
 ```
 
 ## 2. PerformanceTiming 对象

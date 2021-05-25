@@ -3,7 +3,8 @@ const { CleanWebpackPlugin} = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const path = require('path')
-const resolve = (param) => path.join(__dirname, param)
+const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+const pathJoin = dir => path.join(__dirname, dir) // 连接路径
 
 module.exports = (env, argv) => {
   //公共配置
@@ -13,12 +14,13 @@ module.exports = (env, argv) => {
       app: './src/main.js'
     },
     output: {
-      filename: 'js/[name].[hash].js',
-      path: resolve('dist')
+      filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+      path: pathResolve('./dist'), // 输出目录
+      publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
     },
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': pathJoin('src')
       },
       extensions: ['.js', '.json', '.vue']
     },
