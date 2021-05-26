@@ -388,8 +388,8 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-      path: pathJoin('./dist'), // 输出目录
-      publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      path: pathJoin('./dist'),             // 输出目录
+      publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
     },
   }
   return config
@@ -426,8 +426,8 @@ module.exports = (env, argv) => {
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -440,7 +440,7 @@ module.exports = (env, argv) => {
 }
 ```
 
-## 5. 浏览器热更新
+## 5. 浏览器热更新（watch、devServer、HMR）
 
 浏览器热更新是指本地开发的同时打开浏览器预览，当文件代码发生变化时，`浏览器自动更新页面内容`的技术，有以下 2 种更新方式
 
@@ -483,8 +483,8 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -598,8 +598,8 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -609,9 +609,9 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -705,8 +705,8 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -716,9 +716,9 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -796,9 +796,10 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
 
 ## 6. 加载器 loader
 
-Webpack 提供 loader 机制实现除 JS 模块外的其他类型资源模块的加载，从而实现项目的整体模块化
+Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块`，因此 loader 类似于其他构建工具中的任务 task，`loader 还可以将其他类型资源模块转换为 JS 模块，或将内联模块转换为 data URL`，实现所有类型资源模块的加载，从而实现项目的整体模块化
 
-loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像转换为 data URL，`loader 可以在 import 模块时预处理模块`，因此 loader 类似于其他构建工具中的任务 task
+* **JS 模块**：Webpack 内置 JS 模块加载器，无需 loader 即可加载 JS 模块，但是在工程化的项目中，我们还需要对 ES6 代码进行语法检查以及将 ES6 语法转换成浏览器可直接识别的 ES5 语法，这就需要相应的 loader 进行处理
+* **其他类型资源模块**：loader 用于将其他类型资源模块转换为 JS 模块，或将内联模块转换为 data URL，从而实现项目的整体模块化
 
 ### (1) 加载 CSS
 
@@ -854,8 +855,8 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -866,17 +867,17 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
         ]
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -946,8 +947,8 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -958,19 +959,19 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
             use: {
               loader: 'url-loader',
               options: {
-                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          //打包后引用地址（相对 name）
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -978,9 +979,9 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -1047,8 +1048,8 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -1059,24 +1060,24 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
             use: {
               loader: 'url-loader',
               options: {
-                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          //打包后引用地址（相对 name）
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
               }
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1091,9 +1092,9 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -1168,8 +1169,8 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -1180,24 +1181,24 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/, 
+            exclude: /(node_modules)/,
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
             use: {
               loader: 'url-loader',
               options: {
-                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          //打包后引用地址（相对 name）
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
               }
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1209,7 +1210,7 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
             }
           },
           {
-            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, 
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1224,9 +1225,9 @@ loader 用于`将非 JS 模块的源码转换为 JS 模块`，或将内联图像
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -1313,8 +1314,8 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -1325,24 +1326,24 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/,
+            exclude: /(node_modules)/,
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
               options: {
-                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          //打包后引用地址（相对 name）
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
               }
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1354,7 +1355,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
             }
           },
           {
-            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1373,9 +1374,9 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -1441,8 +1442,8 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -1453,24 +1454,24 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
               options: {
-                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          //打包后引用地址（相对 name）
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
               }
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1482,7 +1483,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
             }
           },
           {
-            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1502,9 +1503,9 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
       plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -1568,8 +1569,8 @@ html-webpack-plugin 插件的使用如下
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -1580,24 +1581,24 @@ html-webpack-plugin 插件的使用如下
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/, 
             use: {
               loader: 'url-loader',
               options: {
-                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          //打包后引用地址（相对 name）
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
               }
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1609,7 +1610,7 @@ html-webpack-plugin 插件的使用如下
             }
           },
           {
-            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1629,9 +1630,9 @@ html-webpack-plugin 插件的使用如下
       plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -1669,6 +1670,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
   const webpack = require('webpack')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -1685,8 +1687,8 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'), // 输出目录
-        publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
@@ -1697,24 +1699,24 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
       module: {
         rules: [
           {
-            test: /\.css$/, // 正则匹配文件路径
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-            exclude: /(node_modules)/, //提高构建速度
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
             use: {
               loader: 'url-loader',
               options: {
-                limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-                name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          //打包后引用地址（相对 name）
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
               }
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1726,7 +1728,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
             }
           },
           {
-            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, 
             exclude: /(node_modules)/,
             use: {
               loader: 'url-loader',
@@ -1746,9 +1748,9 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
       plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-          filename: 'index.html', //文件名
-          title: 'Webpack',       //title属性
-          meta: {                 //meta标签
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
             viewPort: 'width=device-width'
           }
         }),
@@ -1770,6 +1772,18 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
       ]
     }
 
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        })
+      ]
+    }
+
     return config
   }
   ```
@@ -1778,7 +1792,198 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
 
   ![dist_copy_webpack_plugin]()
 
-## 8. 缓存
+## 8. 代码检查、转换、压缩
+
+### (1) ES6 语法检查（ESlint）
+
+ESlint 是一个使用 Node 编写的开源 JS 代码检查工具，代码检查是一种静态分析，常用于检查有问题的代码和模式，并不依赖于具体的编码风格，ESlint 的所有规则都被设计成可插入的，每条规则都是各自独立的
+
+* npm i eslint eslint-webpack-plugin -D
+
+  eslint-loader 已废弃，目前使用最新的 eslint-webpack-plugin
+
+* npm i @babel/core @babel/eslint-parser -D
+
+  @babel/eslint-parser 作为 eslint 的解析器
+
+* 项目根目录下执行 `./node_modules/.bin/eslint --init`，自动创建 .eslintrc.js 文件
+
+  ```js
+  module.exports = {
+    "root": true, // 在当前根目录下寻找配置文件
+    "env": { // eslint 脚本运行环境
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": "eslint:recommended", // 启用 eslint 默认规则
+    "parserOptions": {
+      "ecmaVersion": 12,                // ES6 语法版本
+      "sourceType": "module",           // ES6 模块
+      "parser": "@babel/eslint-parser", // 指定解析器
+    },
+    "rules": {} // 自定义规则
+  };
+  ```
+
+* 项目根目录下新建 .eslintignore 文件
+
+  ```eslintignore
+  node_modules
+  dist
+  config/*.js
+  src/assets
+  src/public
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
+            use: ['style-loader', 'css-loader'] 
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: './'          // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: './'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+        ]
+      },
+      plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
+            viewPort: 'width=device-width'
+          }
+        }),
+        new ESLintWebpackPlugin(), // 代替已废弃的 eslint-loader
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        })
+      ]
+    }
+
+    return config
+  }
+  ```
+
+### (2) ES6 转换 ES5（Babel）
+
+* **@babel/core**：转换 ES6 代码的核心方法
+* **@babel/preset-env**：babel 是插件化的，什么插件都不配，输入输出就是一样的，因此需要配置插件来转换 `ES6 标准语法`，@babel/preset-env 是一个`智能预设`，处理 ES6 规范语法的插件集合，会按需加载需要的插件
+* **@babel/polyfill**：babel 默认只会转换 ES6 标准语法，不会转换 Promise 等新增的全局 API，@babel/polyfill 负责转换新增 API
+* **@babel/plugin-transform-runtime**：babel 转换复杂语法例如 class 等时会引入一些 helper 函数，@babel/plugin-transform-runtime 负责将这些 helper 函数抽离到一个公共包，用到的地方只需要引入对应函数，从而减少代码量
+
+* npm i babel-loader @babel/preset-env @babel/plugin-transform-runtime -D
+
+* 项目根目录下新建 babel.config.js 文件
+
+  ```javascript
+
+  ```
+
+### (3) JS 代码压缩
+
+### (4) CSS 代码压缩
+
+## 9. Webpack 编译阶段优化
+
+## 10. Webpack 打包阶段优化
 
 ### (1) moduleId vs chunkId
 

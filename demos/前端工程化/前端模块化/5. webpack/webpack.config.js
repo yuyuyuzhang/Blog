@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const { CleanWebpackPlugin} = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -18,7 +19,7 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-      path: pathResolve('./dist'), // 输出目录
+      path: pathResolve('./dist1'), // 输出目录
       publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
     },
     resolve: {
@@ -30,24 +31,31 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.css$/, // 正则匹配文件路径
-          exclude: /(node_modules)/, //提高构建速度
+          test: /\.js$/,    // 正则匹配文件路径
+          include: /(src)/, // 提高构建速度
+          use: {
+            loader: 'babel-loader',
+          }
+        },
+        {
+          test: /\.css$/, 
+          exclude: /(node_modules)/, 
           use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
         },
         {
-          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          exclude: /(node_modules)/, //提高构建速度
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+          exclude: /(node_modules)/,
           use: {
             loader: 'url-loader',
             options: {
-              limit: 20000,             //文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
-              name: 'img/[name].[ext]', //文件名合并文件输出目录（相对 dist 目录）
-              publicPath: './'          //打包后引用地址（相对 name）
+              limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+              name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+              publicPath: './'          // 打包后引用地址（相对 name）
             }
           }
         },
         {
-          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
+          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
           exclude: /(node_modules)/,
           use: {
             loader: 'url-loader',
@@ -59,7 +67,7 @@ module.exports = (env, argv) => {
           }
         },
         {
-          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
+          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
           exclude: /(node_modules)/,
           use: {
             loader: 'url-loader',
@@ -85,6 +93,7 @@ module.exports = (env, argv) => {
           viewPort: 'width=device-width'
         }
       }),
+      new ESLintWebpackPlugin(),
     ]
   }
 
@@ -116,9 +125,11 @@ module.exports = (env, argv) => {
   if (argv.nodeEnv === 'production') {
     config.plugins = [
       ...config.plugins,
-      new CopyWebpackPlugin([
-        { from: pathResolve('./static'), to: '' }
-      ])
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: './src/static/test.js', to: './static' }
+        ]
+      })
     ]
   }
 

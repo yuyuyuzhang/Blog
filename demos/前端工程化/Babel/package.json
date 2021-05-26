@@ -1,0 +1,10 @@
+{
+  "name": "babel-project",
+  "version": "1.0.0",
+  "scripts": {},
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.3"
+  }
+}
