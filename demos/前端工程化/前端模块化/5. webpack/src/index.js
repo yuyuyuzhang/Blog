@@ -7,16 +7,16 @@ const Textarea = createTextarea()
 document.body.append(Textarea)
 
 // HMR 处理函数
-// let lastTextarea = Textarea
-// if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
-//   module.hot.accept('./components/textarea.js', () => {
-//     const value = lastTextarea.value
-//     document.body.removeChild(lastTextarea)
-//     lastTextarea = createTextarea()
-//     lastTextarea.value = value
-//     document.body.append(lastTextarea)
-//   })
-// }
+let lastTextarea = Textarea
+if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+  module.hot.accept('./components/textarea.js', () => {
+    const value = lastTextarea.value
+    document.body.removeChild(lastTextarea)
+    lastTextarea = createTextarea()
+    lastTextarea.value = value
+    document.body.append(lastTextarea)
+  })
+}
 
 // 加载 CSS 模块
 import './style/index.css'

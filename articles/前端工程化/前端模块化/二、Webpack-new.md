@@ -830,6 +830,18 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
   const Textarea = createTextarea()
   document.body.append(Textarea)
 
+  // HMR 处理函数
+  let lastTextarea = Textarea
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./components/textarea.js', () => {
+      const value = lastTextarea.value
+      document.body.removeChild(lastTextarea)
+      lastTextarea = createTextarea()
+      lastTextarea.value = value
+      document.body.append(lastTextarea)
+    })
+  }
+
   // 加载 CSS 模块
   import './assets/style.css'
   ```
@@ -1137,6 +1149,18 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
   const Textarea = createTextarea()
   document.body.append(Textarea)
 
+  // HMR 处理函数
+  let lastTextarea = Textarea
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./components/textarea.js', () => {
+      const value = lastTextarea.value
+      document.body.removeChild(lastTextarea)
+      lastTextarea = createTextarea()
+      lastTextarea.value = value
+      document.body.append(lastTextarea)
+    })
+  }
+
   // 加载 CSS 模块
   import './style/index.css'
 
@@ -1273,6 +1297,18 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
   import createTextarea from './components/textarea.js'
   const Textarea = createTextarea()
   document.body.append(Textarea)
+
+  // HMR 处理函数
+  let lastTextarea = Textarea
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./components/textarea.js', () => {
+      const value = lastTextarea.value
+      document.body.removeChild(lastTextarea)
+      lastTextarea = createTextarea()
+      lastTextarea.value = value
+      document.body.append(lastTextarea)
+    })
+  }
 
   // 加载 CSS 模块
   import './style/index.css'
@@ -1796,37 +1832,211 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
 
 ### (1) ES6 语法检查（ESlint）
 
-ESlint 是一个使用 Node 编写的开源 JS 代码检查工具，代码检查是一种静态分析，常用于检查有问题的代码和模式，并不依赖于具体的编码风格，ESlint 的所有规则都被设计成可插入的，每条规则都是各自独立的
+ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
 * npm i eslint eslint-webpack-plugin -D
 
-  eslint-loader 已废弃，目前使用最新的 eslint-webpack-plugin
+  eslint-loader 已废弃，目前使用最新的 `eslint-webpack-plugin`
 
 * npm i @babel/core @babel/eslint-parser -D
 
   @babel/eslint-parser 作为 eslint 的解析器
 
-* 项目根目录下执行 `./node_modules/.bin/eslint --init`，自动创建 .eslintrc.js 文件
+* .eslintrc.js
+  
+  项目根目录下执行 `eslint --init`，自动创建 .eslintrc.js 文件，稍加配置后如下
 
   ```js
   module.exports = {
-    "root": true, // 在当前根目录下寻找配置文件
-    "env": { // eslint 脚本运行环境
+    root: true,
+    env: {
       "browser": true,
       "es2021": true,
       "node": true
     },
-    "extends": "eslint:recommended", // 启用 eslint 默认规则
-    "parserOptions": {
+    extends: "eslint:recommended", // 启用 eslint 默认规则
+    parserOptions: {
       "ecmaVersion": 12,                // ES6 语法版本
       "sourceType": "module",           // ES6 模块
       "parser": "@babel/eslint-parser", // 指定解析器
     },
-    "rules": {} // 自定义规则
+    rules: {
+      'accessor-pairs': 2,
+      'arrow-spacing': [2, {
+        'before': true,
+        'after': true
+      }],
+      'block-spacing': [2, 'always'],
+      'brace-style': [2, '1tbs', {
+        'allowSingleLine': true
+      }],
+      'camelcase': [0, {
+        'properties': 'always'
+      }],
+      'comma-dangle': [2, 'never'],
+      'comma-spacing': [2, {
+        'before': false,
+        'after': true
+      }],
+      'comma-style': [2, 'last'],
+      'constructor-super': 2,
+      'curly': [2, 'multi-line'],
+      'dot-location': [2, 'property'],
+      'eol-last': 2,
+      'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
+      'generator-star-spacing': [2, {
+        'before': true,
+        'after': true
+      }],
+      'handle-callback-err': [2, '^(err|error)$'],
+      'indent': [2, 2, {
+        'SwitchCase': 1
+      }],
+      'jsx-quotes': [2, 'prefer-single'],
+      'key-spacing': [2, {
+        'beforeColon': false,
+        'afterColon': true
+      }],
+      'keyword-spacing': [2, {
+        'before': true,
+        'after': true
+      }],
+      'new-cap': [2, {
+        'newIsCap': true,
+        'capIsNew': false
+      }],
+      'new-parens': 2,
+      'no-array-constructor': 2,
+      'no-caller': 2,
+      'no-console': 'off',
+      'no-class-assign': 2,
+      'no-cond-assign': 2,
+      'no-const-assign': 2,
+      'no-control-regex': 0,
+      'no-delete-var': 2,
+      'no-dupe-args': 2,
+      'no-dupe-class-members': 2,
+      'no-dupe-keys': 2,
+      'no-duplicate-case': 2,
+      'no-empty-character-class': 2,
+      'no-empty-pattern': 2,
+      'no-eval': 2,
+      'no-ex-assign': 2,
+      'no-extend-native': 2,
+      'no-extra-bind': 2,
+      'no-extra-boolean-cast': 2,
+      'no-extra-parens': [2, 'functions'],
+      'no-fallthrough': 2,
+      'no-floating-decimal': 2,
+      'no-func-assign': 2,
+      'no-implied-eval': 2,
+      'no-inner-declarations': [2, 'functions'],
+      'no-invalid-regexp': 2,
+      'no-irregular-whitespace': 2,
+      'no-iterator': 2,
+      'no-label-var': 2,
+      'no-labels': [2, {
+        'allowLoop': false,
+        'allowSwitch': false
+      }],
+      'no-lone-blocks': 2,
+      'no-mixed-spaces-and-tabs': 2,
+      'no-multi-spaces': 2,
+      'no-multi-str': 2,
+      'no-multiple-empty-lines': [2, {
+        'max': 1
+      }],
+      'no-native-reassign': 2,
+      'no-negated-in-lhs': 2,
+      'no-new-object': 2,
+      'no-new-require': 2,
+      'no-new-symbol': 2,
+      'no-new-wrappers': 2,
+      'no-obj-calls': 2,
+      'no-octal': 2,
+      'no-octal-escape': 2,
+      'no-path-concat': 2,
+      'no-proto': 2,
+      'no-redeclare': 2,
+      'no-regex-spaces': 2,
+      'no-return-assign': [2, 'except-parens'],
+      'no-self-assign': 2,
+      'no-self-compare': 2,
+      'no-sequences': 2,
+      'no-shadow-restricted-names': 2,
+      'no-spaced-func': 2,
+      'no-sparse-arrays': 2,
+      'no-this-before-super': 2,
+      'no-throw-literal': 2,
+      'no-trailing-spaces': 2,
+      'no-undef': 2,
+      'no-undef-init': 2,
+      'no-unexpected-multiline': 2,
+      'no-unmodified-loop-condition': 2,
+      'no-unneeded-ternary': [2, {
+        'defaultAssignment': false
+      }],
+      'no-unreachable': 2,
+      'no-unsafe-finally': 2,
+      'no-unused-vars': [2, {
+        'vars': 'all',
+        'args': 'none'
+      }],
+      'no-useless-call': 2,
+      'no-useless-computed-key': 2,
+      'no-useless-constructor': 2,
+      'no-useless-escape': 0,
+      'no-whitespace-before-property': 2,
+      'no-with': 2,
+      'one-var': [2, {
+        'initialized': 'never'
+      }],
+      'operator-linebreak': [2, 'after', {
+        'overrides': {
+          '?': 'before',
+          ':': 'before'
+        }
+      }],
+      'padded-blocks': [2, 'never'],
+      'quotes': [2, 'single', {
+        'avoidEscape': true,
+        'allowTemplateLiterals': true
+      }],
+      'semi': [2, 'never'],
+      'semi-spacing': [2, {
+        'before': false,
+        'after': true
+      }],
+      'space-before-blocks': [2, 'always'],
+      'space-before-function-paren': [2, 'never'],
+      'space-in-parens': [2, 'never'],
+      'space-infix-ops': 2,
+      'space-unary-ops': [2, {
+        'words': true,
+        'nonwords': false
+      }],
+      'spaced-comment': [2, 'always', {
+        'markers': ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
+      }],
+      'template-curly-spacing': [2, 'never'],
+      'use-isnan': 2,
+      'valid-typeof': 2,
+      'wrap-iife': [2, 'any'],
+      'yield-star-spacing': [2, 'both'],
+      'yoda': [2, 'never'],
+      'prefer-const': 2,
+      'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+      'object-curly-spacing': [2, 'always', {
+        objectsInObjects: false
+      }],
+      'array-bracket-spacing': [2, 'never']
+    }
   };
   ```
 
-* 项目根目录下新建 .eslintignore 文件
+* .eslintignore
+  
+  项目根目录下新建 .eslintignore 文件，配置 ESLint 需要`忽略`的目录和文件
 
   ```eslintignore
   node_modules
@@ -1919,6 +2129,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具，代码检查
         ]
       },
       plugins: [
+        new ESLintWebpackPlugin(), // 代替已废弃的 eslint-loader
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           filename: 'index.html', // 文件名
@@ -1927,7 +2138,6 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具，代码检查
             viewPort: 'width=device-width'
           }
         }),
-        new ESLintWebpackPlugin(), // 代替已废弃的 eslint-loader
       ]
     }
 
@@ -1962,12 +2172,15 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具，代码检查
   }
   ```
 
-### (2) ES6 转换 ES5（Babel）
+* src/index.js
 
-* **@babel/core**：转换 ES6 代码的核心方法
-* **@babel/preset-env**：babel 是插件化的，什么插件都不配，输入输出就是一样的，因此需要配置插件来转换 `ES6 标准语法`，@babel/preset-env 是一个`智能预设`，处理 ES6 规范语法的插件集合，会按需加载需要的插件
-* **@babel/polyfill**：babel 默认只会转换 ES6 标准语法，不会转换 Promise 等新增的全局 API，@babel/polyfill 负责转换新增 API
-* **@babel/plugin-transform-runtime**：babel 转换复杂语法例如 class 等时会引入一些 helper 函数，@babel/plugin-transform-runtime 负责将这些 helper 函数抽离到一个公共包，用到的地方只需要引入对应函数，从而减少代码量
+  ![ESLint报错]()
+
+* Ctrl + S 保存，自动格式化代码
+
+  ![ESLint报错修复]()
+
+### (2) ES6 转换 ES5（Babel）
 
 * npm i babel-loader @babel/preset-env @babel/plugin-transform-runtime -D
 

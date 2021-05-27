@@ -1,4 +1,5 @@
 const f = a => console.log(a + 1)
+f()
 
 new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -7,11 +8,13 @@ new Promise((resolve, reject) => {
 }).then(res => console.log(res))
 
 class Person {
-  constructor(name, age){
+  constructor(name, age) {
     this.name = name
     this.age = age
   }
-  getName = () => this.name
+  getName() {
+    return this.name
+  }
 }
 const person = new Person('张三', 20)
 console.log(person.getName())
