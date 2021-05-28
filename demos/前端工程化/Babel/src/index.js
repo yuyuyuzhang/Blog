@@ -1,11 +1,12 @@
-const f = a => console.log(a + 1)
-f()
+const [x, y, ...z] = [1]
+console.log(x, y, z)
 
-new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve('我是小可爱')
-  }, 1000)
-}).then(res => console.log(res))
+const f = async() => {
+  return await new Promise((resolve, reject) => {
+    resolve('success')
+  })
+}
+f().then(val => console.log(val))
 
 class Person {
   constructor(name, age) {
@@ -18,3 +19,6 @@ class Person {
 }
 const person = new Person('张三', 20)
 console.log(person.getName())
+
+import { unique } from './components/base.js'
+console.log(unique([1, 1, 2]))

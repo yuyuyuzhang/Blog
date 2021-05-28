@@ -2,7 +2,7 @@
 
 ## 1. Babel 原理
 
-
+Babel 是一个开源的 JS 语法转换工具，将 ES6 源码转换成可以被低版本浏览器识别的 ES5 源码，`V8 引擎将 ES6 源码转换成 ES6 AST，Babel 将 ES6 AST 转换成 ES5 AST，最后生成 ES5 源码`
 
 ### (1) 语言处理程序
 
@@ -93,21 +93,248 @@ Chrome V8 引擎解释和执行 JS 代码阶段如下
 AST 在实际工作中应用场景大致有如下几个
 
 * ESlint：ESLint 使用 espree 来解析 JS 代码来生成 AST 抽象语法树，然后`使用 AST 分析代码模式`
-* Babel：V8 引擎将 ES6 源码转换成 ES6 AST，Babel 将其转换成 ES5 AST，最后生成 ES5 源码
+* Babel：V8 引擎将 ES6 源码转换成 ES6 AST，Babel 将 ES6 AST 转换成 ES5 AST，最后生成 ES5 源码
 * JS 反编译
 * 关键词匹配
 * 代码高亮
 * 代码压缩
 
-## 2. Babel 安装
+## 2. Babel 使用
 
-* 配置 ESLint 时已安装 @babel/core、@babel/eslint-parser
+@babel/cli 是 `Babel 终端 Cli 工具`
 
-* npm i 
+* npm i @babel/core -D
+
+  必须先安装 Babel 编译器 @babel/core，才能编译并使用 Babel
+
+* npm i @babel/cli -D
+
+```javascript
+npx babel [input] -o [output] //编译 input 目录并输出到 output 文件
+npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
+
+-s         //输出 SourceMap 文件
+-s inline  //输出 内联 SourceMap
+```
+
+* package.json
+
+  ```json
+  "scripts": {
+    "eslintFix": "eslint src --fix",
+    "babel": "npx babel src -d dist"
+  },
+  ```
 
 ## 3. Babel 配置
 
-* **@babel/core**：转换 ES6 代码的核心方法
-* **@babel/preset-env**：babel 是插件化的，什么插件都不配，输入输出就是一样的，因此需要配置插件来转换 `ES6 标准语法`，@babel/preset-env 是一个`智能预设`，处理 ES6 规范语法的插件集合，会按需加载需要的插件
-* **@babel/polyfill**：babel 默认只会转换 ES6 标准语法，不会转换 Promise 等新增的全局 API，@babel/polyfill 负责转换新增 API
-* **@babel/plugin-transform-runtime**：babel 转换复杂语法例如 class 等时会引入一些 helper 函数，@babel/plugin-transform-runtime 负责将这些 helper 函数抽离到一个公共包，用到的地方只需要引入对应函数，从而减少代码量
+### (1) @babel/core
+
+@babel/core 是 `Babel 编译器`，被拆分成 3 个模块
+
+* **@babel/parser**：接收 ES6 源码，进行词法分析、语法分析，生成 ES6 AST
+* **@babel/traverse**：接收并遍历 ES6 AST，根据`预设 preset、插件 plugin` 进行 AST 节点的替换、删除、添加等逻操作，生成 ES5 AST
+  * @babel/traverse 本身只具有`遍历 ES6 AST` 的作用，在遍历迭代的过程中可以定义回调函数，回调函数的参数提供了丰富的增、删、改、查以及类型断言的方法
+  * Babel 是`完全插件化`的，想要将 ES6 AST 转换成 ES5 AST，必须使用对应语法转换功能的`插件 plugin`，如果不使用任何插件，最终结果也只是生成和 ES6 源码一模一样的代码
+* **@babel/generator**：接收 ES5 AST，生成 ES5 源码
+
+![babel_core]()
+
+#### 实例
+
+* npm i @babel/core -D
+
+* index.html
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Babel-project</title>
+  </head>
+  <body>
+
+  <script src="src/index.js" type="module"></script>
+  </body>
+  </html>
+  ```
+
+* src/components/base.js
+
+  ```javascript
+  const unique = arr => Array.from(new Set(arr))
+
+  export { unique }
+  ```
+
+* src/index.js
+
+  ```javascript
+  const [x, y, ...z] = [1]
+  console.log(x, y, z)
+
+  const f = async() => {
+    return await new Promise((resolve, reject) => {
+      resolve('success')
+    })
+  }
+  f().then(val => console.log(val))
+
+  class Person {
+    constructor(name, age) {
+      this.name = name
+      this.age = age
+    }
+    getName() {
+      return this.name
+    }
+  }
+  const person = new Person('张三', 20)
+  console.log(person.getName())
+
+  import { unique } from './components/base.js'
+  console.log(unique([1, 1, 2]))
+  ```
+
+* http-server
+
+  由下图可见，代码无异常，可以正常运行
+
+  ![babel_server]()
+
+* npm run babel
+
+  ![dist_babel_core1]()
+
+  可以看出，转换后的代码没有任何变化
+
+  ![dist_babel_core2]()
+
+### (2) @babel/plugin-*、@babel/preset-*
+
+`@babel/plugin-*` 是 Babel 的插件机制，每个插件具有对应的转换 ES6 语法的功能
+
+`@babel/preset-*` 是一组预设的 Babel 插件，方便对插件进行集成配置管理
+
+预设 presets 在插件 plugins 之前执行，预设 preset 是`从后往前`执行，插件 plugins 是`从前往后`执行
+
+* @babel/preset-env：将最新的 ES6 语法转换成 ES5 语法
+* @babel/preset-typescript：将 TS 语法转换成 ES5 语法
+
+#### 实例
+
+* npm i @babel/preset-env -D
+
+* .babelrc.js
+
+  项目根目录下新建配置文件 .babelrc.js，用于配置 Babel 转换预设及插件等
+
+  ```javascript
+  module.exports = {
+    presets: [
+      ["@babel/preset-env", {
+        targets: {
+          chrome: 58,
+          ie: 9
+        },
+        modules: false, // 保留 ES6 modules，不转换成其他类型模块
+        debug: true,    // 保留 console.log 到输出文件
+      }]
+    ],
+  }
+  ```
+
+* npm run babel
+
+  可以看出目前不兼容 Promsie 等新 API
+
+  ![dist_babel_preset_env]()
+
+### (3) @babel/polyfill（core-js、regenerator-runtime）
+
+@babel/polyfill 为浏览器不支持的 `ES6 新 API 如 Promise 等`提供兼容性代码，但是从 Babel v7.4.0 开始，不建议使用 @babel/polyfill，建议使用其拆分后的 `core-js、regenerator-runtime` 代替
+
+由于后续将要说明的插件 @babel/plugin-transform-runtime 依赖了 core-js、regenerator-runtime，因此一般不需要在项目中单独配置 core-js、regenerator-runtime，而只需要配置 @babel/plugin-transform-runtime 即可
+
+### (4) @babel/runtime、@babel/plugin-transform-runtime
+
+@babel/runtime 是一个`生产环境依赖插件`
+
+@babel/plugin-transform-runtime 是一个`开发环境依赖插件`，依赖了 core-js、regenerator-runtime、@babel/runtime
+
+预设 presets 在插件 plugins 之前执行，预设 preset 是`从后往前`执行，插件 plugins 是`从前往后`执行
+
+* Babel 在转码过程中，会加入很多自己定义的 `helper 函数`，这些 helper 函数可能会在每个文件都被重复引用，@babel/plugin-transform-runtime 会将这些重复的 helper 函数转换成公共的、单独的依赖，节省转码后的体积
+* @babel/plugin-transform-runtime 以`沙盒`的方式将 ES6 新 API 对应的全局变量转换成 core-js、regenerator-runtime 的引用
+
+#### 实例
+
+* npm i @babel/plugin-transform-runtime -D
+
+* .babelrc.js
+
+  ```javascript
+  module.exports = {
+    presets: [
+      ["@babel/preset-env", {
+        targets: {
+          chrome: 58,
+          ie: 9
+        },
+        modules: false,       // 保留 ES6 modules，不转换成其他类型模块
+        debug: true,          // 保留 console.log 到输出文件，方便调试
+        useBuiltIns: 'entry', // 按需导入 core-js 支持的 ES6 新 API
+        corejs: {             // 指定 core-js 版本
+          version: "3.13", 
+          proposals: true 
+        },          
+      }]
+    ],
+    plugins: ["@babel/plugin-transform-runtime"],
+  }
+  ```
+
+* npm run babel
+
+  ![dist_babel_plugin_transform_runtime]()
+
+### (5) 其他
+
+@babel/register
+@babel/standalone
+@babel/code-frame：
+@babel/template：
+@babel/types：
+
+## 4. Babel 插件开发
+
+@babel/traverse 这个插件的作用是对ast进行遍历，在迭代的过程中可以定义回调函数，回调函数的参数提供了丰富的增、删、改、查以及类型断言的方法
+
+@babel/types：创建、修改、删除、查找ast节点，因为ast也是一个树状结构，我们可以像js操作dom节点一样，使用types对ast进行操作
+
+## 5. Webpack 集成 Babel
+
+Webpack 提供 babel-loader 用于转换 ES6 源码
+
+* npm i babel-loader -D
+
+* webpack.config.js
+
+  ```javascript
+  const ESLintPlugin = require('eslint-webpack-plugin');
+
+  module.exports = {
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: /(src)/,
+          use: {
+            loader: 'babel-loader'
+          }
+        },
+      ]
+    }
+  };
+  ```

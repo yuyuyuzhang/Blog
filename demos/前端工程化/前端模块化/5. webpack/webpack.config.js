@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
   const config = {
     target: 'web',
     mode: argv.nodeEnv,
-    devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+    devtool: argv.nodeEnv === 'development' ? 'eval-cheap-module-source-map' : false,
     context: pathResolve('./'), // 设置项目根目录为环境上下文
     entry: {
       app: './src/index.js' // 相对 context 配置
@@ -20,26 +20,26 @@ module.exports = (env, argv) => {
     output: {
       filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
       path: pathResolve('./dist1'), // 输出目录
-      publicPath: '/', // 输出目录中相对该目录加载资源、启动服务
+      publicPath: '/' // 输出目录中相对该目录加载资源、启动服务
     },
     resolve: {
       alias: {
         '@': pathJoin('src')
       },
-      extensions: ['.js', '.vue', '.json'],
+      extensions: ['.js', '.vue', '.json']
     },
     module: {
       rules: [
         {
-          test: /\.js$/,    // 正则匹配文件路径
+          test: /\.js$/, // 正则匹配文件路径
           include: /(src)/, // 提高构建速度
           use: {
-            loader: 'babel-loader',
+            loader: 'babel-loader'
           }
         },
         {
-          test: /\.css$/, 
-          exclude: /(node_modules)/, 
+          test: /\.css$/,
+          exclude: /(node_modules)/,
           use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
         },
         {
@@ -48,9 +48,9 @@ module.exports = (env, argv) => {
           use: {
             loader: 'url-loader',
             options: {
-              limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+              limit: 20000, // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
               name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-              publicPath: './'          // 打包后引用地址（相对 name）
+              publicPath: './' // 打包后引用地址（相对 name）
             }
           }
         },
@@ -81,19 +81,19 @@ module.exports = (env, argv) => {
         {
           test: /\.xml$/,
           use: 'xml-loader'
-        },
+        }
       ]
     },
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        filename: 'index.html', //文件名
-        title: 'Webpack',       //title属性
-        meta: {                 //meta标签
+        filename: 'index.html', // 文件名
+        title: 'Webpack', // title属性
+        meta: { // meta标签
           viewPort: 'width=device-width'
         }
       }),
-      new ESLintWebpackPlugin(),
+      new ESLintWebpackPlugin()
     ]
   }
 
@@ -112,12 +112,12 @@ module.exports = (env, argv) => {
       port: '8082',
       // open: true,
       hot: true,
-      hotOnly: true, //避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-      overlay: { errors: true, warnings: false },
+      hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+      overlay: { errors: true, warnings: false }
     }
     config.plugins = [
       ...config.plugins,
-      new webpack.HotModuleReplacementPlugin(),
+      new webpack.HotModuleReplacementPlugin()
     ]
   }
 
@@ -135,7 +135,6 @@ module.exports = (env, argv) => {
 
   return config
 }
-
 
 // module.exports = () => {
 //   //公共配置
@@ -182,7 +181,7 @@ module.exports = (env, argv) => {
 //           use: {
 //             loader: 'url-loader',
 //             options: {
-//               limit: 20000, 
+//               limit: 20000,
 //               name: 'fonts/[name].[hash].[ext]',
 //               publicPath: '../'
 //             }
@@ -194,7 +193,7 @@ module.exports = (env, argv) => {
 //           use: {
 //             loader: 'url-loader',
 //             options: {
-//               limit: 20000, 
+//               limit: 20000,
 //               name: 'media/[name].[hash].[ext]',
 //               publicPath: './'
 //             }

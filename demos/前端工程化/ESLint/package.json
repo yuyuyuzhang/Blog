@@ -2,7 +2,7 @@
   "name": "eslint-project",
   "version": "1.0.0",
   "scripts": {
-    "fix": "eslint src --fix"
+    "eslintFix": "eslint src --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

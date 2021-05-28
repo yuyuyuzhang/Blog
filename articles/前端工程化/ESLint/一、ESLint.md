@@ -92,7 +92,7 @@ Chrome V8 引擎解释和执行 JS 代码阶段如下
 
 AST 在实际工作中应用场景大致有如下几个
 
-* ESlint：ESLint 使用 espree 来解析 JS 代码来生成 AST 抽象语法树，然后`使用 AST 分析代码模式`
+* ESlint：ESLint 使用指定解析器解析 JS 代码生成 AST 抽象语法树，然后`使用 AST 分析代码模式`
 * Babel：V8 引擎将 ES6 源码转换成 ES6 AST，Babel 将其转换成 ES5 AST，最后生成 ES5 源码
 * JS 反编译
 * 关键词匹配
@@ -482,11 +482,11 @@ module.exports = {
 
   ```json
   "scripts": {
-    "fix": "eslint src --fix"
+    "eslintFix": "eslint src --fix"
   },
   ```
 
-* npm run fix
+* npm run eslintFix
 
   ![ESLint错误修复](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/ESLint/ESLint%E9%94%99%E8%AF%AF%E4%BF%AE%E5%A4%8D.png)
 
@@ -526,7 +526,7 @@ module.exports = {
 
 ## 6. Webpack 集成 ESLint
 
-Webpack 以前使用 eslint-loader，现在已废弃改用 `eslint-webpack-plugin`
+Webpack 以前提供 eslint-loader，现在已废弃改用 `eslint-webpack-plugin`
 
 * npm i eslint-webpack-plugin -D
 
