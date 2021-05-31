@@ -299,19 +299,13 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
   ![dist_babel_plugin_transform_runtime]()
 
-### (5) 其他
-
-@babel/register
-@babel/standalone
-@babel/code-frame：
-@babel/template：
-@babel/types：
-
 ## 4. Babel 插件开发
 
-@babel/traverse 这个插件的作用是对ast进行遍历，在迭代的过程中可以定义回调函数，回调函数的参数提供了丰富的增、删、改、查以及类型断言的方法
+* **@babel/traverse**：这个插件的作用是`接收并遍历 ES6 AST`，在迭代的过程中可以定义回调函数，回调函数的参数提供了丰富的增、删、改、查以及类型断言的方法
 
-@babel/types：创建、修改、删除、查找ast节点，因为ast也是一个树状结构，我们可以像js操作dom节点一样，使用types对ast进行操作
+* **@babel/types**：这个插件的作用是`查找、创建、修改、删除、AST 节点`，因为 AST 也是一个树状结构，我们可以像 JS 操作 DOM 节点一样，使用 @babel/types 对 AST 进行操作
+
+* **@babel/template**：这个插件的作用是`将字符串代码片段转换成 AST 节点`
 
 ## 5. Webpack 集成 Babel
 
