@@ -8,5 +8,5 @@ export default () => {
   // 触发 HMR
   // element.style.color = 'blue'
 
-  return element 
+  return element
 }

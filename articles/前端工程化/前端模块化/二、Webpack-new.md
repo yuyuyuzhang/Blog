@@ -983,7 +983,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -1084,7 +1084,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -1096,7 +1096,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
               options: {
                 limit: 20000,
                 name: 'fonts/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1217,7 +1217,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -1229,7 +1229,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
               options: {
                 limit: 20000,
                 name: 'fonts/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1241,7 +1241,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
               options: {
                 limit: 20000,
                 name: 'media/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1374,7 +1374,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -1386,7 +1386,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
               options: {
                 limit: 20000,
                 name: 'fonts/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1398,7 +1398,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
               options: {
                 limit: 20000,
                 name: 'media/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1452,7 +1452,7 @@ plugin 机制是为了解决项目中除资源模块打包以外的其他自动�
 
 Webpack 每次打包的结果都是直接覆盖到 dist 目录，因此打包之前 dist 目录就可能存在上次打包遗留的文件，再次打包时只能覆盖同名文件，故而已经移除的资源文件就会一直积累在里面，导致部署上线时出现多余文件，这显然非常不合理
 
-clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
+clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目录
 
 * npm i clean-webpack-plugin -D
 
@@ -1502,7 +1502,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -1514,7 +1514,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
               options: {
                 limit: 20000,
                 name: 'fonts/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1526,7 +1526,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
               options: {
                 limit: 20000,
                 name: 'media/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1537,7 +1537,6 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
         ]
       },
       plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           filename: 'index.html', // 文件名
           title: 'Webpack',       // title 属性
@@ -1560,6 +1559,14 @@ clean-webpack-plugin 插件就是在每次打包之前，清除 dist 目录
       config.plugins = [
         ...config.plugins,
         new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
       ]
     }
 
@@ -1629,7 +1636,7 @@ html-webpack-plugin 插件的使用如下
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -1641,7 +1648,7 @@ html-webpack-plugin 插件的使用如下
               options: {
                 limit: 20000,
                 name: 'fonts/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1653,7 +1660,7 @@ html-webpack-plugin 插件的使用如下
               options: {
                 limit: 20000,
                 name: 'media/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1664,7 +1671,6 @@ html-webpack-plugin 插件的使用如下
         ]
       },
       plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           filename: 'index.html', // 文件名
           title: 'Webpack',       // title 属性
@@ -1687,6 +1693,14 @@ html-webpack-plugin 插件的使用如下
       config.plugins = [
         ...config.plugins,
         new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
       ]
     }
 
@@ -1747,7 +1761,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -1759,7 +1773,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
               options: {
                 limit: 20000,
                 name: 'fonts/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1771,7 +1785,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
               options: {
                 limit: 20000,
                 name: 'media/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -1782,7 +1796,6 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
         ]
       },
       plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           filename: 'index.html', // 文件名
           title: 'Webpack',       // title 属性
@@ -1812,6 +1825,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
     if (argv.nodeEnv === 'production') {
       config.plugins = [
         ...config.plugins,
+        new CleanWebpackPlugin(),
         new CopyWebpackPlugin({
           patterns: [
             { from: './src/static/test.js', to: './static' }
@@ -2050,10 +2064,10 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
   ```javascript
   const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const CopyWebpackPlugin = require('copy-webpack-plugin')
-  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -2094,7 +2108,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
               options: {
                 limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
                 name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
-                publicPath: './'          // 打包后引用地址（相对 name）
+                publicPath: '../'          // 打包后引用地址（相对 name）
               }
             }
           },
@@ -2106,7 +2120,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
               options: {
                 limit: 20000,
                 name: 'fonts/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -2118,7 +2132,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
               options: {
                 limit: 20000,
                 name: 'media/[name].[ext]',
-                publicPath: './'
+                publicPath: '../'
               }
             }
           },
@@ -2130,7 +2144,6 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
       },
       plugins: [
         new ESLintWebpackPlugin(), // 代替已废弃的 eslint-loader
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           filename: 'index.html', // 文件名
           title: 'Webpack',       // title 属性
@@ -2160,6 +2173,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
     if (argv.nodeEnv === 'production') {
       config.plugins = [
         ...config.plugins,
+        new CleanWebpackPlugin(),
         new CopyWebpackPlugin({
           patterns: [
             { from: './src/static/test.js', to: './static' }
@@ -2184,165 +2198,762 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
 * npm i babel-loader @babel/preset-env @babel/plugin-transform-runtime -D
 
-* 项目根目录下新建 babel.config.js 文件
+* 项目根目录下新建 .babelrc.js 文件
 
   ```javascript
-
+  module.exports = {
+    presets: [
+      ["@babel/preset-env", {
+        targets: {
+          chrome: 58,
+          ie: 9
+        },
+        modules: false,       // 保留 ES6 modules，不转换成其他类型模块
+        useBuiltIns: 'entry', // 按需导入 core-js 支持的 ES6 新 API
+        corejs: {             // 指定 core-js 版本
+          version: "3.13", 
+          proposals: true 
+        },          
+      }]
+    ],
+    plugins: ["@babel/plugin-transform-runtime"],
+  }
   ```
 
-### (3) JS 代码压缩
+* webpack.config.js
 
-### (4) CSS 代码压缩
+  ```javascript
+  const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,    // 正则匹配文件路径
+            include: /(src)/, // 提高构建速度
+            use: {
+              loader: 'babel-loader'
+            }
+          },
+          {
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
+            use: ['style-loader', 'css-loader'] 
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../'          // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+        ]
+      },
+      plugins: [
+        new ESLintWebpackPlugin(), // 代替已废弃的 eslint-loader
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        })
+      ]
+    }
+
+    return config
+  }
+  ```
+
+### (3) CSS 代码单独拆包和压缩
+
+CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果就是将 CSS 代码转换成 JS 代码，然后通过 `<style>` 标签嵌套到 JS 文件
+
+* **MiniCSSExtractPlugin**：MiniCSSExtractPlugin 插件可以将 CSS 代码单独打包成 CSS 文件，通过 `<link>` 标签引入到 HTML 页面，CSS 独立拆包的最大好处就是 JS 和 CSS 的改动不会影响对方，例如修改 JS 文件不会导致 CSS 文件缓存失效
+* **OptimizeCSSAssetsWebpackPlugin**：生产环境下 Webpack 内置压缩插件只会自动压缩 JS 文件，不会压缩 CSS 文件，因此需要通过 OptimizeCSSAssetsWebpackPlugin 插件来`压缩 CSS 文件`
+
+* npm i mini-css-extract-plugin optimize-css-assets-webpack-plugin -D
+* webpack.config.js
+
+  MiniCSSExtractPlugin 插件不但需要配置到 plugins，还需要在 module-rules 中`修改 style-loader 为 MiniCSSExtractPlugin.loader`
+
+  OptimizeCSSAssetsWebpackPlugin 插件用于压缩代码，因此需要配置到 `optimization.minimizer` 而非 plugins，webpack 推荐压缩类插件都应该配置在到 optimization.minimizer 方便统一管理
+
+  ```javascript
+  const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv === 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathResolve('./dist'), // 输出目录
+        publicPath: '/' // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/, // 正则匹配文件路径
+            include: /(src)/, // 提高构建速度
+            use: {
+              loader: 'babel-loader'
+            }
+          },
+          {
+            test: /\.css$/,
+            exclude: /(node_modules)/,
+            // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+            use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../' // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          }
+        ]
+      },
+      plugins: [
+        new ESLintWebpackPlugin(),
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash].css', // 入口文件中引入的 CSS 文件
+          chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
+        }),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack', // title属性
+          meta: { // meta标签
+            viewPort: 'width=device-width'
+          }
+        })
+      ]
+    }
+
+    // 开发环境
+    if (argv.nodeEnv === 'development') {
+      config.target = 'web'
+      config.devServer = {
+        port: '8082',
+        open: true,
+        hot: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false }
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin()
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        })
+      ]
+      config.optimization = {
+        minimize: true,
+        minimizer: [
+          new OptimizeCssAssetsWebpackPlugin()
+        ]
+      }
+    }
+
+    return config
+  }
+  ```
+
+* npm run build
+
+  ![dist_css1]()
+
+  ![dist_css2]()
+
+  查看可知，JS 文件代码没有被压缩，
+
+  ![dist_js1]()
+
+### (4) JS 代码压缩
+
+Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要自定义压缩插件而不使用 Webpack 内置压缩插件，因此在使用了 CSS 代码单独拆包和压缩插件后，需要重新下载并配置 JS 代码压缩插件
+
+* npm i terser-webpack-plugin -D
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv === 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathResolve('./dist'), // 输出目录
+        publicPath: '/' // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/, // 正则匹配文件路径
+            include: /(src)/, // 提高构建速度
+            use: {
+              loader: 'babel-loader'
+            }
+          },
+          {
+            test: /\.css$/,
+            exclude: /(node_modules)/,
+            // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+            use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../' // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          }
+        ]
+      },
+      plugins: [
+        new ESLintWebpackPlugin(),
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash].css', // 入口文件中引入的 CSS 文件
+          chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
+        }),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack', // title属性
+          meta: { // meta标签
+            viewPort: 'width=device-width'
+          }
+        })
+      ]
+    }
+
+    // 开发环境
+    if (argv.nodeEnv === 'development') {
+      config.target = 'web'
+      config.devServer = {
+        port: '8082',
+        open: true,
+        hot: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false }
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin()
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        })
+      ]
+      config.optimization = {
+        minimize: true,
+        minimizer: [
+          new OptimizeCssAssetsWebpackPlugin(),
+          new TerserWebpackPlugin()
+        ]
+      }
+    }
+
+    return config
+  }
+  ```
+
+* npm run build
+
+  ![dist_js2]()
 
 ## 9. Webpack 编译阶段优化
 
-## 10. Webpack 打包阶段优化
+### (1) 减少执行编译的模块
 
-### (1) moduleId vs chunkId
+* **剔除无需构建的模块**：`IgnorePlugin` 插件可以在编译时`忽略指定目录`，从而提高构建速度，减少产物体积
+* **按需引入类库模块中的导出**：import 后跟的文件路径写到`文件模块内导出的具体方法`
 
-* **moduleId**：Webpack 内部为每个 module 维护了一个递增的 moduleId，当增加或删除 moudle 的时候，就需要增加或删除 moduleId，导致其他 module 虽然内容没有变化，但由于 moduleId 被强占，自身 moduleId 只能自增或自减，因此整个 moduleId 表的顺序都错乱了
-  
-  chunk 内部的每个 module 都有一个 moduleId，如果引用一个新文件或删除一个旧文件，都可能导致其他文件的 moduleId 变化，这样缓存就失效了
-  
-  ![moduleId表](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/moduleId%E8%A1%A8.png)
-  
-  Webpack 提供 `HashedModuleIdsPlugin` 插件解决这个问题，不使用自增的 moudleId，使用 `hash 之后的文件路径`作为 moudleId
-  
-  ![新moduleId](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E6%96%B0moduleId.png)
-
-* **chunkId**：Webpack 内部为每个 chunk 维护了一个递增的 chunkId，当增加或删除 chunk 的时候，就需要增加或删除 chunkId，导致其他 module 虽然内容没有变化，但由于 chunkId 被强占，自身 chunkId 只能自增或自减，因此整个 chunkId 表的顺序都错乱了
-  
-  Webpack 提供 `NamedChunkPlugin` 插件解决这个问题，但是该插件只对有 name 的 chunk 有效，因此对于`路由懒加载`的页面无效，`NamedChunkPlugin` 插件支持自定义 `nameResolver` 规则解决路由懒加载无效的问题
-
-  * webpack.config.js
-  
   ```javascript
-  const webpack = require('webpack')
-  const path = require('path')
-  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
-  const HtmlWebpackPlugin = require('html-webpack-plugin')
-  const RemoveCommentsPlugin = require('./rustom/remove-comments-plugin.js')
-  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-  // const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin');
-  const seen = new Set(); //用于NamedChunksPlugin插件固定chunkId
-  const nameLength = 4;   //用于NamedChunksPlugin插件固定chunkId
-  const config = {
-    mode: 'none',
-    entry: {
-      app: './src/index.js'
-    },
-    output: {
-      filename: 'js/[name].[chunkhash].js',
-      path: path.join(__dirname, 'dist_moduleId_chunkId_111')
-    },
-    resolve: {
-      alias: {
-        '@': path.join(__dirname, '..', 'src')
-      },
-      extensions: ['.js', '.json', '.vue']
-    },
-    module: {
-      rules: [{
-          test: /\.css$/, //正则匹配文件路径
-          use: [ //指定具体的loader,一组链式loader按相反顺序执行
-            MiniCssExtractPlugin.loader,
-            'css-loader'
-          ]
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, //加载图片
-          exclude: /(node_modules)/, //提高构建速度
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 20000,                    //文件小于20KB url-loader将文件转换为DataURL,否则file-loader拷贝文件到输出目录
-              name: 'img/[name].[hash].[ext]', //文件名合并资源文件输出目录(相对dist目录)
-              publicPath: './'                 //打包后引用地址(相对name)
-            }
-          }
-        },
-        {
-          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, //加载字体
-          exclude: /(node_modules)/,
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 20000, 
-              name: 'fonts/[name].[hash].[ext]',
-              publicPath: '../'
-            }
-          }
-        },
-        {
-          test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, //加载多媒体
-          exclude: /(node_modules)/,
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 20000, 
-              name: 'media/[name].[hash].[ext]',
-              publicPath: './'
-            }
-          }
-        },
-        {
-          test: /\.md$/,
-          use: './rustom/sync-markdown-loader.js' //use属性即可以使用模块名称,也可以使用模块路径
-        }
-      ]
-    },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({
-        filename: 'index.html', //文件名
-        title: 'Webpack',       //title属性
-        meta: {                 //meta标签
-          viewPort: 'width=device-width'
-        }
-      }),
-      new RemoveCommentsPlugin(),
-      new webpack.IgnorePlugin({ //构建时忽略指定目录
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/
-      }),
-      new MiniCssExtractPlugin({
-        filename: 'css/[name].[contenthash].css',     //入口文件中引入的CSS文件
-        chunkFilename: 'css/[name].[contenthash].css' //入口文件中未引入,通过按需加载引入的CSS文件
-      }),
-      new webpack.HashedModuleIdsPlugin(), //固定hash之后的文件路径作为moduleId
-      new webpack.NamedChunksPlugin(chunk => { //固定chunkId
-        if (chunk.name) {
-          return chunk.name;
-        }
-        const modules = Array.from(chunk.modulesIterable);
-        if (modules.length > 1) {
-          const hash = require("hash-sum");
-          const joinedHash = hash(modules.map(m => m.id).join("_"));
-          let len = nameLength;
-          while (seen.has(joinedHash.substr(0, len))) len++;
-          seen.add(joinedHash.substr(0, len));
-          return `chunk-${joinedHash.substr(0, len)}`;
-        } else {
-          return modules[0].id;
-        }
-      })
-    ],
-    devtool: 'none', //构建速度很快，方便观察页面变化
-    optimization: {
-      usedExports: true,         //打包结果中模块只导出外部用到的成员(标记枯树枝、树叶)
-      minimize: false,           //暂不压缩打包结果,压缩后不方便阅读代码
-      concatenateModules: false, //暂不合并可用模块,合并后不容易找到对应模块
-      sideEffects: true,         //无副作用打包
-      minimizer: [
-        // new UglifyJsWebpackPlugin(), //压缩JS文件
-        new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
-      ]
-    },
-  }
-  module.exports = config
+  import _ from 'lodash' // 全部引入
+
+  import find from 'lodash/find'; // 按需引入
   ```
 
-  * npx webpack
+### (2) 提高单个模块的构建速率
+
+* **include/exclude**：include 只对符合条件的模块指定 loader 处理，exclude 排除不符合条件的模块
+* **noParse**：module.noParse 可以配置某些模块不使用 JS 模块编译器进行编译，例如 jQuery
   
-  ![moduleId_chunkId打包](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/moduleId_chunkId%E6%89%93%E5%8C%85.png)
+  ```javascript
+  module.exports = {
+    ...
+    module: {
+      noParse: /jquery/, // Webpack 不解析 jquery
+      rules: [
+        ...
+      ]
+    }
+    ...
+  }
+  ```
+
+### (3) 并行构建以提升总体效率
+
+中小型项目并不适用于并行构建的思路，因为这种情况下，并发所需的多进程管理与通信带来的额外时间成本，可能会超过使用工具带来的收益，而在大型项目的生产环境构建时，并行构建工具才具有发挥作用的空间
+
+* **thread-loader**：thread-loader 作用于编译模块的 loader 上，用于在特定 loader 的编译过程中开启`多进程`的方式加速编，thread-loader 应该放置在其他 loader 之前，之后的 loader 就会在一个单独的 worker 池中运行，并且运行是受限制的
+* **parallel-webpack**：parallel-webpack 针对多配置构建，Webpack 的配置文件可以是包含多个子配置对象的数组，在执行这类多配置对象时默认串行执行，而 parallel-webpack 能实现相关配置的`并行处理`
+
+## 10. Webpack 打包阶段优化
+
+### (1) 按需引入模块 import()
+
+Webpack 默认将所有模块打包到`一个 JS 文件`，这会导致打包结果过大，绝大多数情况下，应用程序刚开始运行时，并非所有模块都是必须的，如果所有模块都被打包到一个 JS 文件，即使应用程序一开始只需要一到两个模块工作，也必须将打包后的整个 JS 文件加载进来，前端应用程序一般都是运行在浏览器，因此这种情况会浪费大量流量和带宽，也会导致浏览器响应速度变慢
+
+合理的方式是将打包结果按照一定的规则分离到`多个 JS 文件`，然后根据应用程序的运行`按需加载`，这样就可以降低启动成本，提高响应速度
+
+这与 Webpack 将项目中散落的模块打包到一起，从而提高加载效率，并不自相矛盾，只是物极必反，前端应用程序中的资源受环境所限，太大不行，太碎也不行，需要维持在一个`合理的细粒度`，开发环境中划分模块的颗粒度一般都会非常细，很多时候一个模块只是提供一个小工具函数，并不能形成一个完整的功能单元，如果不将这些资源模块打包，直接按照开发过程划分的模块颗粒度加载，那么运行一个很小的功能，就需要加载非常多的资源模块，因此模块打包肯定是必要的，但是当应用程序体积越来越大时，我们也要学会变通
+
+Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态导入的模块都会被自动提取到`单独的 JS 文件`
+
+* src/components/link.js
+
+  ```javascript
+  const link = document.createElement('a')
+  link.href = 'https://www.baidu.com/'
+  link.innerHTML = '百度一下'
+
+  export default link // 默认导出
+  ```
+
+* src/index.js
+
+  ```javascript
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
+
+  // HMR 处理函数
+  let lastTextarea = Textarea
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./components/textarea.js', () => {
+      const value = lastTextarea.value
+      document.body.removeChild(lastTextarea)
+      lastTextarea = createTextarea()
+      lastTextarea.value = value
+      document.body.append(lastTextarea)
+    })
+  }
+
+  // 加载 CSS 模块
+  import './style/index.css'
+
+  // 加载多媒体模块
+  import movie from './assets/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 加载 JSON 模块
+  import Person from './assets/data1.json'
+  console.log(Person)
+
+  // 加载 XML 模块
+  import Info from './assets/data2.xml'
+  console.log(Info)
+
+  // 按需引入模块
+  const btn = document.createElement('button')
+  btn.innerHTML = '显示链接'
+  document.body.append(btn)
+  btn.addEventListener('click', e => {
+    import('./components/link.js')
+      .then(Link => {
+        document.body.append(Link.default)
+      })
+  })
+  ```
+
+* webpack.config.js
+
+  Webapck 无需针对 ES6 modules import() 做任何额外的配置
+
+  ```javascript
+  const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv === 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathResolve('./dist'), // 输出目录
+        publicPath: '/' // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/, // 正则匹配文件路径
+            include: /(src)/, // 提高构建速度
+            use: {
+              loader: 'babel-loader'
+            }
+          },
+          {
+            test: /\.css$/,
+            exclude: /(node_modules)/,
+            // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+            use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../' // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          }
+        ]
+      },
+      plugins: [
+        new ESLintWebpackPlugin(),
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash].css', // 入口文件中引入的 CSS 文件
+          chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
+        }),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack', // title属性
+          meta: { // meta标签
+            viewPort: 'width=device-width'
+          }
+        })
+      ]
+    }
+
+    // 开发环境
+    if (argv.nodeEnv === 'development') {
+      config.target = 'web'
+      config.devServer = {
+        port: '8082',
+        open: true,
+        hot: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false }
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin()
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        })
+      ]
+      config.optimization = {
+        minimize: true,
+        minimizer: [
+          new OptimizeCssAssetsWebpackPlugin(),
+          new TerserWebpackPlugin()
+        ]
+      }
+    }
+
+    return config
+  }
+  ```
+
+* npm run build
+
+  ![dist_import()]()
+
+### (2) Tree Shaking
+
+Tree Shaking 摇掉树上的枯枝和树叶，也就是摇掉项目中的`未引用代码 dead-code`
+
+### (3) sideEffects
+
+### (4) Code Splitting
+
+### (5) 缓存

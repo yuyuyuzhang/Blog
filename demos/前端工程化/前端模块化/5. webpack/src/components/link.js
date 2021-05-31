@@ -1,8 +1,5 @@
-// 副作用代码
-console.log('Link component')
+const link = document.createElement('a')
+link.href = 'https://www.baidu.com/'
+link.innerHTML = '百度一下'
 
-export const Link = () => {
-  const a = document.createElement('a')
-  a.innerHTML = '链接-common'
-  return a
-}
+export default link // 默认导出

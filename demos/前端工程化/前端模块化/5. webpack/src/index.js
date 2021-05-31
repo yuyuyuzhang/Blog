@@ -36,8 +36,16 @@ console.log(Person)
 import Info from './assets/data2.xml'
 console.log(Info)
 
-// // 导入 .md 文件
-// import title from './title.md'
+// 按需引入模块
+const btn = document.createElement('button')
+btn.innerHTML = '显示链接'
+document.body.append(btn)
+btn.addEventListener('click', e => {
+  import('./components/link.js')
+    .then(Link => {
+      document.body.append(Link.default)
+    })
+})
 
 // // IngorePlugin
 // import moment from 'moment'
@@ -71,25 +79,3 @@ console.log(Info)
 // import './numPad.js'
 // console.log((8).pad(3))
 
-// // 按需加载
-// const btn1 = document.createElement('button')
-// const btn2 = document.createElement('button')
-// btn1.innerHTML = '显示按钮'
-// btn2.innerHTML = '显示链接'
-// document.body.append(btn1)
-// document.body.append(btn2)
-// btn1.addEventListener('click', function(e){
-//   import('./importDemand/buttonA.js')
-//     .then(({Button}) => {
-//       document.body.append(Button())
-//     })
-// })
-// btn2.addEventListener('click', function(e){
-//   import('./importDemand/buttonB.js')
-//     .then(({Button}) => {
-//       document.body.appendChild(Button())
-//     })
-// })
-
-// // 测试增量构建
-// console.log('增量构建')

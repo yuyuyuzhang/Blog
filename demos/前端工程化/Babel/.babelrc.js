@@ -1,12 +1,4 @@
-// require('core-js/stable')
-// require('regenerator-runtime/runtime')
-
 module.exports = {
-    // env: {
-    //     development:{
-    //         plugins: ["dynamic-import-node"]
-    //     }
-    // },
     presets: [
         ["@babel/preset-env", {
             targets: {
