@@ -2,7 +2,8 @@ const Title = document.createElement('h2')
 Title.textContent = 'Hello Webpack'
 document.body.append(Title)
 
-import createTextarea from './components/textarea.js'
+// import createTextarea from './components/textarea.js'
+import { f as createTextarea } from './components/textarea.js' // Tree Shaking
 const Textarea = createTextarea()
 document.body.append(Textarea)
 

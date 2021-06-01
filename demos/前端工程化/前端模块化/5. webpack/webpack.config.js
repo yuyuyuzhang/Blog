@@ -6,6 +6,7 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -137,6 +138,9 @@ module.exports = (env, argv) => {
         patterns: [
           { from: './src/static/test.js', to: './static' }
         ]
+      }),
+      new ScriptExtHtmlWebpackPlugin({
+        inline: /runtime\..*\.js$/
       })
     ]
     config.optimization = {
