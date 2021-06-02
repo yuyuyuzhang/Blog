@@ -5,8 +5,8 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -140,7 +140,7 @@ module.exports = (env, argv) => {
         ]
       }),
       new ScriptExtHtmlWebpackPlugin({
-        inline: /runtime\..*\.js$/
+        inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
       })
     ]
     config.optimization = {
@@ -148,7 +148,8 @@ module.exports = (env, argv) => {
       minimizer: [
         new OptimizeCssAssetsWebpackPlugin(),
         new TerserWebpackPlugin()
-      ]
+      ],
+      runtimeChunk: 'single' // 单独提取 manifest 文件
     }
   }
 

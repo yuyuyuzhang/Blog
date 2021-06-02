@@ -4859,7 +4859,7 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
           return modules[0].id;
         }
       }),
-      new ScriptExtHtmlWebpackPlugin({ //将提取的manifest内联到index.html
+      new ScriptExtHtmlWebpackPlugin({ //将提取的 manifest 内联到 index.html
         inline: /runtime\..*\.js$/
       })
     ],
@@ -4873,7 +4873,7 @@ Webpack 4 提供 `optimization.runtimeChunk` 让开发者方便地配置如何�
         // new UglifyJsWebpackPlugin(), //压缩JS文件
         new OptimizeCssAssetsWebpackPlugin() //压缩CSS文件
       ],
-      runtimeChunk: 'single' //提取manifest
+      runtimeChunk: true //提取 manifest
     },
   }
   module.exports = config

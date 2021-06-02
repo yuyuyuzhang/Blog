@@ -20,7 +20,117 @@ Webpack 本质上是一个现代 JS 应用程序的静态模块打包器，Webpa
 
 ## 2. Webpack 概念
 
-### (1) module vs chunk vs bundle
+### (1) 打包流程
+
+前端项目中散落着各种各样的代码和资源文件，例如 JS、CSS、图片、字体等等，这些文件在 Webpack 中都属于当前项目的一个模块，Webpack 通过打包将它们聚集在一起
+
+* loader 机制处理除 JS 以外其他类型资源的加载，例如 CSS、图片等
+* plugin 机制实现各种自动化的构建任务，例如自动压缩、自动发布等
+
+Webpack 启动后，根据配置找到项目中的指定入口文件，然后顺着文件的代码，根据代码中出现的 `import、require` 之类的语句，解析推断出这个文件依赖的模块资源，然后再分别去解析每个资源模块的依赖，周而复始，最终形成整个项目中所有用到的文件的依赖关系树
+
+![依赖关系树](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%A0%91.gif)
+
+Webpack 遍历整个依赖关系树，找到每个节点对应的资源文件，然后根据配置文件中的 loader 配置，交给对应的 loader 去加载这个模块，最后将加载的结果放入 bundle.js 文件
+
+对于无法通过 JS 代码表示的资源文件，例如图片、字体，对应的 loader 会将其单独作为资源拷贝到输出目录，然后将这个资源文件的访问路径作为这个模块的导出成员暴露给外部
+
+![打包](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E6%89%93%E5%8C%85.gif)
+
+
+一个模块依赖于另一个模块，Webpack 就视这两个模块之间有依赖关系
+
+Webpack 从配置文件定义的入口 `entry` 开始，`递归`地构建一个依赖图，这个依赖图包含着应用程序所需的所有模块
+
+### (2) 关键环节
+
+Webpack 构建是一个`串行`的过程
+
+* 初始化参数：从配置文件和 Shell 语句中读取并合并参数，得出最终的参数
+* 开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译
+* 确定入口：根据配置中的 entry 找出所有的入口文件
+* 编译模块：从入口文件出发，调用所有配置的 Loader 加载模块，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理
+* 完成模块编译：使用 Loader 加载完所有模块后，得到了每个模块处理后的最终内容以及它们之间的依赖关系树
+* 输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会
+* 输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
+
+#### ① Webpack Cli
+
+从 Webpack 4 开始 Cli 部分被单独抽象到了 webpack-cli 模块，目的是为了增强 Webpack 本身的灵活性
+
+webpack-cli 的作用就是将 CLI 参数（运行 webpack 命令时通过命令行传入的参数，例如 --mode=production）和 Webpack 配置文件中的配置整合，得到一个完整的配置对象
+
+node_modules/webpack-cli/cli.js
+
+![cli](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/cli.png)
+
+调用 bin/utils/convert-argv.js 模块，将得到的命令行参数转换为 Webpack 的配置选项对象
+
+![调用convert-argv](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E8%B0%83%E7%94%A8convert-argv.png)
+
+convert-argv.js 工作过程中，首先判断命令行参数中是否指定了具体的配置文件路径，如果指定了就加载指定配置文件，否则就需要根据默认配置文件加载规则找到配置文件
+
+node_modules/webpack-cli/utils/convert-argv.js
+
+![convert-argv](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/convert-argv.png)
+
+找到配置文件后，将 CLI 参数中的配置和配置文件中的配置合并，最终得到一个完整的配置选项，有了配置选项，就开始载入 Webpack 核心模块，创建 Compiler 实例，Compiler 实例负责完成整个项目的构建工作，是 Webpack 工作过程中最核心的对象
+
+![Compiler实例](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/Compiler%E5%AE%9E%E4%BE%8B.png)
+
+#### ② 创建 Compiler 实例
+
+随着 Webpack-cli 载入 Webpack 核心模块，整个执行过程就到了 Webpack 模块，webpack.js 文件导出一个用于创建 Compiler 实例的函数，
+
+node_modules/webpack/lib/webpack.js
+
+![webpack](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/webpack.png)
+
+导出函数中首先判断参数 options，options 既可以是对象也可以是数组，配置数组中的每个成员都是一个独立的配置选项，Webpack 既支持`单线打包`也支持`多路打包`
+
+![多路打包](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E5%A4%9A%E8%B7%AF%E6%89%93%E5%8C%85.png)
+
+顺着单线打包往下看，创建 Compiler 实例后，Webpack 就开始注册配置的每个插件，再往后 Webpack 工作过程的生命周期就要开始了，所以必须先注册，这样才能确保插件中的钩子函数都能挂载到指定钩子上
+
+![注册插件](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E6%B3%A8%E5%86%8C%E6%8F%92%E4%BB%B6.png)
+
+#### ③ 开始构建
+
+完成 Compiler 实例的创建后，再次进入 webpack-cli 模块，开始判断配置选项中是否启用了监视模式
+
+* 如果是监视模式就调用 Compiler 实例的 watch 方法，以监视模式启动构建，但这不是我们主要关心的主线
+* 如果不是监视模式就调用 Compiler 实例的 run 方法，开始构建整个应用
+
+node_modules/webpack-cli/cli.js
+
+![判断监视模式](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E5%88%A4%E6%96%AD%E7%9B%91%E8%A7%86%E6%A8%A1%E5%BC%8F.png)
+
+Compiler.run() 方法定义在 Compiler 类上，具体文件在 node_modules/webpack/lib/Compiler.js，run() 方法内部先后触发了 beforeRun、run 两个钩子，最关键的是调用了 this.compile() 方法，正式开始编译整个项目
+
+![Compiler.run](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/Compiler.run.png)
+
+再往下看，找到 Compiler.compile() 方法，compile() 方法内部先后触发了 beforeCompile、compile、make、afterCompile 四个钩子，最主要的是创建了一个 compilation 实例，compilation 可以理解为一次构建过程中的上下文对象，里面包含了这次构建的全部资源和信息
+
+![Compiler.compile](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/Compiler.compile.png)
+
+#### ④ make 阶段
+
+随着 Compiler.compile() 方法内触发 make 钩子，由此进入了 make 阶段，make 阶段的主要目标就是：根据 entry 配置找到入口模块，开始依次递归遍历出所有依赖，形成依赖关系树，然后将每个模块交给对应的 loader 处理
+
+触发 make 钩子之后就开始执行所有同步和异步 make 钩子函数，VSCode 搜索 make.tap，找到所有注册的 make 钩子函数
+
+![make钩子函数](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/make%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0.png)
+
+* SingleEntryPlugin.js 插件中调用了 Compilation 对象的 addEntry 方法，开始解析入口
+* addEntry 方法中又调用了 _addModuleChain 方法，将入口模块添加到模块依赖列表中
+* 紧接着通过 Compilation 对象的 buildModule 方法进行模块构建
+* buildModule 方法中执行具体的 Loader，处理特殊资源加载
+* build 完成过后，通过 acorn 库生成模块代码的 AST 语法树
+* 根据语法树分析这个模块是否还有依赖的模块，如果有则继续循环 build 每个依赖
+* 所有依赖解析完成，build 阶段结束
+* 最后合并生成需要输出的 bundle.js 写入 dist 目录
+
+### (3) module vs chunk vs bundle
 
 一个 chunk 包含`一或多`个 module
 
@@ -32,7 +142,13 @@ Webpack 本质上是一个现代 JS 应用程序的静态模块打包器，Webpa
 * **chunk**：Webpack 处理过程中根据 module 依赖关系生成 chunk 文件
 * **bundle**：Webpack 处理好 chunk 文件后，最终输出可在浏览器直接运行的 bundle 文件
 
-### (2) hash vs chunkhash vs contenthash
+### (4) hash vs chunkhash vs contenthash
+
+当我们把打包后的 dist 目录部署到服务器上后，客户端浏览器就能够访问该服务器的网站和资源，而获取资源是比较耗时的，因此浏览器使用一种名为`缓存`的技术，可以通过命中缓存，降低网络流量，使网站加载速度更快
+
+然而如果我们在部署新版本时，未更改资源文件名，浏览器很可能会认为其未更新，转而使用缓存版本，如果新版本和缓存版本资源内容不同，就需要用户手动清除浏览器缓存之后才能访问新版本，这对于用户来说并不方便
+
+Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包都生成新的文件名，从而告诉浏览器是否要读取缓存
 
 * **hash**：hash 是`项目级别`的，整个项目的所有文件共用一个 hash，Webpack 每次重新构建打包时，如果项目没有任何更改，其 hash 值就不会改变，否则就会改变
   * `url-loader 管理的图片、字体、多媒体`等静态资源，应该在打包后的文件名里嵌套 hash，以避免缓存问题
@@ -42,7 +158,7 @@ Webpack 本质上是一个现代 JS 应用程序的静态模块打包器，Webpa
   * `单独输出的 CSS 文件`，应该在打包后的文件名里嵌套 contenthash，以避免缓存问题
   * contenthash 值的出现主要是为了让 CSS 文件不受 JS 文件的影响，比如 foo.css 被 foo.js 引用了，所以它们共用相同的 chunkhash，但这样是有问题的，如果 foo.js 修改了代码，foo.css 文件就算内容没有任何改变，其 hash、chunkhash 也会随之改变
 
-### (3) moduleId vs chunkId
+### (5) moduleId vs chunkId
 
 * **moduleId**：Webpack 内部为每个 module 维护了一个递增的 moduleId，当增加或删除 moudle 的时候，就需要增加或删除 moduleId，导致其他 module 虽然内容没有变化，但由于 moduleId 被强占，自身 moduleId 只能自增或自减，因此整个 moduleId 表的顺序都错乱了
   
@@ -62,19 +178,13 @@ Webpack 本质上是一个现代 JS 应用程序的静态模块打包器，Webpa
 
   Webpack5 内置该插件解决这个问题，无需手动下载配置
 
-### (4) 依赖图
-
-一个模块依赖于另一个模块，Webpack 就视这两个模块之间有依赖关系
-
-Webpack 从配置文件定义的入口 `entry` 开始，`递归`地构建一个依赖图，这个依赖图包含着应用程序所需的所有模块
-
-### (5) runtime & manifest
+### (6) runtime & manifest
 
 使用 Webpack 构建的应用程序中，主要存在以下三种代码类型
 
 * 业务源码
 * 引用的第三方 npm 包
-* Webpack 的 runtime、manifest 文件，用于管理所有模块的交互
+* Webpack 的 runtime、manifest 文件，用来管理所有模块的交互
   * **manifest 文件**：编译器 Compiler 开始执行、解析、映射应用程序`源代码`时，manifest 文件保留所有模块的详细要点
   * **runtime 文件**：runtime 文件包含浏览器运行时连接模块所需的加载和解析逻辑代码，浏览器中已加载模块的连接，以及懒加载模块的执行逻辑
   * Webpack 完成打包并发送到浏览器运行时，`/src 目录结构将不复存在`，import、require 等模块导入语句都将转换成 `__webpack_require__` 方法，该方法指向`模块标识符`，runtime 文件通过 manifest 文件查询模块标识符，检索出背后对应的模块，完成加载和解析模块的功能
@@ -550,11 +660,11 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
 
 * npm run watch
   
-  ![dist_watch_before1]()
+  ![dist_watch_before1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_watch_before1.png)
 
   修改 index.html 文件 script 标签 src 属性为打包后的 js 文件路径，`http-server` 打开查看效果
 
-  ![dist_watch_before2]()
+  ![dist_watch_before2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_watch_before2.png)
   
 * src/components/textarea.js
 
@@ -574,11 +684,11 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
 
 * 保存后自动编译
 
-  ![dist_watch_after1]()
+  ![dist_watch_after1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_watch_after1.png)
 
   由于修改代码会导致 JS 文件名中的 chunkhash 改变，因此需要再次修改 index.html 文件 script 标签 src 属性，http-server 打开查看效果，需要手动刷新页面才能看到新的效果
   
-  ![dist_watch_after2]()
+  ![dist_watch_after2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_watch_after2.png)
 
 ### (2) 保存后自动编译打包且自动刷新浏览器（Live Reload）— devServer
 
@@ -668,7 +778,9 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
 
   浏览器页面上 textarea 输入框输入 ddddd...
 
-  ![serve_devServer_before]()
+  ![serve_devServer_before1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_devServer_before1.png)
+
+  ![serve_devServer_before2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_devServer_before2.png)
 
 * src/components/textarea.js
 
@@ -688,11 +800,11 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
 
 * Ctrl + S 保存文件代码，终端重新编译打包如下
 
-  ![serve_devServer_after1]()
+  ![serve_devServer_after1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_devServer_after1.png)
 
   观察浏览器页面变化如下，可得知 devServer 自动刷新页面会丢失操作状态
 
-  ![serve_devServer_after2]()
+  ![serve_devServer_after2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_devServer_after2.png)
 
 ### (3) 模块热替换（Hot Module Replacement，HMR）— HMR
 
@@ -769,7 +881,7 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
 
 * npm run serve
 
-  ![serve_hmr_before]()
+  ![serve_hmr_before](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_hmr_before.png)
 
 * src/components/textarea.js
 
@@ -816,7 +928,7 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
 
 * 操作步骤同上，保存文件代码后观察页面变化如下
 
-  ![serve_hmr_after]()
+  ![serve_hmr_after](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_hmr_after.png)
 
 ## 6. 加载器 loader
 
@@ -941,7 +1053,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
 * npm run serve
 
-  ![serve_css_style_loader]()
+  ![serve_css_style_loader](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_css_style_loader.png)
 
 ### (2) 加载图片
 
@@ -1045,7 +1157,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
 * npm run serve
 
-  ![serve_file_url_loader_image]()
+  ![serve_file_url_loader_image](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_file_url_loader_image.png)
 
 ### (3) 加载字体
 
@@ -1158,7 +1270,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
 * npm run serve
 
-  ![serve_file_url_loader_font]()
+  ![serve_file_url_loader_font](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_file_url_loader_font.png)
 
 ### (4) 加载多媒体
 
@@ -1303,7 +1415,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
 * npm run serve
 
-  ![serve_file_url_loader_media]()
+  ![serve_file_url_loader_media](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_file_url_loader_media.png)
 
 ### (5) 加载数据
 
@@ -1464,7 +1576,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
 
 * npm run serve
 
-  ![serve_xml_loader]()
+  ![serve_xml_loader](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_xml_loader.png)
 
 ## 7. 插件 plugin
 
@@ -1864,7 +1976,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
 
 * npm run build
 
-  ![dist_copy_webpack_plugin]()
+  ![dist_copy_webpack_plugin](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_copy_webpack_plugin.png)
 
 ## 8. 代码检查、转换、压缩
 
@@ -2212,11 +2324,11 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
 * src/index.js
 
-  ![ESLint报错]()
+  ![ESLint报错](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/ESLint%E6%8A%A5%E9%94%99.png)
 
 * Ctrl + S 保存，自动格式化代码
 
-  ![ESLint报错修复]()
+  ![ESLint报错修复](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/ESLint%E6%8A%A5%E9%94%99%E4%BF%AE%E5%A4%8D.png)
 
 ### (2) ES6 转换 ES5（Babel）
 
@@ -2538,13 +2650,13 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
 
 * npm run build
 
-  ![dist_css1]()
+  ![dist_css1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_css1.png)
 
-  ![dist_css2]()
+  ![dist_css2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_css2.png)
 
   查看可知，JS 文件代码没有被压缩，
 
-  ![dist_js1]()
+  ![dist_js1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_js1.png)
 
 ### (4) JS 代码压缩
 
@@ -2702,7 +2814,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
 
 * npm run build
 
-  ![dist_js2]()
+  ![dist_js2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_js2.png)
 
 ## 9. Webpack 编译阶段优化
 
@@ -2970,11 +3082,13 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
 
 * npm run build
 
-  ![dist_import()]()
+  ![dist_import()](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_import().png)
 
 ### (2) TreeShaking
 
 TreeShaking 功能就是摇掉树上的枯枝和树叶，也就是摇掉项目中的`未引用代码 dead-code`，TreeShaking 并不是指某一个配置选项，而是一组功能搭配使用的效果
+
+TreeShaking 功能是基于 `ES6 modules 静态特性检测`找出未引用代码，因此 CommonJS 模块 TreeShaking 就会失效
 
 * **生产环境**：生产环境打包时`自动`开启 TreeShaking 功能，检测未引用代码并移除，无需手动配置
 * **其他环境**：其他环境需要开发者`手动`在配置文件 webpack.config.js 中配置 TreeShaking 功能
@@ -3020,62 +3134,216 @@ sideEffects 功能就是模块打包时去除导出成员外的其他代码，si
 
 CodeSplitting 功能就是实现`代码分包`，`生产环境`下默认开启 CodeSplitting 功能
 
-* Webpack 内置代码分包策略如下
-  * 新的 chunk 是否被共享或者是来自 node_modules 的模块
-  * 新的 chunk 体积在压缩之前是否大于 30kb
-  * 按需加载 chunk 的并发请求数量小于等于 5 个
-  * 页面初始加载时的并发请求数量小于等于 3 个
-* Webpack 提供 `optimization.splitChunks` 供开发者自行配置代码分包策略
-  * 但是在某些业务情况下并不是十分合适，例如一个后台管理系统，大部分页面都是表格，因此封装一个公共 Table 组件供所有表格页面使用，但是体积很小只有 15KB，不符合 Webpack 内置代码分包策略，会被打包到每个页面的 bundle，这就很浪费资源不太合理了，这种情况就建议把大部分页面能公用的组件单独分包
-  * Webpack 内置代码分包策略优化如下
+Webpack 内置代码分包策略如下
 
-    ![Webpack内置代码分包策略优化]()
+* 新的 chunk 是否被共享或者是来自 node_modules 的模块
+* 新的 chunk 体积在压缩之前是否大于 30kb
+* 按需加载 chunk 的并发请求数量小于等于 5 个
+* 页面初始加载时的并发请求数量小于等于 3 个
 
-    webpack.config.js
+Webpack 提供 `optimization.splitChunks` 供开发者自行配置代码分包策略
 
-    ```javascript
-    optimization: {
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          libs: { // 基础类库
-            name: 'chunk-libs',
-            test: /[\\/]node_modules[\\]/,
-            priority: 10,
-            chunks: 'initial' // 只打包初始时依赖的第三方
-          },
-          elementUI: { // UI 组件库
-            name: 'chunk-elementUI', // elementUI 单独拆包
-            test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于 libs、app 不然会被打包进 libs、app
-            priority: 20,
-          },
-          commons: { // 自定义组件/函数
-            name: 'chunk-commons',
-            test: pathResolve('src/components'),
-            priority: 5,
-            minChunks: 3, // 最小共用次数
-            reuseExistingChunk: true
-          }
+* Webpack 内置代码分包策略在某些业务情况下并不是十分合适，例如一个后台管理系统，大部分页面都是表格，因此封装一个公共 Table 组件供所有表格页面使用，但是体积很小只有 15KB，不符合 Webpack 内置代码分包策略，会被打包到每个页面的 bundle，这就很浪费资源不太合理了，这种情况就建议把大部分页面能公用的组件单独分包
+* Webpack 内置代码分包策略优化配置如下
+
+  ![Webpack内置代码分包策略优化](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/Webpack%E5%86%85%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%88%86%E5%8C%85%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96.png)
+
+  webpack.config.js
+
+  ```javascript
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        libs: { // 基础类库
+          name: 'chunk-libs',
+          test: /[\\/]node_modules[\\]/,
+          priority: 10,
+          chunks: 'initial' // 只打包初始时依赖的第三方
+        },
+        elementUI: { // UI 组件库
+          name: 'chunk-elementUI', // elementUI 单独拆包
+          test: /[\\]node_modules[\\]element-ui[\\]/, //权重需大于 libs、app 不然会被打包进 libs、app
+          priority: 20,
+        },
+        commons: { // 自定义组件/函数
+          name: 'chunk-commons',
+          test: pathResolve('src/components'),
+          priority: 5,
+          minChunks: 3, // 最小共用次数
+          reuseExistingChunk: true
         }
       }
     }
-    ```
+  }
+  ```
 
 ### (5) 提取 manifest 文件
 
-Webpack 的 runtime、manifest 文件，用于管理所有模块的交互
+Webpack 的 runtime、manifest 文件，用来管理所有模块的交互
 
 * **manifest 文件**：编译器 Compiler 开始执行、解析、映射应用程序`源代码`时，manifest 文件保留所有模块的详细要点
 * **runtime 文件**：runtime 文件包含浏览器运行时连接模块所需的加载和解析逻辑代码，浏览器中已加载模块的连接，以及懒加载模块的执行逻辑
 * Webpack 完成打包并发送到浏览器运行时，`/src 目录结构将不复存在`，import、require 等模块导入语句都将转换成 `__webpack_require__` 方法，该方法指向`模块标识符`，runtime 文件通过 manifest 文件查询模块标识符，检索出背后对应的模块，完成加载和解析模块的功能
 
-Webpack 提供 `optimization.runtimeChunk` 让开发者配置如何提取 manifest，作用是将包含 chunks 映射关系的 list 从 app.js 提取出来单独生成一个 `runtimeChunk.xxx.js`，但是该 JS 文件非常小又经常会改变，每次都需要重新请求，HTTP 耗时远大于执行时间，因此不建议单独拆包，而是使用插件 `ScriptExtHtmlWebpackPlugin` 将其内联到 `index.html`，index.html 本来每次打包都会改变
+Webpack 提供 `optimization.runtimeChunk` 让开发者配置如何提取 manifest 文件，将包含 chunks 映射关系的 list 从 app.js 提取出来单独生成一个 `runtimeChunk.xxx.js`
+
+runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请求，HTTP 耗时远大于执行时间，因此不建议单独拆包，而是使用插件 `ScriptExtHtmlWebpackPlugin` 将其内联到 `index.html`，index.html 本来每次打包都会改变
 
 * npm install script-ext-html-webpack-plugin --save-dev
 * webpack.config.js
   
   ```javascript
+  const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
 
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv === 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathResolve('./dist'), // 输出目录
+        publicPath: '/' // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/, // 正则匹配文件路径
+            include: /(src)/, // 提高构建速度
+            use: {
+              loader: 'babel-loader'
+            }
+          },
+          {
+            test: /\.css$/,
+            exclude: /(node_modules)/,
+            // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+            use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../' // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          }
+        ]
+      },
+      plugins: [
+        new ESLintWebpackPlugin(),
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash].css', // 入口文件中引入的 CSS 文件
+          chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
+        }),
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack', // title属性
+          meta: { // meta标签
+            viewPort: 'width=device-width'
+          }
+        })
+      ]
+    }
+
+    // 开发环境
+    if (argv.nodeEnv === 'development') {
+      config.target = 'web'
+      config.devServer = {
+        port: '8082',
+        open: true,
+        hot: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false }
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin()
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        }),
+        new ScriptExtHtmlWebpackPlugin({
+          inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
+        })
+      ]
+      config.optimization = {
+        minimize: true,
+        minimizer: [
+          new OptimizeCssAssetsWebpackPlugin(),
+          new TerserWebpackPlugin()
+        ],
+        runtimeChunk: 'single' // 单独提取 manifest 文件
+      }
+    }
+
+    return config
+  }
   ```
 
 * npm run build
+
+  ![dist_manifest](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_manifest.png)
