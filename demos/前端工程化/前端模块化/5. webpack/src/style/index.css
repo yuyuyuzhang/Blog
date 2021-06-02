@@ -1,9 +1,0 @@
-@font-face {
-  font-family: 'myFont';
-  src: url('../assets/TJS.ttf');
-}
-body {
-  background: url('../assets/cat.jpg');
-  font-family: 'myFont';
-  color: red;
-}
