@@ -7,6 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const RemoveCommentsPlugin = require('./config/remove-comments-plugin.js')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -86,6 +87,10 @@ module.exports = (env, argv) => {
         {
           test: /\.xml$/,
           use: 'xml-loader'
+        },
+        {
+          test: /\.md$/,
+          use: './config/async-markdown-loader.js'
         }
       ]
     },
@@ -133,21 +138,22 @@ module.exports = (env, argv) => {
   if (argv.nodeEnv === 'production') {
     config.plugins = [
       ...config.plugins,
+      new ScriptExtHtmlWebpackPlugin({
+        inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
+      }),
       new CleanWebpackPlugin(),
       new CopyWebpackPlugin({
         patterns: [
           { from: './src/static/test.js', to: './static' }
         ]
       }),
-      new ScriptExtHtmlWebpackPlugin({
-        inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
-      })
+      new RemoveCommentsPlugin()
     ]
     config.optimization = {
       minimize: true,
       minimizer: [
-        new OptimizeCssAssetsWebpackPlugin(),
-        new TerserWebpackPlugin()
+        new OptimizeCssAssetsWebpackPlugin()
+        // new TerserWebpackPlugin()
       ],
       runtimeChunk: 'single' // 单独提取 manifest 文件
     }

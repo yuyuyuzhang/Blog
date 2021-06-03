@@ -6,9 +6,8 @@
     "*.css"
   ],
   "scripts": {
-    "serve": "webpack serve --node-env=development --inline --progress",
+    "serve": "webpack serve --node-env=development",
     "build": "webpack --node-env=production",
-    "none": "webpack ",
     "watch": "webpack --node-env=production --watch"
   },
   "devDependencies": {

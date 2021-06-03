@@ -37,6 +37,10 @@ console.log(Person)
 import Info from './assets/data2.xml'
 console.log(Info)
 
+// 加载 markdown 模块
+import Hello from './md/hello.md'
+console.log(Hello)
+
 // 按需引入模块
 const btn = document.createElement('button')
 btn.innerHTML = '显示链接'

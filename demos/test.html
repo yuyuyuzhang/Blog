@@ -12,7 +12,10 @@
 
 <script>
 
-
+let source = '# Hello markdown'
+source = source + 'async-markdown-loader'
+source = source.split(' ').filter(item => item !== '#').join(' ')
+console.log(source)
 
 
 

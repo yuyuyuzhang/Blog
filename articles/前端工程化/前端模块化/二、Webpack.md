@@ -31,7 +31,7 @@ Webpack 启动后，根据配置找到项目中的指定入口文件，然后顺
 
 ![依赖关系树](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%A0%91.gif)
 
-Webpack 遍历整个依赖关系树，找到每个节点对应的资源文件，然后根据配置文件中的 loader 配置，交给对应的 loader 去加载这个模块，最后将加载的结果放入 bundle.js 文件
+Webpack 遍历整个依赖关系树，找到每个节点对应的资源文件，然后根据配置文件中的 loader 配置，交给对应的 loader 去加载这个模块
 
 对于无法通过 JS 代码表示的资源文件，例如图片、字体，对应的 loader 会将其单独作为资源拷贝到输出目录，然后将这个资源文件的访问路径作为这个模块的导出成员暴露给外部
 
@@ -141,6 +141,8 @@ Compiler.run() 方法定义在 Compiler 类上，具体文件在 node_modules/we
   * 样式文件、HTML 文件中的图片链接 image url
 * **chunk**：Webpack 处理过程中根据 module 依赖关系生成 chunk 文件
 * **bundle**：Webpack 处理好 chunk 文件后，最终输出可在浏览器直接运行的 bundle 文件
+
+![module_chunk_bundle]()
 
 ### (4) hash vs chunkhash vs contenthash
 
@@ -470,7 +472,7 @@ module.exports = (env, argv) => {
 
 ### (5) 入口 entry
 
-Webpack 提供 entry 配置`设置哪个模块作为构建依赖关系图的开始`，Webpack 首先进入入口，然后找出入口直接或间接依赖的模块和库，每个依赖项随即被处理，最后被输出到 bundles 文件
+Webpack 提供 entry 配置`设置哪个模块作为构建依赖关系图的开始`，Webpack 首先进入入口，然后找出入口直接或间接依赖的模块和库，每个依赖项随即被处理，最后被输出到 bundle 文件
 
 > entry 配置可以指定`一或多个`入口，其入口模块的路径必须是`相对 context 配置的目录`
 
@@ -496,7 +498,7 @@ module.exports = (env, argv) => {
 
 ### (6) 出口 output
 
-Webpack 提供 output 配置`设置在磁盘哪里输出创建的 bundles 文件，以及如何向磁盘写入编译文件，如何命名这些文件等`
+Webpack 提供 output 配置`设置在磁盘哪里输出创建的 bundle 文件，以及如何向磁盘写入编译文件，如何命名这些文件等`
 
 > output 配置只能指定`一个`出口
 
@@ -932,12 +934,29 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
 
 ## 6. 加载器 loader
 
-Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块`，因此 loader 类似于其他构建工具中的任务 task，`loader 还可以将其他类型资源模块转换为 JS 模块，或将内联模块转换为 data URL`，实现所有类型资源模块的加载，从而实现项目的整体模块化
+### (1) loader
+
+Webpack 本身只是 JS 模块打包器，Webpack 内置 loader 只能加载 JS 模块，因此如果需要加载其他类型的资源模块，就需要配置不同的 loader，loader 可以`在 import 模块时预处理模块`，因此 loader 类似于其他构建工具中的任务 task，`loader 还可以将其他类型资源模块转换为 JS 模块，或将内联模块转换为 data URL`，实现所有类型资源模块的加载，从而实现项目的整体模块化
 
 * **JS 模块**：Webpack 内置 JS 模块加载器，无需 loader 即可加载 JS 模块，但是在工程化的项目中，我们还需要对 ES6 代码进行语法检查以及将 ES6 语法转换成浏览器可直接识别的 ES5 语法，这就需要相应的 loader 进行处理
 * **其他类型资源模块**：loader 用于将其他类型资源模块转换为 JS 模块，或将内联模块转换为 data URL，从而实现项目的整体模块化
 
-### (1) 加载 CSS
+Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入是加载的资源文件内容，函数的输出是处理后的结果，loader 支持链式传递，而 loader 的原理是`在 JS 文件代码中加载其他类型资源`，因此`一组链式 loader 的最后一个必须返回 JS 代码`
+
+#### ① loader 的特性
+
+* **loader 支持链式传递**：loader 能够对资源使用流水线处理，一组链式的 loader 按照`相反`顺序执行，第一个 loader 以`字符串`的形式读入资源文件，返回值传给下一个 loader，由于 loader 的原理是`在 JS 代码中加载其他类型资源`，因此最后一个 loader 必须返回 `JS 代码`
+* **loader 支持同步和异步**：Node 使用的是 chrome V8 JS 引擎，因此 `Node 环境只有一个 JS 引擎线程`，Webpack 就是工作在 Node 环境
+  * **同步 loader**：同步返回转换后的内容，转换过程会阻塞 Webpack 整个构建，构建缓慢只适用于计算量小、速度快的情况
+  * **异步 loader**：异步返回转换后的内容，转换过程不会阻塞 Webpack 整个构建，适用于计算量大、耗时长的情况，例如网络请求
+
+#### ② loader 的作用
+
+* **加载任意类型资源文件**：Webpack 本身只是 JS 模块打包器，Webpack 内置 loader 只能加载 JS 模块，因此如果需要加载其他类型的资源模块，就需要配置不同的 loader
+* **便于开发者维护**：Webpack 的设计哲学是`真正需要引用资源的并不是整个应用，而是你正在编写的 JS 代码`，假设我们在开发某个页面上的局部功能时，需要用到一个 CSS 文件和一个图片文件，如果还是将资源引用到 HTML 文件然后在 JS 文件中添加需要的逻辑代码，那么后期如果这个局部功能不需要了，我们就需要同时删除 HTML 中的资源引用和 JS 中的逻辑代码，也就是说需要同时维护两条线，但是如果遵循 Webpack 的设计哲学，所有资源的加载都是由 JS 代码控制，后期只需要维护 JS 代码这一条线
+* **减少网络请求**：正常情况下，项目部署上线后，CSS 文件、图片文件、字体文件、多媒体文件等静态资源都需要向服务器请求，而使用 Webpack 打包后的项目，CSS 文件被 css-loader、style-loader 转换成 `<style>` 标签加载到 JS 文件代码中，图片、字体、多媒体等文件，文件大小若小于 limit 参数，都被 url-loader 转换成 `base64` 格式编码加载到 JS 文件代码中，这些静态资源都不再需要单独向服务器请求，只要请求到了 JS 文件，这些资源就都存在，因此能够显著减少网络请求
+
+### (2) 加载 CSS
 
 * npm i css-loader -D
   
@@ -1055,7 +1074,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
   ![serve_css_style_loader](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_css_style_loader.png)
 
-### (2) 加载图片
+### (3) 加载图片
 
 * npm i file-loader -D
 
@@ -1159,7 +1178,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
   ![serve_file_url_loader_image](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_file_url_loader_image.png)
 
-### (3) 加载字体
+### (4) 加载字体
 
 * src/style/index.css
 
@@ -1272,7 +1291,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
   ![serve_file_url_loader_font](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_file_url_loader_font.png)
 
-### (4) 加载多媒体
+### (5) 加载多媒体
 
 * src/index.js
 
@@ -1417,7 +1436,7 @@ Webpack 提供 loader 机制，`loader 可以在 import 模块时预处理模块
 
   ![serve_file_url_loader_media](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_file_url_loader_media.png)
 
-### (5) 加载数据
+### (6) 加载数据
 
 Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 是 Webpack 内置的无需 loader 处理，XML 文件需要 xml-loader 处理
 
@@ -1578,13 +1597,299 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
 
   ![serve_xml_loader](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_xml_loader.png)
 
+### (7) 开发一个 loader
+
+需求是开发一个可以加载 markdown 文件的 loader，以便在代码中可以直接导入 .md 文件，.md 文件一般是需要转换成 HTML 之后再呈现到页面上，因此 markdown-loader 的工作原理是`接收 .md 文件，转换成 HTML 字符串，再拼接成 JS 代码`
+
+* src/md/hello.md
+
+  ```md
+  # Hello markdwon
+  ```
+
+* src/index.js
+
+  ```javascript
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
+
+  // HMR 处理函数
+  let lastTextarea = Textarea
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./components/textarea.js', () => {
+      const value = lastTextarea.value
+      document.body.removeChild(lastTextarea)
+      lastTextarea = createTextarea()
+      lastTextarea.value = value
+      document.body.append(lastTextarea)
+    })
+  }
+
+  // 加载 CSS 模块
+  import './style/index.css'
+
+  // 加载多媒体模块
+  import movie from './assets/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 加载 JSON 模块
+  import Person from './assets/data1.json'
+  console.log(Person)
+
+  // 加载 XML 模块
+  import Info from './assets/data2.xml'
+  console.log(Info)
+
+  // 加载 markdown 模块
+  import Hello from './md/hello.md'
+  console.log(Hello)
+  ```
+
+* config/sync-markdown-loader.js
+
+  ```javascript
+  // 导出一个处理函数
+  module.exports = source => {
+    // 必须返回 JS 代码
+    return "console.log('<h1>hello sync-markdown-loader</h1>')"
+  }
+  ```
+
+* config/async-markdown-loader.js
+
+  ```javascript
+  // 此处不能使用箭头函数，否则函数内部取不到正确的 this
+  module.exports = function(source) {
+    console.log('source:', source) // 以字符串的形式获取资源 "# Hello markdown"
+
+    // 获取 callback() 函数
+    const cb = this.async()
+
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve('hello async-markdown-loader')
+      }, 1000)
+    }).then(res => {
+      cb(null, res)
+    })
+  }
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/,
+            exclude: /(node_modules)/,
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../'          // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
+          }
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![serve_markdown_loader]()
+
 ## 7. 插件 plugin
+
+### (1) plugin
 
 loader 机制是为了完成项目中其他类型资源模块的加载，从而实现项目的整体模块化
 
-plugin 机制是为了解决项目中除资源模块打包以外的其他自动化工作，因此 plugin 的能力范围更广用途更多
+plugin 机制是为了解决项目中`除资源模块打包以外的其他自动化工作`，因此 plugin 的能力范围更广用途更多
 
-### (1) clean-webpack-plugin
+#### ① 钩子机制
+
+Webpack 的 plugin 机制就是软件开发中常见的`钩子机制`，钩子机制类似于 `DOM 的事件`，`钩子函数`类似于 `DOM 的事件回调函数`
+
+Webpack 的整个工作过程会有很多环节，为了便于插件的扩展，Webpack 几乎在每个环节都埋下了一个钩子，这样开发 plugin 时就可以通过往这些不同钩子上挂载不同的钩子函数，实现扩展 Webpack 的能力
+
+![钩子机制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E9%92%A9%E5%AD%90%E6%9C%BA%E5%88%B6.gif)
+
+#### ② Tapable 库
+
+Webpack 的钩子机制是通过 `Tapable` 库实现的，类似于 Node 的 `EventEmitter` 库，其实就是实现的`发布订阅模式的自定义事件`
+
+* **EventEmitter 库**：通过 `on()` 方法注册一个事件，通过 `emit()` 方法触发一个事件，执行事件回调函数
+  
+  ```javascript
+  const EventEmitter = require('events');
+  const myEmitter = new EventEmitter();
+
+  //on的第一个参数是事件名,第二个参数是事件回掉函数
+  myEmitter.on('newListener', (param1,param2) => {
+    console.log("newListener", param1, param2)
+  });
+
+  //emit的第一个参数是触发的事件名,第二个以后的参数是事件回调函数的参数
+  myEmitter.emit('newListener', 111, 222);
+  ```
+
+* **Tapable 库**：通过 `tap()` 方法为钩子注册一个`同步钩子函数`，通过 `tapAsync()` 方法为钩子注册一个`异步钩子函数`，通过 `call()` 方法触发一个钩子，钩子触发时钩子上挂载的所有同步和异步钩子函数都会执行
+  
+  Tapable 库为插件提供了很多钩子类，这些类可以为插件创建钩子
+  
+  ```javascript
+  SyncHook
+  SyncBailHook
+  SyncWaterfallHook
+  AsyncParallelHook
+  AsyncSeriesHook
+  AsyncSeriesWaterfallHook
+  ```
+  
+  ```javascript
+  class MyDaily {
+    constructor() {
+      //最好将插件的自定义钩子暴露在类的hooks属性上
+      this.hooks = {
+        beforeWork: new SyncHook(["getUp"]),
+        atWork: new SyncWaterfallHook(["workTask"]),
+        afterWork: new SyncBailHook(["activity"])
+      };
+    }
+    tapTap(){
+      //同步钩子函数：同一个钩子上的所有同步钩子函数按注册顺序执行
+      this.hooks.beforeWork.tap("getOut", ()=>{
+        console.log("出门")
+      })
+      this.hooks.atWork.tap("makePPT", ()=>{
+        console.log("做 PPT")
+        return "你的 ppt"
+      })
+      this.hooks.afterWork.tap("goHome", (work)=>{
+        console.log("带着工作回家：" + work)
+      })
+
+      //异步钩子函数：callback()类似于generator函数的next()
+      this.hooks.beforeWork.tapAsync("putOnCloth", (params, callback)=>{
+        console.log("穿衣服")
+        callback(); //此处无callback，则getOut不会执行
+      })
+      this.hooks.beforeWork.tapAsync("getOut", (params, callback)=>{
+        console.log("出门")
+        callback() //此处无callback，则无法跳出
+      })
+    }
+    run(){
+      this.hooks.beforeWork.call()
+      this.hooks.atWork.call()
+      this.hooks.afterWork.call()
+    }
+  }
+  ```
+
+### (2) clean-webpack-plugin
 
 Webpack 每次打包的结果都是直接覆盖到 dist 目录，因此打包之前 dist 目录就可能存在上次打包遗留的文件，再次打包时只能覆盖同名文件，故而已经移除的资源文件就会一直积累在里面，导致部署上线时出现多余文件，这显然非常不合理
 
@@ -1670,6 +1975,10 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
             test: /\.xml$/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
+          }
         ]
       },
       plugins: [
@@ -1710,7 +2019,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
   }
   ```
 
-### (2) html-webpack-plugin
+### (3) html-webpack-plugin
 
 HTML 文件一般是单独存放在项目根目录下，这会导致以下 2 个问题
 
@@ -1804,6 +2113,10 @@ html-webpack-plugin 插件的使用如下
             test: /\.xml$/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
+          }
         ]
       },
       plugins: [
@@ -1844,7 +2157,7 @@ html-webpack-plugin 插件的使用如下
   }
   ```
 
-### (3) copy-webpack-plugin
+### (4) copy-webpack-plugin
 
 copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理的资源文件拷贝到输出目录（一般放在 static 文件夹）
 
@@ -1929,6 +2242,10 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
             test: /\.xml$/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
+          }
         ]
       },
       plugins: [
@@ -1977,6 +2294,185 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
 * npm run build
 
   ![dist_copy_webpack_plugin](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_copy_webpack_plugin.png)
+
+### (5) 开发一个 plugin
+
+需求是开发一个打包时能够自动清除注释的插件，这样 bundle.js 文件将更易阅读
+
+删除 bundle.js 文件的注释，只有在 Webpack 明确需要生成的 bundle.js 文件内容后才能实施，查阅 API 文档后得知，我们需要把任务挂载到 `emit 钩子`上，emit 钩子会在 Webpack 即将向输出目录输出文件前执行
+
+Webpack 要求插件必须是一个`包含 apply() 方法的类`
+
+* config/remove-comments-plugin.js
+  
+  ```javascript
+  const {
+    SyncHook,
+    SyncBailHook,
+    SyncWaterfallHook
+  } = require('tapable')
+
+  class RemoveCommentsPlugin {
+    constructor(){}
+    apply (compiler) {
+      // Webpack工作过程中最核心的对象,包含此次构建的所有配置信息,通过这个对象注册钩子函数
+      console.log(compiler)
+      console.log('RemoveCommentsPlugin 启动')
+
+      // 通过compiler对象的hooks属性访问emit钩子
+      // 再通过tap()方法注册同步钩子函数，第一个参数是插件名，第二个参数是同步钩子函数
+      compiler.hooks.emit.tap('RemoveCommentsPlugin', compilation => {
+        // compilation => 可以理解为此次打包的上下文
+        // assets属性获取即将写入输出目录的文件信息
+        for (const name in compilation.assets) {
+          console.log(name) // 输出文件名
+          console.log(compilation.assets[name].source()) // 输出文件内容
+
+          // 去掉JS文件注释
+          if (name.endsWith('.js')) {
+            const contents = compilation.assets[name].source()
+            const noComments = contents.replace(/\/\*{2,}\/\s?/g, '')
+            compilation.assets[name] = {
+              source: () => noComments,
+              size: () => noComments.length
+            }
+          }
+        }
+      })
+    }
+  }
+  module.exports = RemoveCommentsPlugin
+  ```
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../'          // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
+          }
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true,
+        overlay: { errors: true, warnings: false },
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        }),
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run build
 
 ## 8. 代码检查、转换、压缩
 
@@ -2276,6 +2772,10 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
             test: /\.xml$/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
+          }
         ]
       },
       plugins: [
@@ -2443,6 +2943,10 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
             test: /\.xml$/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
+          }
         ]
       },
       plugins: [
@@ -2590,6 +3094,10 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
           {
             test: /\.xml$/,
             use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
           }
         ]
       },
@@ -2753,6 +3261,10 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
           {
             test: /\.xml$/,
             use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
           }
         ]
       },
@@ -2917,6 +3429,10 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
   import Info from './assets/data2.xml'
   console.log(Info)
 
+  // 加载 markdown 模块
+  import Hello from './md/hello.md'
+  console.log(Hello)
+
   // 按需引入模块
   const btn = document.createElement('button')
   btn.innerHTML = '显示链接'
@@ -3021,6 +3537,10 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
           {
             test: /\.xml$/,
             use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
           }
         ]
       },
@@ -3281,6 +3801,10 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
           {
             test: /\.xml$/,
             use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            use: './config/async-markdown-loader.js'
           }
         ]
       },
@@ -3320,14 +3844,14 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
     if (argv.nodeEnv === 'production') {
       config.plugins = [
         ...config.plugins,
+        new ScriptExtHtmlWebpackPlugin({
+          inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
+        }),
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin({
           patterns: [
             { from: './src/static/test.js', to: './static' }
           ]
-        }),
-        new ScriptExtHtmlWebpackPlugin({
-          inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
         })
       ]
       config.optimization = {
