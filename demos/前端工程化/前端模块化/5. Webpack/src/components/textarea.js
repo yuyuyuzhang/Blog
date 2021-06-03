@@ -10,8 +10,4 @@ const f = () => {
 
   return element
 }
-
-// Tree Shaking
-const trim = str => str.trim()
-
-export { f, trim }
+export default f

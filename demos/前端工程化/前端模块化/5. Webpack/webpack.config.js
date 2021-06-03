@@ -87,10 +87,6 @@ module.exports = (env, argv) => {
         {
           test: /\.xml$/,
           use: 'xml-loader'
-        },
-        {
-          test: /\.md$/,
-          use: './config/async-markdown-loader.js'
         }
       ]
     },
@@ -152,8 +148,8 @@ module.exports = (env, argv) => {
     config.optimization = {
       minimize: true,
       minimizer: [
-        new OptimizeCssAssetsWebpackPlugin()
-        // new TerserWebpackPlugin()
+        new OptimizeCssAssetsWebpackPlugin(),
+        new TerserWebpackPlugin()
       ],
       runtimeChunk: 'single' // 单独提取 manifest 文件
     }
