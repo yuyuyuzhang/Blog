@@ -49,7 +49,7 @@ Webpack 构建是一个`串行`的过程
 * **chunk**：Webpack 合并 loader 处理完的结果，组装成 chunk 文件
 * **bundle**：Webpack 根据配置文件最终输出可在浏览器直接运行的 bundle 文件
 
-![module_chunk_bundle]()
+![module_chunk_bundle](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/module_chunk_bundle.png)
 
 ### (3) hash vs chunkhash vs contenthash
 
