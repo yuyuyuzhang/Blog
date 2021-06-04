@@ -55,7 +55,7 @@ Webpack 构建是一个`串行`的过程
 
 当我们把打包后的 dist 目录部署到服务器上后，客户端浏览器就能够访问该服务器的网站和资源，而获取资源是比较耗时的，因此浏览器使用一种名为`缓存`的技术，可以通过命中缓存，降低网络流量，使网站加载速度更快
 
-然而如果我们在部署新版本时，未更改资源文件名，浏览器很可能会认为其未更新，转而使用缓存版本，如果新版本和缓存版本资源内容不同，就需要用户手动清除浏览器缓存之后才能访问新版本，这对于用户来说并不方便
+然而如果我们在部署新版本时，未更改资源文件名，浏览器很可能会认为其未更新，转而使用缓存版本，如果新版本和缓存版本资源内容不同，就需要用户手动清除浏览器缓存之后才能访问新版本，这对用户来说很不方便
 
 Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包都生成新的文件名，从而告诉浏览器是否要读取缓存
 
@@ -70,22 +70,14 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
 ### (4) moduleId vs chunkId
 
 * **moduleId**：Webpack 内部为每个 module 维护了一个递增的 moduleId，当增加或删除 moudle 的时候，就需要增加或删除 moduleId，导致其他 module 虽然内容没有变化，但由于 moduleId 被强占，自身 moduleId 只能自增或自减，因此整个 moduleId 表的顺序都错乱了
-  
-  chunk 内部的每个 module 都有一个 moduleId，如果引用一个新文件或删除一个旧文件，都可能导致其他文件的 moduleId 变化，这样缓存就失效了
-  
-  ![moduleId表](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/moduleId%E8%A1%A8.png)
-  
-  Webpack4 提供 `HashedModuleIdsPlugin` 插件解决这个问题，不使用自增的 moudleId，使用 `hash 之后的文件路径`作为 moudleId
-
-  Webpack5 内置该插件解决这个问题，无需手动下载配置
-  
-  ![新moduleId](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E6%96%B0moduleId.png)
-
+  * chunk 内部的每个 module 都有一个 moduleId，如果引用一个新文件或删除一个旧文件，都可能导致其他文件的 moduleId 变化，这样缓存就失效了
+    ![moduleId表](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/moduleId%E8%A1%A8.png)
+  * Webpack4 提供 `HashedModuleIdsPlugin` 插件解决这个问题，不使用自增的 moudleId，使用 `hash 之后的文件路径`作为 moudleId
+  * Webpack5 内置该插件解决这个问题，无需手动下载配置
+    ![新moduleId](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E6%96%B0moduleId.png)
 * **chunkId**：Webpack 内部为每个 chunk 维护了一个递增的 chunkId，当增加或删除 chunk 的时候，就需要增加或删除 chunkId，导致其他 module 虽然内容没有变化，但由于 chunkId 被强占，自身 chunkId 只能自增或自减，因此整个 chunkId 表的顺序都错乱了
-  
-  Webpack4 提供 `NamedChunkPlugin` 插件解决这个问题，但是该插件只对有 name 的 chunk 有效，因此对于`路由懒加载`的页面无效，NamedChunkPlugin 插件支持自定义 `nameResolver` 规则解决路由懒加载无效的问题
-
-  Webpack5 内置该插件解决这个问题，无需手动下载配置
+  * Webpack4 提供 `NamedChunkPlugin` 插件解决这个问题，但是该插件只对有 name 的 chunk 有效，对于`路由懒加载`的页面无效，但是 NamedChunkPlugin 插件支持自定义 `nameResolver` 规则解决路由懒加载无效的问题
+  * Webpack5 内置该插件解决这个问题，无需手动下载配置
 
 ### (5) runtime & manifest
 
