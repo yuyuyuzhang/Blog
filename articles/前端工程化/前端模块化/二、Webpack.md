@@ -3571,8 +3571,18 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 
 #### ② 开发一个 loader
 
+需求是开发一个可以加载 markdown 文件的 loader，以便在代码中可以直接导入 .md 文件，.md 文件一般是需要转换成 HTML 之后再呈现到页面上的，因此 markdown-loader 的工作原理是`接收 .md 文件，转换成 HTML 字符串，再拼接成 JS 代码`
+
 ### (7) plugin API
 
 #### ① plugin API
 
 #### ② 开发一个 plugin
+
+需求是开发一个打包时能够自动清除注释的插件，使得 bundle.js 文件更易阅读
+
+![comments](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/comments.png)
+
+删除 bundle.js 文件的注释，只有在 Webpack 明确需要生成的 bundle.js 文件内容后才能实施，查阅 API 文档后得知，我们需要把任务挂载到 `emit 钩子`上，emit 钩子会在 Webpack 即将向输出目录输出文件前执行
+
+Webpack 要求插件必须是一个`包含 apply() 方法的类`
