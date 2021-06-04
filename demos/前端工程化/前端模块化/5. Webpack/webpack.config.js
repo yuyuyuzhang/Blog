@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const RemoveCommentsPlugin = require('./config/remove-comments-plugin.js')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -122,11 +123,20 @@ module.exports = (env, argv) => {
       // open: true,
       hot: true,
       hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-      overlay: { errors: true, warnings: false }
+      overlay: { errors: true, warnings: false },
+      quiet: true // 控制台输出配置：FriendlyErrorsPlugin
     }
     config.plugins = [
       ...config.plugins,
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new FriendlyErrorsPlugin({
+        compilationSuccessInfo: {
+          messages: [
+            `Your application is running here: http://localhost:8082`
+          ]
+        },
+        onErrors: undefined
+      })
     ]
   }
 
