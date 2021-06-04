@@ -3586,3 +3586,7 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 删除 bundle.js 文件的注释，只有在 Webpack 明确需要生成的 bundle.js 文件内容后才能实施，查阅 API 文档后得知，我们需要把任务挂载到 `emit 钩子`上，emit 钩子会在 Webpack 即将向输出目录输出文件前执行
 
 Webpack 要求插件必须是一个`包含 apply() 方法的类`
+
+https://github.com/yuyuyuzhang/Blog/raw/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv4%E5%9C%B0%E5%9D%80.png
+
+https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv4%E5%9C%B0%E5%9D%80.png
