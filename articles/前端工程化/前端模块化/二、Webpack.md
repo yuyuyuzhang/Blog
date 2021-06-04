@@ -35,7 +35,7 @@ Webpack 构建是一个`串行`的过程
   * loader 机制处理 JS 外其他类型资源模块，例如 CSS、图片等
   * 对于无需通过 JS 代码表示的资源文件，例如超过 url-loader limit 限制的资源文件，直接通过 file-loader 拷贝到输出目录，并将这个资源文件的访问路径作为这个模块的导出成员暴露给外部
 * **组装 chunk**：合并 loader 处理完的结果，组装成一个个包含一或多个模块的 `chunk` 文件
-* **输出 bundle**：根据配置文件的输出路径和文件名，将输出的 `bundle` 文件写入文件系统
+* **输出 bundle**：根据配置文件将输出的可在浏览器直接运行的 `bundle` 文件写入文件系统
 
 ### (2) module vs chunk vs bundle
 
@@ -46,8 +46,8 @@ Webpack 构建是一个`串行`的过程
   * CommonJS require()
   * css/sass/less 文件中的 @import
   * 样式文件、HTML 文件中的图片链接 image url
-* **chunk**：Webpack 处理过程中根据 module 依赖关系生成 chunk 文件
-* **bundle**：Webpack 处理好 chunk 文件后，最终输出可在浏览器直接运行的 bundle 文件
+* **chunk**：Webpack 合并 loader 处理完的结果，组装成 chunk 文件
+* **bundle**：Webpack 根据配置文件最终输出可在浏览器直接运行的 bundle 文件
 
 ![module_chunk_bundle]()
 
