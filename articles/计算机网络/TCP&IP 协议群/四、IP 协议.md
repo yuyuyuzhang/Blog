@@ -72,6 +72,8 @@ IP 地址 = 网络号 + 主机号
 
 ![IPv4地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv4%E5%9C%B0%E5%9D%80.png)
 
+![IPv4地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv4%E5%9C%B0%E5%9D%80.png)
+
 ### (2) 子网掩码
 
 ① IPv4 地址的网络号和主机号通过子网掩码区分，子网掩码对应网络号的位全部为 1，对应主机号的位全部为 0
