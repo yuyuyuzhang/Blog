@@ -1987,6 +1987,150 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
 
   ![dist_copy_webpack_plugin](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_copy_webpack_plugin.png)
 
+### (5) friendly-errors-webpack-plugin
+
+friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时控制台输出信息
+
+* npm i friendly-errors-webpack-plugin -D
+
+* webpack.config.js
+
+  ```javascript
+  const webpack = require('webpack')
+  const { CleanWebpackPlugin} = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv == 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathJoin('./dist'),             // 输出目录
+        publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathJoin('src')
+        },
+        extensions: ['.js', '.vue', '.json'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.css$/, 
+            exclude: /(node_modules)/, 
+            use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, 
+            exclude: /(node_modules)/, 
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,             // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../'          // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/, 
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            use: 'xml-loader'
+          },   
+        ]
+      },
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html', // 文件名
+          title: 'Webpack',       // title 属性
+          meta: {                 // meta 标签
+            viewPort: 'width=device-width'
+          }
+        }),
+      ]
+    }
+
+    // 开发环境：devServer
+    if (argv.nodeEnv === 'development') {
+      config.devServer = {
+        port: '8081',
+        open: true,
+        hot: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8082`
+            ]
+          },
+          onErrors: undefined
+        })
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        })
+      ]
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![dist_friendly_errors_webpack_plugin](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_friendly_errors_webpack_plugin.png)
+
 ## 8. 代码检查、转换、压缩
 
 ### (1) ES6 语法检查（ESlint）
@@ -2213,6 +2357,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -2305,12 +2450,21 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
         port: '8081',
         open: true,
         hot: true,
-        hotOnly: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
         overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
       }
       config.plugins = [
         ...config.plugins,
         new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8082`
+            ]
+          },
+          onErrors: undefined
+        })
       ]
     }
 
@@ -2373,6 +2527,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -2472,12 +2627,21 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
         port: '8081',
         open: true,
         hot: true,
-        hotOnly: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
         overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
       }
       config.plugins = [
         ...config.plugins,
         new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8082`
+            ]
+          },
+          onErrors: undefined
+        })
       ]
     }
 
@@ -2520,6 +2684,7 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -2626,11 +2791,20 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
         open: true,
         hot: true,
         hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-        overlay: { errors: true, warnings: false }
+        overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
       }
       config.plugins = [
         ...config.plugins,
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8082`
+            ]
+          },
+          onErrors: undefined
+        })
       ]
     }
 
@@ -2683,6 +2857,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -2789,11 +2964,20 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
         open: true,
         hot: true,
         hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-        overlay: { errors: true, warnings: false }
+        overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
       }
       config.plugins = [
         ...config.plugins,
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8082`
+            ]
+          },
+          onErrors: undefined
+        })
       ]
     }
 
@@ -2951,6 +3135,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -3057,11 +3242,20 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
         open: true,
         hot: true,
         hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-        overlay: { errors: true, warnings: false }
+        overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
       }
       config.plugins = [
         ...config.plugins,
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8082`
+            ]
+          },
+          onErrors: undefined
+        })
       ]
     }
 
@@ -3211,6 +3405,7 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
   const { CleanWebpackPlugin } = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
@@ -3317,11 +3512,20 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
         open: true,
         hot: true,
         hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
-        overlay: { errors: true, warnings: false }
+        overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
       }
       config.plugins = [
         ...config.plugins,
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8082`
+            ]
+          },
+          onErrors: undefined
+        })
       ]
     }
 
@@ -3358,3 +3562,25 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
   ![dist_manifest](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/dist_manifest.png)
 
 ## 11. Webpack API
+
+### (1) Compiler 钩子
+
+### (2) Compilation 钩子
+
+### (3) resolver
+
+### (4) parser
+
+### (5) module API
+
+### (6) loader API
+
+#### ① loader API
+
+#### ② 开发一个 loader
+
+### (7) plugin API
+
+#### ① plugin API
+
+#### ② 开发一个 plugin
