@@ -26,7 +26,7 @@ History 对象保存了当前浏览器窗口浏览过的所有文档地址，由
 
 浏览器访问顺序：a.html -> b.html -> c.htmld
 
-![History栈](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/History%E6%A0%88.png)
+![History栈](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/History%E6%A0%88.png)
 
 ### (2) 状态方法
 

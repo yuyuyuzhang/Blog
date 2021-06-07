@@ -16,7 +16,7 @@
 
 ③ 客户端收到服务器返回的 Set-Cookie 字段后，从中获取 Session ID 值，将其作为 Cookie 保存在本地，下次向服务器发送请求时，浏览器会自动发送 Cookie，服务器就可以通过验证 Session ID 识别用户及其认证状态
 
-![Cookie管理状态](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/Cookie%E7%AE%A1%E7%90%86%E7%8A%B6%E6%80%81.png)
+![Cookie管理状态](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Cookie%E7%AE%A1%E7%90%86%E7%8A%B6%E6%80%81.png)
 
 ### (2) Cookie 的特点
 
