@@ -8,7 +8,7 @@
 
 渲染进程主要负责将 HTML、CSS、JS 转化为用户可以与之交互的网页，每个渲染进程都会启动单独的渲染引擎线程、JS 引擎线程、事件触发线程、定时器计数线程、异步请求线程
 
-![渲染进程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B.png)
+![渲染进程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B.png)
 
 ### (2) 标签页渲染进程
 
@@ -16,7 +16,7 @@
 
 渲染进程主要负责将 HTML、CSS、JS 转化为用户可以与之交互的网页，每个渲染进程都会启动单独的渲染引擎线程、JS 引擎线程、事件触发线程、定时器计数线程、异步请求线程
 
-![渲染进程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B8%E5%85%B3/%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B.png)
+![渲染进程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B.png)
 
 ### (3) JS 引擎单线程实现异步
 
