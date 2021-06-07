@@ -70,8 +70,6 @@ IP 地址 = 网络号 + 主机号
 
 ② IPv4 地址以 8 个比特为一组，每组以 `.` 隔开，再转成十进制表示
 
-![IPv4地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv4%E5%9C%B0%E5%9D%80.png)
-
 ![IPv4地址](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/IPv4%E5%9C%B0%E5%9D%80.png)
 
 ### (2) 子网掩码

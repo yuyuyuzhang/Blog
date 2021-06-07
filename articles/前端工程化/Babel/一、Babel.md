@@ -138,7 +138,7 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
   * Babel 是`完全插件化`的，想要将 ES6 AST 转换成 ES5 AST，必须使用对应语法转换功能的`插件 plugin`，如果不使用任何插件，最终结果也只是生成和 ES6 源码一模一样的代码
 * **@babel/generator**：接收 ES5 AST，生成 ES5 源码
 
-![babel_core]()
+![babel_core](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Babel/babel_core.png)
 
 #### 实例
 
@@ -201,15 +201,15 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
   由下图可见，代码无异常，可以正常运行
 
-  ![babel_server]()
+  ![babel_server](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Babel/babel_server.png)
 
 * npm run babel
 
-  ![dist_babel_core1]()
+  ![dist_babel_core1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Babel/dist_babel_core1.png)
 
   可以看出，转换后的代码没有任何变化
 
-  ![dist_babel_core2]()
+  ![dist_babel_core2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Babel/dist_babel_core2.png)
 
 ### (2) @babel/plugin-*、@babel/preset-*
 
@@ -249,7 +249,7 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
   可以看出目前不兼容 Promsie 等新 API
 
-  ![dist_babel_preset_env]()
+  ![dist_babel_preset_env](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Babel/dist_babel_preset_env.png)
 
 ### (3) @babel/polyfill（core-js、regenerator-runtime）
 
@@ -297,7 +297,7 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
 * npm run babel
 
-  ![dist_babel_plugin_transform_runtime]()
+  ![dist_babel_plugin_transform_runtime](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Babel/dist_babel_plugin_transform_runtime.png)
 
 ## 4. Babel 插件开发
 
