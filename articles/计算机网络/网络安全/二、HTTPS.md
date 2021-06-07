@@ -10,7 +10,7 @@
 
 ③ HTTPS 主要保证网络安全中的`数据交换信息`的安全
 
-![HTTPS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTPS.png)
+![HTTPS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTPS.png)
 
 ## 2. HTTPS 的加密技术
 
@@ -132,13 +132,13 @@ SSL 客户端认证是利用客户端证书完成认证的方式，服务器凭�
 
 通常 HTTP 直接和 TCP 通信，而 HTTPS 则是 HTTP 先和 SSL 通信，再由 SSL 和 TCP 通信
 
-![HTTP和HTTPS对比](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTP%E5%92%8CHTTPS%E5%AF%B9%E6%AF%94.png)
+![HTTP和HTTPS对比](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTP%E5%92%8CHTTPS%E5%AF%B9%E6%AF%94.png)
 
 ### (1) TCP 连接
 
 TCP 连接三次握手和四次挥手
 
-![持久连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5.png)
+![持久连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5.png)
 
 ### (2) SSL 连接
 
@@ -170,13 +170,13 @@ SSL/TLS 连接只有握手阶段，没有挥手阶段
 
 ⑨ 服务器发送 Finished 报文，该报文使用共享密钥加密，客户端和服务器的 Finished 报文交换完毕，SSL 连接就算建立完成，从此处开始进行 HTTP 协议的通信
 
-![SSL连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/SSL%E8%BF%9E%E6%8E%A5.png)
+![SSL连接](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/SSL%E8%BF%9E%E6%8E%A5.png)
 
 ### (3) HTTPS 的通信
 
 先建立 TCP 连接，再建立 SSL 连接，之后进行 HTTP 通信，然后再断开 TCP 连接
 
-![HTTPS通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTPS%E9%80%9A%E4%BF%A1.png)
+![HTTPS通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTPS%E9%80%9A%E4%BF%A1.png)
 
 ### (4) HTTPS 比 HTTP 慢
 
@@ -190,7 +190,7 @@ HTTPS 比 HTTP 多了进行 `SSL 通信`的过程，整体上处理通信量会�
 
 SSL 必须进行加密处理，客户端和服务器都需要进行`加密和解密的运算处理`，因此 HTTPS 比 HTTP 会更多地消耗客户端和服务器的 CPU 和内存等硬件资源，导致硬件负载加强，处理速度变慢
 
-![HTTPS通信慢](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%8D%8F%E8%AE%AE/HTTPS%E9%80%9A%E4%BF%A1%E6%85%A2.png)
+![HTTPS通信慢](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTPS%E9%80%9A%E4%BF%A1%E6%85%A2.png)
 
 ## 6. HTTP 升级至 HTTPS
 
