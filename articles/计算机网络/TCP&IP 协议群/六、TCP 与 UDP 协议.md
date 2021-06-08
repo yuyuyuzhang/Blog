@@ -35,7 +35,7 @@
 
 TCP/IP 通信中通常采用 5 个信息来识别一个通信，`源 IP`、`目标 IP`、`源端口`、`目标端口`、`协议号`，只有这 5 项全部相同才可以被认为是同一个通信
 
-![识别同一个通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E8%AF%86%E5%88%AB%E5%90%8C%E4%B8%80%E4%B8%AA%E9%80%9A%E4%BF%A1.png)
+![识别同一个通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E8%AF%86%E5%88%AB%E5%90%8C%E4%B8%80%E4%B8%AA%E9%80%9A%E4%BF%A1.png)
 
 ## 3. UDP 协议
 
@@ -55,7 +55,7 @@ TCP/IP 通信中通常采用 5 个信息来识别一个通信，`源 IP`、`目�
 
 **④ 校验和**：为了提供可靠的 UDP 报文而设计
 
-![UDP报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/UDP%E6%8A%A5%E6%96%87.png)
+![UDP报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/UDP%E6%8A%A5%E6%96%87.png)
 
 ### (3) UDP 的应用
 
@@ -84,21 +84,21 @@ TCP 协议采用面向有连接的传输方式，应用程序不用顾虑网络�
 
 #### ① 确认应答和序列号机制
 
-**确认应答**
+##### 确认应答
 
 * 发送端主机将数据发出之后，会等待接收端主机的确认应答，接收端主机收到数据会返回一个已收到消息的通知，这个通知就叫做确认应答
 * 如果一定时间内接收端主机未收到确认应答，则认为数据已经丢失，进行重发，这种情况下有可能是数据丢失，也有可能是确认应答丢失  
   * 数据丢失
-    ![数据丢失](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1.png)
+    ![数据丢失](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1.png)
   * 确认应答丢失
-    ![确认应答丢失](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%A1%AE%E8%AE%A4%E5%BA%94%E7%AD%94%E4%B8%A2%E5%A4%B1.png)
+    ![确认应答丢失](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%A1%AE%E8%AE%A4%E5%BA%94%E7%AD%94%E4%B8%A2%E5%A4%B1.png)
 
-**序列号**
+##### 序列号
 
 * 如果是确认应答丢失，发送端主机只需要按照机制进行重发，但是接收端主机会反复收到相同的数据，而为了对应用层提供可靠传输，发送端主机必须得放弃重复的数据包
 * 序列号是按顺序给发送数据的每个字节都标上的编号，接收端主机查询 TCP 报文首部的序列号和数据长度，将自己下一步应该接收的序号作为确认应答返回，通过确认应答和序列号，TCP 协议就可以实现可靠传输
 
-![TCP可靠传输](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCP%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93.png)
+![TCP可靠传输](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCP%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93.png)
 
 #### ② 重发超时间隔
 
@@ -106,7 +106,7 @@ TCP 协议采用面向有连接的传输方式，应用程序不用顾虑网络�
 * 最理想的时间间隔是保证确认应答一定能在这个时间内返回的最小时间，然而这个时间随着网络环境的不同而有所变化，例如在长距离通信中应该比短距离通信中长一些
 * TCP 协议在每次发包时都会计算往返时间及其偏差，重发时间间隔就是比往返时间和偏差之和稍大一点的值
 
-![重发时间间隔](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E9%87%8D%E5%8F%91%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94.png)
+![重发时间间隔](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E9%87%8D%E5%8F%91%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94.png)
 
 #### ③ 连接管理
 
@@ -133,28 +133,28 @@ TCP 协议采用面向有连接的传输方式，应用程序不用顾虑网络�
 * 客户端受到 FIN 后，发送针对 FIN 的确认应答，表示自己收到了请求
 * 服务器收到确认应答后断开连接，客户端等待 2 秒后无回复，证明服务器已关闭连接，客户端也就关闭连接
 
-![连接管理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86.png)
+![连接管理](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86.png)
 
 #### ④ 最大消息长度 MSS
 
 * 最大消息长度 MSS（Maximum Segment Size） 是指 TCP 发送数据的单位，即 TCP 以 MSS 的大小将数据分割发送，最理想的情况是，MSS 正好是 `IP 报文不会被分片处理的最大长度`
 * TCP 三次握手时，在两端主机之间计算得出 MSS，两端主机发出建立连接的请求时，会在 TCP 报文首部写入自身能适应的 MSS，然后在两者之间取较小值作为最终的 MSS
 
-![MSS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/MSS.png)
+![MSS](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/MSS.png)
 
 #### ⑤ 窗口控制
 
 * TCP 传输以一个段（最大消息长度 MSS）为单位，每发一个段就进行一次确认应答的处理，那么包的往返时间越长，通信性能就越低
 * 为了解决这个问题，TCP 引入了窗口这个概念，窗口大小就是无需等待确认应答而可以继续发送的数据的最大值，转发时间将大幅度缩短
 
-![窗口控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%AA%97%E5%8F%A3%E6%8E%A7%E5%88%B6.png)
+![窗口控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E7%AA%97%E5%8F%A3%E6%8E%A7%E5%88%B6.png)
 
 #### ⑥ 高速重发控制
 
 * 没有使用窗口控制的时候，未收到确认应答的数据都要重发，使用窗口控制的时候，某些确认应答即使丢失也无需重发，可以通过下一个确认应答进行确认
 * 如下图所示，当某一段报文丢失后，发送端会一直收到序号为 1001 的确认应答，如果发送端主机`连续 3 次`收到同一个序号的确认应答，就会重发对应的数据
 
-![高速重发控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E9%AB%98%E9%80%9F%E9%87%8D%E5%8F%91%E6%8E%A7%E5%88%B6.png)
+![高速重发控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E9%AB%98%E9%80%9F%E9%87%8D%E5%8F%91%E6%8E%A7%E5%88%B6.png)
 
 #### ⑦ 流控制
 
@@ -169,7 +169,7 @@ TCP 协议采用面向有连接的传输方式，应用程序不用顾虑网络�
 * TCP 为了防止该问题的出现，在通信一开始就会通过`慢启动算法`得到的值，对发送数据量进行控制
 * TCP 定义了拥塞窗口的概念，慢启动时，将拥塞窗口的大小设置为 `1 MSS`，之后每收到一次确认应答，拥塞窗口的值就加 1，发送数据时，将拥塞窗口与接收端主机通知的窗口大小作比较，发送比较小的值还要小的数据量
 
-![拥塞控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.png)
+![拥塞控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.png)
 
 ### (3) TCP 报文
 
@@ -185,11 +185,11 @@ TCP 协议采用面向有连接的传输方式，应用程序不用顾虑网络�
 
 **⑥ 控制位**：控制标志，如下所示
 
-![控制位](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%8E%A7%E5%88%B6%E4%BD%8D.png)
+![控制位](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%8E%A7%E5%88%B6%E4%BD%8D.png)
 
 **⑦ 窗口大小**：接收端主机通知的窗口大小
 
-![TCP报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCP%E6%8A%A5%E6%96%87.png)
+![TCP报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/TCP%E6%8A%A5%E6%96%87.png)
 
 ## 5. TCP 比 UDP 快
 
