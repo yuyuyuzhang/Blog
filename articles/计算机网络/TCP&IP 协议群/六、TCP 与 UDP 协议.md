@@ -161,7 +161,7 @@ TCP 协议采用面向有连接的传输方式，应用程序不用顾虑网络�
 * 接收端主机将自己可以接收的缓冲区大小放入 TCP 报文首部的窗口大小字段通知给发送端主机，接收端主机的缓冲区面临数据溢出时，窗口大小会被设置为一个更小的值通知发送端主机，从而形成一个完整的 TCP 流控制
 * 为了避免窗口大小的更新通知在传送途中丢失导致无法继续通信的问题，发送端主机会是不是发送一个叫做`窗口探测`的数据段以获取最新的窗口大小
 
-![流控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCPIP%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%B5%81%E6%8E%A7%E5%88%B6.png)
+![流控制](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP%26IP%20%E5%8D%8F%E8%AE%AE%E7%BE%A4/%E6%B5%81%E6%8E%A7%E5%88%B6.png)
 
 #### ⑧ 拥塞控制
 
