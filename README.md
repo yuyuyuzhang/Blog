@@ -30,11 +30,11 @@ JS 系列之 E5S 已完结
 
 JS 系列之 ES6 已完结
 
-JS 系列之 TS 已完结
-
 JS 系列之函数式编程 进行中......
 
 JS 系列之设计模式 进行中......
+
+JS 系列之 TS 进行中......
 
 CSS 系列之 CSS 进行中......
 
@@ -235,6 +235,13 @@ CSS 系列之 SASS 已完成
 10. [异步](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E3%80%81%E5%BC%82%E6%AD%A5.md)
 11. [模块](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97.md)
 
+## JS 系列之函数式编程
+
+1. [定时器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/%E4%B8%80%E3%80%81%E5%AE%9A%E6%97%B6%E5%99%A8.md)
+2. [递归](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/%E4%BA%8C%E3%80%81%E9%80%92%E5%BD%92.md)
+
+## JS 系列之设计模式
+
 ## JS 系列之 TS
 
 1. [数据类型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
@@ -244,13 +251,6 @@ CSS 系列之 SASS 已完成
 5. [泛型](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%BA%94%E3%80%81%E6%B3%9B%E5%9E%8B.md)
 6. [声明文件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E5%85%AD%E3%80%81%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6.md)
 7. [工程配置](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/TS/%E4%B8%83%E3%80%81%E5%B7%A5%E7%A8%8B%E9%85%8D%E7%BD%AE.md)
-
-## JS 系列之函数式编程
-
-1. [定时器](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/%E4%B8%80%E3%80%81%E5%AE%9A%E6%97%B6%E5%99%A8.md)
-2. [递归](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/%E4%BA%8C%E3%80%81%E9%80%92%E5%BD%92.md)
-
-## JS 系列之设计模式
 
 ## CSS 系列之 CSS
 
