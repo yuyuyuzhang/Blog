@@ -7,7 +7,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const RemoveCommentsPlugin = require('./config/remove-comments-plugin.js')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const path = require('path')
@@ -37,17 +36,27 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.js$/, // 正则匹配文件路径
-          include: /(src)/, // 提高构建速度
-          use: {
-            loader: 'babel-loader'
-          }
+          test: /\.vue$/,
+          exclude: /(node_modules)/,
+          use: 'vue-loader',
         },
         {
-          test: /\.css$/,
+          test: /\.js$/,
+          include: /(src)/,
+          use: 'babel-loader'
+        },
+        {
+          test: /\.(css|postcss)$/,
           exclude: /(node_modules)/,
-          // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
-          use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
+          use: [ // CSS 代码单独拆包，一组链式 loader 按相反顺序执行
+            MiniCssExtractPlugin.loader, 
+            'css-loader'
+          ] 
+        },
+        {
+          test: /\.(sass|scss)$/,
+          exclude: /(node_modules)/,
+          use: [MiniCssExtractPlugin.loader, 'css-loader'] 
         },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -84,10 +93,6 @@ module.exports = (env, argv) => {
               publicPath: '../'
             }
           }
-        },
-        {
-          test: /\.xml$/,
-          use: 'xml-loader'
         }
       ]
     },
@@ -106,14 +111,6 @@ module.exports = (env, argv) => {
       })
     ]
   }
-
-  // watch 模式
-  // if (argv.watch) {
-  //   config.watchOptions = {
-  //     aggregateTimeout: 300, // 将指定延迟内的所有更改都聚合到这次的重新构建
-  //     ignored: /node_modules/, // 不监听 node_modules 文件夹，避免占用大量 CPU 和内存
-  //   }
-  // }
 
   // 开发环境
   if (argv.nodeEnv === 'development') {
@@ -148,12 +145,11 @@ module.exports = (env, argv) => {
         inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
       }),
       new CleanWebpackPlugin(),
-      new CopyWebpackPlugin({
-        patterns: [
-          { from: './src/static/test.js', to: './static' }
-        ]
-      }),
-      new RemoveCommentsPlugin()
+      // new CopyWebpackPlugin({
+      //   patterns: [
+      //     { from: './src/static/test.js', to: './static' }
+      //   ]
+      // })
     ]
     config.optimization = {
       minimize: true,

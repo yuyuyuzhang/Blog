@@ -103,7 +103,7 @@ AST 在实际工作中应用场景大致有如下几个
 
 * npm i eslint -D
 
-* ./node_modules/.bin/eslint --init
+* eslint --init
 
   ```javascript
   How would you like to use ESLint?

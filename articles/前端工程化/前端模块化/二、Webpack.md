@@ -642,7 +642,7 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -752,7 +752,7 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -941,7 +941,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -1045,7 +1045,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -1158,7 +1158,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -1303,7 +1303,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -1464,7 +1464,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -1675,7 +1675,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -1809,7 +1809,7 @@ html-webpack-plugin 插件的使用如下
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -1934,7 +1934,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -2069,7 +2069,7 @@ friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时�
       },
       plugins: [
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -2343,6 +2343,8 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
 * webpack.config.js
 
+  配置 ESLintWebpackPlugin 插件代替已废弃的 eslint-loader
+
   ```javascript
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
@@ -2427,7 +2429,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
       plugins: [
         new ESLintWebpackPlugin(), // 代替已废弃的 eslint-loader
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -2512,6 +2514,8 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
   ```
 
 * webpack.config.js
+
+  配置 babel-loader
 
   ```javascript
   const webpack = require('webpack')
@@ -2604,7 +2608,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
       plugins: [
         new ESLintWebpackPlugin(), // 代替已废弃的 eslint-loader
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack',       // title 属性
           meta: {                 // meta 标签
             viewPort: 'width=device-width'
@@ -2766,7 +2770,7 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
           chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
         }),
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack', // title属性
           meta: { // meta标签
             viewPort: 'width=device-width'
@@ -2939,7 +2943,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
           chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
         }),
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack', // title属性
           meta: { // meta标签
             viewPort: 'width=device-width'
@@ -3217,7 +3221,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
           chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
         }),
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack', // title属性
           meta: { // meta标签
             viewPort: 'width=device-width'
@@ -3487,7 +3491,7 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
           chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
         }),
         new HtmlWebpackPlugin({
-          filename: 'index.html', // 文件名
+          template: './index.html', // HTML 文件路径
           title: 'Webpack', // title属性
           meta: { // meta标签
             viewPort: 'width=device-width'

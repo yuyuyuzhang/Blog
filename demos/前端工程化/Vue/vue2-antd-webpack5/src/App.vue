@@ -1,5 +1,4 @@
 <template>
-  <!-- <router-view /> -->
   <div>小可爱</div>
 </template>
 
