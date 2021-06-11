@@ -26,7 +26,7 @@ Ubuntu 是通过修改 Apache 配置文件 `/etc/apache2/apache2.conf`，其他�
 
 Apache 默认开启访问日志，需要确认下配置文件是否开启 CustomLog 的日志路径设置，在浏览器被攻击时，通过日志可以帮助回溯整个安全事件的过程，有助于定位漏洞成因和攻击者
 
-```javascript
+```js
 /etc/apache2/sites-available/default-ssl.conf
 /etc/apache2/sites-available/000-default.conf
 ```
@@ -41,7 +41,7 @@ Apache 默认禁止启动 ROOT，可以在 Apache 配置文件中再确认下 Us
 
 * 下面是 apache2.conf 为配置文件时的情况，它通过 /etc/apache2/envars 指定变量名来设置 User 和 Group
 
-    ```javascript
+    ```js
     # /etc/apache2/apache2.conf
     User ${APACHE_RUN_USER}
     Group ${APACHE_RUN_GROUP}
@@ -52,7 +52,7 @@ Apache 默认禁止启动 ROOT，可以在 Apache 配置文件中再确认下 Us
 
 * 如果是 httpd.conf，一般就直接用 User 与 Group 来指定用户名和用户组
 
-    ```javascript
+    ```js
     User apache
     Group apache
     ```
@@ -61,7 +61,7 @@ Apache 默认禁止启动 ROOT，可以在 Apache 配置文件中再确认下 Us
 
 Apache 需要修改 Apache 配置文件，先禁止所有目录的访问，然后再开启可访问的目录，当网站存在目录遍历漏洞时，攻击者可能通过 `../` 来访问系统上的任意目录
 
-```javascript
+```js
 # 先禁止任何目录访问
 
 Order Deny,Allow
@@ -77,7 +77,7 @@ Allow from {网站根目录}
 
 Apache 修改 Apache 配置文件，指定不同响应号的返回页面文件，Apache 错误页面重定向功能可以防止敏感信息泄露，比如网站路径等信息
 
-```javascript
+```js
 ErrorDocument 400 /custom400.html
 ErrorDocument 401 /custom401.html
 ErrorDocument 403 /custom403.html
@@ -92,7 +92,7 @@ Nginx 是一款著名且免费的网页服务器软件，在世界范围内应�
 
 Nginx 配置文件通常位于 `/usr/local/etc/nginx/nginx.conf`，没找到可以通过命令 `locate nginx.conf` 来搜索
 
-```javascript
+```js
 $ locate nginx.conf
 /usr/local/etc/nginx/nginx.conf
 /usr/local/etc/nginx/nginx.conf.default
@@ -102,7 +102,7 @@ $ locate nginx.conf
 
 Nginx 也存在默认页面，上线后应该删除，防止不必要的信息泄露，可通过删除如下配置信息来解决
 
-```javascript
+```js
 location /doc {
 root /usr/share;
 autoindex on;
@@ -120,7 +120,7 @@ autoindex off;
 
 Nginx 默认不允许目录浏览，可以再确认下配置文件中的 autoindex 是否配置为 off，以防止敏感信息泄露
 
-```javascript
+```js
 autoindex off
 ```
 
@@ -128,7 +128,7 @@ autoindex off
 
 Nginx 默认开启访问日志，可以在配置文件中确认下是否已开启，开启日志有助追踪攻击途径，以及定位攻击者
 
-```javascript
+```js
 access_log /backup/nginx_logs/access.log combined;
 ```
 

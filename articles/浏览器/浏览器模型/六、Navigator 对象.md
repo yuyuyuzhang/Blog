@@ -8,7 +8,7 @@ Navigator 对象表示`当前浏览器信息`，包含与浏览器相关的各�
 
 ### (1) Navigator 对象属性
 
-```javascript
+```js
 主机信息：
 navigator.platform                //返回当前主机运行当前浏览器的操作系统平台(不推荐使用)
 navigator.hardwareConcurrency     //返回当前主机的CPU核心数
@@ -59,7 +59,7 @@ navigator.clipboard               //返回 Clipboard API
 
 ### (2) Navigator 对象方法
 
-```javascript
+```js
 浏览器信息：
 navigator.javaEnabled()                 //返回布尔值,浏览器是否启用java
 navigator.taintEnabled()                //返回布尔值,浏览器是否启用数据污点
@@ -85,7 +85,7 @@ navigator.clearAppBadge()               //返回Promise实例,清除当前应用
 
 测试当前浏览器是否支持要使用的 JavaScript 功能，尽量使用 `typeof` 进行能力检测
 
-```javascript
+```js
 //检测是否存在sort()方法,然而任何包含sort属性的对象同样返回true
 function isSortable(obj){
   return !!obj.sort;

@@ -12,7 +12,7 @@ Chrome 尝试以 WebHID API 来解决这个问题，透过 WebHID API 就可直�
 
 ## 2. HID 对象
 
-```javascript
+```js
 定义：const hid = navigator.hid
 方法：hid.getDevices()    //
      hid.requestDevice() //
@@ -20,7 +20,7 @@ Chrome 尝试以 WebHID API 来解决这个问题，透过 WebHID API 就可直�
 
 ## 3. HID 事件
 
-```javascript
+```js
 .onconnect    //
 .ondisconnect //
 ```

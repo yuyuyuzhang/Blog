@@ -10,7 +10,7 @@ File 对象`继承了 Blob 对象`，所有可以使用 Blob 对象的场合都�
 * 第二个参数（必需）：字符串，文件名或文件路径
 * 第三个参数（可选）：配置对象，type 属性为文件的 `MIME 类型`（默认`空字符串`），lastModified 属性为文件的`最后修改时间`
 
-```javascript
+```js
 定义：const file = new File(array,name,{type:MIME,lastModified:Date})
 属性：file.size              //返回file的字节大小
      file.type              //返回file的MIME类型
@@ -36,7 +36,7 @@ FileList 对象表示`一组文件`，是一个`类数组对象`，每个成员�
 <input type="file" id="file">
 ```
 
-```javascript
+```js
 const file = document.getElementById('file')
 file.addEventListener('input', function(e){
   const file = e.target.files[0]
@@ -54,7 +54,7 @@ file.addEventListener('input', function(e){
 <div id="target" style="width:200px;height:200px;border:1px solid red;"></div>
 ```
 
-```javascript
+```js
 const target = document.getElementById("target");      
 target.addEventListener("dragenter", function(e) {        
   e.preventDefault(); //目标节点默认不允许放下拖动节点,阻止默认行为        
@@ -86,7 +86,7 @@ target.addEventListener("drop", function(e) {
 
 FileReader 对象表示`文件读取器`，用于读取 `File 对象`或者 `Blob 对象`的文件内容
 
-```javascript
+```js
 定义：const fr = new FileReader()
 属性：fr.error                    //返回读取文件时产生的错误对象
      fr.readyState               //返回读取文件时的当前状态(0:尚未加载,1:正在加载,2:加载完成)
@@ -100,7 +100,7 @@ FileReader 对象表示`文件读取器`，用于读取 `File 对象`或者 `Blo
 
 ### (2) FileReader 事件
 
-```javascript
+```js
 fr.onloadstart //读取操作开始时触发
 fr.onprogress  //读取操作进行中时触发
 fr.onloadend   //读取操作结束时触发
@@ -115,7 +115,7 @@ fr.onabort     //用户终止读取操作时触发
 <input type="file" id="file">
 ```
 
-```javascript
+```js
 const file = document.getElementById('file')
 file.addEventListener('input', function(e){
   const file = e.target.files[0]

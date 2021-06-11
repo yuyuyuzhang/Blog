@@ -2,7 +2,7 @@
 
 ## 1. REPL
 
-REPL（Read Eval Print Loop，交互式解释器）表示一个电脑环境，类似于 shell，可以在终端中输入命令，并接收到系统的响应
+REPL（Read Eval Print Loop，交互式解释器）表示一个电脑环境，类似于 shell，可以在终端中输入命令，并接收到系统响应
 
 ## 2. Node REPL
 

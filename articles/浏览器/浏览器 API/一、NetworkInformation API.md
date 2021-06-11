@@ -7,7 +7,7 @@
 * 应用何时回到在线状态：可以与服务器重新同步
 * 应用何时处于离线状态：可以将对服务器的请求放入队列中以便稍后使用
 
-```javascript
+```js
 navigator.onLine //返回布尔值,当前浏览器是否在线
 ```
 
@@ -15,7 +15,7 @@ navigator.onLine //返回布尔值,当前浏览器是否在线
 
 NetworkInformation 对象表示`当前设备的网络连接信息`
 
-```javascript
+```js
 定义：const net = navigator.connection
 属性：net.effectiveType //返回当前网络连接的有效类型(slow-2g,2g,3g,4g)
      net.downlink      //返回有效宽带估计值
@@ -25,13 +25,13 @@ NetworkInformation 对象表示`当前设备的网络连接信息`
 
 ## 3. NetworkInformation 事件
 
-```javascript
+```js
 net.onchange //当前网络连接信息变化时,在当前网络连接上触发
 ```
 
 ## 4. 实例
 
-```javascript
+```js
 //浏览器是否在线
 console.log(navigator.onLine)
 

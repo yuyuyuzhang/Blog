@@ -214,7 +214,7 @@ SSL 证书购买完成后，下载证书文件，以 `Nginx 服务器`为例，�
 
 ② 打开 Nginx 安装目录下 conf 目录中的 nginx.conf 文件，找到 HTTPS server 部分，指定证书路径，如下示意并保存，然后重启 Nginx 就可以使用 HTTPS 访问
 
-```javascript
+```js
 server {
   listen 443;
   server_name localhost;

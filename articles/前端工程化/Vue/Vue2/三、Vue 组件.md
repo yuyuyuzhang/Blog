@@ -138,7 +138,7 @@ ES6 的 import() 方法类似于 Node 的 require() 方法，区别主要是 imp
 
 import() 方法返回一个 `Promise 实例`
 
-```javascript
+```js
 const main = document.querySelector('main');
 
 //JS引擎线程执行import()函数,并通知网络进程异步加载模块资源,
@@ -159,7 +159,7 @@ import(`./section-modules/${someVariable}.js`)
 
 import(path) 函数可以用在任何地方，不仅仅是模块，非模块的脚本也可以使用，`运行到这一行代码时`才会加载指定的模块
 
-```javascript
+```js
 //<button @click="handleClick">点击</button>
 const btn = document.getElementById('btn')
 btn.addEventListener('click', function(){
@@ -173,7 +173,7 @@ btn.addEventListener('click', function(){
 
 可以放在 if 代码块，根据不同的情况，加载不同的模块，
 
-```javascript
+```js
 //main.js
 if(flag){
   import('./module1')
@@ -190,7 +190,7 @@ if(flag){
 
 允许模块路径动态生成
 
-```javascript
+```js
 const f = (name) => return './' + name + '.js';
 import(f())
   .then(res => {})
@@ -201,7 +201,7 @@ import(f())
 
 import(path) 加载成功后的模块会作为一个`对象`，成为返回的 Promise 实例的 then 方法的参数函数的参数
 
-```javascript
+```js
 //person.js
 export { person1, person2}
 
@@ -219,7 +219,7 @@ import('./person')
 
 使用 `Promise.all()` 实现同时加载多个模块
 
-```javascript
+```js
 Promise.all([
   import('./module1'),
   import('./module2'),
@@ -233,7 +233,7 @@ Promise.all([
 
 import(path) 函数返回一个 Promise 实例，因而可以用在 async 函数的 await 命令后
 
-```javascript
+```js
 //main.js
 async f(){
   const { export1, export2 } = await import('./module1');
@@ -249,7 +249,7 @@ f();
 
 全局异步组件
 
-```javascript
+```js
 Vue.component(
   'async-webpack-example',
   () => import('./my-async-component')

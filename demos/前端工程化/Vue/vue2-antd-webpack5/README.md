@@ -42,7 +42,7 @@
 
 * src/index.js
 
-  ```javascript
+  ```js
   import Vue from 'vue'
   import App from './App.vue'
 
@@ -62,7 +62,7 @@
 * npm i clean-webpack-plugin html-webpack-plugin copy-webpack-plugin mini-css-extract-plugin optimize-css-assets-webpack-plugin terser-webpack-plugin script-ext-html-webpack-plugin friendly-errors-webpack-plugin -D
 * 项目根目录下新建 webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
   const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
@@ -235,7 +235,7 @@
 * npm i eslint-plugin-vue -D
 * eslint init：项目根目录下新建 .eslintrc.js 配置文件
 
-  ```javascript
+  ```js
   module.exports = {
     root: true,
     env: {
@@ -264,7 +264,7 @@
 
 * webpack.config.js 配置 ESLintWebpackPlugin 插件，代替已废弃的 eslint-loader
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -428,7 +428,7 @@
 * npm i babel-plugin-syntax-jsx babel-plugin-transform-vue-jsx -D
 * 项目根目录下新建 .babelrc.js 文件
 
-  ```javascript
+  ```js
   module.exports = {
     presets: [
       ["@babel/preset-env", {
@@ -451,7 +451,7 @@
 
 * webpack.config.js 配置 babel-loader
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')

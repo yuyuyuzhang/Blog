@@ -50,7 +50,7 @@ WebSocket 协议建立在 HTTP1.1 协议的基础上，WebSocket 协议必须依
 
 ### (1) HTTP 请求报文
 
-```javascript
+```js
 GET /chat HTTP/1.1
 Host: server.example.com
 Upgrade: websocket //升级为WebSocket协议
@@ -62,7 +62,7 @@ Sec-WebSocket-Version: 13 //
 
 ### (2) HTTP 响应报文
 
-```javascript
+```js
 HTTP/1.1 101 Switching Protocols
 Upgrade: websocket
 Connection: Upgrade
@@ -75,7 +75,7 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 
 WebSocket 的客户端 API 部署在 `window.WebSocket(url)`，url 字符串必须以 `ws 或 wss ( 加密通信 )` 开头
 
-```javascript
+```js
 定义：const ws = new WebSocket(url) //返回WebSocket实例,浏览器与服务器建立WebSocket连接
 属性：ws.readyState     //返回WebSocket连接的当前状态
      ws.binaryType     //设置服务器推送的二进制数据类型
@@ -93,7 +93,7 @@ WebSocket 的客户端 API 部署在 `window.WebSocket(url)`，url 字符串必�
 
 ### (2) WebSocket 事件
 
-```javascript
+```js
 ws.onopen    //WebSocket连接建立时触发
 ws.onmessage //WebSocket连接建立后,服务器推送数据时触发
 ws.onerror   //WebSocket连接出错时触发
@@ -102,7 +102,7 @@ ws.onclose   //WebSocket连接关闭时触发
 
 事件对象继承了 Event 对象
 
-```javascript
+```js
 e.data //服务器推送的数据
 ```
 
@@ -116,7 +116,7 @@ e.data //服务器推送的数据
 发送数据：<input type="text" id="txt" >
 ```
 
-```javascript
+```js
 let ws
 
 const connectBtn = document.getElementById('connectBtn')
@@ -163,7 +163,7 @@ function disconnect (e){
 
 Node 服务器实例
 
-```JAVASCRIPT
+```js
 const WebSocketServer = require('ws').Server
 
 const wss = new WebSocketServer({ port: 8181 })

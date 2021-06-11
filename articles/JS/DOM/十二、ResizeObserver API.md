@@ -17,7 +17,7 @@ MutationObserver API 用于`观察并处理 DOM 节点的大小变化`，可以�
 
 浏览器原生提供 ResizeObserver 构造函数，接受一个回调函数作为参数，该回调函数接受一个参数，，当检测到页面变化时执行这个回调函数
 
-```javascript
+```js
 定义：const resizeObserver = new ResizeObserver(entries => {...})
 方法：resizeObserver.observe(elem)   //无返回值,开始观察节点elem
      resizeObserver.unobserve(elem) //无返回值,停止观察节点elem
@@ -28,7 +28,7 @@ MutationObserver API 用于`观察并处理 DOM 节点的大小变化`，可以�
 
 ResizeObserverEntry 对象表示`对某个 DOM 元素的观察入口`，可以获得观察的 DOM 元素变化后的各种尺寸大小
 
-```javascript
+```js
 定义：const entry = entries[index]
 属性：entry.target               
      entry.contentRect               
@@ -45,7 +45,7 @@ F12 打开控制台，控制 div 元素宽高变化时，会触发观察器执�
 <div id="block" style="border:1px solid red;width:100%;height:100px;">aaa</div>
 ```
 
-```javascript
+```js
 const resizeObserver = new ResizeObserver(entries => {
   console.log(entries)
   console.log(entries[0])
@@ -57,7 +57,7 @@ resizeObserver.observe(div)
 
 使用 ResizeObserver API 在每次触发元素的大小变化时，会在 1s 内多次触发回调，可以使用 `throttle 节流函数`进一步优化性能
 
-```javascript
+```js
 const resizeObserver = new ResizeObserver(throttle(entries => {
   entries.forEach(entry => {
     console.log('大小位置 contentRect', entry.contentRect)

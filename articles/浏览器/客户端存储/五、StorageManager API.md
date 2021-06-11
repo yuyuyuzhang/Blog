@@ -42,7 +42,7 @@
 
 ## 3. StorageManager 对象
 
-```javascript
+```js
 定义：const storage = navigator.storage
 方法：storage.estimate()  //返回Promise实例,StorageEstimate对象表示存储空间的限额和使用情况
      storage.persist()   //返回Promise实例,请求当前网站的模式(true:persistent box,false:best-effort box)
@@ -51,7 +51,7 @@
 
 ### (1) 查看存储空间限额和使用情况
 
-```javascript
+```js
 const f = async (spaceRequired) => {
   const storageInfo = await navigator.storage.estimate()
   console.log(storageInfo) //{quote: 64424506982, usage: 0, usageDetails: {}}
@@ -70,7 +70,7 @@ f()
 
 需要在 https 环境下测试
 
-```javascript
+```js
 const f = async (spaceRequired) => {
   Promise.all([
     navigator.storage.persist(),

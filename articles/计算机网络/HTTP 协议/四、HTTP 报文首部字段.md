@@ -126,7 +126,7 @@ Referrer Policy 有以下三种常用方法
   
   服务器返回网页时，通过响应报文的其他首部字段 Referrer-Policy 告知浏览器 Referer 行为
 
-  ```javascript
+  ```js
   Referrer-Policy: origin
   ```
 
@@ -338,7 +338,7 @@ Via 字段用于标记请求报文和响应报文转发过程中经过的所有�
 
 Pragma 字段是 HTTP 1.0 的遗留字段，只用在客户端发送的 HTTP 请求报文中，要求所有的代理服务器不返回缓存，为了兼容所有的 HTTP 协议版本，通常的 HTTP 请求中会同时包含以下两个字段
 
-```javascript
+```js
 Cache-Control: no-cache
 Pragma: no-cache
 ```

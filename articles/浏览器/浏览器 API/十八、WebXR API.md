@@ -2,7 +2,7 @@
 
 ## 1. XRSystem 对象
 
-```javascript
+```js
 定义：const xr = navigator.xr
 方法：xr.isSessionSupported()
      xr.requestSession()
@@ -11,6 +11,6 @@
 
 ## 2. XRSystem 事件
 
-```javascript
+```js
 .ondevicechange //
 ```

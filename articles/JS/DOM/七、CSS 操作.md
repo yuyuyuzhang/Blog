@@ -12,7 +12,7 @@ StyleSheetList 对象表示`当前文档所有样式表的集合`，包含 link 
 
 StyleSheet 对象表示`一张样式表`，可以是 link 元素的外部样式表或者 style 元素的内联样式表
 
-```javascript
+```js
 定义：const sheets = document.styleSheets 
      const sheet = sheets[index]
      const sheet = elem.sheet    //elem为<style>节点
@@ -41,7 +41,7 @@ StyleSheet 对象表示`一张样式表`，可以是 link 元素的外部样式�
 </style>
 ```
 
-```javascript
+```js
 const style = document.getElementById('myStyle');
 const sheet = style.sheet;
 
@@ -54,7 +54,7 @@ console.log(sheet.cssRules); //CSSRuleList {0: CSSStyleRule ".small", 1: CSSStyl
 
 classList 对象操作`元素的 class 类`，可以给元素添加删除类
 
-```javascript
+```js
 定义：const classList = elem.classList
 方法：classList.add(class)      //无返回值,元素增加指定class
      classList.remove(class)   //无返回值,元素移除指定class
@@ -66,7 +66,7 @@ classList 对象操作`元素的 class 类`，可以给元素添加删除类
 <div id="block" class="one"></div>
 ```
 
-```javascript
+```js
 const div = document.getElementById("block");
 const classList = div.classList;
 
@@ -83,7 +83,7 @@ console.log(classList.toString());        //"one"
 
 Style 对象表示`元素的 style 属性指定的所有内联样式`，但不包含与嵌入样式表或外部样式表层叠而来的样式
 
-```javascript
+```js
 定义：const style = elem.style
 访问：style.css
 属性：style.cssText                  //返回/设置style的css规则文本
@@ -100,7 +100,7 @@ Style 对象表示`元素的 style 属性指定的所有内联样式`，但不�
 <div id="block" style="font-size:14px;color:red;">haha</div>
 ```
 
-```javascript
+```js
 const div = document.getElementById("block");
 const style = div.style;
 
@@ -120,7 +120,7 @@ CSSStyleDeclaration 对象表示`元素计算后的所有最终样式`，
 
 文档元素的最终样式是浏览器综合各种规则计算出来的，该对象是`动态`的，任何基于样式的修改都会`实时反映`
 
-```javascript
+```js
 定义：const computedStyle = getComputedStyle(elem)
 访问：computedStyle.css
 属性：computedStyle.length                   //返回computedStyle声明的css规则个数
@@ -136,7 +136,7 @@ CSSStyleDeclaration 对象表示`元素计算后的所有最终样式`，
 <div id="block" style="font-size:14px;color:red;">haha</div>
 ```
 
-```javascript
+```js
 const div = document.querySelector('#block');
 const computedStyle = getComputedStyle(div);
 
@@ -155,7 +155,7 @@ CSSRuleList 对象表示`一组 CSS 规则`，成员都是 CSSRule 实例
 
 CSSRule 对象表示`一条 CSS 规则`，而一条 CSS 规则包括两部分：CSS 选择器和样式声明
 
-```javascript
+```js
 定义：const rules = sheet.cssRules
      const rule = rules[index]
 属性：rule.parentStyleSheet //返回rule所在的样式表
@@ -179,7 +179,7 @@ CSSRule 对象表示`一条 CSS 规则`，而一条 CSS 规则包括两部分：
 </style>
 ```
 
-```javascript
+```js
 const styleNode = document.getElementById('myStyle');
 const sheet = styleNode.sheet;
 const rules = sheet.cssRules;

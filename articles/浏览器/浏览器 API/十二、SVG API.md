@@ -4,7 +4,7 @@
 
 ## 2. SVG 事件
 
-```javascript
+```js
 svg.onSVGAbort  //
 svg.onSVGError  //
 svg.onSVGLoad   //

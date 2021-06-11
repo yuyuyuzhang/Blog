@@ -8,7 +8,7 @@ History 对象表示`当前浏览器窗口的浏览历史`
 
 History 对象保存了当前浏览器窗口浏览过的所有文档地址，由于安全原因，浏览器不允许脚本读取这些地址，但是允许在地址之间导航，浏览器工具栏的 前进 和 后退 按钮，就是对 History 对象进行操作
 
-```javascript
+```js
 定义：window.history
 属性：history.length                       //返回当前浏览器窗口的访问过的文档数量(包括当前文档)
      history.state                        //返回History栈中顶层文档的state对象
@@ -40,7 +40,7 @@ History 对象保存了当前浏览器窗口浏览过的所有文档地址，由
 * 浏览器也不会检查该文档是否存在，只是成为浏览历史中的最新记录
 * 点击浏览器后退按钮，浏览器地址栏立即变成上一条记录，页面不变
 
-```javascript
+```js
 //当前文档 URL：https://wangdoc.com/javascript/bom/history.html
 
 history.pushState(null, '', 'https://www.iconfont.cn/search/index');           //跨域报错
@@ -55,7 +55,7 @@ history.pushState(null, '', 'https://wangdoc.com/javascript/bom/window.html'); /
 * 浏览器也不会检查该文档是否存在，只是成为浏览历史中的最新记录
 * 点击浏览器后退按钮，浏览器地址栏立即变成上上一条记录，页面跳转
 
-```javascript
+```js
 //当前文档 URL：https://wangdoc.com/javascript/bom/history.html
 
 history.replaceState(null, '', 'https://www.iconfont.cn/search/index');           //跨域报错
@@ -68,7 +68,7 @@ history.replaceState(null, '', 'https://wangdoc.com/javascript/bom/window.html')
 
 将要加载的文档若是访问过，则从`浏览器缓存`中加载，否则要求服务器发送文档
 
-```javascript
+```js
 //当前文档 URL：(https://wangdoc.com/javascript/bom/history.html
 history.go(0);  //刷新当前页面
 hostory.go(-1); //后退
@@ -86,13 +86,13 @@ hidtory.go(1);  //前进
 
 Event对象相关属性如下
 
-```javascript
+```js
 e.state //返回浏览器History对象当前记录的state对象
 ```
 
 实例
 
-```javascript
+```js
 //当前文档 URL：https://wangdoc.com/javascript/bom/history.html
 
 window.addEventListener('popstate', function(e){
@@ -114,7 +114,7 @@ history.go(); //控制台无反应, 文档变化,same-origin.html
 
 实例
 
-```javascript
+```js
 const _globalE = function(ename){
   const orig = history[ename]
   return function(){

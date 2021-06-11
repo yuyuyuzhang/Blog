@@ -18,7 +18,7 @@ History 对象表示当前浏览器窗口的`浏览历史`
 
 History 对象保存了当前浏览器窗口浏览过的所有文档地址，由于安全原因，浏览器不允许脚本读取这些地址，但是允许在地址之间导航，浏览器工具栏的前进和后退按钮，就是对 History 对象进行操作
 
-```javascript
+```js
 定义：window.history
 属性：history.length                       //返回当前浏览器窗口的访问过的文档数量(包括当前文档)
      history.state                         //返回History栈中顶层文档的state对象
@@ -60,13 +60,13 @@ history.back()/forward()/go(n)
 
 Event对象相关属性如下
 
-```javascript
+```js
 e.state //返回浏览器 History对象当前记录的state对象
 ```
 
 实例
 
-```javascript
+```js
 //当前文档 URL：https://wangdoc.com/javascript/bom/history.html
 
 window.addEventListener('popstate', function(e){
@@ -87,7 +87,7 @@ history.go(); //控制台无反应, 文档变化,same-origin.html
 
 以下示例通过新建全局事件 pushState、replaceState 监听 history.pushState()、history.replaceState() API
 
-```javascript
+```js
 const _globalE = function(ename){
   const orig = history[ename]
   return function(){
@@ -122,7 +122,7 @@ history.replaceState(null, '', 'https://wangdoc.com/javascript/bom/same-origin.h
 
 片段识别符是 `URL 的锚`，代表文档中的一个位置，# 号后面的字符就是该位置的标识符
 
-```javascript
+```js
 url.hash
 location.hash
 ```
@@ -149,7 +149,7 @@ HTML5 新增 hashchange 事件，每当 URL 的片段识别符改变时，就会
 
 Event 对象相关属性如下
 
-```javascript
+```js
 e.oldURL    //返回变化前的完整URL
 e.newURL    //返回变化后的完整URL
 ```
@@ -163,7 +163,7 @@ e.newURL    //返回变化后的完整URL
 <div id="part2" style="height:500px;border:1px solid red;">part2</div>
 ```
 
-```javascript
+```js
 window.addEventListener('popstate', function(e){
   console.log('state');
 });
@@ -215,7 +215,7 @@ Vue Router 默认 `hash 模式`
 
 router/index.js
 
-```javascript
+```js
 // Vue Router 3.x 版本是一个类
 import Vue from "vue";
 import VueRouter from "vue-router";
@@ -268,7 +268,7 @@ const router = new VueRouter({
 
 router/index.js
 
-```javascript
+```js
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -308,7 +308,7 @@ const router = new VueRouter({
 
 router/index.js
 
-```javascript
+```js
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -339,7 +339,7 @@ const router = new VueRouter({
 
 组件内部通过 `this.$router` 访问路由实例，因此可以通过以下三个方法导航到不同的 URL
 
-```javascript
+```js
 this.$router.push(route)    //向history对象添加一条最新浏览记录,地址栏立刻变化,跳转
 this.$router.replace(route) //修改history对象的当前浏览记录,地址栏立刻变化,跳转
 this.$router.go(n)          //浏览器加载指定索引的路由
@@ -377,7 +377,7 @@ export default {
 
 组件 about
 
-```javascript
+```js
 <template>
   <div class="about">
     about
@@ -412,7 +412,7 @@ export default {
 
 ### (3) 全局守卫
 
-```javascript
+```js
 beforeEach(to,from,next)    //全局前置守卫,导航触发后调用
 beforeResolve(to,from,next) //全局解析守卫,导航确认前,同时所有组件内守卫执行后调用
 afterEach(to,from,next)     //全局后置钩子,导航确认后调用
@@ -422,7 +422,7 @@ afterEach(to,from,next)     //全局后置钩子,导航确认后调用
 
 permission.js
 
-```javascript
+```js
 import router from './router'
 
 router.beforeEach((to, from, next) => {
@@ -456,13 +456,13 @@ router.afterEach((to, from) => {
 
 ### (4) 路由守卫
 
-```javascript
+```js
 beforeEnter(to,from,next) //路由独享守卫,全局前置守卫 beforeEach执行后调用
 ```
 
 router/index.js
 
-```javascript
+```js
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -494,7 +494,7 @@ export default router;
 
 ### (5) 组件内守卫
 
-```javascript
+```js
 beforeRouteEnter(to,from,next)  //导航进入当前组件对应的路由前调用,不能访问 this
 beforeRouteUpdate(to,from,next) //路由改变但是当前组件被复用时调用,例如路由 /foo/:id 在 /foo/1 和 /foo/2 之间跳转
 beforeRouteLeave(to,from,next)  //导航离开当前组件对应的路由前调用
@@ -562,7 +562,7 @@ export default {
 
 router/index.js
 
-```javascript
+```js
 import Vue from "vue";
 import VueRouter from "vue-router";
 

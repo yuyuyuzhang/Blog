@@ -37,11 +37,11 @@ Chrome V8 引擎解释和执行 JS 代码阶段如下
 * **Parse**：`V8 引擎`将 JS 代码转换成 `AST 抽象语法树`
   * **词法分析**：将 JS 源代码拆分成最小的、不可再分的`词法单元（token）`，忽略空格
 
-    ```javascript
+    ```js
     var x = 1;
     ```
 
-    ```javascript
+    ```js
     分解成 5 个词法单元：var、a、=、1、;
     ```
 
@@ -109,7 +109,7 @@ AST 在实际工作中应用场景大致有如下几个
 
 * npm i @babel/cli -D
 
-```javascript
+```js
 npx babel [input] -o [output] //编译 input 目录并输出到 output 文件
 npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
@@ -162,7 +162,7 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
 * src/components/base.js
 
-  ```javascript
+  ```js
   const unique = arr => Array.from(new Set(arr))
 
   export { unique }
@@ -170,7 +170,7 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
 * src/index.js
 
-  ```javascript
+  ```js
   const [x, y, ...z] = [1]
   console.log(x, y, z)
 
@@ -230,7 +230,7 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
   项目根目录下新建配置文件 .babelrc.js，用于配置 Babel 转换预设及插件等
 
-  ```javascript
+  ```js
   module.exports = {
     presets: [
       ["@babel/preset-env", {
@@ -274,7 +274,7 @@ npx babel [input] -d [output] //编译 input 目录并输出到 output 目录
 
 * .babelrc.js
 
-  ```javascript
+  ```js
   module.exports = {
     presets: [
       ["@babel/preset-env", {
@@ -315,7 +315,7 @@ Webpack 提供 babel-loader 用于转换 ES6 源码
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const ESLintPlugin = require('eslint-webpack-plugin');
 
   module.exports = {

@@ -4,7 +4,7 @@
 
 Screen 对象表示`当前浏览器窗口所在的用户屏幕`，提供显示设备的信息
 
-```javascript
+```js
 定义：window.screen
 属性：screen.width       //返回当前浏览器窗口所在用户屏幕总宽度(单位像素)
      screen.height      //返回当前浏览器窗口所在用户屏幕总高度(单位像素)
@@ -21,7 +21,7 @@ Screen 对象表示`当前浏览器窗口所在的用户屏幕`，提供显示�
 
 属性应用
 
-```javascript
+```js
 console.log(screen.width);       //1280
 console.log(screen.height);      //720
 console.log(screen.availWidth);  //1280
@@ -35,7 +35,7 @@ console.log(screen.orientation); //ScreenOrientation {type:"landscape-primary", 
 
 根据屏幕的分辨率，将用户导向不同网页的代码
 
-```javascript
+```js
 if(screen.width <= 800 && screen.height <= 600){
   window.location.replace('small.html')
 } else{

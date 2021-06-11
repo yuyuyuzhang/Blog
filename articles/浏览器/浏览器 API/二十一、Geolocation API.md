@@ -8,7 +8,7 @@ Geolocation API 用于`获取用户的当前地理位置`，由于涉及到用�
 
 ## 2. Geolocation 对象
 
-```javascript
+```js
 定义：const geoloacation = navigator.geoloacation                           
 方法：geoloacation.getCurrentPosition(successCB,errorCB,options) //无返回值,请求用户的当前地理位置
      geoloacation.watchPosition(successCB,errorCB,options)      //返回监听ID,监听用户当前地理位置是否发生变化
@@ -25,7 +25,7 @@ maximumage         //正整数,可接受的缓存的最长缓存时间(ms),0:不
 
 Position 对象表示`当前地理位置`
 
-```javascript
+```js
 定义：const position = 
 属性：position.coords    //返回Coordinates实例,表示当前地理位置的坐标
      position.timestamp //返回当前时间戳
@@ -33,7 +33,7 @@ Position 对象表示`当前地理位置`
 
 PositionError 对象表示`请求当前地理位置失败时的错误对象`
 
-```javascript
+```js
 定义：const positionError = 
 属性：positionError.code    //返回错误原因(1:无权限,2:无法获得位置,3:超时)
      positionError.message //返回错误描述字符串
@@ -43,7 +43,7 @@ PositionError 对象表示`请求当前地理位置失败时的错误对象`
 
 Coordinates 对象表示`当前地理位置的坐标`
 
-```javascript
+```js
 定义：const coordinates = Position.coords
 属性：coordinates.longitude        //返回经度
      coordinates.latitude         //返回纬度
@@ -56,7 +56,7 @@ Coordinates 对象表示`当前地理位置的坐标`
 
 ## 5. 实例
 
-```javascript
+```js
 if(!navigator.geolocation){
   console.log('您的浏览器不支持 Geolocation API')
 } else{

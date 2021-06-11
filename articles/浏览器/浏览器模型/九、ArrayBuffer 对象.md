@@ -27,7 +27,7 @@ ArrayBuffer 对象表示`存储二进制数据的一段连续内存`，不能直
 
 ArrayBuffer 构造函数用来`分配一段指定字节大小的连续内存区域`，每个字节的值默认为 `0`
 
-```javascript
+```js
 定义：const buffer = new ArrayBuffer(n); //分配一段n字节的连续内存
 属性：buffer.byteLength                  //返回buffer的字节长度
 方法：静态方法
@@ -40,7 +40,7 @@ ArrayBuffer 构造函数用来`分配一段指定字节大小的连续内存区�
 
 如果分配的内存区域很大，有可能分配失败，通过 byteLength 属性检查是否分配成功
 
-```javascript
+```js
 //分配一段 100 字节的连续内存
 const buf = new ArrayBuffer(100);
 
@@ -83,7 +83,7 @@ TypedArray 构造函数需要通过如下 3 个参数，生成一个`类数组�
 * 第二个参数（可选）：视图开始的`字节序号`，默认从 0 开始
 * 第三个参数（可选）：视图包含的`数据成员个数`，默认直到本段内存区域结束
 
-```javascript
+```js
 定义
 const tv = new Int8Array(buffer,byteOffset,length)
 const tv = new Uint8Array(buffer,byteOffset,length);
@@ -96,7 +96,7 @@ const tv = new Float32Array(buffer,byteOffset,length);
 const tv = new Float64Array(buffer,byteOffset,length);
 ```
 
-```javascript
+```js
 //分配 8 字节的连续内存
 const buffer = new ArrayBuffer(8);
 
@@ -119,7 +119,7 @@ console.log(tv2.length)
 
 TypedArray 构造函数还可以不通过 ArrayBuffer 对象，接受`数组成员个数`作为参数，直接分配内存生成
 
-```javascript
+```js
 定义
 const tv = new Int8Array(length)
 const tv = new Uint8Array(length);
@@ -132,7 +132,7 @@ const tv = new Float32Array(length);
 const tv = new Float64Array(length);
 ```
 
-```javascript
+```js
 //创建一个包含 8 个数据成员的 Float64 视图，基于 64 字节的连续内存
 const tv = new Float64Array(8);
 tv[0] = 10;
@@ -146,7 +146,7 @@ tv[2] = tv[0] + tv[1];
 
 TypedArray 构造函数还可以接受`另一个 TypedArray 实例`作为参数，此时生成的新的类数组对象只是复制了参数的值，对应的底层内存是不一样的，会`另外开辟一段新的内存储存数据`
 
-```javascript
+```js
 定义
 const tv = new Int8Array(typedArrayOther)
 const tv = new Uint8Array(typedArrayOther);
@@ -159,7 +159,7 @@ const tv = new Float32Array(typedArrayOther);
 const tv = new Float64Array(typedArrayOther);
 ```
 
-```javascript
+```js
 //创建一个包含 4 个数据成员的 Int8 视图，基于 4 字节的连续内存
 const tv1 = new Int8Array(4);
 
@@ -177,7 +177,7 @@ console.log(tv2)
 
 TypedArray 构造函数还可以接受`一个数据成员值的数组`作为参数，此时 TypedArray 视图会`重新开辟内存`，不会在原数组的内存上建立视图
 
-```javascript
+```js
 定义
 const tv = new Int8Array(typedArrayOther)
 const tv = new Uint8Array(typedArrayOther);
@@ -190,7 +190,7 @@ const tv = new Float32Array(typedArrayOther);
 const tv = new Float64Array(typedArrayOther);
 ```
 
-```javascript
+```js
 //创建一个包含数据成员 [1,2,3,4] 的 Int16 视图，基于 8 字节的连续内存
 const tv = new Uint16Array([1, 2, 3, 4]);
 console.log(tv)
@@ -207,7 +207,7 @@ TypedArray 类数组对象与普通数组的区别如下
 * 所有成员的默认值为 `0`
 * 所有成员是`连续`的，不会有空位
 
-```javascript
+```js
 属性：实例属性
       tv.buffer             //返回tv整段内存区域对应的ArrayBuffer对象
       tv.byteOffset         //返回tv从底层ArrayBuffer对象的哪个字节开始
@@ -229,7 +229,7 @@ TypedArray 类数组对象与普通数组的区别如下
 
 目前所有个人电脑几乎都是小端字节序，所以 TypedArray 类数组对象内部也采用`小端字节序`读写数据，然而很多网络设备和特定的操作系统采用的是大端字节序，这就导致一个严重问题：`TypedArray 视图无法正确解析大端字节序的数据`，因为它只能处理小端字节序，为了解决这个问题，JS 引入 DataView 视图可以设定字节序
 
-```javascript
+```js
 const buffer = new ArrayBuffer(16);
 const tv1 = new Int32Array(buffer);
 const tv2 = new Int16Array(buffer);
@@ -246,7 +246,7 @@ console.log(tv2)
 
 **确定计算机字节序**：可通过如下方法确定计算机字节序，true 为小端字节序，false 为大端字节序
 
-```javascript
+```js
 const littleEndian = (function() {
   const buffer = new ArrayBuffer(2);
   new DataView(buffer).setInt16(0, 256, true);
@@ -258,7 +258,7 @@ const littleEndian = (function() {
 
 不同的视图类型所能容纳的数值范围是确定的，超出这个范围就会出现溢出，TypedArray 类数组对象的溢出处理规则就是`抛弃溢出的位`，然后按照视图类型解释
 
-```javascript
+```js
 const tv = new Uint8Array(1);
 
 //tv 是一个 8 位视图，而 256 的二进制形式是一个 9 位值 100000000
@@ -271,7 +271,7 @@ console.log(tv[0]) //0
 
 同一个 ArrayBuffer 对象之上，可以根据不同的数据类型，建立多个视图
 
-```javascript
+```js
 const buffer = new ArrayBuffer(8); //创建一个 8 字节的 ArrayBuffer
 
 //以下 3 个视图是重叠的，任何一个视图对内存有所修改，另外 2 个视图都会反应出来
@@ -284,7 +284,7 @@ const tv3 = new Int16Array(b, 2, 2); //创建一个指向 buffer 的 Int16 视�
 
 TypedArray 类数组对象不适用于数组的 `concat()` 方法，因此想要合并多个 TypedArray 类数组对象，可以使用如下函数
 
-```javascript
+```js
 function concatenate(resultConstructor, ...arrays) {
   let totalLength = 0;
   for (let arr of arrays) {
@@ -306,7 +306,7 @@ concatenate(Uint8Array, Uint8Array.of(1, 2), Uint8Array.of(3, 4)) //Uint8Array [
 
 TypedArray 类数组对象与普通数组一样，都部署了 Iterator 接口，可以被遍历
 
-```javascript
+```js
 let tv = Uint8Array.of(0, 1, 2);
 for (let byte of tv) {
   console.log(tv); //0 1 2
@@ -315,7 +315,7 @@ for (let byte of tv) {
 
 #### ⑥ TypedArray.of()
 
-```javascript
+```js
 const tv = Float32Array.of(0.151, -8, 3.7)
 console.log(tv)
 ```
@@ -324,7 +324,7 @@ console.log(tv)
 
 #### ⑦ TypedArray.from()
 
-```javascript
+```js
 const tv = Uint16Array.from([0, 1, 2])
 console.log(tv)
 ```
@@ -333,7 +333,7 @@ console.log(tv)
 
 #### ⑧ typedArray.subarray()
 
-```javascript
+```js
 const tv1 = Uint16Array.from([1, 2, 3])
 const tv2 = tv1.subarray(2,3);
 
@@ -345,7 +345,7 @@ console.log(tv2)
 
 #### ⑨ typedArray.set()
 
-```javascript
+```js
 const tv1 = Uint16Array.from([1, 2, 3])
 const tv2 = new Uint16Array(5);
 tv2.set(tv1, 2)
@@ -360,7 +360,7 @@ console.log(tv2)
 
 TypedArray 视图的构造函数可以指定`起始位置`和`长度`，所以同一段内存可以依次存放不同类型的数据，这叫做复合视图
 
-```javascript
+```js
 const buffer = new ArrayBuffer(24);
 
 const tv1 = new Uint32Array(buffer, 0, 1);   //字节 0 到字节 3，1 个 32 位无符号整数
@@ -402,13 +402,13 @@ DataView 视图本身也是构造函数，DataView 构造函数需要通过如�
 * 第二个参数（可选）：视图开始的`字节序号`，默认从 0 开始
 * 第三个参数（可选）：视图包含的`数据成员个数`，默认直到本段内存区域结束
 
-```javascript
+```js
 定义：const dv = new DataView(buffer,byteOffset,length);
 ```
 
 ### (3) DataView 属性和方法
 
-```javascript
+```js
 定义：const dv = new DataView(buffer);
 属性：实例属性
       dv.buffer                    //返回typedArray整段内存区域对应的ArrayBuffer对象
@@ -438,7 +438,7 @@ DataView 视图本身也是构造函数，DataView 构造函数需要通过如�
 
 #### ① DataView 实例方法
 
-```javascript
+```js
 const buffer = new ArrayBuffer(10); //分配一段10字节的连续内存
 const dv = new DataView(buffer);    //基于buffer创建一个DataView视图
 

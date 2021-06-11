@@ -50,7 +50,7 @@ DOM 是针对 HTML 文档的一个`应用程序编程接口`（API），浏览�
 
 一个文档的所有节点，按照所在层级，可以抽象成一种树状结构，DOM树有一个顶层节点，下一层是顶层节点的子节点，子节点又有自己的子节点，层层衍生出一个金字塔结构，倒过来就像一棵树
 
-```javascript
+```js
 <!DOCTYPE html>
 <html lang="en" manifest="offline.appcache">
 <head>

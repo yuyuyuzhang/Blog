@@ -6,7 +6,7 @@
 
 事件发生以后，会产生一个  Event对象作为参数传给监听函数 listener，当事件处理程序执行完毕，Event 对象就会被`销毁`，Event 对象包含所有与事件相关的信息，比如导致事件的元素、事件类型等
 
-```javascript
+```js
 定义：const e = new Event(type, options);
 属性：e.target                    //返回触发事件的节点
      e.currentTarget             //返回注册事件处理程序的节点
@@ -37,7 +37,7 @@
 <button id="btn">点击</button>
 ```
 
-```javascript
+```js
 const btn = document.querySelector('#btn');
 document.body.addEventListener('click', function(e){
   console.log(e.target);        //<button id="btn">
@@ -54,7 +54,7 @@ document.body.addEventListener('click', function(e){
 <button id="btn">点击</button>
 ```
 
-```javascript
+```js
 const btn = document.querySelector('#btn');
 const handler = function(e){
   switch(e.type){
@@ -82,7 +82,7 @@ btn.addEventListener('mouseout', handler);
 <button id="btn">点击</button>
 ```
 
-```javascript
+```js
 const btn = document.querySelector('#btn');
 btn.addEventListener('click', function(e){
   console.log(e.eventPhase);
@@ -103,7 +103,7 @@ e.preventDefault() 可以阻止事件的默认行为，如下例所示，链接�
 <a href="https://fanyi.baidu.com">百度翻译</a>
 ```
 
-```javascript
+```js
 const link = document.querySelector('a');
 link.addEventListener('click', function(e){
   e.preventDefault();
@@ -118,7 +118,7 @@ e.stopPropagation() 和 e.stopImmediatePropagation() 都可以阻止事件在 DO
 <button id="btn">点击</button>
 ```
 
-```javascript
+```js
 const btn = document.getElementById('btn');
 btn.addEventListener('click', function(e){
   console.log(1);               //正常:1 2 3

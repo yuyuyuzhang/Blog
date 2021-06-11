@@ -10,7 +10,7 @@
 
 ② IntersectionObserver API 是`异步`的，在目标元素滚动至可见后，将`回调函数`添加到 `JS 引擎线程的宏任务队列`
 
-```javascript
+```js
 定义：const io = new IntersectionObserver(callback, options)
 方法：io.observe(elem)    //无返回值,开始观察指定节点elem
       io.unobserve(elem) //无返回值,停止观察指定节点elem
@@ -19,7 +19,7 @@
 
 ### (2) options 配置项参数
 
-```javascript
+```js
 options:{
   threshold  //指定何时将回调函数添加到 JS 引擎线程的宏任务队列,默认[0,1],刚进入视口和完全离开视口时
   root       //指定目标元素滚动的容器节点
@@ -94,7 +94,7 @@ IntersectionObserverEntry 对象表示`目标元素的信息`
 }
 ```
 
-```javascript
+```js
 const container = document.querySelector('.image-lazy')
 const options = {
   threshold: [0, 0.5],
@@ -142,7 +142,7 @@ query('.image-lazy img').forEach(item => observer.observe(item))
 }
 ```
 
-```javascript
+```js
 const container = document.querySelector('.image-lazy')
 const footer = document.querySelector('.footerScroll')
 const options = {

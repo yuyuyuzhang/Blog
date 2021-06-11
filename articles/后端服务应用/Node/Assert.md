@@ -4,7 +4,7 @@
 
 Assert 模块提供了一组断言函数，用于验证`常量`
 
-```javascript
+```js
 //非严格的断言模式
 const assert = require('assert')
 
@@ -12,7 +12,7 @@ const assert = require('assert')
 const assert = require('assert').strict
 ```
 
-```javascript
+```js
 属性：
 方法：assert.equal()        //
      assert.deepEqual()    //
@@ -24,7 +24,7 @@ const assert = require('assert').strict
 
 assert 模块抛出的所有错误都是 AssertionError 类的实例，表明断言的失败
 
-```javascript
+```js
 定义：new assert.AssertionError(options)
 
 options：

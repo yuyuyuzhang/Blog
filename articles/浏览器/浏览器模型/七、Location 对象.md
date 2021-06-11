@@ -28,7 +28,7 @@ URL 合法字符包括 URL 元字符和语义字符
 
 除 URL 合法字符外，其他字符出现在 URL 中都必须经过转义，字符的 1 个`字节`被转义为百分号加上 2 个大写的十六进制字母
 
-```javascript
+```js
 URI(通用资源标识符)编码方法:
 encodeURI(url)          //返回编码后的url,转义除URL合法字符外的所有字符
 decodeURI(url)          //解码使用encodeURL()编码的url
@@ -37,7 +37,7 @@ encodeURIComponent(url) //返回编码后的url,转义除URL合法字符中语�
 decodeURIComponent(url) //解码使用encodeURLComponent()编码的url
 ```
 
-```javascript
+```js
 //默认采用 UTF-8 编码：一个英文字符 1 个字节，一个中文字符 3 个字节
 const url = "http://www.b.com #哈";
 console.log(encodeURI(url));          //"http://www.b.com%20#%E5%93%88"
@@ -48,7 +48,7 @@ console.log(encodeURIComponent(url)); //"http%3A%2F%2Fwww.b.com%20%23%E5%93%88"
 
 URL 全称统一资源定位符，又称网页地址 ( 全球性 )，用于定位浏览器中显示的网页资源
 
-```javascript
+```js
 定义：const url = new URL(urlStr);
 属性：url.href         //完整URL
      url.origin       //源(协议、主机、端口)
@@ -69,7 +69,7 @@ URL 全称统一资源定位符，又称网页地址 ( 全球性 )，用于定�
 
 #### ① URL 对象属性
 
-```javascript
+```js
 const url = "http://user:passwd@www.example.com:4097/path/a.html?x=111#part1"
 
 console.log(url.href);     //"http://user:passwd@www.example.com:4097/path/a.html?x=111#part1"
@@ -89,7 +89,7 @@ console.log(url.password); //"passwd"
 
 #### ② URL 对象方法
 
-```javascript
+```js
 //通过文件流下载文件
 request({
   url: LOAD_URL,
@@ -122,7 +122,7 @@ request({
 
 显示动态页面结果，例如购物页面，添加了活动参数，就可以按照大小过滤产品
 
-```javascript
+```js
 //基本T恤页面
 http://www.example.com/tshirt.html
 
@@ -134,7 +134,7 @@ http://www.example.com/tshirt.html?size=s
 
 URLSearchParams 对象表示  `URL 的查询字符串`，用来构造、解析、处理 URL 的查询字符串
 
-```javascript
+```js
 定义：const urlSearch = new URLSearchParams(urlSearchStr); //自动编码
 方法：urlSearch.toString()        //返回urlSearch的字符串形式
      urlSearch.has(key)          //返回布尔值,是否包含指定键名的键值对
@@ -152,7 +152,7 @@ URLSearchParams 对象表示  `URL 的查询字符串`，用来构造、解析�
 
 方法应用
 
-```javascript
+```js
 let urlSearch = new URLSearchParams({'f2': 2, 'f1': 1});
 urlSearch.append('f2', 3);
 console.log(urlSearch.toString());   //"f2=2&f1=1&f2=3"
@@ -204,7 +204,7 @@ HTML5 新增 hashchange 事件，每当 URL 的片段识别符改变时，就会
 
 Event 对象相关属性如下
 
-```javascript
+```js
 e.oldURL    //返回变化前的完整URL
 e.newURL    //返回变化后的完整URL
 ```
@@ -220,7 +220,7 @@ e.newURL    //返回变化后的完整URL
 
 Event对象相关属性如下
 
-```javascript
+```js
 e.state //返回浏览器History对象当前记录的state对象
 ```
 
@@ -247,7 +247,7 @@ e.state //返回浏览器History对象当前记录的state对象
 <div id="part2" style="height:500px;border:1px solid red;">part2</div>
 ```
 
-```javascript
+```js
 window.addEventListener('popstate', function(e){
   console.log('state');
 });
@@ -270,7 +270,7 @@ btn2.addEventListener('click', function(e){
 
 Location 对象表示`当前浏览器窗口加载的文档地址`
 
-```javascript
+```js
 定义：window.location
 属性：location.href            //完整URL
      location.origin          //源(协议、主机、端口)
@@ -303,7 +303,7 @@ location.href 是浏览器唯一允许`跨域`写入的属性，可以改写非�
 <button id="btn">跳转</button>
 ```
 
-```javascript
+```js
 const btn = document.getElementById('btn')
 btn.addEventListener('click', function handleChangeURL(){
   console.log(location.href); //'http://10.20.15.72:8080'
@@ -315,7 +315,7 @@ btn.addEventListener('click', function handleChangeURL(){
 
 #### ① 重载方法
 
-```javascript
+```js
 location.reload(false); //浏览器从本地缓存重载该文档,文档视口不变
 location.reload(true);  //浏览器向服务器重新请求并重载该文档,文档视口滚动到头部
 ```
@@ -326,7 +326,7 @@ location.reload(true);  //浏览器向服务器重新请求并重载该文档,�
 <button id="btn">重载</button>
 ```
 
-```javascript
+```js
 const btn = document.getElementById('btn')
 btn.addEventListener('click', function handleReload(){
   location.reload(); //默认从缓存中重载
@@ -335,7 +335,7 @@ btn.addEventListener('click', function handleReload(){
 
 #### ② 重定向方法
 
-```javascript
+```js
 //方法应用
 document.location.assign('http://www.example.com');  //当前窗口立刻载入新文档
 document.location.replace('http://www.example.com'); //当前窗口立刻载入新文档,在History对象中替换当前URL,故无法后退
@@ -348,7 +348,7 @@ document.location.replace('http://www.example.com'); //当前窗口立刻载入�
 <button id="btn2">重定向(替换)</button>
 ```
 
-```javascript
+```js
 //先点击重定向,再点击后退按钮回到上一文档
 const btn1 = document.getElementById('btn1')
 btn1.addEventListener('click', function handleAssign(e){

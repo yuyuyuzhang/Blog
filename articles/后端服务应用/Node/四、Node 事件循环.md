@@ -19,7 +19,7 @@ Node 事件循环原理的核心流程图如下，这一流程包含 6 个阶段
 
 ![Node事件循环原理流程图](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/Node%20%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E5%8E%9F%E7%90%86%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
-```javascript
+```js
 const fs = require('fs');
 
 setTimeout(() => { // 新的事件循环的起点
@@ -63,7 +63,7 @@ Node 不善于处理 CPU 密集型业务，这会导致性能问题，如果要�
 
   node sync.js
 
-  ```javascript
+  ```js
   function startCount() {
     let sum = 0;
     for(let i=0; i<500000000; i++){
@@ -90,7 +90,7 @@ Node 不善于处理 CPU 密集型业务，这会导致性能问题，如果要�
 
 * 通过网络异步 IO 给其他线程处理，例如
 
-   ```javascript
+   ```js
 
    ```
 

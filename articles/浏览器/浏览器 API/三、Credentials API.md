@@ -14,7 +14,7 @@ Credential API 允许从不同的子域检索凭证，例如存储在 login.exam
 
 CredentialsContainer 对象表示
 
-```javascript
+```js
 定义：const credentialsContainer = navigator.credentials
 方法：credentials.get()                 //返回Promise实例,
      credentials.create()              //返回Promise实例,
@@ -30,7 +30,7 @@ Credential 对象表示`凭据`，可以是以下 3 种类型
 * FederatedCredential：联合凭据
 * PublicKeyCredential：公钥凭据
 
-```javascript
+```js
 定义：const passwordCredentials = new PasswordCredential()
      const publicKeyCredentials = new PublicKeyCredential()
      const federatedCredential = new FederatedCredential()
@@ -42,7 +42,7 @@ Credential 对象表示`凭据`，可以是以下 3 种类型
 
 PasswordCredential 对象表示`密码凭据`，继承了 Credential 对象
 
-```javascript
+```js
 定义：const passwordCredentials = new PasswordCredential()
 属性：passwordCredentials.name     //
      passwordCredentials.password //
@@ -53,7 +53,7 @@ PasswordCredential 对象表示`密码凭据`，继承了 Credential 对象
 
 FederatedCredential 对象表示`联合凭据`，继承了 Credential 对象
 
-```javascript
+```js
 定义：const federatedCredential = new FederatedCredential()
 属性：federatedCredential.provider //
      federatedCredential.protocol //
@@ -63,7 +63,7 @@ FederatedCredential 对象表示`联合凭据`，继承了 Credential 对象
 
 PublicKeyCredential 对象表示`公钥凭据`，继承了 Credential 对象
 
-```javascript
+```js
 定义：const publicKeyCredentials = new PublicKeyCredential()
 属性：publicKeyCredentials.rawId    //
      publicKeyCredentials.response //
@@ -77,6 +77,6 @@ PublicKeyCredential 对象表示`公钥凭据`，继承了 Credential 对象
 
 ```
 
-```javascript
+```js
 
 ```

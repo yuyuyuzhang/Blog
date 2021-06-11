@@ -4,7 +4,7 @@
 
 Performance API 用于`前端性能监控`
 
-```javascript
+```js
 定义：const performance = window.performance
 属性：performance.timeOrigin                       //返回
      performance.eventCounts                      //返回EventCounts对象

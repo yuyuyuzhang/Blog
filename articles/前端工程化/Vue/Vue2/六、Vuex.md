@@ -14,7 +14,7 @@ Vuex 通过 store 选项，提供了一种机制在 main.js 中将状态从根�
 
 main.js
 
-```javascript
+```js
 import Vue from "vue";
 import router from "./router";
 import store from "./store";
@@ -38,7 +38,7 @@ new Vue({
 
 store/modules/config.js
 
-```javascript
+```js
 const config = {
   state: {
     allTime: "2"
@@ -50,7 +50,7 @@ export default config;
 
 store/index.js
 
-```javascript
+```js
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -83,7 +83,7 @@ export default store;
 
 store/modules/config.js
 
-```javascript
+```js
 const config = {
   state: {
     allTime: "2"
@@ -95,7 +95,7 @@ export default config;
 
 store/getters.js
 
-```javascript
+```js
 const getters = {
   allTimeConfig: state => state.config.allTime + ' config'
 };
@@ -105,7 +105,7 @@ export default getters;
 
 store/index.js
 
-```javascript
+```js
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -165,7 +165,7 @@ export default {
 
 ③ mutation 函数通过 `$store.commit(name, args)` 触发
 
-```javascript
+```js
 mutations: {
   someMutation(state) {
     api.callAsyncMethod(() => {
@@ -185,7 +185,7 @@ mutations: {
 
 store/modules/config.js
 
-```javascript
+```js
 const config = {
   state: {
     allTime: "2"
@@ -225,7 +225,7 @@ export default config;
 
 store/getters.js
 
-```javascript
+```js
 const getters = {
   allTimeConfig: state => state.config.allTime + " config"
 };
@@ -235,7 +235,7 @@ export default getters;
 
 store/index.js
 
-```javascript
+```js
 import Vue from "vue";
 import Vuex from "vuex";
 

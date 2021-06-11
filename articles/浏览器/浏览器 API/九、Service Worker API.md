@@ -15,7 +15,7 @@ Service Worker 充当`浏览器和服务器之间的代理服务器`，如果网
 
 ## 2. ServiceWorkerContainer 对象
 
-```javascript
+```js
 定义：const serviceWorkerCon = navigator.serviceWorker
 属性：serviceWorkerCon.controller         //返回
 方法：serviceWorkerCon.ready()            //返回Promise实例,
@@ -44,7 +44,7 @@ messageerror     //
 
 默认情况下，Service Worker 每 24 小时被下载一次，如果下载的是最新文件，就会被重新注册和安装，但不会被激活，当所有页面都不再使用旧的而是使用最新的 Service Worker 时就会被激活，这对于开发非常不方便，因此可以在控制台 F12 的 Service Worker 中勾选 `Update on reload`，选中后每次刷新页面都会得到最新文件
 
-```javascript
+```js
 navigator.serviceWorker.register('serverWorker.js', { scope: './' })
   .then(reg => {
       console.log(reg) //ServiceWorkerRegistration 实例
@@ -58,7 +58,7 @@ Service Worker 注册成功后浏览器会自动安装，安装完成后会触�
 
 serviceWorker.js
 
-```javascript
+```js
 this.addEventListener('install', e => {
   //e.waitUntil() 指定 install 事件完成后的回调函数
   e.waitUntil(() => {
@@ -71,7 +71,7 @@ this.addEventListener('install', e => {
 
 Service Worker 安装完成后就会等待激活，激活成功后会触发 Service Worker 脚本的 `activate 事件`
 
-```javascript
+```js
 this.addEventListener('activate', e => {
     //e.waitUntil() 指定 activate 事件完成后的回调函数
     e.waitUntil(() => {
@@ -84,7 +84,7 @@ this.addEventListener('activate', e => {
 
 serviceWorker.js
 
-```javascript
+```js
 this.addEventListener('activate', e => {
     e.waitUntil(
         this.clients.matchAll().then(client => {
@@ -99,7 +99,7 @@ this.addEventListener('activate', e => {
 
 客户端
 
-```javascript
+```js
 this.addEventListener('message', data => {
     if(data.source == 'service-worker'){
         console.log(data.msg)

@@ -72,7 +72,7 @@ IndexedDB 支持事务，这意味着一系列操作步骤之中，只要有一�
 
 浏览器原生提供 IndexexDB 对象，作为开发者操作 IndexedDB 数据库的接口
 
-```javascript
+```js
 定义：window.indexedDB
 方法：indexedDB.open(name,version)  //返回IDBRequest实例,发起一个打开指定名称和版本数据库的请求
      indexedDB.deleteDatabase(name) //返回IDBRequest实例,发起一个删除指定名称数据库的请求
@@ -98,7 +98,7 @@ IndexedDB 支持事务，这意味着一系列操作步骤之中，只要有一�
 
 IDBRequest 对象表示`一个操作数据库的请求`
 
-```javascript
+```js
 定义：const request = indexedDB.open(name,version)   //打开数据库的请求
      const request = indexedDB.deleteDatabase(name) //删除数据库的请求
 属性：request.source      //返回当前请求的来源
@@ -108,7 +108,7 @@ IDBRequest 对象表示`一个操作数据库的请求`
      request.transaction //返回当前请求正在进行的事务
 ```
 
-```javascript
+```js
 事件：
 request.onupgradeneeded //数据库版本变化时触发(包含新建数据库,版本从无到有)
 request.onblocked       //数据库被锁定时触发(上次的数据库连接还未关闭)
@@ -120,7 +120,7 @@ request.onerror         //打开/删除数据库失败时触发,数据记录操�
 
 IDBDatabase 对象表示`连接的数据库`
 
-```javascript
+```js
 定义：const db = IDBRequest.result
 属性：db.name                           //返回当前数据库的名称
      db.version                        //返回当前数据库的版本
@@ -135,7 +135,7 @@ config：keyPath      //指定对象仓库的主键使用数据记录的哪个�
        autoIncrement //指定对象仓库是否使用自动递增的整数作为主键,默认false
 ```
 
-```javascript
+```js
 事件：
 db.onversionchange //数据库版本变化时触发
 db.onerror         //访问数据库失败时触发
@@ -147,7 +147,7 @@ db.onabort         //事务终止时触发
 
 IDBTransaction 对象表示`一个操作指定对象仓库中数据记录的事务`
 
-```javascript
+```js
 定义：const transaction = IDBDatabase.transaction(stores,type) //当前数据库针对指定对象仓库数组创建一个事务
      const transaction = IDBObjectStore.transaction           //当前对象仓库所属的事务
      const transaction = IDBRequest.transaction()             //当前请求所在的事务
@@ -159,7 +159,7 @@ IDBTransaction 对象表示`一个操作指定对象仓库中数据记录的事�
      transaction.abort()           //无返回值,终止当前事务,回滚所有已经进行的变更
 ```
 
-```javascript
+```js
 事件：
 transaction.oncomplete //当前事务成功时触发
 transaction.onerror    //当前事务失败时触发
@@ -178,7 +178,7 @@ transaction.onabort    //当前事务终止时触发
 
 IDBObjectStore 对象表示`对象仓库`
 
-```javascript
+```js
 定义：const storeNames = IDBDatabase.objectStoreNames          //当前数据库所有对象仓库的名称
      const store = IDBDatabase.createObjectStore(name,config) //当前数据库新建一个对象仓库
      const store = IDBTransaction.objectStore(name)           //当前事务针对的指定对象仓库
@@ -214,7 +214,7 @@ config：unique    //指定索引键值是否唯一(索引键=索引所在的属
 
 IDBIndex 对象表示`对象仓库的索引`
 
-```javascript
+```js
 定义：const index = IDBObjectStore.createIndex(name,attr,config) //根据当前对象仓库数据记录的属性attr新建一个索引
      const index = IDBObjectStore.index(name)                   //获取当前对象仓库指定名称的索引
      const index = IDBObjectStore.deleteIndex(name)             //删除当前对象仓库指定名称的索引
@@ -237,7 +237,7 @@ IDBIndex 对象表示`对象仓库的索引`
 
 ### (1) 索引键为数组
 
-```javascript
+```js
 //以下为对象仓库的一条数据记录，将属性tags设为索引
 //该索引的multiEntry属性值为true时，可以通过HTML、JS、PHP、中的任意一个值检索出该条数据记录
 //该索引的multiEntry属性值为false时，只能通过['HTML', 'JS', 'PHP']这个整体检索出该条数据记录
@@ -258,7 +258,7 @@ IDBIndex 对象表示`对象仓库的索引`
 
 IDBCursor 对象表示`对象仓库/索引的指针`，用来遍历对象仓库/索引
 
-```javascript
+```js
 定义：const cursor = store.openCursor(range,direction)    //获取指定主键值范围指定遍历方向的遍历数据记录的指针
      const cursor = store.openKeyCursor(range,direction) //获取指定主键值范围指定遍历方向的遍历主键的指针
      const cursor = index.openCursor(range,direction)    //获取指定索引键值范围指定遍历方向的遍历数据记录的指针
@@ -275,7 +275,7 @@ IDBCursor 对象表示`对象仓库/索引的指针`，用来遍历对象仓库/
      cursor.delete()                           //返回IDBRequest实例,删除当前指针指向的数据记录
 ```
 
-```javascript
+```js
 事件：
 cursor.onsuccess //获取指针成功时触发
 cursor.onerror   //获取指针失败时触发
@@ -297,7 +297,7 @@ cursor.onerror   //获取指针失败时触发
 
 IDBKeyRange 对象表示`一组主键/索引键`，根据这组主键/索引键，可以获取一组数据记录
 
-```javascript
+```js
 定义：const range = IDBKeyRange.bound(lower,upper,lowerOpen,upperOpen) //指定下限和上限的一批键值范围
      const range = IDBKeyRange.lowerBound(lower,lowerOpen)            //指定下限的一批键值范围
      const range = IDBKeyRange.upperBound(upper,upperOpen)            //指定上限的一批键值范围
@@ -349,7 +349,7 @@ IDBKeyRange 对象表示`一组主键/索引键`，根据这组主键/索引键�
 </table>
 ```
 
-```javascript
+```js
 const createBtn = document.getElementById('createBtn')
 const connectBtn = document.getElementById('connectBtn')
 const closeBtn = document.getElementById('closeBtn')
@@ -492,7 +492,7 @@ function showAllMsg(arr){
 <p id="msg"></p>
 ```
 
-```javascript
+```js
 let db
 
 const createBtn = document.getElementById('createBtn')

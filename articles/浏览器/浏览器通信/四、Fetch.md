@@ -14,7 +14,7 @@
 
 ## 2. Headers 对象
 
-```javascript
+```js
 定义：const headers = new Headers()
      const headers = response.headers
 属性：headers.
@@ -32,7 +32,7 @@
 
 ### (1) 创建 Headers 实例
 
-```javascript
+```js
 //方法一
 const headers = new Headers({
   "Content-Type": "text/plain",
@@ -47,7 +47,7 @@ headers.append("X-Custom-Header", "ProcessThisImmediately");
 
 ### (2) Fetch 请求的 Headers
 
-```javascript
+```js
 fetch(url, {
   method: 'POST',
   header: {
@@ -61,7 +61,7 @@ fetch(url, {
 
 ### (3) Fetch 响应的 Headers
 
-```javascript
+```js
 async function fetchApi(){
   const response = await fetch('https://dummyimage.com/300.png')
   const headers = response.headers
@@ -86,7 +86,7 @@ Fetch 接收以下 2 个参数，返回一个 Promise 实例
 
 Fetch 请求配置对象 options API 就是 Request 对象的 API
 
-```javascript
+```js
 {
   method,         //指定 HTTP 请求方法，默认 GET
   headers,        //指定 HTTP 请求头
@@ -103,7 +103,7 @@ Fetch 请求配置对象 options API 就是 Request 对象的 API
 }
 ```
 
-```javascript
+```js
 fetch(url, options)
   .then(response => {})
   .catch(err => {})
@@ -126,7 +126,7 @@ POST 请求提交不同类型数据时，需要设置 HTTP 请求头的 Content-
 
 #### ① 提交 JSON 数据
 
-```javascript
+```js
 const user = {name: '张三', age: 20}
 
 fetch('/user', {
@@ -140,7 +140,7 @@ fetch('/user', {
 
 #### ② 提交二进制数据
 
-```javascript
+```js
 const buf = new ArrayBuffer(100)
 const blob = new Blob([buf])
 
@@ -155,7 +155,7 @@ fetch('/user', {
 
 #### ③ 提交表单
 
-```javascript
+```js
 const form = document.getElementById('form')
 
 fetch('/user', {
@@ -169,7 +169,7 @@ fetch('/user', {
 
 #### ④ 文件上传
 
-```javascript
+```js
 const file = document.getElementById('inputFile').files[0]
 const formData = new FormData()
 formData.append('file', file)
@@ -228,7 +228,7 @@ Fetch 请求发送后，想要中途取消，需要使用 AbortController 对象
 
 首先新建 AbortController 实例，然后发送 Fetch 请求，配置对象的 signal 属性必须指定接收 AbortController 实例发送的信号 controller.signal，controller.abort() 方法用于发出取消信号
 
-```javascript
+```js
 const controller = new AbortController()
 setTimeout(() => controller.abort(), 1000)
 
@@ -247,7 +247,7 @@ fetch('/user', {signal: controller.signal})
 
 Fetch 请求成功后，得到一个 Response 对象，对应服务器的 HTTP 响应
 
-```javascript
+```js
 定义：const response = await fetch(url)
 属性：response.ok            //返回布尔值,请求是否成功
      response.redirected    //返回布尔值,请求是否发生过跳转
@@ -279,7 +279,7 @@ Fetch 请求只有在`网络错误`时，Fetch 才会报错，其他情况都认
 
 * 方法一：通过判断 response.ok 属性是否为 `true`
 
-```javascript
+```js
 fetch('/user', {signal: controller.signal})
   .then(res => {
     if(res.ok){
@@ -293,7 +293,7 @@ fetch('/user', {signal: controller.signal})
 
 * 方法二：通过 response.status 属性得到 HTTP 响应的真实状态码是否等于 `2xx`，无需考虑 URL 跳转 3xx，因为 Fetch 会将 URL 跳转的状态码自动转换成 200
 
-```javascript
+```js
 fetch('/user', {signal: controller.signal})
   .then(res => {
     if (res.status >= 200 && res.status < 300) {
@@ -311,7 +311,7 @@ Response 对象是一个`数据流 Stream 对象`，因此只能读取一次，�
 
 response.clone() 方法返回 Response 对象的副本，可以实现多次读取
 
-```javascript
+```js
 fetch('https://dummyimage.com/300.png')
   .then(async res => {
     const res1 = res.clone()

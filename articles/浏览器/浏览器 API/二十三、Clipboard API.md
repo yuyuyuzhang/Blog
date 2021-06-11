@@ -15,7 +15,7 @@ Clipboard 对象表示`当前页面的剪贴板`，Clipboard API 是剪贴板操
 
 Clipboard API 的所有操作都是`异步`的，返回 `Promise 实例`，不会造成页面卡顿，并且可以将任意内容放入剪贴板
 
-```javascript
+```js
 定义：const clipboard = navigator.clipboard //返回一个 Clipboard API
 方法：clipboard.readText()                  //返回Promise实例,读取剪贴板的文本数据
      clipboard.read()                      //返回Promise实例,读取剪贴板的任意类型数据,需要用户明确给予许可
@@ -29,7 +29,7 @@ ClipboardItem 对象表示`一个单独的剪贴项`
 
 ClipboardItem() 是浏览器原生提供的构造函数，用来生成 ClipboardItem 实例，参数是一个对象，键名是数据的 MIME 类型，键值是数据值，`同一个剪贴项可以有多种格式的值`
 
-```javascript
+```js
 定义：const clipboardItem = new ClipboardItem(MIME,data)
 属性：clipboardItem.types          //返回clipboardItem所有可用MIME类型的数组
 方法：clipboardItem.getType(MIMIE) //返回Promise实例,以指定MIME类型读取clipboardItem数据
@@ -37,7 +37,7 @@ ClipboardItem() 是浏览器原生提供的构造函数，用来生成 Clipboard
 
 Clipboard API 实例
 
-```javascript
+```js
 async function addClip(){
   const img = await fetch('https://dummyimage.com/300.png');
   const imgBlob = await img.blob()
@@ -61,7 +61,7 @@ addClip()
 
 ## 4. 剪贴板事件
 
-```javascript
+```js
 剪贴板事件：
 contextmenu //按下鼠标右键时触发
 copy        //复制时触发
@@ -73,7 +73,7 @@ ClipboardEvent 对象表示`剪贴板事件`，继承了 Event 对象
 
 ClipboardData 对象表示`剪贴板数据`，继承了 DataTransfer 对象
 
-```javascript
+```js
 定义：const clip = e.clipboardData || window.clipboardData;
 方法：clip.getDate("text/plain")     //返回剪贴板中指定格式的数据
      clip.setData("text/plain",str) //返回布尔值,是否成功设置剪贴板中指定格式数据
@@ -93,7 +93,7 @@ ClipboardData 对象表示`剪贴板数据`，继承了 DataTransfer 对象
 </ul>
 ```
 
-```javascript
+```js
 const div = document.querySelector('#block');
 div.addEventListener('contextmenu', function(e){
   //取消浏览器默认行为,不显示浏览器默认菜单
@@ -121,7 +121,7 @@ document.addEventListener('click', function(e){
 <input type="text" value="我是小可爱">
 ```
 
-```javascript
+```js
 document.addEventListener('copy', addLink);
 function addLink(e){
   const text = document.getSelection().toString();
@@ -142,7 +142,7 @@ function addLink(e){
 <input id="text" type="text" value="我是小可爱111"/>
 ```
 
-```javascript
+```js
 const text = document.querySelector('#text');
 text.addEventListener('paste', function(e){
   const clip = e.clipboardData || window.clipboardData;
@@ -159,7 +159,7 @@ text.addEventListener('paste', function(e){
 
 对于受保护的文档，可以通过阻止默认行为来屏蔽剪贴板
 
-```javascript
+```js
 document.addEventListener('copy', forbidClip);
 document.addEventListener('cut', forbidClip);
 document.addEventListener('paste', forbidClip);

@@ -4,7 +4,7 @@
 
 WakeLock API 用于`屏幕唤醒`
 
-```javascript
+```js
 定义：const wakeLock = navigator.wakeLock
 方法：wakeLock.request(type) //返回Promise实例,指定类型的唤醒锁对象wakeLockSentinel
 ```
@@ -13,7 +13,7 @@ WakeLock API 用于`屏幕唤醒`
 
 WakeLockSentinel 对象表示`唤醒锁`，目前只针对`屏幕`
 
-```javascript
+```js
 定义：const wakeLockSentinel = await navigator.wakeLock.request()
 属性：wakeLockSentinel.type      //返回当前唤醒锁类型,目前一直为屏幕screen
      wakeLockSentinel.released  //返回当前唤醒锁是否释放
@@ -26,7 +26,7 @@ wakeLockSreen.onrelease //当前唤醒锁释放时触发
 
 ### (2) WakeLock 事件
 
-```javascript
+```js
 const wakeLockSreen = await navigator.wakeLock.request('screen')
 
 wakeLockSreen.onrelease //当前唤醒锁释放时触发
@@ -34,7 +34,7 @@ wakeLockSreen.onrelease //当前唤醒锁释放时触发
 
 ### (3) 实例
 
-```javascript
+```js
 const f = async () => {
   const wakeLockSreen = await navigator.wakeLock.request('screen')
   wakeLockSreen.addEventListener('release', e => {
@@ -53,7 +53,7 @@ f()
 
 Keybord API 用于`检索键盘布局图和切换物理键盘按键捕获`
 
-```javascript
+```js
 定义：const keyboard = navigator.keyboard
 方法：keyboard.getLayoutMap() //返回Promise实例,键盘布局图对象 keyboardLayoutMap
      keyboard.lock(keys)     //返回Promise实例,
@@ -68,7 +68,7 @@ keyboardLayoutMap 对象表示`键盘布局图`
 * **e.key** ：返回当前按下键的`键值`
 * **e.keyCode**：返回当前按下键的`键码（字符键：键码=字符编码）`
 
-```javascript
+```js
 定义：const keyboardLayoutMap = await navigator.keyboard.getLayoutMap()
 属性：keyboardLayoutMap.size        //返回
 方法：keyboardLayoutMap.has(code)   //返回布尔值,当前键盘布局图是否有指定键名code
@@ -81,7 +81,7 @@ keyboardLayoutMap 对象表示`键盘布局图`
 
 ### (2) 实例：检索键盘布局图
 
-```javascript
+```js
 const f = async () => {
   const keyboardLayoutMap = await navigator.keyboard.getLayoutMap()
 
@@ -98,7 +98,7 @@ f()
 
 ### (3) 实例：切换物理键盘按键捕获
 
-```javascript
+```js
 
 ```
 
@@ -109,7 +109,7 @@ Bluetooth API 用于`连接蓝牙设备并与之交互`
 * Bluetooth API 只支持基于 `https` 的页面
 * 通过用户操作触发：需要确保这个 API 不会在用户未知的情况下偷偷在后台运行，也不希望用户什么都没有做站点就直接弹出一个提示吓到用户，于是只有当用户作出了类似 click 的操作，这个方法才会被调用
 
-```javascript
+```js
 定义：const bluetooth = navigator.bluetooth
 方法：bluetooth.getAvailability()                               //返回Promise实例,当前设备是否支持蓝牙
      bluetooth.requestDevice({filters,optionalServices,acceptAllDevices}) //返回Promise实例,请求指定的蓝牙设备
@@ -119,7 +119,7 @@ Bluetooth API 用于`连接蓝牙设备并与之交互`
 
 BluetoothDevice 对象表示`蓝牙设备`
 
-```javascript
+```js
 定义：const bluttoothDevice = await navigator.bluetooth.requestDevice()
 属性：bluttoothDevice.id   //返回当前蓝牙设备的id
      bluttoothDevice.name //返回当前蓝牙设备的名称
@@ -132,7 +132,7 @@ gattserverdisconnected //
 
 ### (2) BluetoothRemoteGATTServer 对象
 
-```javascript
+```js
 定义：
 属性：
 方法：
@@ -140,7 +140,7 @@ gattserverdisconnected //
 
 ### (3) 实例
 
-```javascript
+```js
 const f = async () => {
   const isBluetooth = await navigator.bluetooth.getAvailability()
   if(isBluetooth){
@@ -158,7 +158,7 @@ btn.addEventListener('click', f)
 
 USB API 用于 `USB`
 
-```javascript
+```js
 定义：const usb = navigator.usb
 方法：usb.getDevices()             //返回Promise实例,已连接的配对USB设备数组
      usb.requestDevice({filters}]) //返回Promise实例,请求指定的USB
@@ -182,7 +182,7 @@ disconnect //配对USB设备断开连接时触发
 
 USBDevice 对象表示 `USB 设备`
 
-```javascript
+```js
 定义：const usbDevices = await navigator.usb.getDevices()
      const usbDevice = usbDevices[index]
      const usbDevice = await navigator.usb.requestDevice({filters}])
@@ -221,13 +221,13 @@ USBDevice 对象表示 `USB 设备`
 
 ### (2) USBTransferInResult 对象
 
-```javascript
+```js
 
 ```
 
 ### (3) USBTransferOutResult 对象
 
-```javascript
+```js
 
 ```
 
@@ -237,7 +237,7 @@ USBDevice 对象表示 `USB 设备`
 
 BatteryManager 对象表示`电池`
 
-```javascript
+```js
 定义：const batteryManager = await navigator.getBattery()
 属性：batteryManager.level           //返回电量等级(0.0-1.0)
      batteryManager.charging        //返回电池是否正在充电
@@ -247,7 +247,7 @@ BatteryManager 对象表示`电池`
 
 ### (2) 电池事件
 
-```javascript
+```js
 batteryManager.onlevelchange           //电池电量改变时触发
 batteryManager.onchargingchange        //电池充电状态改变时触发
 batteryManager.onchargingtimechange    //电池充电时间改变时触发
@@ -256,7 +256,7 @@ batteryManager.ondischargingtimechange //电池耗电时间改变时触发
 
 ### (3) 实例
 
-```javascript
+```js
 const f = async () => {
   const batteryManager = await navigator.getBattery()
   console.log(batteryManager)
@@ -273,7 +273,7 @@ f()
 
 ### (1) 打印事件
 
-```javascript
+```js
 window.onbeforeprint //打印机就绪时,在 window 对象上触发
 window.onafterprint  //打印机关闭时,在 window 对象上触发
 ```
@@ -282,7 +282,7 @@ window.onafterprint  //打印机关闭时,在 window 对象上触发
 
 `Ctrl + p` 快捷键以预览打印
 
-```javascript
+```js
 window.addEventListener('beforeprint', e => {
   console.log('beforeprint:', e)
 })

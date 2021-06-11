@@ -18,7 +18,7 @@
 * 域名是分层管理的：`.` 三级域名 `.` 二级域名 `.` 一级域名
 * 若服务器返回的 HTTP 响应报文中 `Set-Cookie 字段设置 HttpOnly`，则无法在 JS 脚本中通过 document.domain 获取 Cookie
 
-```javascript
+```js
 document.domain //返回/设置当前文档域名
 ```
 
@@ -26,7 +26,7 @@ document.domain //返回/设置当前文档域名
 
 带域名的主机名是互联网上某一台计算机或某一组计算机的名称，用于识别单一主机名和具有分层结构的组织机构名称，带域名的主机名互联网`唯一`
 
-```javascript
+```js
 URL对象：
 url.origin   //协议、主机、端口
 url.protocol //协议
@@ -35,7 +35,7 @@ url.hostname //主机
 url.port     //端口
 ```
 
-```javascript
+```js
 //新浪博客：http://blog.sina.com.cn
 
 单一主机名：blog
@@ -43,7 +43,7 @@ url.port     //端口
 带域名的主机名：blog.sina.com.cn
 ```
 
-```javascript
+```js
 //百度网：https://www.baidu.com
 console.log(url.hostname);    //"www.baidu.com"
 console.log(document.domain); //"www.baidu.com"

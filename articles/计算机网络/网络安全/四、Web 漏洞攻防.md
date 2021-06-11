@@ -109,7 +109,7 @@ XSS 蠕虫攻击的实现正是得益于 `AJAX` 的出现，AJAX 正是 Web2.0 �
   * 利用 XmlHttpRequest 发送请求去发表微博、关注用户、获取关注者列表并向其发送私信
   * 微博消息和私信都包含恶意攻击链接，等同于实现了攻击代码的自我复制和传播
 
-  ```javascript
+  ```js
   // 创建 XMLHttp 对象用于收发请求
   function createXHR(){ 
       return window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
@@ -276,7 +276,7 @@ DOM XSS 是一种特殊的 XSS 类型，不太适合前面介绍的防御方法
   * 服务器的 Set-Cookie 字段指定 `Secure` 属性，浏览器只有在加密协议 HTTPS 下才将 Cookie 发送给服务器
   * 服务器的 Set-Cookie 字段指定 `HttpOnly` 属性，Cookie 无法由 JS 脚本使用 `document.cookie` 获得，主要目的是为了防止跨站脚本攻击 XSS (Cross-site scripting) 对 Cookie 信息的窃取
 
-  ```javascript
+  ```js
   Set-Cookie: sid=hdhfhbg136254; Secure; HttpOnly
   ```
 
@@ -349,7 +349,7 @@ Chrome 51 浏览器为 Cookie 新增了一个 `SameSite 属性`，服务器的 `
 
 * Strict 完全禁止第三方 Cookie，跨站点时任何情况下都不会发送 Cookie，换言之，只有当前网页的 URI 与请求 URI 完全一致，才会带上 Cookie
   
-  ```javascript
+  ```js
   Set-Cookie: sid=sjkhfiuegfie; SameSite=strict;
   ```
 
@@ -367,7 +367,7 @@ Chrome 51 浏览器为 Cookie 新增了一个 `SameSite 属性`，服务器的 `
 
 * Chrome 默认设置 SameSite=Lax，这时可以通过设置 SameSite=None 显式关闭 SameSite 属性，不过前提是必须同时设置 Secure 属性，否则无效
   
-  ```javascript
+  ```js
   //无效
   Set-Cookie: sid=abc123; SameSite=None;
 

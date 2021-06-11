@@ -37,11 +37,11 @@ Chrome V8 引擎解释和执行 JS 代码阶段如下
 * **Parse**：`V8 引擎`将 JS 代码转换成 `AST 抽象语法树`
   * **词法分析**：将 JS 源代码拆分成最小的、不可再分的`词法单元（token）`，忽略空格
 
-    ```javascript
+    ```js
     var x = 1;
     ```
 
-    ```javascript
+    ```js
     分解成 5 个词法单元：var、a、=、1、;
     ```
 
@@ -105,7 +105,7 @@ AST 在实际工作中应用场景大致有如下几个
 
 * eslint --init
 
-  ```javascript
+  ```js
   How would you like to use ESLint?
   To check syntax only
   To check syntax and find problems
@@ -131,7 +131,7 @@ AST 在实际工作中应用场景大致有如下几个
 
   上一步骤回答完成后，会在项目根目录下自动生成 .eslintrc.js 文件
 
-  ```javascript
+  ```js
   module.exports = {
     env: { // 运行环境
       browser: true,
@@ -179,7 +179,7 @@ your-project
 
 .eslintrc.js
 
-```javascript
+```js
 module.exports = {
   root: true, // 停止在父级目录寻找配置文件
   env: {
@@ -215,7 +215,7 @@ ESLint 默认使用 `Espree` 解析器，也可以配置其他的解析器，但
 
 * .eslintrc.js
 
-  ```javascript
+  ```js
   module.exports = {
     root: true, // 停止在父级目录寻找配置文件
     env: {
@@ -252,7 +252,7 @@ ESLint extends `指定代码风格`，值可以是以下 2 类：
 
 .eslintrc.js
 
-```javascript
+```js
 module.exports = {
   root: true, // 停止在父级目录寻找配置文件
   env: {
@@ -279,7 +279,7 @@ ESLint 自定义规则 rules 是基于 `extends` 来扩展的
 
 .eslintrc.js
 
-```javascript
+```js
 module.exports = {
   root: true, // 停止在父级目录寻找配置文件
   env: {
@@ -532,7 +532,7 @@ Webpack 以前提供 eslint-loader，现在已废弃改用 `eslint-webpack-plugi
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const ESLintPlugin = require('eslint-webpack-plugin');
 
   module.exports = {

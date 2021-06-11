@@ -2,7 +2,7 @@
 
 ## 1. LockManager 对象
 
-```javascript
+```js
 定义：const locks = navigator.locks
 方法：locks.query()                  //返回Promise实例,锁管理快照对象LockManagerSnapshot
      locks.request(name,options,cb) //返回Promise实例,请求指定名称name和配置options的锁
@@ -16,7 +16,7 @@ signal      //
 
 ## 2. LockManagerSnapshot 对象
 
-```javascript
+```js
 定义：const lockManagerSnapshot = await navigator.locks.query()
 属性：lockManagerSnapshot.held    //返回持有锁的对象数组
      lockManagerSnapshot.pending //返回请求锁的对象数组
@@ -24,7 +24,7 @@ signal      //
 
 实例：查询锁
 
-```javascript
+```js
 const f = async () => {
   await navigator.locks.request('my_resource', {mode: 'shared'}, async lock => {
     const locks = await navigator.locks.query()
@@ -36,7 +36,7 @@ f()
 
 ## 3. Lock 对象
 
-```javascript
+```js
 定义：const lock = await navigator.locks.request(name,options,cb)
 属性：lock.name //返回当前锁的名称
      lock.mode //返回当前锁的模式
@@ -44,7 +44,7 @@ f()
 
 实例：请求锁
 
-```javascript
+```js
 const read = async () => {
   await navigator.locks.request('my_resource', {mode: 'shared'}, async lock => console.log(lock))
 }

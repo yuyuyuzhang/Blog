@@ -18,7 +18,7 @@ const constantRoutes =  {
     {
       path: '/',
       name: 'layout',
-      component: () => import('@/layout/menu.vue')
+      component: () => import('@/views/login/index.vue')
     },
     // {
     //   path: '/component',

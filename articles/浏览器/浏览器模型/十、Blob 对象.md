@@ -12,14 +12,14 @@ ArrayBuffer 对象用来`操作内存`，Blob 对象用来`操作二进制文件
 * 第一个参数（必需）：数组，数组成员可以是`字符串`或者 `ArrayBuffer 实例`
 * 第二个参数（可选）：配置对象，type 属性为数据的 `MIME 类型`（默认`空字符串`）
 
-```javascript
+```js
 定义：const blob = new Blob(array, {type: MIME})
 属性：blob.size             //返回blob的字节大小
      blob.type             //返回blob的MIME类型
 方法：blob.sice(n1,n2,MIME) //返回新Blob实例,拷贝字节索引n1到字节索引n2前一项字节
 ```
 
-```javascript
+```js
 //分配一段 100 字节的连续内存
 const buf = new ArrayBuffer(100);
 
@@ -36,7 +36,7 @@ console.log(copyBlob)  //Blob {size: 10, type: ''}
 
 浏览器允许通过 `window.URL.createObjectURL()` 方法，针对 Blob 对象生成一个临时 URL 以便于某些 API 使用，这个 URL 以`blob://` 开头表明对应一个 Blob 对象
 
-```javascript
+```js
 function download(){
     downloadFile(fileId).then(res => {
         const blob = new Blob([res])

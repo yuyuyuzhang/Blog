@@ -124,7 +124,7 @@ HTTP 请求报文和 HTTP 响应报文通过通用首部字段 Connection 来指
 
 Nginx 反向代理时，所有客户端请求直接发送到 Nginx 代理服务器，再由 Nginx 代理服务器转发给源服务器，所以 Nginx 代理服务器需要将`客户端真实协议、域名、端口、IP` 添加到 HTTP 请求报文首部告知源服务器，因为源服务器无法直接从客户端获取客户端信息
 
-```javascript
+```js
 server {
   listen 443;
   server_name localhost;

@@ -105,7 +105,7 @@ render 渲染函数的参数函数 createElement 返回的并不是一个实际�
 * updateChildren() 函数中有一个 `saveVnode()` 函数，源码如下
 * 也就是说，判断两个节点是否为同一节点（也就是是否可复用），标准是 `key 相同且 tag 相同`
   
-  ```javascript
+  ```js
   function sameVnode (a, b) {
     return (a.key === b.key && a.tag === b.tag)
   }
@@ -142,7 +142,7 @@ Vue 更新 DOM 是异步执行的，Vue 侦听到数据变化，将开启一个�
 
 Vue 的 14 个指令如下
 
-```javascript
+```js
 v-text  //内容被 Vue 渲染为文本节点
 v-html  //内容被 Vue 渲染为元素节点
 v-pre   //所在元素及其子元素不会被 Vue 编译
@@ -274,7 +274,7 @@ const vm = new Vue({
 
 v-model 用于表单控件上创建`双向数据绑定`，表单数据修饰符如下
 
-```javascript
+```js
 .trim   //自动过滤用户输入的首尾空格
 .number //自动将用户输入转换为数值类型 (不推荐使用)
 .lazy   //默认情况下v-model在input事件后同步值,.lazy将改为在change事件后同步
@@ -309,7 +309,7 @@ const vm = new Vue({
 
 v-bind 用于属性绑定，属性修饰符如下
 
-```javascript
+```js
 .prop  //作为一个 property 而非 attribute 绑定
 .sync  //扩展成一个更新父组件绑定值的 v-on 侦听器
 .camel //将连词符属性名转换为驼峰大小写属性名(不推荐使用,建议开发者通过ESLint规范代码)
@@ -471,7 +471,7 @@ v-on 用于事件绑定，事件修饰符如下
 * v-on 用在普通元素上只能监听`原生 DOM 事件`
 * v-on 用在自定义组件上可以监听`自定义事件`
 
-```javascript
+```js
 .left     //点击鼠标左键时触发
 .right    //点击鼠标右键时触发
 .middle   //点击鼠标中键时触发

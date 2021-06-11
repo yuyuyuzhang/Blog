@@ -6,7 +6,7 @@ window 对象表示`浏览器窗口`，浏览器中 window 对象具有双重角
 
 ## 1. Window 对象属性
 
-```javascript
+```js
 客户端存储：
 document.cookie            //返回当前文档的cookie
 window.caches              //返回CacheStorage对象
@@ -71,7 +71,7 @@ window.createImageBitmap   //返回Promise实例,将图像源裁剪为指定规�
 
 ## 2. Window 对象方法
 
-```javascript
+```js
 对话框方法：
 window.alert()                                  //显示通知对话框,仅含确定按钮,通知用户某些信息,无返回值
 window.confirm()                                //显示征询对话框,包含确定取消按钮,征询用户是否同意

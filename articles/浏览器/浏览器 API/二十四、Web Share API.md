@@ -11,7 +11,7 @@ Web Share API 允许网页调用操作系统的分享接口，实质是 Web App 
 * Web Share API 要求网站必须使用 `HTTPS` 协议，但是本地 localhost 可以使用 HTTP 协议
 * Web Share API 不能直接调用，只能用来`响应用户操作`
 
-```javascript
+```js
 navigator.canShare({files: []}) //返回布尔值,指定的所有文件是否都可以被分享
 navigator.share(options)        //返回Promise实例,分享指定文件或网页
 
@@ -29,7 +29,7 @@ files //要分享的文件 URL 数组
 <button id="btn">分享当前网页</button>
 ```
 
-```javascript
+```js
 const btn = document.getElementById('btn')
 btn.addEventListener('click', function(e){
   const title = document.title
@@ -55,7 +55,7 @@ btn.addEventListener('click', function(e){
 <button id="btn">分享视频文件</button>
 ```
 
-```javascript
+```js
 const btn = document.getElementById('btn')
 btn.addEventListener('click', function(e){
   if(navigator.canShare && navigator.canShare({files: ['./movie.mp4']})){

@@ -53,7 +53,7 @@
 
 浏览器检测到跨域 AJAX 请求是简单请求时，就直接在 HTTP 请求报文中添加一个 `Origin` 首部字段来说明本次请求来自哪个源 (协议、域名、端口)
 
-```javascript
+```js
 //简单请求的请求报文首部
 
 POST /cors HTTP/1.1 //简单CORS请求
@@ -64,7 +64,7 @@ Origin              //当前请求的源
 
 如果服务器允许简单请求，就会返回一个包含 CORS 相关首部字段的 HTTP 响应报文
   
-```javascript
+```js
 //简单请求的响应报文首部
 
 Access-Control-Allow-Origin      //服务器允许跨域请求的源
@@ -88,7 +88,7 @@ Access-Control-Expose-Headers    //服务器允许xhr.getResponseHeader()方法�
 
 浏览器通过预检请求询问服务器，当前网页所在的源 (协议、域名、端口) 是否在服务器的许可名单之内，以及正式通信时可以使用哪些 HTTP 请求方法和首部字段
 
-```javascript
+```js
 //预检请求的请求报文首部
 
 OPTIONS /cors HTTP/1.1         //预检请求使用OOTIONS方法
@@ -101,7 +101,7 @@ Access-Control-Request-Headers //非简单请求会额外发送的首部字段
 
 如果服务器允许非简单请求，就会返回一个包含 CORS 相关首部字段的 HTTP 响应报文
   
-```javascript
+```js
 //预检请求的响应报文首部
 
 HTTP/1.1 200 OK
@@ -118,14 +118,14 @@ Access-Control-Allow-Headers     //服务器允许非简单请求额外发送的
 
 服务器针对预检请求返回肯定的答复后，浏览器就会正式发送非简单请求，此时非简单请求的方式和简单请求一样
 
-```javascript
+```js
 //非简单请求的请求报文首部
 
 POST /cors HTTP/1.1 //简单CORS请求
 Origin              //当前请求的源
 ```
 
-```javascript
+```js
 //非简单请求的响应报文首部
 
 Access-Control-Allow-Origin      //服务器允许跨域请求的源

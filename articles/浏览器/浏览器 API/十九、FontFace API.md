@@ -4,7 +4,7 @@
 
 FontFaceSet 对象用于 JS 动态加载新字体文件，并检查之前动态加载的字体文件的状态
 
-```javascript
+```js
 定义：const fontfaceset = document.fonts //返回fontfaceSet实例,当前文档应用的字体
 属性：fontfaceset.size   //返回动态加载的字体文件个数
      fontfaceset.status //返回加载状态(loaded...)
@@ -21,7 +21,7 @@ fontfaceset.onloadingerror //字体加载失败时触发
 
 FontFace 对象用来控制字体加载，浏览器原生提供 FontFace 构造函数，用来生成一个字体对象
 
-```javascript
+```js
 定义：const font = new FontFace(family,url,desc)
 属性：font.family          //返回字体名
      font.status          //返回字体的加载状态(unloaded、loading、loaded、error)
@@ -49,7 +49,7 @@ fallback //前 100ms 显示不出内容，后 3s 显示后备字体，加载完�
 <button id="btn">加载并应用字体</button>
 ```
 
-```javascript
+```js
 const btn = document.getElementById("btn")
 btn.addEventListener('click', async e => {
   const font = new FontFace('TJS', 'url(./TJS.ttf)')

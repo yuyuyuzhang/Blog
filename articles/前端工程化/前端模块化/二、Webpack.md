@@ -143,7 +143,7 @@ Webpack 提供 target 配置`设置构建目标为浏览器代码还是服务器
 
 webpack.config.js
 
-```javascript
+```js
 module.exports = (env, argv) => {
   const config = {
     target: 'web',
@@ -183,7 +183,7 @@ package.json 设置 Node 环境变量有以下 2 种方式
 
   webpack.config.js
 
-  ```javascript
+  ```js
   console.log(process.env.NODE_ENV) //'development' 'production'
 
   module.exports = (env, argv) => {
@@ -206,7 +206,7 @@ package.json 设置 Node 环境变量有以下 2 种方式
 
   webpack.config.js
 
-  ```javascript
+  ```js
   console.log(process.env.NODE_ENV) //'development' 'production'
 
   module.exports = (env, argv) => {
@@ -233,7 +233,7 @@ package.json 设置 Webpack 环境变量有以下 2 种方式
 
   webpack.config.js
 
-  ```javascript
+  ```js
   module.exports = (env, argv) => {
     console.log(env)       //{ WEBPACK_SERVE: true, development: true } 
                            //{ WEBPACK_BUNDLE: true, WEBPACK_BUILD: true, production: true }
@@ -256,7 +256,7 @@ package.json 设置 Webpack 环境变量有以下 2 种方式
 
   webpack.config.js
 
-  ```javascript
+  ```js
   module.exports = (env, argv) => {
     console.log(env)       //{ WEBPACK_SERVE: true }
                            //{ WEBPACK_BUNDLE: true, WEBPACK_BUILD: true }
@@ -279,7 +279,7 @@ package.json
 
 webpack.config.js
 
-```javascript
+```js
 module.exports = (env, argv) => {
   const config = {
     target: 'web',
@@ -335,7 +335,7 @@ Webpack 支持 12 种不同的 SourceMap 机制
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   module.exports = (env, argv) => {
     const config = {
       target: 'web',
@@ -354,7 +354,7 @@ Webpack 提供 context 配置`设置某个目录的绝对路径为环境上下�
 
 webpack.config.js
 
-```javascript
+```js
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
 
@@ -377,7 +377,7 @@ Webpack 提供 entry 配置`设置哪个模块作为构建依赖关系图的开�
 
 webpack.config.js
 
-```javascript
+```js
 const path = require('path')
 const pathResolve = dir => path.join(__dirname, dir) // 将第二个参数解析为绝对路径
 
@@ -403,7 +403,7 @@ Webpack 提供 output 配置`设置在磁盘哪里输出创建的 bundle 文件�
 
 webpack.config.js
 
-```javascript
+```js
 const path = require('path')
 const pathResolve = dir => path.join(__dirname, dir) // 将第二个参数解析为绝对路径
 const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
@@ -441,7 +441,7 @@ Webpack 提供 resolve 配置`设置模块如何被解析`
 
 webpack.config.js
 
-```javascript
+```js
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
 const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
@@ -496,7 +496,7 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
 
 * webpack.config.js
   
-  ```javascript
+  ```js
   const webpack = require('webpack')
 
   const path = require('path')
@@ -539,7 +539,7 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
 
 * src/components/textarea.js
 
-  ```javascript
+  ```js
   const f = () => {
     const element = document.createElement('textarea')
     return element
@@ -549,7 +549,7 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
 
 * src/index.js
 
-  ```javascript
+  ```js
   const Title = document.createElement('h2')
   Title.textContent = 'Hello Webpack'
   document.body.append(Title)
@@ -571,7 +571,7 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
 
   修改 textarea.js 模块代码，测试 watch 模式
   
-  ```javascript
+  ```js
   const f = () => {
     const element = document.createElement('textarea')
 
@@ -612,7 +612,7 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
   * 代理：http://localhost:8081/api/users
   * 后端：http://github.com/users
   
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -687,7 +687,7 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
 
   修改 textarea.js 模块代码，测试 devServer
   
-  ```javascript
+  ```js
   const f = () => {
     const element = document.createElement('textarea')
 
@@ -722,7 +722,7 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
   * devServer `hotOnly` 属性设置为 true，避免 JS 文件 HMR 处理函数出现错误导致回退到自动刷新页面
   * 通过 webpack 模块加载 `HotModuleReplacementPlugin` 插件
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -788,7 +788,7 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
 
   修改 textarea.js 模块代码，触发模块热替换 HMR
 
-  ```javascript
+  ```js
   const f = () => {
     const element = document.createElement('textarea')
 
@@ -805,7 +805,7 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
   * 因此 JS 文件要实现 HMR 需要`开发者调用插件 HotModuleReplacementPlugin API 手动处理`
   * CSS 等其他资源文件无需开发者手动实现 HMR 处理函数，因为相应的 loader 集成了 HMR 功能，例如 css-loader、vue-loader 等
 
-  ```javascript
+  ```js
   const Title = document.createElement('h2')
   Title.textContent = 'Hello Webpack'
   document.body.append(Title)
@@ -875,7 +875,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * src/index.js
 
-  ```javascript
+  ```js
   const Title = document.createElement('h2')
   Title.textContent = 'Hello Webpack'
   document.body.append(Title)
@@ -902,7 +902,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -994,7 +994,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -1095,7 +1095,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -1194,7 +1194,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * src/index.js
 
-  ```javascript
+  ```js
   const Title = document.createElement('h2')
   Title.textContent = 'Hello Webpack'
   document.body.append(Title)
@@ -1228,7 +1228,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -1343,7 +1343,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
 
 * src/index.js
 
-  ```javascript
+  ```js
   const Title = document.createElement('h2')
   Title.textContent = 'Hello Webpack'
   document.body.append(Title)
@@ -1385,7 +1385,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -1518,7 +1518,7 @@ Webpack 的钩子机制是通过 `Tapable` 库实现的，类似于 Node 的 `Ev
 
 * **EventEmitter 库**：通过 `on()` 方法注册一个事件，通过 `emit()` 方法触发一个事件，执行事件回调函数
   
-  ```javascript
+  ```js
   const EventEmitter = require('events');
   const myEmitter = new EventEmitter();
 
@@ -1535,7 +1535,7 @@ Webpack 的钩子机制是通过 `Tapable` 库实现的，类似于 Node 的 `Ev
   
   Tapable 库为插件提供了很多钩子类，这些类可以为插件创建钩子
   
-  ```javascript
+  ```js
   SyncHook
   SyncBailHook
   SyncWaterfallHook
@@ -1544,7 +1544,7 @@ Webpack 的钩子机制是通过 `Tapable` 库实现的，类似于 Node 的 `Ev
   AsyncSeriesWaterfallHook
   ```
   
-  ```javascript
+  ```js
   class MyDaily {
     constructor() {
       //最好将插件的自定义钩子暴露在类的hooks属性上
@@ -1595,7 +1595,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -1729,7 +1729,7 @@ html-webpack-plugin 插件的使用如下
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -1853,7 +1853,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -1987,7 +1987,7 @@ friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时�
 
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
   const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -2345,7 +2345,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
   配置 ESLintWebpackPlugin 插件代替已废弃的 eslint-loader
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
@@ -2493,7 +2493,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
 * 项目根目录下新建 .babelrc.js 文件
 
-  ```javascript
+  ```js
   module.exports = {
     presets: [
       ["@babel/preset-env", {
@@ -2517,7 +2517,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
   配置 babel-loader
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const { CleanWebpackPlugin} = require('clean-webpack-plugin')
@@ -2672,7 +2672,7 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
 
   OptimizeCSSAssetsWebpackPlugin 插件用于压缩代码，因此需要配置到 `optimization.minimizer` 而非 plugins，webpack 推荐压缩类插件都应该配置在到 optimization.minimizer 方便统一管理
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -2844,7 +2844,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
 * npm i terser-webpack-plugin -D
 * webpack.config.js
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -3012,7 +3012,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
 * **剔除无需构建的模块**：`IgnorePlugin` 插件可以在编译时`忽略指定目录`，从而提高构建速度，减少产物体积
 * **按需引入类库模块中的导出**：import 后跟的文件路径写到`文件模块内导出的具体方法`
 
-  ```javascript
+  ```js
   import _ from 'lodash' // 全部引入
 
   import find from 'lodash/find'; // 按需引入
@@ -3023,7 +3023,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
 * **include/exclude**：include 只对符合条件的模块指定 loader 处理，exclude 排除不符合条件的模块
 * **noParse**：module.noParse 可以配置某些模块不使用 JS 模块编译器进行编译，例如 jQuery
   
-  ```javascript
+  ```js
   module.exports = {
     ...
     module: {
@@ -3057,7 +3057,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
 
 * src/components/link.js
 
-  ```javascript
+  ```js
   const link = document.createElement('a')
   link.href = 'https://www.baidu.com/'
   link.innerHTML = '百度一下'
@@ -3067,7 +3067,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
 
 * src/index.js
 
-  ```javascript
+  ```js
   const Title = document.createElement('h2')
   Title.textContent = 'Hello Webpack'
   document.body.append(Title)
@@ -3122,7 +3122,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
 
   Webapck 无需针对 ES6 modules import() 做任何额外的配置
 
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -3310,7 +3310,7 @@ sideEffects 功能就是模块打包时去除导出成员外的其他代码，si
 
       src/components/pad.js
 
-      ```javascript
+      ```js
       // 为 Number 的原型添加一个扩展方法
       Number.prototype.pad = function(size) {
         const leadingZeros = Array(size + 1).join(0)
@@ -3349,7 +3349,7 @@ Webpack 提供 `optimization.splitChunks` 供开发者自行配置代码分包�
 
   webpack.config.js
 
-  ```javascript
+  ```js
   optimization: {
     splitChunks: {
       chunks: 'all',
@@ -3392,7 +3392,7 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 * npm install script-ext-html-webpack-plugin --save-dev
 * webpack.config.js
   
-  ```javascript
+  ```js
   const webpack = require('webpack')
   const ESLintWebpackPlugin = require('eslint-webpack-plugin')
   const MiniCssExtractPlugin = require('mini-css-extract-plugin')

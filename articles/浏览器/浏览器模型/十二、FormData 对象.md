@@ -67,7 +67,7 @@
 
 浏览器允许开发者指定一些条件，`表单提交时`浏览器会自动校验各个表单控件的值是否符合条件
 
-```javascript
+```js
 <form id="form">
   <input type="text" maxlength="20">
   <input type="number" min="0" max="10" step="2">
@@ -91,7 +91,7 @@ input:invalid {
 }
 ```
 
-```javascript
+```js
 const form = document.getElementById('form')
 form.addEventListener('submit', e => {
   e.preventDefault() //阻止默认操作
@@ -102,14 +102,14 @@ form.addEventListener('submit', e => {
 
 还可以通过表单元素和表单控件的 `checkValidity()` 方法手动触发校验
 
-```javascript
+```js
 //触发整个表单/单个表单控件的校验
 form/formControl.checkValidity() 
 ```
 
 提交表单可以封装成以下函数
 
-```javascript
+```js
 function submitForm(action) {
   const form = document.getElementById('form');
   form.action = action;
@@ -151,7 +151,7 @@ input:invalid {
 }
 ```
 
-```javascript
+```js
 const form = document.getElementById('form')
 const name = document.getElementById('name')
 form.addEventListener('submit', e => {
@@ -168,7 +168,7 @@ name.addEventListener('invalid', e => {
 
 ## 3. 表单事件
 
-```javascript
+```js
 formControl.onselect      //鼠标选取表单控件的文本时,在表单控件上触发
 
 form/formControl.oninput  //表单控件值改变时,在表单控件上触发,会冒泡到 form 元素
@@ -192,7 +192,7 @@ select 事件仅限于以下 3 中情形，选中控件文本时会触发
 <textarea id="textarea">是否合格看大家都看开</textarea>
 ```
 
-```javascript
+```js
 const textInput = document.getElementById('textInput')
 const passwordInput = document.getElementById('passwordInput')
 const textarea = document.getElementById('textarea')
@@ -237,7 +237,7 @@ textarea.addEventListener('select', e => {
 </form>
 ```
 
-```javascript
+```js
 const form = document.getElementById('form')
 const select = document.getElementById('select')
 const radio = document.getElementById('radio')
@@ -300,7 +300,7 @@ form.addEventListener('change', e => {
 </form>
 ```
 
-```javascript
+```js
 const form = document.getElementById('form')
 form.addEventListener('submit', e => {
   console.log('submit')
@@ -392,7 +392,7 @@ Content-Disposition: form-data; userPassword="123"
 
 FormData 构造函数的参数是一个 DOM 的 `form 元素`，浏览器会自动处理表单的键值对，如果参数为空代表一个空表单
 
-```javascript
+```js
 定义：const formData = new FormData(form)
 方法：formData.has(key)          //返回布尔值,是否存在键名key
      formData.get(key)          //返回第一个键名key对应的键值字符串
@@ -436,7 +436,7 @@ FormData 构造函数的参数是一个 DOM 的 `form 元素`，浏览器会自�
 </form>
 ```
 
-```javascript
+```js
 const form = document.getElementById('form')
 form.addEventListener('submit', e => {
   e.preventDefault() //阻止默认操作
@@ -459,7 +459,7 @@ form.addEventListener('submit', e => {
 </form>
 ```
 
-```javascript
+```js
 let file = null;
 const form = document.getElementById('form')
 const fileInput = document.getElementById('fileInput')
@@ -510,7 +510,7 @@ form.addEventListener('submit', e => {
 </form>
 ```
 
-```javascript
+```js
 let file = null;
 const form = document.getElementById('form')
 const fileInput = document.getElementById('fileInput')

@@ -288,7 +288,7 @@ HTTP2 有了服务器推送策略，HTTP1.1 的嵌入资源做法基本上也就
 
 ① 在 Nginx 服务器上执行以下命令，将低版本的 Nginx 升级到支持 HTTP2 的新版本
 
-```javascript
+```js
 wget http://nginx.org/download/nginx-1.12.1.tar.gz # 下载
 tar -zxvf nginx-1.12.1.tar.gz # 解压
 cd nginx-1.12.1
@@ -299,7 +299,7 @@ sudo make install #安装
 
 ② 然后添加 Nginx 配置，在原来的 listen 后面添加 http2
 
-```javascript
+```js
 //原来
 listen 443 ssl;
 
@@ -313,7 +313,7 @@ HTTP2 仅有服务器推送功能需要开发者手动配置，其他功能都�
 
 以 Nginx 服务器为例，其实就是最后多了两行 `http2_push` 命令，意思是如果用户请求根路径，服务器就推送 style.css、example.png
 
-```javascript
+```js
 server {
   listen 443 ssl http2;
   server_name  localhost;

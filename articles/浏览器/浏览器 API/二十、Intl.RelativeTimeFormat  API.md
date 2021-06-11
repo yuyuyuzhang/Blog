@@ -6,7 +6,7 @@
 
 现在浏览器提供内置 Intl.RelativeTimeFormat 对象直接显示相对时间而无需使用这些日期库，浏览器原生提供 Intl.RelativeTimeFormat() 构造函数，构造函数参数 lang 指定显示相对时间的语言，例如 zh、en 等
 
-```javascript
+```js
 定义：const rtf = new Intl.RelativeTimeFormat(lang);
 方法：rtf.format(num,unit)        //返回相对时间字符串,指定时间间隔的数值num和单位unit
 ```
@@ -22,7 +22,7 @@
 * quarter：季
 * year：年
 
-```javascript
+```js
 const rtfEn = new Intl.RelativeTimeFormat('en');
 const rtfZh = new Intl.RelativeTimeFormat('zh');
 

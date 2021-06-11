@@ -26,7 +26,7 @@
 
 > potions 配置中的基本选项均默认 false，设置基本选项中某些为 true 的情况下，可以追加使用某些特殊选项
 
-```javascript
+```js
 定义：const mutationObserver = new MutationObserver((records, mutationObserver) => {...});
 方法：mutationObserver.observe(elem,options) //无返回值,开始观察节点elem
      mutationObserver.disconnect()          //无返回值,停止当前观察器的所有观察
@@ -49,7 +49,7 @@ characterDataOldValue   //characterData=true,是否记录目标节点变动前�
 
 MutationRecord 对象表示`变动记录`，包含与变动相关的所有信息
 
-```javascript
+```js
 定义：const records = observer.takeRecords()
 属性：record.type            //返回该次变动类型
      record.target          //返回该次变动的元素节点
@@ -67,7 +67,7 @@ F12 打开控制台，控制 div 元素宽高变化时，不会触发观察器�
 <div id="block" style="border:1px solid red;width:100%;height:100px;">aaa</div>
 ```
 
-```javascript
+```js
 const div = document.getElementById('block');
 const mutationObserver = new MutationObserver((records, observer) => {
   records.map(record => {

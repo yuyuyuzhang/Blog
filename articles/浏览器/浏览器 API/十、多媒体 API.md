@@ -12,7 +12,7 @@ H5 新增 audio、video 标签用于显示`音视频`
 
 ### (1) audio、video 属性和方法
 
-```javascript
+```js
 属性：读写属性：
      video.mediaGroup          //返回/设置音视频所属的组合(组合用于连接多个音视频)
      video.src                 //返回/设置音视频的当前来源
@@ -51,7 +51,7 @@ H5 新增 audio、video 标签用于显示`音视频`
 
 ### (2) audio、video 事件
 
-```javascript
+```js
 加载事件：
 audio/video.onloadstart      //当浏览器开始加载音视频时触发
 audio/video.onloadeddata     //当浏览器已加载音视频的当前帧时触发
@@ -99,7 +99,7 @@ Web Audio API 用于操作声音，可以让网页发出声音
 
 浏览器原生提供 AudioContext() 构造函数，用于生成 AudioContext 对象，表示一个`音频上下文`，音频相关的一切操作都在音频上下文这个环境中操作
 
-```javascript
+```js
 定义：const audioCtx = new AudioContext()
 属性：audioCtx.state                           //返回audioCtx当前状态(running,suspended,closed)
      audioCtx.destination                     //返回AudioDestinationNode实例,表示音频目的地
@@ -154,7 +154,7 @@ Web Audio API 中每个组件都是一个音频节点 AudioNode，声音从第�
 * **MediaStreamAudioSourceNode**：由 `WebRTC 摄像头或麦克风`生成的音频源
 * **ConstantSourceNode**：`恒定输出`的音频源
 
-```javascript
+```js
 定义：const source = audioCtx.createBufferSource()           //返回AudioBufferSourceNode对象,从AudioBuffer音频文件生成音频源
      const source = audioCtx.createMediaElementSource(node)  //返回MediaElementAudioSourceNode对象,从页面audio&video元素生成音频源
      const source = audioCtx.createMediaStreamSource(stream) //返回MediaStreamAudioSourceNode对象,从WebRTC摄像头或麦克风生成音频源
@@ -204,7 +204,7 @@ source.onend //音频源播放结束时触发
 * **AudioDestinationNode**：定义音频输出到哪里，通常是扬声器、耳机
 * **MediaStreamAudioDestinationNode**：定义 WebRTC getUserMedia API 的音频输出
 
-```javascript
+```js
 定义：const destination = audioCtx.destination
      const destination = audioCtx.createMediaStreamDestination()
 属性：destination.context                 //返回AudioContext对象,当前音频源所属的音频上下文
@@ -229,7 +229,7 @@ source.onend //音频源播放结束时触发
   <button id="btn">点击</button>
   ```
   
-  ```javascript
+  ```js
   //a user gesture on the page
   const btn = document.getElementById('btn')
   btn.addEventListener('click', e => {
@@ -253,7 +253,7 @@ source.onend //音频源播放结束时触发
   <button id="btn">点击</button>
   ```
   
-  ```javascript
+  ```js
   const audioCtx = new AudioContext()
   fetch('./movie.mp4')
      .then(res => res.arrayBuffer())
@@ -281,7 +281,7 @@ source.onend //音频源播放结束时触发
 <canvas id="canvas" width="300" height="150" style="border:1px solid red;"></canvas>
 ```
 
-```javascript
+```js
 //a user gesture on the page
 const btn = document.getElementById('btn')
 btn.addEventListener('click', e => {
@@ -323,7 +323,7 @@ btn.addEventListener('click', e => {
 <input type="range" min="0" max="100" step="1" value="20" name="volume" id="volume" />
 ```
 
-```javascript
+```js
 navigator.getUserMedia({
   audio: true, //麦克风
   video: true, //摄像头
@@ -357,7 +357,7 @@ navigator.getUserMedia({
 <input type="range" min="0" max="1" step="0.1" value="0.5" name="volume" id="volume" />
 ```
 
-```javascript
+```js
 //a user gesture on the page
 const btn = document.getElementById('btn')
 btn.addEventListener('click', e => {
@@ -378,7 +378,7 @@ btn.addEventListener('click', e => {
 
 Web Speech API 用于`语音合成`
 
-```javascript
+```js
 定义：const speechSynthesis = window.speechSynthesis
 属性：speechSynthesis.speaking    //
      speechSynthesis.pending     //
@@ -398,14 +398,14 @@ voiceschanged //
 
 navigator.mediaCapabilities 属性返回 MediaCapabilities API，表示`浏览器对指定多媒体格式的支持能力`
 
-```javascript
+```js
 定义：const mediaCapabilities = navigator.mediaCapabilities
 方法：mediaCapabilities.decodingInfo(config) //返回Promise实例,当前浏览器对config提供的视频格式和编码信息的支持能力
 ```
 
 ### (1) 当前浏览器对指定多媒体格式的支持能力
 
-```javascript
+```js
 const mediaConfig = {  
   type: 'media-source',
   audio: {
@@ -435,7 +435,7 @@ f()
 
 navigator.mediaDevices 属性返回 MediaDevices API，表示`可用的多媒体设备`
 
-```javascript
+```js
 定义：const mediaDevices = navigator.mediaDevices
 方法：mediaDevices.getSupportedConstraints() //返回MediaTrackSupportedConstraints对象,包含当前浏览器支持的所有约束属性
      mediaDevices.enumerateDevices()        //返回Promise实例,枚举所有可用的多媒体设备
@@ -449,7 +449,7 @@ mediaDevices.ondevicechange //可用的多媒体设备列表改变时触发,可�
 
 ### (1) 可用的多媒体设备列表
 
-```javascript
+```js
 const updateDeviceList = async () => {
   const deviceList = await navigator.mediaDevices.enumerateDevices()
   console.log(deviceList)
@@ -473,7 +473,7 @@ navigator.mediaDevices.addEventListener('devicechange', e => {
 <input type="range" min="0" max="100" step="1" value="20" name="volume" id="volume" />
 ```
 
-```javascript
+```js
 const f = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
      audio: true, //麦克风
@@ -507,7 +507,7 @@ f()
 
 mediaDevices.getDisplayMedia() API 支持共享`整个屏幕、应用窗口、Chrome 标签页`
 
-```javascript
+```js
 const f = async () => {
   const displayMedia = await navigator.mediaDevices.getDisplayMedia()
   console.log(displayMedia) //MediaStream {}
@@ -573,7 +573,7 @@ WebRTC（网络实时通信，Web Real Time Communication） API 允许快速轻
 
 MediaStream 对象表示`媒体流`，一个媒体流包含多个轨道，例如音频轨道、视频轨道
 
-```javascript
+```js
 属性：stream.id                 //返回当前媒体流对象的唯一标识符ID
      stream.active             //返回布尔值,当前媒体流对象是否处于活动状态
 方法：stream.clone()            //返回具有新ID的当前媒体流对象的克隆
@@ -596,7 +596,7 @@ stream.onremovetrack //当前媒体流对象移除旧的MediaStreamTrack对象�
 
 MediaStreamTrack 对象表示`媒体流的一个轨道`，例如音频轨道、视频轨道
 
-```javascript
+```js
 定义：const track = stream.getTrackById(id)
      const tracks = stream.getAudioTracks()
      const tracks = stream.getAudioTracks()
@@ -632,7 +632,7 @@ track.onunmute     //当前轨道静音时触发
   * NOT_SUPPORTED_ERROR：浏览器不支持指定硬件设备
   * PERMISSION_DENIED：用户拒绝浏览器使用指定硬件设备
 
-```javascript
+```js
 navigator.getUserMedia({
   audio, //麦克风
   video, //摄像头
@@ -646,7 +646,7 @@ navigator.getUserMedia({
 <input type="range" min="0" max="100" step="1" value="20" name="volume" id="volume" />
 ```
 
-```javascript
+```js
 navigator.getUserMedia({
   audio: true, //麦克风
   video: true, //摄像头
@@ -687,7 +687,7 @@ RTCPeerConnection 对象用于`创建浏览器之间的点对点通信（peer to
 
 RTCPeerConnection 对象的主要任务是创建对等连接，可以轻松地钩住连接的关键点，因为此对象在出现时会触发一组事件，可以通过这些事件访问连接配置
 
-```javascript
+```js
 定义：const RTCPeerConnection = new RTCPeerConnection(config)
 属性：RTCPeerConnection.canTrickleIceCandidates  //返回远程是否支持UDP打洞或通过中继服务器连接
      
@@ -762,7 +762,7 @@ RTCPeerConnection.onaddstream                //
 
 ```
 
-```javascript
+```js
 
 ```
 
@@ -772,7 +772,7 @@ RTCDataChannel 对象用于`创建基于 RTCPeerConnection 对象的通道，并
 
 #### ① RTCDataChannel 对象
 
-```javascript
+```js
 定义：const RTCDataChannel = RTCPeerConnection.createDataChannel(name,options)
 属性：RTCDataChannel.id                         //返回通道标识ID
      RTCDataChannel.label                      //返回通道名
@@ -801,7 +801,7 @@ RTCDataChannel.onerror   //
 
 ```
 
-```javascript
+```js
 
 ```
 

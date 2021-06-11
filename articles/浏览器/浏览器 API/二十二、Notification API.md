@@ -4,7 +4,7 @@
 
 在获得让浏览器显示通知的权限后，可以通过创建 Notification 对象来让浏览器向用户显示通知
 
-```javascript
+```js
 定义：const notify = new Notification(title, options)
 属性：Notification.permission                  //返回字符串,用户是否允许浏览器显示通知(default:未请求,granted:允许,denied:拒绝)
 方法：Notification.requestPermission(callback) //无返回值,向用户请求让浏览器显示通知的权限
@@ -21,7 +21,7 @@ body //指定通知显示的内容
 
 ## 2. Notification 事件
 
-```javascript
+```js
 notify.onshow  //通知被显示时触发
 notify.onclick //通知被点击时触发
 notify.onclose //通知被关闭时触发
@@ -34,7 +34,7 @@ notify.onerror //通知发生错误时触发
 <button id="btn">浏览器显示通知</button>
 ```
 
-```javascript
+```js
 const btn = document.getElementById('btn')  
 btn.addEventListener('click', function (e) {    
   if (Notification.permission !== 'granted') {  

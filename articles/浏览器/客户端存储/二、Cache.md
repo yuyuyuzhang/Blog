@@ -6,7 +6,7 @@
 
 window.caches 属性返回 CacheStorage API，用于操作缓存
 
-```javascript
+```js
 定义：const caches = window.caches
 方法：caches.open(cacheName)   //返回Promise实例,返回并创建指定名称的Cache对象,已创建就直接返回
      caches.has(cacheName)    //返回Promise实例,是否存在指定名称的Cache对象
@@ -17,7 +17,7 @@ window.caches 属性返回 CacheStorage API，用于操作缓存
 
 ### (2) 实例：操作 CacheStorage API
 
-```javascript
+```js
 const f = async () => {
   //创建多个 Cache 对象
   const cacheNames = ['cache1', 'cache2', 'cache3']
@@ -39,7 +39,7 @@ f()
 
 ### (1) Cache 对象属性和方法
 
-```javascript
+```js
 定义：const cache = await window.caches.open(cacheName)
 方法：cache.add(url)          //返回Promise实例,请求url并将返回的200 response响应添加到cache
      cache.addAll([url,...]) //返回Promise实例,请求url数组并将返回的所有200 response响应添加到cache
@@ -53,7 +53,7 @@ f()
 * **cache.add/addAll(request)**：只缓存 `200` 响应，不可用于不透明的响应
 * **cache.put(request,response)**：缓存`任意`响应，可用于不透明的响应
 
-  ```javascript
+  ```js
   //add/addAll 等同于以下代码
   fetch(url).then(res => {
      if(res.status === 200){
@@ -65,7 +65,7 @@ f()
 
 ### (2) 实例：操作 Cache 对象
 
-```javascript
+```js
 const f = async () => {
   const cache1 = await window.caches.open('cache1')
   console.log(await cache1.addAll(['./cat.jpg', './movie.mp4'])) //undefined

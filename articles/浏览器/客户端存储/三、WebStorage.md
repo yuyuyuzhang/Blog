@@ -36,7 +36,7 @@ WebStorage 接口操作是`同步`的，进行大量操作时会锁死浏览器
 
 ③ SessionStorage 接口将数据保存在 `session 对象`中，数据的有效期仅限于`浏览器的一次会话`，会话结束后（浏览器加载文档的窗口关闭），数据被清空
 
-```javascript
+```js
 window.sessionStorage   //指向SessionStorage对象
 ```
 
@@ -44,13 +44,13 @@ window.sessionStorage   //指向SessionStorage对象
 
 LocalStorage 接口将数据保存在`客户端本地磁盘`，除非主动清除保存的数据，否则数据的有效期为`永久存在`，下一次访问该网站的时候网页可以直接读取以前保存的数据
 
-```javascript
+```js
 window.localStorage     //指向LocalStorage对象
 ```
 
 ## 3. WebStorage 的属性和方法
 
-```javascript
+```js
 定义：const ls = window.localStorage     //指向LocalStorage对象
      const ss = window.sessionStorage   //指向SessionStorage对象
 属性：s.length             //返回保存的键值对个数
@@ -85,7 +85,7 @@ window.localStorage     //指向LocalStorage对象
 * 结合使用 s.length 属性和 s.key(index) 方法，可以遍历所有键值对
 * WebStorage 接口保存的键值对的索引并不是固定的，新增一个键值对后，索引并不是顺序加 1
 
-```javascript
+```js
 const ss = window.sessionStorage
 
 ss.setItem('name', '张三')
@@ -121,7 +121,7 @@ for(let i=0; i < ss.length; i++){
 </table>
 ```
 
-```javascript
+```js
 const addBtn = document.getElementById('addBtn')
 addBtn.addEventListener('click', function(e){
   const time = new Date()
@@ -171,7 +171,7 @@ function showLocalStorage(){
 <p id="msg"></p>
 ```
 
-```javascript
+```js
 const saveBtn = document.getElementById('saveBtn')
 saveBtn.addEventListener('click', function(e){
   const person = {}
@@ -208,13 +208,13 @@ findBtn.addEventListener('click', function(e){
 
 storage 事件不在导致数据变化的当前页面触发，而是在`相同源 (协议、域名、端口) 下的在浏览器打开的其他页面`触发，也就是说，当浏览器同时打开多个窗口，每个窗口加载的文档同属一个源，其中一个窗口的文档的 WebStorage 接口存储的键值对发生变化时，可以在其他窗口的文档观察到监听函数的执行
 
-```javascript
+```js
 window.onstorage //WebStorage 接口存储的键值对发生变化时,在window对象上触发storage事件
 ```
 
 StorageEvent 事件对象继承了 Event 对象，StorageEvent 事件对象的几个特有的只读属性如下
 
-```javascript
+```js
 e.url         //返回原始触发storage事件的那个网页网址
 e.storageArea //返回键值对所在的整个对象
 e.key         //返回变动的键名
@@ -224,7 +224,7 @@ e.newValue    //返回变动键名的新键值(键值对删除返回null)
 
 实例
 
-```javascript
+```js
 window.addEventListener('storage', function(e){
   console.log(e.url)
   console.log(e.storageArea)
