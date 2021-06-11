@@ -1,0 +1,14 @@
+{
+  "name": "node-project",
+  "version": "1.0.0",
+  "author": "yuyuyuzhang",
+  "license": "ISC",
+  "description": "a node project",
+  "keywords": [
+    "node"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
