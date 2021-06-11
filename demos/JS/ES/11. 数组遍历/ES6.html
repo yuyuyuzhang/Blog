@@ -50,6 +50,26 @@ const arr = [
 ];
 console.log(deepTraversal(arr)); //Array [1, 4, 6, 3, 7]
 console.log(wideTraversal(arr)); //Array [1, 3, 4, 7, 6]
+
+
+//树遍历
+function getCurrItem(data, id){
+  for(let item of data){
+    if(item.id === id){
+      return item
+    }else if(Array.isArray(item.son) && item.son.length > 0){
+      const value = getCurrItem(item.son, id)
+      if(value){
+        return value
+      }
+    }
+  }
+}
+const a = JSON.parse('{"code":"0","data":{"success":"1","code":"200","message":"操作成功!","data":{"operable":true,"field0001":{"value":"1"},"son":[{"operable":true,"field0001":{"value":"1-1"},"son":[{"operable":true,"field0001":{"value":"1-1-1"},"son":[],"level":"3","taskname":"1-1-1","id":"7359839430116001547","state":"1","parentId":"1236570348444599504"}],"level":"2","taskname":"1-1","id":"1236570348444599504","state":"1","parentId":"-5626987991432869816"},{"operable":true,"field0001":{"value":"个"},"son":[{"operable":true,"field0001":{"value":"1-2-1"},"son":[],"level":"3","taskname":"1-2-1","id":"4001890019011481284","state":"1","parentId":"-1470606067011205940"}],"level":"2","taskname":"个","id":"-1470606067011205940","state":"1","parentId":"-5626987991432869816"}],"level":"1","taskname":"1","id":"-5626987991432869816","state":"1"}},"message":""}')
+const data = a.data.data.son
+const id = "7359839430116001547"
+const curr = getCurrItem(data, id)
+console.log("curr:", curr)
 </script>
 </body>
 </html>
