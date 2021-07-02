@@ -31,7 +31,7 @@ ArrayBuffer 构造函数用来`分配一段指定字节大小的连续内存区�
 定义：const buffer = new ArrayBuffer(n); //分配一段n字节的连续内存
 属性：buffer.byteLength                  //返回buffer的字节长度
 方法：静态方法
-     ArrayBuffer.isView(param)          //返回布尔值,param是否为ArrayBuffer对象的视图实例
+     ArrayBuffer.isView(param)          //返回param是否为ArrayBuffer对象的视图实例
      实例方法
      buffer.slice(n1,n2)                //返回新ArrayBuffer实例,拷贝buffer字节索引n1到字节索引n2前一项字节
 ```
@@ -59,11 +59,11 @@ ArrayBuffer 对象作为内存区域可以存放`多种类型的数据`，视图
 
 TypedArray 视图包括如下 9 种类型
 
-| 数据类型 | 字节长度 | 含义                        | 对应的C语言类型 |
-| -------- | -------- | --------------------------- | --------------- |
+| 数据类型  | 字节长度 | 含义                        | 对应的C语言类型  |
+| -------- | -------- | -------------------------- | --------------- |
 | Int8     | 1        | 8位有符号整数               | signed char     |
 | Uint8    | 1        | 8位无符号整数               | unsigned char   |
-| Uint8C   | 1        | 8位无符号整数(自动过滤溢出) | unsigned char   |
+| Uint8C   | 1        | 8位无符号整数(自动过滤溢出)  | unsigned char   |
 | Int16    | 2        | 16位有符号整数              | short           |
 | Uint16   | 2        | 16位无符号整数              | unsigned short  |
 | Int32    | 4        | 32位有符号整数              | int             |
@@ -116,7 +116,7 @@ console.log(tv2.length)
 
 #### ② TypedArray(length)
 
-TypedArray 构造函数还可以不通过 ArrayBuffer 对象，接受`数组成员个数`作为参数，直接分配内存生成
+TypedArray 构造函数还可以不通过 ArrayBuffer 对象，接受`数组成员个数`作为参数，直接分配`一段连续内存`生成
 
 ```js
 定义
@@ -141,7 +141,32 @@ tv[2] = tv[0] + tv[1];
 
 ![TypedArray(length)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(length).png)
 
-#### ③ TypedArray(typedArray)
+#### ③ TypedArray(array)
+
+TypedArray 构造函数还可以接受`一个数据成员值的数组`作为参数，此时 TypedArray 视图会`重新开辟内存`，不会在原数组的内存上建立视图
+
+```js
+定义
+const tv = new Int8Array(typedArrayOther)
+const tv = new Uint8Array(typedArrayOther);
+const tv = new Uint8CArray(typedArrayOther);
+const tv = new Int16Array(typedArrayOther);
+const tv = new Uint16Array(typedArrayOther);
+const tv = new Int32Array(typedArrayOther);
+const tv = new Uint32Array(typedArrayOther);
+const tv = new Float32Array(typedArrayOther);
+const tv = new Float64Array(typedArrayOther);
+```
+
+```js
+//创建一个包含数据成员 [1,2,3,4] 的 Int16 视图，基于 8 字节的连续内存
+const tv = new Uint16Array([1, 2, 3, 4]);
+console.log(tv)
+```
+
+![TypedArray(array)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(array).png)
+
+#### ④ TypedArray(typedArray)
 
 TypedArray 构造函数还可以接受`另一个 TypedArray 实例`作为参数，此时生成的新的类数组对象只是复制了参数的值，对应的底层内存是不一样的，会`另外开辟一段新的内存储存数据`
 
@@ -172,31 +197,6 @@ console.log(tv2)
 
 ![TypedArray(typedArray)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(typedArray).png)
 
-#### ④ TypedArray(array)
-
-TypedArray 构造函数还可以接受`一个数据成员值的数组`作为参数，此时 TypedArray 视图会`重新开辟内存`，不会在原数组的内存上建立视图
-
-```js
-定义
-const tv = new Int8Array(typedArrayOther)
-const tv = new Uint8Array(typedArrayOther);
-const tv = new Uint8CArray(typedArrayOther);
-const tv = new Int16Array(typedArrayOther);
-const tv = new Uint16Array(typedArrayOther);
-const tv = new Int32Array(typedArrayOther);
-const tv = new Uint32Array(typedArrayOther);
-const tv = new Float32Array(typedArrayOther);
-const tv = new Float64Array(typedArrayOther);
-```
-
-```js
-//创建一个包含数据成员 [1,2,3,4] 的 Int16 视图，基于 8 字节的连续内存
-const tv = new Uint16Array([1, 2, 3, 4]);
-console.log(tv)
-```
-
-![TypedArray(array)](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/TypedArray(array).png)
-
 ### (3) TypedArray 属性和方法
 
 TypedArray 类数组对象与普通数组的区别如下
@@ -208,18 +208,18 @@ TypedArray 类数组对象与普通数组的区别如下
 
 ```js
 属性：实例属性
-      tv.buffer             //返回tv整段内存区域对应的ArrayBuffer对象
-      tv.byteOffset         //返回tv从底层ArrayBuffer对象的哪个字节开始
-      tv.byteLength         //返回tv字节长度
-      tv.length             //返回tv成员个数
-      普通数组所有属性
+     tv.buffer             //返回tv整段内存区域对应的ArrayBuffer对象
+     tv.byteOffset         //返回tv从底层ArrayBuffer对象的哪个字节开始
+     tv.byteLength         //返回tv字节长度
+     tv.length             //返回tv成员个数
+     普通数组所有属性
 方法：静态方法
-      TypedArray.of(n1,...) //返回将参数n1,...等转换成的typedArray实例
-      TypedArray.from(ite)  //返回将具有iterator接口的参数转换成的typedArray实例
-      实例方法
-      tv.subarray(a,b)      //返回基于tv的成员索引a到b前一项建立的新typedArray实例
-      tv.set(tv1,n)         //无返回值,将tv1内容复制到tv从成员索引n开始的内容,整段内存的复制比一个个拷贝成员快得多
-      普通数组除 concat 外所有方法
+     TypedArray.of(n1,...) //返回将参数n1,...等转换成的typedArray实例
+     TypedArray.from(ite)  //返回将具有iterator接口的参数转换成的typedArray实例
+     实例方法
+     tv.subarray(a,b)      //返回基于tv的成员索引a到b前一项建立的新typedArray实例
+     tv.set(tv1,n)         //无返回值,将tv1内容复制到tv从成员索引n开始的内容,整段内存的复制比一个个拷贝成员快得多
+     普通数组除 concat 外所有方法
 ```
 
 #### ① TypedArray 字节序
@@ -410,29 +410,29 @@ DataView 视图本身也是构造函数，DataView 构造函数需要通过如�
 ```js
 定义：const dv = new DataView(buffer);
 属性：实例属性
-      dv.buffer                    //返回typedArray整段内存区域对应的ArrayBuffer对象
-      dv.byteOffset                //返回typedArray从底层ArrayBuffer对象的哪个字节开始
-      dv.byteLength                //返回typedArray字节长度
-      dv.length                    //返回typedArray成员个数
-      普通数组所有属性
+     dv.buffer                    //返回typedArray整段内存区域对应的ArrayBuffer对象
+     dv.byteOffset                //返回typedArray从底层ArrayBuffer对象的哪个字节开始
+     dv.byteLength                //返回typedArray字节长度
+     dv.length                    //返回typedArray成员个数
+     普通数组所有属性
 方法：实例方法
-      dv.getInt8(byte,flag)        //返回一个有符号8位整数,从指定字节byte开始读取1个字节,flag默认false大端字节序
-      dv.getUint8(byte,flag)       //返回一个无符号8位整数,从指定字节byte开始读取1个字节
-      dv.getInt16(byte,flag)       //返回一个有符号16位整数,从指定字节byte开始读取2个字节
-      dv.getUint16(byte,flag)      //返回一个无符号16位整数,从指定字节byte开始读取2个字节
-      dv.getInt32(byte,flag)       //返回一个有符号32位整数,从指定字节byte开始读取4个字节
-      dv.getUint32(byte,flag)      //返回一个无符号32位整数,从指定字节byte开始读取4个字节
-      dv.getFloat32(byte,flag)     //返回一个32位浮点数,从指定字节byte开始读取4个字节
-      dv.getFloat64(byte,flag)     //返回一个64位浮点数,从指定字节byte开始读取8个字节
-      dv.setInt8(byte,val,flag)    //无返回值,从指定字节byte开始写入1个字节的有符号8位整数
-      dv.setUint8(byte,val,flag)   //无返回值,从指定字节byte开始写入1个字节的无符号8位整数
-      dv.setInt16(byte,val,flag)   //无返回值,从指定字节byte开始写入2个字节的有符号16位整数
-      dv.setUint16(byte,val,flag)  //无返回值,从指定字节byte开始写入2个字节的无符号16位整数
-      dv.setInt32(byte,val,flag)   //无返回值,从指定字节byte开始写入4个字节的有符号32位整数
-      dv.setUint32(byte,val,flag)  //无返回值,从指定字节byte开始写入4个字节的无符号32位整数
-      dv.setFloat32(byte,val,flag) //无返回值,从指定字节byte开始写入4个字节的有符号32位整数
-      dv.setFloat64(byte,val,flag) //无返回值,从指定字节byte开始写入8个字节的有符号64位整数
-      普通数组的所有方法
+     dv.getInt8(byte,flag)        //返回一个有符号8位整数,从指定字节byte开始读取1个字节,flag默认false大端字节序
+     dv.getUint8(byte,flag)       //返回一个无符号8位整数,从指定字节byte开始读取1个字节
+     dv.getInt16(byte,flag)       //返回一个有符号16位整数,从指定字节byte开始读取2个字节
+     dv.getUint16(byte,flag)      //返回一个无符号16位整数,从指定字节byte开始读取2个字节
+     dv.getInt32(byte,flag)       //返回一个有符号32位整数,从指定字节byte开始读取4个字节
+     dv.getUint32(byte,flag)      //返回一个无符号32位整数,从指定字节byte开始读取4个字节
+     dv.getFloat32(byte,flag)     //返回一个32位浮点数,从指定字节byte开始读取4个字节
+     dv.getFloat64(byte,flag)     //返回一个64位浮点数,从指定字节byte开始读取8个字节
+     dv.setInt8(byte,val,flag)    //无返回值,从指定字节byte开始写入1个字节的有符号8位整数
+     dv.setUint8(byte,val,flag)   //无返回值,从指定字节byte开始写入1个字节的无符号8位整数
+     dv.setInt16(byte,val,flag)   //无返回值,从指定字节byte开始写入2个字节的有符号16位整数
+     dv.setUint16(byte,val,flag)  //无返回值,从指定字节byte开始写入2个字节的无符号16位整数
+     dv.setInt32(byte,val,flag)   //无返回值,从指定字节byte开始写入4个字节的有符号32位整数
+     dv.setUint32(byte,val,flag)  //无返回值,从指定字节byte开始写入4个字节的无符号32位整数
+     dv.setFloat32(byte,val,flag) //无返回值,从指定字节byte开始写入4个字节的有符号32位整数
+     dv.setFloat64(byte,val,flag) //无返回值,从指定字节byte开始写入8个字节的有符号64位整数
+     普通数组的所有方法
 ```
 
 #### ① DataView 实例方法
