@@ -4,57 +4,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="renderer" content="webkit" />
+  <meta name="referrer" content="no-referrer" />
   <title>test</title>
 </head>
 <body>
   
-
-
 <script>
 
-const a = JSON.parse('{"code":"0","data":{"success":"1","code":"200","message":"操作成功!","data":{"operable":true,"field0001":{"value":"1"},"son":[{"operable":true,"field0001":{"value":"1-1"},"son":[{"operable":true,"field0001":{"value":"1-1-1"},"son":[],"level":"3","taskname":"1-1-1","id":"7359839430116001547","state":"1","parentId":"1236570348444599504"}],"level":"2","taskname":"1-1","id":"1236570348444599504","state":"1","parentId":"-5626987991432869816"},{"operable":true,"field0001":{"value":"个"},"son":[{"operable":true,"field0001":{"value":"1-2-1"},"son":[],"level":"3","taskname":"1-2-1","id":"4001890019011481284","state":"1","parentId":"-1470606067011205940"}],"level":"2","taskname":"个","id":"-1470606067011205940","state":"1","parentId":"-5626987991432869816"}],"level":"1","taskname":"1","id":"-5626987991432869816","state":"1"}},"message":""}')
-const data = a.data.data.son
-const id = "7359839430116001547"
 
-function treeLock(treeChildren){
-  treeChildren.forEach(item => {
-    // this.$set(item, 'lock', false)
-    item.lock = false
-    if(item.son && Array.isArray(item.son) && item.son.length > 0){
-      this.treeLock(item.son)
-    }
-  });
-}
-function getCurrItem(data, id){
-  for(let item of data){
-    if(item.id === id){
-      return item
-    }else if(Array.isArray(item.son) && item.son.length > 0){
-      const value = getCurrItem(item.son, id)
-      if(value){
-        return value
-      }
-    }
-  }
-}
-function treeUnlock(curr){
-  curr.lock = true
-  if(curr.parentId){
-    const parentItem = getCurrItem(data, curr.parentId)
-    if(parentItem){
-      treeUnlock(parentItem)
-    } else{
-      return
-    }
-  } else{
-    return
-  }
-}
-treeLock(data)
-const curr = getCurrItem(data, id)
-treeUnlock(curr, id)
-console.log("data:", data)
-console.log("curr:", curr)
 </script>
 </body>
 </html>

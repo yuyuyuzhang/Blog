@@ -109,15 +109,15 @@ Referer 字段告知服务器当前请求的引荐人，这往往可以用来用
 
 **源信息**：协议、域名、端口
 
-| Referrer Policy                 | 含义                                                                                      |
-| ------------------------------- | ----------------------------------------------------------------------------------------- |
-| no-referrer                     | 不发送                                                                                    |
-| origin                          | 一律只发送源信息                                                                          |
-| unsafe-url                      | 一律只发送源信息、路径、查询字符串，不包含片段字符串、用户名和密码                        |
-| no-referrer-when-downgrade      | 从 HTTPS 网址链接到 HTTP 网址不发送                                                       |
-| strict-origin                   | 从 HTTPS 网址链接到 HTTP 网址不发送，否则只发送源信息                                     |
-| same-origin                     | 链接到同源网址发送，跨域不发送                                                            |
-| origin-when-cross-origin        | 链接到同源网址发送完整信息，跨域只发送源信息                                              |
+| Referrer Policy | 含义  |
+| ----------------| ----- |
+| no-referrer                     | 不发送|
+| origin                          | 一律只发送源信息|
+| unsafe-url                      | 一律只发送源信息、路径、查询字符串，不包含片段字符串、用户名和密码|
+| no-referrer-when-downgrade      | 从 HTTPS 网址链接到 HTTP 网址不发送|
+| strict-origin                   | 从 HTTPS 网址链接到 HTTP 网址不发送，否则只发送源信息|
+| same-origin                     | 链接到同源网址发送，跨域不发送 |
+| origin-when-cross-origin        | 链接到同源网址发送完整信息，跨域只发送源信息 |
 | strict-origin-when-cross-origin | 链接到同源网址发送完整信息，跨域时如果 HTTPS 网址链接到 HTTP 网址不发送，否则只发送源信息 |
 
 Referrer Policy 有以下三种常用方法

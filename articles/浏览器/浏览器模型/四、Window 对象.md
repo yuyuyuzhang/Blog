@@ -80,9 +80,6 @@ window.print()                                  //显示打印对话框
 window.showDirectoryPicker()                    //显示目录选择器,允许用户选择目录
 window.showOpenFilePicker()                     //显示文件选择器,允许用户选择一或多个文件
 window.showSaveFilePicker()                     //显示保存文件的文件选择器,允许用户选择现有文件或输入新文件名称
-编码解码方法：
-window.btoa(str)                                //返回Base64编码后的字符串
-window.atob(encodedStr)                         //返回Base64解码后的字符串
 定时器方法：
 window.setTimeout(f,t,...)                      //返回定时器编号,t毫秒后执行一次回调函数f,其他参数将依次传入回调函数
 window.setInterval(f,t,...)                     //返回定时器编号,每隔t毫秒执行一次回调函数f
