@@ -11,8 +11,13 @@
   
 <script>
 
-
-
+const f1 = () => {
+  console.trace()
+}
+const f2 = () => {
+  f1()
+}
+f2()
 
 
 </script>

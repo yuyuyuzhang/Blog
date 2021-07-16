@@ -50,6 +50,7 @@ window.screenY/screenTop   //返回浏览器窗口左上角相对当前屏幕左
 window.pageXOffset         //返回文档的当前水平滚动距离
 window.pageYOffset         //返回文档的当前垂直滚动距离
 浏览器模型：
+window.console             //指向console对象
 window.screen              //指向screen对象
 window.navigator           //指向Navigator对象
 window.URL                 //指向URL对象
@@ -81,8 +82,8 @@ window.showDirectoryPicker()                    //显示目录选择器,允许�
 window.showOpenFilePicker()                     //显示文件选择器,允许用户选择一或多个文件
 window.showSaveFilePicker()                     //显示保存文件的文件选择器,允许用户选择现有文件或输入新文件名称
 定时器方法：
-window.setTimeout(f,t,...)                      //返回定时器编号,t毫秒后执行一次回调函数f,其他参数将依次传入回调函数
-window.setInterval(f,t,...)                     //返回定时器编号,每隔t毫秒执行一次回调函数f
+window.setTimeout(cb,t,param...)                //返回定时器编号,t毫秒后执行一次回调函数cb,其他参数将依次传入回调函数
+window.setInterval(cb,t)                        //返回定时器编号,每隔t毫秒执行一次回调函数cb
 window.clearTimeout(tId)                        //无返回值,清除编号tId表示的setTimeout定时器
 window.clearInterval(tId)                       //无返回值,清除编号tId表示的setInterval定时器
 新窗口方法：

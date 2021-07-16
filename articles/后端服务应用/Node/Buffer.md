@@ -340,26 +340,3 @@ buf6.swap64()
 console.log(buf5) //buf5 <Buffer 08 07 06 05 04 03 02 01>
 console.log(buf6) //buf6 抛出 ERR_INVALID_BUFFER_SIZE 异常
 ```
-
-### (8) 读取方法
-
-```js
-
-```
-
-### (9) 写入方法
-
-```js
-
-```
-
-## 3. Blob 类
-
-```js
-定义：new buffer.Blob(source,{enc,type})
-属性：blob.type                  //返回blob的MIME类型
-     blob.size                  //返回blob字节大小  
-方法：blob.slice(start,end,type) //返回新blob,由blob的索引start到索引end前一项构成
-     blob.arrayBuffer()         //返回Promise实例,blob对应的ArrayBuffer对象
-     blob.text()                //返回Promise实例,将blob内容解码为utf-8字符串
-```
