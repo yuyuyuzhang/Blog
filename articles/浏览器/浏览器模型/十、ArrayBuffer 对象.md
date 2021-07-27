@@ -1,6 +1,4 @@
-# 九、ArrayBuffer 对象
-
-[[_TOC_]]
+# 十、ArrayBuffer 对象
 
 ## 1. 二进制数组 API
 

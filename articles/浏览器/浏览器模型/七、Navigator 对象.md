@@ -1,6 +1,4 @@
-# 六、Navigator 对象
-
-[[_TOC_]]
+# 七、Navigator 对象
 
 ## 1. Navigator 对象
 

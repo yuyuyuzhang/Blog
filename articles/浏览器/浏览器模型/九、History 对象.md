@@ -1,6 +1,4 @@
-# 七、History 对象
-
-[[_TOC_]]
+# 九、History 对象
 
 ## 1. History 对象
 

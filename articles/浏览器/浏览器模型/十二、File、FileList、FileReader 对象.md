@@ -1,4 +1,4 @@
-# 十一、File、FileList、FileReader 对象
+# 十二、File、FileList、FileReader 对象
 
 ## 1. File 对象
 

@@ -1,6 +1,4 @@
-# 七、Location 对象
-
-[[_TOC_]]
+# 八、Location 对象
 
 ## 1. URL 对象
 
