@@ -1,10 +1,6 @@
 {
   "name": "webpack-project",
   "version": "1.0.0",
-  "sideEffects": [
-    "./src/components/pad.js",
-    "*.css"
-  ],
   "scripts": {
     "serve": "webpack serve --node-env=development",
     "build": "webpack --node-env=production",
