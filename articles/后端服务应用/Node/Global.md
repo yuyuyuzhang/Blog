@@ -16,7 +16,7 @@ console 对象是 JS 引擎提供的调试工具，用于控制台调试输出�
 
 ## 5. 定时器
 
-```js
+```node
 setTimeout(cb,t,param...) //返回定时器编号,t毫秒后将回调函数cb添加到等待队列,其他参数将依次传入回调函数
 setInterval(cb,t)         //返回定时器编号,每隔t毫秒将回调函数cb添加到等待队列
 setImmediate()
@@ -41,7 +41,7 @@ clearImmediate()
 
 在 /Users/mjr 目录下运行 node example.js
 
-```js
+```node
 console.log(__dirname);  //"/Users/mjr"
 console.log(__filename); //"/Users/mjr/example.js"
 ```

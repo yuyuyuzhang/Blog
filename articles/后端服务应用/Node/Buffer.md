@@ -27,7 +27,7 @@ Unicode 字符集有如下 3 种字符编码方式，数字表示每种字符编
 
 Global 对象是 ES 中的`全局对象`，浏览器和 Node 对 Global 对象的实现不同
 
-```js
+```node
 Unicode 编码/解码方法：
 escape(str)             //返回编码后的字符串,转义除ASCII字母、数字、标点符号* @ - _ + . /外的其他所有字符
 unescape(str)           //解码使用escape()编码的字符串
@@ -104,7 +104,7 @@ Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8
 
 ## 3. Buffer API
 
-```js
+```node
 定义：Buffer.alloc(len,val,enc)              //返回buffer实例,使用encoding编码,val填充到指定长度len
      Buffer.from(str,enc)                   //返回buffer实例,使用encoding编码str
      Buffer.from(arr)                       //返回buffer实例,使用0-255范围内的字节数组分配buffer
@@ -200,7 +200,7 @@ Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8
 
 ### (1) 创建 buffer 实例
 
-```js
+```node
 //ArrayBuffer对象表示存储二进制数据的一段连续内存,不能直接读写,只能通过TypedArray/DataView视图读写
 const arraybuffer = new ArrayBuffer(6) //分配一段6字节的连续内存
 const buf1 = Buffer.alloc(6)
@@ -221,7 +221,7 @@ console.log(buf6) //<Buffer 61 61 61 61 61 61>
 
 ### (2) 实例方法
 
-```js
+```node
 const buf2 = Buffer.alloc(6, 'a')
 buf2[1] = 0x72
 console.log(buf2.toJSON())   //{type: 'Buffer', data: [ 97, 114, 97, 97, 97, 97 ]}
@@ -230,7 +230,7 @@ console.log(buf2.toString()) //'araaaa'
 
 ### (3) 查询方法
 
-```js
+```node
 str.indexOf(str1,n)     //返回查到的第一个子串str1的索引,由索引n处或字符串头部从前往后搜索
 str.lastIndexOf(str1,n) //返回查到的第一个子串str1的索引,由索引n处或字符串尾部从后往前搜索
 
@@ -267,7 +267,7 @@ console.log(buf3.lastIndexOf('a', 10)) //8
 
 buffer.subarray()、buffer.slice() 复制得到的新 buffer 与旧 buffer `共享相同的底层内存`
 
-```js
+```node
 const buf1 = Buffer.alloc(6)
 const buf2 = Buffer.alloc(6, 'a')
 buf2[1] = 0x72
@@ -284,7 +284,7 @@ console.log(buf) //buf <Buffer 20 00 01 01 72 61>
 
 ### (5) 比较方法
 
-```js
+```node
 const buf1 = Buffer.from('B')
 const buf2 = Buffer.from('A')
 const buf3 = Buffer.from('C')
@@ -294,14 +294,14 @@ console.log(buf2.compare(buf3)) //-1
 
 由此可以实现 buffer 实例数组的排序 sort
 
-```js
+```node
 console.log([buf1, buf2, buf3].sort(Buffer.compare)) 
 //[buf2, buf1, buf3] = [<Buffer 41>, <Buffer 42>, <Buffer 43>]
 ```
 
 ### (6) 遍历方法
 
-```js
+```node
 const buf = Buffer.from('this')
 console.log(buf) //buf <Buffer 74 68 69 73>
 
@@ -312,7 +312,7 @@ for(const item of buf.entries()){
 
 ### (7) 解读交换方法
 
-```js
+```node
 const buf1 = Buffer.from([0x1, 0x2, 0x3, 0x4])
 const buf2 = Buffer.from([0x1, 0x2, 0x3])
 console.log(buf1) //buf1 <Buffer 01 02 03 04>

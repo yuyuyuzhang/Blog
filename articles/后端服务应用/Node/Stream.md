@@ -9,7 +9,7 @@ Node 提供 Stream 接口处理流数据，Node 包含以下 4 种流类型
 * Duplex：双工流 - 可读可写，同时实现了 Readable 和 Writable 接口
 * Transform：转换流 - 可读可写，且读写过程中可以修改或转换数据，实现了 Duplex 接口
 
-```js
+```node
 属性：
 方法：stream.finished(stream,{error,readable,writable},cb) //无返回值,目标流不再可读、可写、遇到错误、过早关闭事件时执行回调
      stream.pipeline(streams,cb) //使用管道传送多个流和生成器,管道完成时执行回调
@@ -48,7 +48,7 @@ Node 提供 Stream 接口处理流数据，Node 包含以下 4 种流类型
 
 ### (3) stream.Readable API
 
-```js
+```node
 定义：
 属性：readable.readableHighWaterMark     //返回构造当前可读流时传入的highWaterMark值
      readable.readableEncoding          //返回当前可读流指定的encoding编码
@@ -75,7 +75,7 @@ readable.pipe(writable,{end})
 
 ### (4) stream.Readable 事件
 
-```js
+```node
 .ondata     //当调用readable.read()有数据返回时触发,当流将数据发送给消费者后触发
 .onreadable //当可读流中有数据可被消费时触发,当到达可读流数据的尽头时在end事件之前触发
 .onend      //当可读流中数据被完全消费后触发
@@ -89,7 +89,7 @@ readable.pipe(writable,{end})
 
 ### (1) stream.Writable API
 
-```js
+```node
 定义：
 属性：writable.writableHighWaterMark        //返回构造当前可写流时传入的highWaterMark值
      writable.writableObjectMode           //返回当前可写流指定的objectMode属性
@@ -110,7 +110,7 @@ readable.pipe(writable,{end})
 
 ### (2) stream.Writable 事件
 
-```js
+```node
 .ondrain  //当可以继续写入数据到当前可写流时触发
 .onpipe   //当在某个可读流上调用readable.pipe()将当前可写流添加到其目标集时触发
 .onunpipe //当在某个可读流上调用readable.unpipe()将当前可写流从其目标集移除时触发
@@ -123,13 +123,13 @@ readable.pipe(writable,{end})
 
 ### (1) Stream.Duplex API
 
-```js
+```node
 
 ```
 
 ### (2) Stream.Duplex 事件
 
-```js
+```node
 
 ```
 
@@ -137,7 +137,7 @@ readable.pipe(writable,{end})
 
 ### (1) Stream.Transform API
 
-```js
+```node
 定义：
 属性：
 方法：transform.destroy(error) //返回当前转换流,销毁当前转换流
@@ -145,7 +145,7 @@ readable.pipe(writable,{end})
 
 ### (2) Stream.Transform 事件
 
-```js
+```node
 
 ```
 
@@ -163,7 +163,7 @@ readable.pipe(writable,{end})
 
 * test.js
 
-  ```js
+  ```node
   const fs = require('fs')
   const readerStream = fs.createReadStream('input.txt')
   const writeStream = fs.createWriteStream('output.txt')
@@ -181,7 +181,7 @@ readable.pipe(writable,{end})
 
 * test.js
 
-  ```js
+  ```node
   const fs = require('fs')
   const zlib = require('zlib')
   fs.createReadStream('input.txt')
