@@ -14,7 +14,7 @@
 
 * **模块名**：用于加载 `Node 原生模块`和 `node_modules 文件夹模块`
 
-  ```node
+  ```js
   const http = require('http')
   ```
 
@@ -22,11 +22,15 @@
   * 相对路径
   * 绝对路径
 
-  ```node
+  ```js
   const circle = require('./circle.js')
   ```
 
 当我们尝试通过模块名加载一个自定义的 http 模块，Node 会首先加载原生 http 模块，除非修改自定义 http 模块名或者使用路径加载
+
+### (4) Node 模块作用域
+
+无论是 ES6 modules 还是 CommonJS 规范，所有模块都拥有自己的`模块作用域`，模块内的变量都是`私有`的，不会污染全局作用域，`调用模块提供的对外接口`是访问模块内数据的唯一途径，这意味着不小心使用重复的全局变量名称引起的数据冲突问题将大大减少
 
 ## 2. ES6 modules
 
@@ -40,14 +44,13 @@ JS 文件和模块间具有`一一对应`的关系
 
 * 模块名是`字符串`，可能包含`斜杠（路径）`
 * 模块必须明确指出需要对外暴露的`功能接口`
-* 所有代码都运行在`模块作用域`，不会污染全局作用域，模块内的变量都是`私有`的
 * 模块加载顺序按照`在代码中出现的顺序`
 
 ### (2) module 对象
 
 每个模块都有一个 module 对象，代表当前模块
 
-```node
+```js
 module.id       //返回当前模块id
 module.filename //返回当前模块名
 module.path     //返回当前模块路径
@@ -62,7 +65,7 @@ module.children //返回当前模块加载的其他模块
 
 module.exports 用于指定当前模块的输出接口
 
-```node
+```js
 // webpack.config.js
 module.exports = (env, argv) => {
   const config = {
@@ -82,7 +85,7 @@ require() 函数用于加载指定模块并返回该模块的 `module.exports`�
 
 require() 函数及其辅助方法
 
-```node
+```js
 require.resolve()  //返回解析后的绝对路径的模块名
 require.main       //返回入口（主模块）
 require.cache      //返回所有缓存模块
@@ -93,7 +96,7 @@ CommonJS 模块的加载机制是`输出值的拷贝`，某个模块一旦输出
 
 * count.js
 
-  ```node
+  ```js
   let count = 1;
   const incCount = () => count++;
 
@@ -105,7 +108,7 @@ CommonJS 模块的加载机制是`输出值的拷贝`，某个模块一旦输出
 
 * index.js
 
-  ```node
+  ```js
   const { count, incCount } = require('./count.js')
 
   console.log(count) //1
@@ -119,7 +122,7 @@ Node 仅在初次加载 CommonJS 模块时执行一次，之后再次加载都�
 
 * 让模块输出一个函数
 
-  ```node
+  ```js
   // webpack.config.js
   module.exports = (env, argv) => {
     const config = {
@@ -131,7 +134,7 @@ Node 仅在初次加载 CommonJS 模块时执行一次，之后再次加载都�
 
 * 每次加载之前删除模块缓存
 
-  ```node
+  ```js
   //删除指定模块缓存
   delete require.cache(moduleName) 
 
@@ -150,7 +153,7 @@ CommonJS 模块规范支持以下 2 个全局变量，ES6 modules 不支持
 
 在 E:\Blog\demos\后端服务应用\Node\CommonJS 目录下运行 node index.js
 
-```node
+```js
 console.log(__dirname);  //"E:\Blog\demos\后端服务应用\Node\CommonJS"
 console.log(__filename); //"E:\Blog\demos\后端服务应用\Node\CommonJS\index.js"
 ```

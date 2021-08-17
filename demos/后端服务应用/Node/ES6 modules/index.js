@@ -7,3 +7,4 @@ console.log(count) //1
 incCount()
 console.log(count) //2
 
+console.log(process)

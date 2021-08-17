@@ -51,7 +51,7 @@ Node 自带 REPL，可以调试 JS 代码，可以执行以下任务
 
   b.js
 
-  ```node
+  ```js
   var b = 2;
   ```
 
