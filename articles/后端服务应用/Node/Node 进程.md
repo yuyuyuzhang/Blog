@@ -17,15 +17,15 @@ process.version   //返回当前Node版本
 process.versions  //返回当前Node及其内置模块版本
 process.release   //返回当前Node版本相关信息
 进程属性：
-process.title     //返回或设置当前进程名称
-process.pid       //返回当前进程pid
-process.ppid      //返回当前进程ppid
-process.config    //返回当前进程可执行文件的配置选项
-process.execPath  //返回当前进程可执行文件的绝对路径
-process.argv      //返回当前进程命令行参数,第一个参数是node,第二个参数是当前执行模块的绝对路径名,之后才是依次传入命令行的参数
-process.execArgv  //返回当前进程命令行特殊参数
-process.argv0     //返回当前进程第一个命令行参数(node)
-process.debugPort //返回当前进程的Node调试端口
+process.title     //返回或设置当前Node进程名称
+process.pid       //返回当前Node进程pid
+process.ppid      //返回当前Node进程ppid
+process.config    //返回当前Node进程可执行文件的配置选项
+process.execPath  //返回当前Node进程可执行文件的绝对路径
+process.argv      //返回当前Node进程命令行参数,第一个参数是node,第二个参数是当前执行模块的绝对路径名,之后才是依次传入命令行的参数
+process.execArgv  //返回当前Node进程命令行特殊参数
+process.argv0     //返回当前Node进程第一个命令行参数(node)
+process.debugPort //返回当前Node进程的Node调试端口
 输入输出属性：
 process.stdin     //返回一个指向标准输入流的只读流
 process.stdout    //返回一个指向标准输出流的只写流
@@ -88,9 +88,9 @@ npm run serve -a
 
 ```js
 process.dlopen(module,fileName)
-process.uptime()
-process.reallyExit()
-process.hrtime()
+process.uptime() //返回当前Node进程已运行的秒数
+
+process.hrtime.bigint()
 process.cpuUsage()
 process.resourceUsage()
 process.memoryUsage()
@@ -108,6 +108,7 @@ process.chdir()
 process.cwd()
 
 process.binding()
+process.reallyExit()
 ```
 
 ### (3) Process 对象事件
