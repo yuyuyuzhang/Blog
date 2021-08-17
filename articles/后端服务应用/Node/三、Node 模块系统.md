@@ -141,6 +141,20 @@ Node 仅在初次加载 CommonJS 模块时执行一次，之后再次加载都�
   })
   ```
 
+### (6) 全局变量
+
+CommonJS 模块规范支持以下 2 个全局变量，ES6 modules 不支持
+
+* **__dirname**：当前模块的目录名
+* **__filename**：当前模块的文件名（包含目录的绝对路径）
+
+在 E:\Blog\demos\后端服务应用\Node\CommonJS 目录下运行 node index.js
+
+```node
+console.log(__dirname);  //"E:\Blog\demos\后端服务应用\Node\CommonJS"
+console.log(__filename); //"E:\Blog\demos\后端服务应用\Node\CommonJS\index.js"
+```
+
 ## 4. Node 包管理工具（Node Package Manager，npm）
 
 ### (1) npm
@@ -157,6 +171,11 @@ npm 常用命令如下
   * 本地安装：安装到项目代码的 node_modules 目录
     * npm i moduleName -D  安装为开发环境依赖
     * npm i moduleName     安装为生产环境依赖
+  * 安装版本
+    * npm i moduleName 1.2.2   安装指定版本
+    * npm i moduleName ~1.2.2  安装1.2.x最新版本
+    * npm i moduleName ^1.2.2  安装1.x.x最新版本
+    * npm i moduleName latest  安装最新版本
 * 卸载模块
   * npm uni moduleName
 * 更新模块
@@ -183,7 +202,7 @@ npm 常用命令如下
   ```json
   {
     "name": "node-commonjs-project",
-    "version": "1.0.0",
+    "version": "1.0.0",    // 大版本-次要版本-小版本
     "author": "yuyuyuzhang",
     "license": "ISC",
     "description": "a node commonJS project",
