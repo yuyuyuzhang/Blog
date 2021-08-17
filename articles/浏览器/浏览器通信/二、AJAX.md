@@ -37,9 +37,9 @@ XMLHttpRequest 对象是 AJAX 的主要接口，尽管名字中含有 XML、HTTP
 ```js
 请求状态：
 xhr.readyState      //返回一个整数,表示xhr的当前状态
-xhr.responseType    //返回/设置从服务器接收数据的类型
-xhr.timeout         //返回/设置多少毫秒后请求仍未得到结果就自动终止(0则没有时间限制)
-xhr.withCredentials //返回/设置跨域请求时,用户信息是否包含在请求中(默认false)
+xhr.responseType    //返回或设置从服务器接收数据的类型
+xhr.timeout         //返回或设置多少毫秒后请求仍未得到结果就自动终止(0则没有时间限制)
+xhr.withCredentials //返回或设置跨域请求时,用户信息是否包含在请求中(默认false)
 回应状态：
 xhr.status          //返回服务器响应的HTTP状态码
 xhr.statusText      //返回服务器响应的状态提示信息
@@ -70,7 +70,7 @@ xhr.readyState 属性状态每次变化都会在 xhr 实例上触发 `readystate
 
 ### (3) xhr.timeout
 
-xhr.timeout 属性返回/设置多少毫秒后请求仍未得到结果，就自动终止请求，终止请求时，会在 xhr 实例上触发 timeout 事件
+xhr.timeout 属性返回或设置多少毫秒后请求仍未得到结果，就自动终止请求，终止请求时，会在 xhr 实例上触发 timeout 事件
 
 ```js
 const xhr = new XMLHttpRequest()

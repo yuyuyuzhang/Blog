@@ -16,7 +16,7 @@ StyleSheet 对象表示`一张样式表`，可以是 link 元素的外部样式�
 定义：const sheets = document.styleSheets 
      const sheet = sheets[index]
      const sheet = elem.sheet    //elem为<style>节点
-属性：sheet.disabled              //返回/设置sheet的禁用状态
+属性：sheet.disabled              //返回或设置sheet的禁用状态
      sheet.ownerNode             //返回sheet所在的DOM节点
      sheet.href                  //返回sheet所在节点的href属性值
      sheet.title                 //返回sheet所在节点的title属性值
@@ -86,7 +86,7 @@ Style 对象表示`元素的 style 属性指定的所有内联样式`，但不�
 ```js
 定义：const style = elem.style
 访问：style.css
-属性：style.cssText                  //返回/设置style的css规则文本
+属性：style.cssText                  //返回或设置style的css规则文本
      style.length                   //返回style声明的css规则个数
 方法：style.getPropertyPriority(css) //返回style中指定css规则的important字符串
      style.getPropertyValue(css)    //返回style中指定css规则的属性值

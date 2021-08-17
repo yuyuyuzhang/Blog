@@ -19,7 +19,7 @@
 * 若服务器返回的 HTTP 响应报文中 `Set-Cookie 字段设置 HttpOnly`，则无法在 JS 脚本中通过 document.domain 获取 Cookie
 
 ```js
-document.domain //返回/设置当前文档域名
+document.domain //返回或设置当前文档域名
 ```
 
 #### ③ 带域名的主机名
