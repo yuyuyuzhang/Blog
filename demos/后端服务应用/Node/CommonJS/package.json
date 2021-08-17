@@ -1,0 +1,17 @@
+{
+  "name": "node-commonjs-project",
+  "version": "1.0.0",
+  "author": "yuyuyuzhang",
+  "license": "ISC",
+  "description": "a node commonJS project",
+  "keywords": [
+    "node",
+    "commonJS"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "serve": "node index.js"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}

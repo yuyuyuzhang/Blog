@@ -2,15 +2,6 @@
 
 ## 1. Node 模块
 
-Node 模块系统以 CommonJS 模块系统为模式，Node 模块系统的关键在于向开发人员保证了可以和其他模块一起工作
-
-* 模块名是`字符串`，可能包含`斜杠（路径）`
-* 模块必须明确指出需要对外暴露的功能接口
-* 模块内的变量都是`私有`的
-* 支持 CommonJS 规范 require、module.exports
-
-Node 模块系统的 JS 文件和模块间具有`一一对应`的关系
-
 ### (1) Node 模块名
 
 * Node 模块的扩展名可以是 `.js .json .node`，.node 扩展名表示`编译好的二进制文件`
@@ -37,36 +28,126 @@ Node 模块系统的 JS 文件和模块间具有`一一对应`的关系
 
 当我们尝试通过模块名加载一个自定义的 http 模块，Node 会首先加载原生 http 模块，除非修改自定义 http 模块名或者使用路径加载
 
-## 2. Node 模块规范
+## 2. ES6 modules
 
-### (1) ES6 modules
+详见 [ES6 modules](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97.md)
 
-参见 [ES6 modules](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/ES6/%E5%8D%81%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97.md)
+## 3. CommonJS
 
-### (2) CommonJS
+### (1) CommonJS 规范
 
-#### ① require()
+JS 文件和模块间具有`一一对应`的关系
 
-* **require.resolve**：负责查找指定模块但并不加载该模块，只返回文件名
-* **require.cache**：负责查找并返回指定模块的所有缓存版本
+* 模块名是`字符串`，可能包含`斜杠（路径）`
+* 模块必须明确指出需要对外暴露的`功能接口`
+* 所有代码都运行在`模块作用域`，不会污染全局作用域，模块内的变量都是`私有`的
+* 模块加载顺序按照`在代码中出现的顺序`
 
-当我们在相同语境中再次加载同一模块，Node 会选择从 cache 中加载该模块来优化性能，如果需要强制重新加载某个 cache 中的模块，需要先从 cache 中删除该模块再重新加载
+### (2) module 对象
+
+每个模块都有一个 module 对象，代表当前模块
 
 ```node
-const circle = require('./circle.js') //引用方式
-
-delete require.cache('./circle.js') //删除模块缓存
+module.id       //返回当前模块id
+module.filename //返回当前模块名
+module.path     //返回当前模块路径
+module.paths    //返回当前模块的搜索路径数组
+module.loaded   //返回布尔值,当前模块是否加载完成
+module.exports  //返回当前模块的输出接口
+module.parent   //返回调用当前模块的模块,入口脚本通过node调用则module.parent=null
+module.children //返回当前模块加载的其他模块
 ```
 
-#### ② module.exports
+### (3) module.exports
 
-将可重用的 JS 代码分离出来作为一个单独的自定义模块
+module.exports 用于指定当前模块的输出接口
 
-## 3. Node 包管理工具（Node Package Manager，npm）
+```node
+// webpack.config.js
+module.exports = (env, argv) => {
+  const config = {
+    target: 'web',
+  }
+  return config
+}
+```
+
+### (4) require()
+
+require() 函数用于加载指定模块并返回该模块的 `module.exports`，未发现指定模块则报错，require() 函数加载规则如下
+
+* 参数以 / 开头：以绝对路径加载模块
+* 参数以 ./ 开头：以相对路径加载模块
+* 参数以其他开头：加载 `Node 原生模块`和 `node_modules 文件夹模块`
+
+require() 函数及其辅助方法
+
+```node
+require.resolve()  //返回解析后的绝对路径的模块名
+require.main       //返回入口（主模块）
+require.cache      //返回所有缓存模块
+require.extensions //根据模块后缀名调用不同执行函数
+```
+
+CommonJS 模块的加载机制是`输出值的拷贝`，某个模块一旦输出某个值，该模块内部的变化就无法影响到这个值
+
+* count.js
+
+  ```node
+  let count = 1;
+  const incCount = () => count++;
+
+  module.exports = {
+      count,
+      incCount
+  }
+  ```
+
+* index.js
+
+  ```node
+  const { count, incCount } = require('./count.js')
+
+  console.log(count) //1
+  incCount()
+  console.log(count) //1，count 模块内部的变化无法影响输出的变量
+  ```
+
+### (5) 模块缓存
+
+Node 仅在初次加载 CommonJS 模块时执行一次，之后再次加载都是直接从缓存中读取该模块的 `module.exports` 属性，想要每次加载时都执行某个模块，有以下 2 种方式
+
+* 让模块输出一个函数
+
+  ```node
+  // webpack.config.js
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+    }
+    return config
+  }
+  ```
+
+* 每次加载之前删除模块缓存
+
+  ```node
+  //删除指定模块缓存
+  delete require.cache(moduleName) 
+
+  //删除所有模块缓存
+  Object.keys(require.cache).forEach(function(key) {
+    delete require.cache(key);
+  })
+  ```
+
+## 4. Node 包管理工具（Node Package Manager，npm）
+
+### (1) npm
 
 开发人员热衷于将自己开发的模块上传到 Github 或其他软件源上供其他开发者使用，我们需要下载模块源码并安装到应用环境上才可以使用，绝大多数模块都提供了简单的安装和使用说明，但更简单的安装和管理模块的方式是使用 Node 包管理工具（Node Package Manager，npm）
 
-### (1) npm 命令
+### (2) npm 命令
 
 npm 常用命令如下
 
@@ -91,30 +172,57 @@ npm 常用命令如下
 * 清空缓存
   * npm cache clean -f
 
-### (2) package.json 文件
+### (3) package.json 文件
 
 * npm init
 
   项目根目录下执行 npm init，自动生成 package.json 文件用于`管理当前项目的 npm 包`
 
+* package.json - CommonJS
+
   ```json
   {
-    "name": "node-project",
+    "name": "node-commonjs-project",
     "version": "1.0.0",
-    "author": "yuyuyuzhang", 
+    "author": "yuyuyuzhang",
     "license": "ISC",
-    "description": "a node project",
+    "description": "a node commonJS project",
     "keywords": [
-      "node"
+      "node",
+      "commonJS"
     ],
-    "type": "module",      // 模块识别为 ES6 modules（否则识别为 CommonJS 模块）
     "main": "index.js",    // 包的入口
-    "scripts": {},         // npm 脚本命令
+    "scripts": {           // npm 脚本命令
+      "serve": "node index.js"
+    },
     "devDependencies": {}, // 开发环境依赖
     "dependencies": {}     // 生产环境依赖
   }
   ```
 
-## 4. 发布自定义模块
+* package.json - ES6 modules
 
-①②③④⑤⑥⑦⑧⑨⑩
+  ```json
+  {
+    "name": "node-module-project",
+    "version": "1.0.0",
+    "author": "yuyuyuzhang",
+    "license": "ISC",
+    "description": "a node project",
+    "keywords": [
+      "node",
+      "ES6 modules"
+    ],
+    "type": "module",      // ES6 modules
+    "main": "index.js",    // 包的入口
+    "scripts": {           // npm 脚本命令
+      "serve": "node index.js"
+    },
+    "devDependencies": {}, // 开发环境依赖
+    "dependencies": {}     // 生产环境依赖
+  }
+  ```
+
+### (4) 发布自定义模块
+
+* npm publish
