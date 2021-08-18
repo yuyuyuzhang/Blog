@@ -2,33 +2,78 @@
 
 ## 1. JS 引擎线程
 
-### (1) 浏览器进程
-
-浏览器会为`每个标签页`单独启动一个渲染进程
-
-渲染进程主要负责将 HTML、CSS、JS 转化为用户可以与之交互的网页，每个渲染进程都会启动单独的渲染引擎线程、JS 引擎线程、事件触发线程、定时器计数线程、异步请求线程
-
-![渲染进程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B.png)
-
-### (2) 标签页渲染进程
-
-浏览器会为`每个标签页`单独启动一个渲染进程
-
-渲染进程主要负责将 HTML、CSS、JS 转化为用户可以与之交互的网页，每个渲染进程都会启动单独的渲染引擎线程、JS 引擎线程、事件触发线程、定时器计数线程、异步请求线程
-
-![渲染进程](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A8%A1%E5%9E%8B/%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B.png)
-
-### (3) JS 引擎单线程实现异步
-
 JS 引擎线程作为一个单线程为什么能够实现异步？
 
-因为标签页渲染进程除了 JS 引擎线程，还有事件触发线程、异步请求线程、定时器计数线程，将一些异步操作交给其他线程处理，然后采用`事件循环机制`处理返回结果
+* 因为`浏览器标签页渲染进程`除了 JS 引擎线程，还有事件触发线程、异步请求线程、定时器计数线程，将一些异步操作交给其他线程处理，然后采用`事件循环机制`处理返回结果
+* 因为 Node
+
+### (1) 事件循环机制
+
+数组 eventLoop 表示任务队列，用来存放需要执行的任务，对象 event 表示当前需要执行的任务
+
+用一个永不停歇的 while 循环来表示事件循环，一次循环称为一次 tick，每次 tick 如果任务队列中有等待的任务，就获取第一个任务执行
+
+```js
+let eventLoop = []; //任务队列，先进先出
+let event;          //当前需要执行的任务
+
+while (true) {
+  //一次循环
+  if (eventLoop.length > 0) {
+    //任务队列中取出第一个任务
+    event = eventLoop.shift(); //移除数组头部项
+    try {
+      event();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+```
+
+### (2) 宏任务队列和微任务队列
+
+**由来**：任务队列按照先进先出的顺序执行，即使排在后面的任务更为紧急，也必须等待前面的任务先执行完成，因此 JS 引擎设置宏任务队列和微任务队列 2 个任务队列，微任务队列的优先级高于宏任务队列
+
+**原理**：由于`微任务队列的优先级高于宏任务队列`，每次事件循环时会从微任务队列中获取任务，只有当微任务队列`为空`时才会从宏任务队列中获取任务，同一个队列中的任务只遵循`先进先出`的原则
+
+* **微任务队列**：Promise.then/catch/finally()、MutaionObserver 回调函数、process.nextTick（Node）
+* **宏任务队列**：异步请求回调函数、定时器回调函数、DOM 事件回调函数、IntersectionObserver 回调函数
+
+```js
+function f1() {
+  setTimeout(console.log.bind(null, 1), 0)
+}
+function f2() {
+  Promise.resolve().then(console.log.bind(null, 2))
+}
+function f3() {
+  setTimeout(() => {
+    console.log(3)
+    f2()
+  }, 0)
+}
+function f4() {
+  Promise.resolve().then(() => {
+    console.log(4)
+    f1()
+  }, 0)
+}
+f3()
+f4()
+
+//输出：4 3 2 1
+```
+
+如下图所示，红色代表微任务队列，绿色代表宏任务队列
+
+![事件循环机制](https://github.com/yuyuyuzhang/Blog/blob/master/images/JS/ES/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6.png)
 
 ## 2. Web Worker
 
 ### (1) Worker 线程
 
-随着电脑计算能力的增强，尤其是多核 CPU 的出现，JS 引擎单线程模型无法充分发挥计算机的计算能力，带来很大的不便
+随着电脑计算能力的增强，尤其是`多核 CPU` 的出现，JS 引擎单线程模型无法充分发挥计算机的计算能力，带来很大的不便
 
 Web Worker 就是为 JS 语言创造多线程环境，`允许 JS 引擎线程创建 Wroker 线程`，将一些任务分配给 Worker 线程运行，JS 引擎线程运行的同时，Wroker 线程在后台运行，两者互不干扰，Worker 线程完成计算任务再将结果返回给 JS 引擎线程，这样的好处是一些`计算密集型或高延迟任务`可以交给 Worker 线程运行，JS 引擎线程能够保持流畅不被阻塞或拖慢
 
