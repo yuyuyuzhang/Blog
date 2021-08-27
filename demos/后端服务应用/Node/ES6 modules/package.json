@@ -1,18 +1,22 @@
 {
-  "name": "node-module-project",
-  "version": "1.0.0",
-  "author": "yuyuyuzhang",
-  "license": "ISC",
-  "description": "a node project",
-  "keywords": [
-    "node",
-    "ES6 modules"
-  ],
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "serve": "node index.js"
-  },
-  "devDependencies": {},
-  "dependencies": {}
-}
+    "name": "node-commonjs-project",
+    "version": "1.0.0",
+    "author": "yuyuyuzhang",
+    "license": "ISC",
+    "description": "a node commonJS project",
+    "keywords": [
+      "node",
+      "commonJS"
+    ],
+    "type": "module",      
+    "main": "index.js",
+    "scripts": {
+      "serve": "node index.js"
+    },
+    "devDependencies": {},
+    "dependencies": {
+      "inquirer": "^8.1.2",
+      "minimist": "^1.2.5"
+    }
+  }
+  

@@ -13,5 +13,8 @@
     "serve": "node index.js"
   },
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "inquirer": "^8.1.2",
+    "minimist": "^1.2.5"
+  }
 }

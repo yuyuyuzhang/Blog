@@ -9,22 +9,8 @@
 </head>
 <body>
 
-<div id="a" style="display:none;">
-  <div>哈哈</div>
-</div>
-<input id="b" type="hidden">
-
-<textarea></textarea>
 
 <script>
-
-document.addEventListener('paste', function(e) {
-  const clip = e.clipboardData || window.clipboardData;
-  const text = clip.getData("application/json");
-  // const text = clip.getData();
-
-  console.log(text)
-});
 
 
 </script>
