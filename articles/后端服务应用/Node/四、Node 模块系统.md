@@ -196,9 +196,11 @@ npm 常用命令如下
 
 ### (3) package.json 文件
 
+package.json 文件用于`管理当前项目的 npm 包`
+
 * npm init
 
-  项目根目录下执行 npm init，自动生成 package.json 文件用于`管理当前项目的 npm 包`
+  项目根目录下执行 npm init，一系列交互后会自动生成 package.json 文件
 
 * package.json - CommonJS
 
@@ -244,3 +246,16 @@ npm 常用命令如下
     "dependencies": {}     // 生产环境依赖
   }
   ```
+
+### (4) package-lock.json
+
+npm 安装模块版本方式如下
+
+* npm i moduleName 1.2.2   安装指定版本
+* npm i moduleName ~1.2.2  安装1.2.x最新版本
+* npm i moduleName ^1.2.2  安装1.x.x最新版本
+* npm i moduleName latest  安装最新版本
+
+由上述方式可知，package.json 文件只能锁定安装模块的`大版本（版本号第一位）`，无法锁定版本号后面的小版本，可能出现他人下载项目后 npm install 时小版本号不同导致一些不兼容的问题的情况
+
+package-lock.json 文件用于`记录实际安装的各个 npm package 的具体来源和版本号`，该文件需要上传到 git，以保证他人下载项目后 npm install 时`版本号完全一致`

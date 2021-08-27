@@ -118,8 +118,6 @@ Webpack 提供一种在`文件名里嵌入 hash` 的方式，使得每次打包�
   *.ntvs*
   *.njsproj
   *.sln
-
-  package-lock.json
   ```
 
 * npm i webpack webpack-cli webpack-dev-server -D
