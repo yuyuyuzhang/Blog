@@ -259,7 +259,7 @@ package.json 文件用于`管理当前项目的 npm 包`
   }
   ```
 
-### (4) package-lock.json
+### (4) package-lock.json 文件
 
 npm 安装模块版本方式如下
 
@@ -274,6 +274,46 @@ package-lock.json 文件用于`记录实际安装的各个 npm package 的具体
 
 ### (5) npx 命令
 
-2017.7 月的 npm 5.2 版本新增 npx 命令
+2017.7 月的 npm 5.2 版本新增 npx 命令，npx 命令有以下几种用法
 
-npx 命令可以直接运行 npm package 代码
+#### ① 调用项目安装模块
+
+例如项目内部安装了测试工具 Mocha，调用 Mocha 有以下 4 种方式
+
+* Mocha 安装目录下调用
+* 项目 package.json 文件的 scripts 字段中添加调用
+* 项目根目录下执行以下命令调用
+
+  ```js
+  node-modules/.bin/mocha --version
+  ```
+
+* 项目根目录下使用 npx 命令调用：原理就是 npx 命令运行时会到 `node_modules/.bin 路径和环境变量 $PATH` 中检查是否存在
+
+  ```js
+  npx mocha --version
+  ```
+
+#### ② 避免全局安装模块
+
+npx 命令无需全局安装模块，也可执行模块命令，原理就是 npx 命令会将模块`下载到一个临时目录，执行完成后再删除`，之后再次执行命令时会重新下载
+
+* npx cowsay
+
+  ![npx_cowsay]()
+
+#### ③ 使用不同的 Node 版本运行代码
+
+利用 npx 可以临时下载模块这个特点，可以指定某个版本的 Node 运行脚本，原理就是 npx 命令会从 npm 下载指定版本的 Node，使用完成后再删除
+
+```js
+npx node@0.12.8 -v
+```
+
+#### ④ 从 URL 运行任意代码片段
+
+npx 命令可以通过 URL 直接运行 npm 仓库上发布的软件包，前提是远程 URL 代码必须是一个`模块`，即`必须包含 package.json 文件和入口脚本`
+
+```js
+npx https://gist.github.com/zkat/4bc19503fe9e9309e2bfaa2c58074d32
+```
