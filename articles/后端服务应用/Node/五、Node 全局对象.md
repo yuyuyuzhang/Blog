@@ -8,7 +8,11 @@ global 对象是 Node 的`全局命名空间对象`，与浏览器环境中的 w
 
 console 对象是 `JS 引擎`提供的调试工具，用于控制台调试输出，逐渐成为了浏览器的实施标准，Node 也沿用了这个标准，提供了与浏览器行为习惯一致的 console 对象
 
-## 3. 事件循环相关全局对象
+## 3. 事件触发机制相关全局对象
+
+Event、EventTarget
+
+## 4. 事件循环机制相关全局对象
 
 ### (1) queueMicrotask(cb)
 
@@ -74,8 +78,6 @@ clearImmediate()
 ## 4. 其他全局对象
 
 ###  Buffer
-
-###  Event、EventTarget
 
 ###  MessageChannel、MessageEvent、MessagePort
 
