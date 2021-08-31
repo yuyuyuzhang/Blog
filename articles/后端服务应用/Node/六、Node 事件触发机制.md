@@ -148,7 +148,7 @@ const emitter = new EventEmitter()
 emitter.emit('error')
 ```
 
-![error事件1]()
+![error事件1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/error%E4%BA%8B%E4%BB%B61.png)
 
 为防止 Node 进程崩溃，最佳实践是始终为 error 事件添加事件监听
 
@@ -162,7 +162,7 @@ emitter.on('error', () => {
 emitter.emit('error')
 ```
 
-![error事件2]()
+![error事件2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/error%E4%BA%8B%E4%BB%B62.png)
 
 ## 2. EventTarget、Event 类
 

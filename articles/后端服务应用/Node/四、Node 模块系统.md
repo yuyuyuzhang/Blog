@@ -300,7 +300,7 @@ npx 命令无需全局安装模块，也可执行模块命令，原理就是 npx
 
 * npx cowsay
 
-  ![npx_cowsay]()
+  ![npx_cowsay](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/npx_cowsay.png)
 
 #### ③ 使用不同的 Node 版本运行代码
 

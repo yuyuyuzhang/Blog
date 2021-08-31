@@ -26,9 +26,9 @@ Node 自带 REPL，可以调试 JS 代码，可以执行以下任务
 ### (2) Node REPL 使用
 
 * **即时输出表达式值**：REPL（Read Eval Print Loop）的重点在于 `Eval（求值）`，而变量赋值的表达式并不会返回变量值作为表达式的值，因此在 Node REPL 中变量赋值表达式会输出 undefined
-  ![变量赋值表达式]()
+  ![变量赋值表达式](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F.png)
 * **_**：下划线变量用于获取上个表达式的计算结果，还可以访问其属性或调用其方法
-  ![_]()
+  ![_](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/_.png)
 
 ### (3) 多行表达式
 
@@ -37,15 +37,15 @@ Node 自带 REPL，可以调试 JS 代码，可以执行以下任务
 * ctrl + D 退出编辑模式
 * 使用多行表达式
 
-![多行表达式]()
+![多行表达式](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E5%A4%9A%E8%A1%8C%E8%A1%A8%E8%BE%BE%E5%BC%8F.png)
 
 ### (4) 保存与载入文件
 
 * **.save**：保存当前会话为 js 文件到当前目录
 
-  ![.save1]()
+  ![.save1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/.save1.png)
 
-  ![.save2]()
+  ![.save2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/.save2.png)
 
 * **.load**：从当前目录加载指定 js 文件到当前会话
 
@@ -55,6 +55,6 @@ Node 自带 REPL，可以调试 JS 代码，可以执行以下任务
   var b = 2;
   ```
 
-  ![.load1]()
+  ![.load1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/.load1.png)
 
-  ![.load2]()
+  ![.load2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/.load2.png)
