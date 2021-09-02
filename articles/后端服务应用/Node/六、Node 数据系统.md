@@ -22,8 +22,7 @@ Node 通过 stream 模块提供流 API，所有流都是 `EevntEmitter` 类的�
      stream.Writable()    //返回只写流实例,只写流构造函数,通过new命令调用
      stream.Duplex()      //返回双工流实例,双工流构造函数,通过new命令调用
      stream.Transform()   //返回转换流实例,转换流构造函数,通过new命令调用
-
-     stream.PassThrough() //转换流的简单实现,只是将输入字节传到输出
+     stream.PassThrough() //返回转换流实例,转换流的简单实现,只是将输入字节传到输出
      实例方法：
      stream.pipeline()       //
      stream.addAbortSignal() //
@@ -31,34 +30,26 @@ Node 通过 stream 模块提供流 API，所有流都是 `EevntEmitter` 类的�
      stream.isDisturbed()    //
 ```
 
-#### ① 流类型
+#### ① 流的类型
 
 Node 包含以下 4 种流类型
 
 * **Readable**：只读流
 * **Writable**：只写流
 * **Duplex**：双工流 - 可读可写
-* **Transform**：转换流 - 可读可写，且读写过程中可以修改或转换数据
+* **Transform**：转换流 - 可读可写，且输出与输入相关，即`输出为输入的转换`
 
-#### ② 流驱动的 Node API
+#### ② 流的对象模式
 
-```js
-压缩 API：
-zlib.createGzip()      //使用 gzip（压缩算法）将数据压缩到流中
-zlib.createGunzip()    //解压缩 gzip 流
-zlib.createDeflate()   //使用 deflate（压缩算法）将数据压缩到流中
-zlib.createInflate()   //解压缩 deflate 流
-文件 API：
-fs.createReadStream()  //创建文件的只读流
-fs.createWriteStream() //创建文件的只写流
-网络 API：
-net.connect()          //启动基于流的连接
-http.request()         //返回 http.ClientRequest 类的实例，该实例是只写流
-进程 API：
-process.stdin          //返回连接到 stdin 的流
-process.stdout         //返回连接到 stdout 的流
-process.stderr         //返回连接到 stderr 的流
-```
+Node Stream API 只能对`字符串、Buffer` 操作，但是创建流实例时只要使用 objectMode 选项切换为对象模式，流就可以使用`其他类型 JS 值`实现
+
+#### ③ 流的内部缓冲
+
+只读流和只写流都将数据存储在`内部缓冲`，highWaterMark 选项指定内部缓冲的数据量`阈值`，普通流为`字节总数`，对象模式流为`对象总数`
+
+一旦内部缓冲已使用大小达到 highWaterMark 选项指定的阈值，只读流将停止从底层资源读取数据，直到可以消费内部缓冲的数据，`readStream.pipe(des,[{endFlag}])` 方法内部实现了将数据缓冲限制在可接受水平，以便不同速度的来源和目标不会压倒可用缓冲
+
+双工流和转换流都是可读可写的，因此内部都维护 `2 个独立的内部缓冲`，用于读取和写入，允许每一端独立操作，同时保持适当且高效的数据流
 
 ### (3) stream.Readable 类
 
@@ -132,15 +123,6 @@ writeStream.end()
 
 #### ② 只读流的可读流动状态
 
-只读流从`底层系统`读取数据块，存储在只读流的`内部缓冲`，并且被提供给`应用程序`消费
-
-只读流的来源
-
-* 压缩流
-* 加密流
-* 文件系统读取流
-* 等等...
-
 只读流的可读流动状态有如下 3 种
 
 * **readable.readableFlowing === null**：当前只读流不可读，不会读取数据
@@ -189,7 +171,7 @@ writeStream.end()
 
 options：
 highWaterMark   //当前只写流内部缓冲的最大字节数(默认16384,16KB)
-objectMode      //当前只写流是否可以写入字符串、Buffer、Uint8Array以外的JS值(默认false)
+objectMode      //当前只写流是否可以写入字符串、Buffer以外的JS值(默认false)
 decodeStrings   //当前只写流调用writeStream.write()方法时是否将字符串编码为buffer(默认true)
 defaultEncoding //当前只写流调用writeStream.write()方法时使用的默认字符串编码(默认utf8,优先级低于decodeStrings)
 autoDestroy     //当前只读流结束后是否应该自动调用writeStream.destroy()方法(默认false)
@@ -283,9 +265,15 @@ writeStream.uncork()
      duplexStream.
 ```
 
-#### ① 
+#### ① 双工流的来源
 
-#### ② 
+* 压缩流
+* 加密流
+* TCP 套接字
+
+#### ② 双工流的自定义创建
+
+自定义创建双工流必须调用 `new stream.Duplex([options])` 构造函数，并且需要实现 `dupStream.read()、dupStream.write()` 方法
 
 ```js
 
@@ -297,13 +285,18 @@ writeStream.uncork()
 定义：const transStream = new stream.Transform([options])
 属性：transStream.
      transStream.
-方法：transStream.destroy(error) //返回当前转换流,销毁当前转换流
+方法：transStream.destroy(error) //返回并当前转换流,触发close事件
      transStream.
 ```
 
-#### ① 
+#### ① 转换流的来源
 
-#### ② 
+* 压缩流
+* 加密流
+
+#### ② 转换流的自定义创建
+
+自定义创建转换流必须调用 `new stream.Transform([options])` 构造函数，并且需要实现 `transStream.read()、transStream.write()` 方法
 
 ```js
 
