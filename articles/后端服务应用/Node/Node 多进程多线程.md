@@ -181,7 +181,7 @@ process.nextTick(cb)        //无返回值,将回调函数cb添加到JS引擎线
 process.binding(moduleName) //返回当前Node进程的指定核心模块
 process.uptime()            //返回当前Node进程已运行的秒数
 process.hrtime.bigint()     //返回当前高精度实际时间(纳秒),常用于计算运行时间差
-process.cpuUsage(preVal)    //返回当前Node进程用户和系统的CPU使用情况,可选参数preVal为上一次调用结果
+process.cpuUsage([preVal])  //返回当前Node进程用户和系统的CPU使用情况,可选参数preVal为上一次调用结果
 process.memoryUsage()       //返回当前Node进程内存使用情况
 process.resourceUsage()     //返回当前Node进程资源使用情况
 工作目录：

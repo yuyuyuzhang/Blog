@@ -311,11 +311,6 @@ CSS 系列之 SASS 已完成
 ## 后端服务开发系列之 Node
 
 1. [Node](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BA%94%E7%94%A8/Node/%E4%B8%80%E3%80%81Node.md)
-2. [Node REPL](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BA%94%E7%94%A8/Node/%E4%BA%8C%E3%80%81Node%20REPL.md)
-3. [Node CLI 交互](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BA%94%E7%94%A8/Node/%E4%B8%89%E3%80%81Node%20CLI%20%E4%BA%A4%E4%BA%92.md)
-4. [Node 模块系统](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BA%94%E7%94%A8/Node/%E5%9B%9B%E3%80%81Node%20%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F.md)
-5. [Node 全局对象](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BA%94%E7%94%A8/Node/%E4%BA%94%E3%80%81Node%20%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1.md)
-6. [Node 事件触发机制](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BA%94%E7%94%A8/Node/%E5%85%AD%E3%80%81Node%20%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E6%9C%BA%E5%88%B6.md)
 
 ## 后端服务开发系列之 Deno
 

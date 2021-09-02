@@ -1,4 +1,4 @@
-# 六、Node 事件触发机制
+# 五、Node 事件触发机制
 
 ## 1. events 模块
 
@@ -187,10 +187,10 @@ Node EventTarget 没有事件传播的概念，调度到 Node EventTarget 的事
 定义：const e = new Event(type)
 属性：e.type                            //返回事件e的类型
      e.timeStamp                       //返回创建事件e时的毫秒时间戳
-     e.cancelable                      //返回布尔值,e创建时是否使用cancelable选项
+     e.cancelable                      //返回e创建时是否使用cancelable选项
      e.target/currentTarget/srcElement //返回触发事件e的EventTarget实例
-     e.defaultPrevented                //返回布尔值,e.cancelable=ture且e.preventDefault()被调用则返回true
-     e.isTrusted                       //返回布尔值,设置为true才会触发abort事件,其他所有情况都为false
+     e.defaultPrevented                //返回是否e.cancelable=ture且e.preventDefault()被调用
+     e.isTrusted                       //返回或设置是否触发abort事件
 方法：e.preventDefault()                //无返回值,当e.cancelable=true则设置e.defaultPrevented=true
      e.stopImmediatePropagation()      //无返回值,当前事件监听器完成后停止调用
 ```

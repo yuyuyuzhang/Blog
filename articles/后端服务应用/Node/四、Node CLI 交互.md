@@ -1,6 +1,6 @@
-# 三、Node CLI 交互
+# 四、Node CLI 交互
 
-## 1. readline
+## 1. readline 模块
 
 Node 提供 readline 模块使 `Node CLI 程序具有交互性`
 

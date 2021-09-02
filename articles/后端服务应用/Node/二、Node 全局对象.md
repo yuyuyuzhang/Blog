@@ -1,4 +1,4 @@
-# 五、Node 全局对象
+# 二、Node 全局对象
 
 ## 1. global 对象
 
@@ -93,4 +93,14 @@ clearImmediate()
 
 ###  AbortController 类
 
+stream zlib buffer string_decoder
+fs path
+http http2 https dgram dns tls net url
+process child_process cluster worker_threads
+os v8 vm tty
+intl
+error
+util
+report
+crypto
 ①②③④⑤⑥⑦⑧⑨⑩
