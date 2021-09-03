@@ -21,7 +21,7 @@ fs 模块对文件进行操作涉及到`文件操作权限`，文件操作权限
 
 开头第一项代表权限，第 1 位代表类型，d 开头表示文件夹，- 开头表示文件，后面 9 位按每 3 位划分，依次表示文件所有者、文件所属组、其他用户的权限
 
-![文件权限位mode]()
+![文件权限位mode](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E4%BD%8Dmode.png)
 
 ### (2) 文件标识位 flag
 

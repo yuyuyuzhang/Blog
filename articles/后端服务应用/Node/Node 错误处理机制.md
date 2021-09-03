@@ -407,7 +407,7 @@ const f3 = () => f2()
 f3()
 ```
 
-![stackTraceLimit1]()
+![stackTraceLimit1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/stackTraceLimit1.png)
 
 ```js
 Error.stackTraceLimit = 2
@@ -418,7 +418,7 @@ const f3 = () => f2()
 f3()
 ```
 
-![stackTraceLimit2]()
+![stackTraceLimit2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/stackTraceLimit2.png)
 
 #### ② 静态方法
 
@@ -435,7 +435,7 @@ console.log(childErr1.stack)
 console.log(childErr2.stack)
 ```
 
-![captureStackTrace()]()
+![captureStackTrace()](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/captureStackTrace().png)
 
 ## 4. SyntaxError 类
 

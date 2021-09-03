@@ -50,7 +50,23 @@ Node Stream API 只能对`字符串、Buffer` 操作，但是创建流实例时�
 
 双工流和转换流都是可读可写的，因此内部都维护 `2 个独立的内部缓冲`，用于读取和写入，允许每一端独立操作，同时保持适当且高效的数据流
 
-#### ④ stream.pipeline(source,[...trans],des,cb)
+#### ④ 流驱动的 Node API
+
+```js
+zlib 模块
+
+fs.createReadStream()  //创建文件的可读流
+fs.createWriteStream() //创建到文件的可写流
+
+net.connect()          //启动基于流的连接
+http.request()         //返回 http.ClientRequest 类的实例，该实例是可写流
+
+process.stdin          //返回连接到 stdin 的流
+process.stdout         //返回连接到 stdout 的流
+process.stderr         //返回连接到 stderr 的流
+```
+
+#### ⑤ stream.pipeline(source,[...trans],des,cb)
 
 ```js
 import fs from 'fs'
@@ -71,11 +87,11 @@ pipeline(
 )
 ```
 
-![stream_pipeline1]()
+![stream_pipeline1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/stream_pipeline1.png)
 
-![stream_pipeline2]()
+![stream_pipeline2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/stream_pipeline2.png)
 
-#### ⑤ stream.finished(stream,[options],cb)
+#### ⑥ stream.finished(stream,[options],cb)
 
 ```js
 import fs from 'fs'
@@ -92,7 +108,7 @@ finished(rs, (err) => {
 rs.resume()
 ```
 
-![stream_finished]()
+![stream_finished](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/stream_finished.png)
 
 ### (3) Stream.Readable 类
 
@@ -162,7 +178,7 @@ readStream.pipe(writeStream)
 writeStream.end()
 ```
 
-![只读流的自定义创建]()
+![只读流的自定义创建](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E5%8F%AA%E8%AF%BB%E6%B5%81%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%9B%E5%BB%BA.png)
 
 #### ② 只读流的可读流动状态
 
@@ -252,7 +268,7 @@ const writeStream = new Stream.Writable({
 writeStream.write('hello world!')
 ```
 
-![只写流的自定义创建]()
+![只写流的自定义创建](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E5%8F%AA%E5%86%99%E6%B5%81%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%9B%E5%BB%BA.png)
 
 #### ② writeStream.cork()/uncork()
 
@@ -267,7 +283,7 @@ writeStream.write('hello')
 writeStream.write('world!')
 ```
 
-![writeStream.cork1]()
+![writeStream_cork1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/writeStream_cork1.png)
 
 ```js
 const writeStream = new Stream.Writable({
@@ -281,7 +297,7 @@ writeStream.cork()
 writeStream.write('world!')
 ```
 
-![writeStream.cork2]()
+![writeStream_cork2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/writeStream_cork2.png)
 
 ```js
 const writeStream = new Stream.Writable({
@@ -296,7 +312,7 @@ writeStream.write('world!')
 writeStream.uncork()
 ```
 
-![writeStream.cork1]()
+![writeStream_cork1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/writeStream_cork1.png)
 
 ### (5) Stream.Duplex 类
 
@@ -501,7 +517,7 @@ zlib.constants.Z_TREES
     .pipe(fs.createWriteStream('output.gz'))
   ```
 
-  ![zlib管道API]()
+  ![zlib管道API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E7%AE%A1%E9%81%93API.png)
 
 * 同步 API
 
@@ -519,7 +535,7 @@ zlib.constants.Z_TREES
   })
   ```
 
-  ![zlib同步API]()
+  ![zlib同步API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E5%90%8C%E6%AD%A5API.png)
 
 * 异步 API
 
@@ -540,9 +556,133 @@ zlib.constants.Z_TREES
   }) 
   ```
 
-  ![zlib异步API]()
+  ![zlib异步API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E5%BC%82%E6%AD%A5API.png)
 
 ## 3. crypto 模块
+
+### Certificate 类
+
+```js
+Certificate.exportChallenge(spkac[, encoding])
+Certificate.exportPublicKey(spkac[, encoding])
+Certificate.verifySpkac(spkac[, encoding])
+```
+
+### X509Certificate 类
+
+```js
+new X509Certificate(buffer)
+x509.ca
+x509.checkEmail(email[, options])
+x509.checkHost(name[, options])
+x509.checkIP(ip[, options])
+x509.checkIssued(otherCert)
+x509.checkPrivateKey(privateKey)
+x509.fingerprint
+x509.fingerprint256
+x509.infoAccess
+x509.issuer
+x509.issuerCertificate
+x509.keyUsage
+x509.publicKey
+x509.raw
+x509.serialNumber
+x509.subject
+x509.subjectAltName
+x509.toJSON()
+x509.toLegacyObject()
+x509.toString()
+x509.validFrom
+x509.validTo
+x509.verify(publicKey)
+```
+
+### Cipher 类
+
+```js
+cipher.final([outputEncoding])
+cipher.getAuthTag()
+cipher.setAAD(buffer[, options])
+cipher.setAutoPadding([autoPadding])
+cipher.update(data[, inputEncoding][, outputEncoding])
+```
+
+### Decipher 类
+
+```js
+decipher.final([outputEncoding])
+decipher.setAAD(buffer[, options])
+decipher.setAuthTag(buffer[, encoding])
+decipher.setAutoPadding([autoPadding])
+decipher.update(data[, inputEncoding][, outputEncoding])
+```
+
+### DiffieHellman 类
+
+```js
+diffieHellman.computeSecret(otherPublicKey[, inputEncoding][, outputEncoding])
+diffieHellman.generateKeys([encoding])
+diffieHellman.getGenerator([encoding])
+diffieHellman.getPrime([encoding])
+diffieHellman.getPrivateKey([encoding])
+diffieHellman.getPublicKey([encoding])
+diffieHellman.setPrivateKey(privateKey[, encoding])
+diffieHellman.setPublicKey(publicKey[, encoding])
+diffieHellman.verifyError
+```
+
+### DiffieHellmanGroup 类
+
+### ECDH 类
+
+```js
+ECDH.convertKey(key, curve[, inputEncoding[, outputEncoding[, format]]])
+ecdh.computeSecret(otherPublicKey[, inputEncoding][, outputEncoding])
+ecdh.generateKeys([encoding[, format]])
+ecdh.getPrivateKey([encoding])
+ecdh.getPublicKey([encoding][, format])
+ecdh.setPrivateKey(privateKey[, encoding])
+```
+
+### Hash 类
+
+```js
+hash.copy([options])
+hash.digest([encoding])
+hash.update(data[, inputEncoding])
+```
+
+### Hmac 类
+
+```js
+hmac.digest([encoding])
+hmac.update(data[, inputEncoding])
+```
+
+### KeyObject 类
+
+```js
+KeyObject.from(key)
+keyObject.asymmetricKeyDetails
+keyObject.asymmetricKeyType
+keyObject.export([options])
+keyObject.symmetricKeySize
+keyObject.type
+```
+
+### Sign 类
+
+```js
+sign.sign(privateKey[, outputEncoding])
+sign.update(data[, inputEncoding])
+```
+
+### Verify 类
+
+```js
+verify.update(data[, inputEncoding])
+verify.verify(object, signature[, signatureEncoding])
+```
 
 ## 4. Buffer 模块
 
