@@ -13,26 +13,42 @@
 //     console.log(item, item[1].toString()) //Array [0, 116] [1, 104] [2, 105] [3, 115]
 // }
 
+// import fs from 'fs'
+// const readerStream = fs.createReadStream('input.txt')
+// const writeStream = fs.createWriteStream('output.txt')
+// readerStream.pipe(writeStream)
+// console.log('input.txt 复制完毕')
 
-import Stream from 'stream'
+import fs from 'fs'
+import zlib from 'zlib'
 
-const writeStream = new Stream.Writable({
-  write(chunk, encoding, next) {
-    console.log(chunk.toString())
-    next()
+// fs.createReadStream('input.txt')
+//   .pipe(zlib.createGzip())
+//   .pipe(fs.createWriteStream('output1.gz'))
+
+// const buffer = zlib.gzipSync('hello world!')
+// fs.writeFile('output2.gz', buffer, null, err => {
+//   if(err){
+//     console.log('failed')
+//   } else {
+//     console.log('succed')
+//   }
+// })
+
+zlib.gzip('hello world!', null, (err, buffer) => {
+  if(!err) {
+    fs.writeFile('output3.gz', buffer, null, err => {
+      if(err){
+        console.log('failed')
+      } else {
+        console.log('succed')
+      }
+    })
   }
-})
-// writeStream.write('hello')
-// writeStream.write('world!')
+}) 
 
-writeStream.write('hello')
-writeStream.cork()
-writeStream.write('world!')
 
-// writeStream.write('hello')
-// writeStream.cork()
-// writeStream.write('world!')
-// writeStream.uncork()
-  
-  
+
+
+
 

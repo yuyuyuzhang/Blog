@@ -93,7 +93,7 @@ clearImmediate()
 
 ###  AbortController 类
 
-stream zlib buffer string_decoder
+stream zlib crypto buffer string_decoder
 fs path
 http http2 https dgram dns tls net url
 process child_process cluster worker_threads
@@ -102,5 +102,4 @@ intl
 error
 util
 report
-crypto
 ①②③④⑤⑥⑦⑧⑨⑩

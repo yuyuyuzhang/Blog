@@ -24,10 +24,9 @@ Node 通过 stream 模块提供流 API，所有流都是 `EevntEmitter` 类的�
      stream.Transform()   //返回转换流实例,转换流构造函数,通过new命令调用
      stream.PassThrough() //返回转换流实例,转换流的简单实现,只是将输入字节传到输出
      实例方法：
-     stream.pipeline()       //
-     stream.addAbortSignal() //
-     stream.finished()       //
-     stream.isDisturbed()    //
+     stream.pipeline(source,[...trans],des,cb) //无返回值,在流之间进行管道转发,并在管道完成时提供回调
+     stream.finished(stream,[options],cb)      //无返回值,当前流不再可读、可写、遇到错误、过早关闭得到通知
+     stream.addAbortSignal(signal,stream)      //无返回值,将中止信号绑定到当前流,让代码可以使用AbortController控制销毁流,不常用
 ```
 
 #### ① 流的类型
@@ -37,7 +36,7 @@ Node 包含以下 4 种流类型
 * **Readable**：只读流
 * **Writable**：只写流
 * **Duplex**：双工流 - 可读可写
-* **Transform**：转换流 - 可读可写，且输出与输入相关，即`输出为输入的转换`
+* **Transform**：转换流 - 可读可写，且`输出为输入的转换`
 
 #### ② 流的对象模式
 
@@ -51,33 +50,77 @@ Node Stream API 只能对`字符串、Buffer` 操作，但是创建流实例时�
 
 双工流和转换流都是可读可写的，因此内部都维护 `2 个独立的内部缓冲`，用于读取和写入，允许每一端独立操作，同时保持适当且高效的数据流
 
-### (3) stream.Readable 类
+#### ④ stream.pipeline(source,[...trans],des,cb)
 
 ```js
-定义：const readable = new Stream.Readable([options])
-属性：readable.readableHighWaterMark     //返回构造当前只读流时指定的highWaterMark值
-     readable.readableObjectMode        //返回构造当前只读流时指定的objectMode属性
-     readable.readableEncoding          //返回当前只读流指定的encoding编码
-     readable.readableFlowing           //返回当前只读流的可读流动状态
-     readable.readable                  //返回当前只读流内部缓冲是否存在数据可被消费
-     readable.readableLength            //返回当前只读流内部缓冲可被消费的数据字节数
-     readable.readableEnded             //返回当前只读流内部缓冲的数据是否被完全消费
-     readable.destroyed                 //返回当前只读流是否被销毁
-方法：readable.setEncoding(encoding)     //返回当前只读流,为当前只读流设置字符编码,未设置字符编码则流数据默认返回buffer对象,否则返回对应字符编码的字符串
-     readable.resume()                  //返回当前只读流,将当前只读流切换为流动模式,恢复触发data事件
-     readable.pause()                   //返回当前只读流,将当前只读流切换为暂停模式,停止触发data事件
-     readable.isPaused()                //返回当前只读流是否暂停
-     readable.push(chunk,[encoding])    //返回当前只读流内部缓冲是否未满,以指定字符编码将额外数据块chunk推入只读流内部缓冲
-     readable.read([size])              //返回读取的指定字节数据(size<=1GB),默认返回buffer对象,没有指定size返回所有可读数据,没有可读数据返回null
-     readable.unshift(chunk,[encoding]) //无返回值,将已经消费的数据块chunk推回只读流内部缓冲
-     readable.pipe(des,[{endFlag}])     //返回目标流des,将当前只读流切换到流动模式并将其所有数据推送到绑定的目标流,可选参数endFlag表示读取结束时是否结束写入(默认true)
-     readable.unpipe([des])             //返回当前只读流,解绑通过readable.pipe()绑定的目标流des
-     readable.destroy()                 //返回并销毁当前只读流,触发close事件
+import fs from 'fs'
+import zlib from 'zlib'
+import { pipeline } from 'stream'
+
+pipeline(
+  fs.createReadStream('input.txt'),
+  zlib.createGzip(),
+  fs.createWriteStream('output.gz'),
+  (err) => {
+    if (err) {
+      console.error('Pipeline failed', err);
+    } else {
+      console.log('Pipeline succeeded');
+    }
+  }
+)
+```
+
+![stream_pipeline1]()
+
+![stream_pipeline2]()
+
+#### ⑤ stream.finished(stream,[options],cb)
+
+```js
+import fs from 'fs'
+import { finished } from 'stream'
+
+const rs = fs.createReadStream('input.txt')
+finished(rs, (err) => {
+  if (err) {
+    console.error('input.txt read failed', err)
+  } else {
+    console.log('input.txt read successfully')
+  }
+})
+rs.resume()
+```
+
+![stream_finished]()
+
+### (3) Stream.Readable 类
+
+```js
+定义：const readStream = new Stream.Readable([options])
+属性：readable.readableHighWaterMark       //返回构造当前只读流时指定的highWaterMark值
+     readStream.readableObjectMode        //返回或设置构造当前只读流时指定的objectMode属性
+     readStream.readableEncoding          //返回当前只读流指定的encoding编码
+     readStream.readableFlowing           //返回当前只读流的可读流动状态
+     readStream.readStream                //返回当前只读流内部缓冲是否存在数据可被消费
+     readStream.readableLength            //返回当前只读流内部缓冲可被消费的数据字节数
+     readStream.readableEnded             //返回当前只读流内部缓冲的数据是否被完全消费
+     readStream.destroyed                 //返回当前只读流是否被销毁
+方法：readable.setEncoding(encoding)       //返回当前只读流,为当前只读流设置字符编码,未设置字符编码则流数据默认返回buffer对象,否则返回对应字符编码的字符串
+     readStream.resume()                  //返回当前只读流,将当前只读流切换为流动模式,恢复触发data事件
+     readStream.pause()                   //返回当前只读流,将当前只读流切换为暂停模式,停止触发data事件
+     readStream.isPaused()                //返回当前只读流是否暂停
+     readStream.push(chunk,[encoding])    //返回当前只读流内部缓冲是否未满,以指定字符编码将额外数据块chunk推入只读流内部缓冲
+     readStream.read([size])              //返回读取的指定字节数据(size<=1GB),默认返回buffer对象,没有指定size返回所有可读数据,没有可读数据返回null
+     readStream.unshift(chunk,[encoding]) //无返回值,将已经消费的数据块chunk推回只读流内部缓冲,用于已消费数据但反悔的情况
+     readStream.pipe(des,[{endFlag}])     //返回目标流des,将当前只读流切换到流动模式并将其所有数据推送到绑定的目标流,可选参数endFlag表示读取结束时是否结束写入(默认true)
+     readStream.unpipe([des])             //返回当前只读流,解绑通过readable.pipe()绑定的目标流des
+     readStream.destroy()                 //返回并销毁当前只读流,触发close事件
 
 
 options：
 highWaterMark //当前只读流内部缓冲的最大字节数(默认16384,16KB)
-objectMode    //当前只读流读取数据时是否可以返回单个值而非buffer(默认false)
+objectMode    //当前只读流是否为对象模式(默认false)
 encoding      //当前只读流缓冲区使用的字符编码(默认null)
 autoDestroy   //当前只读流结束后是否应该自动调用readStream.destroy()方法(默认false)
 emitClose     //当前只读流销毁后是否应该触发close事件(默认true)
@@ -87,7 +130,7 @@ read          //readStream._read() 方法的实现
 destroy       //readStream._destroy() 方法的实现
 
 
-stream.Readable 事件：
+Readable 事件：
 readStream.ondata     //当只读流将数据块发送给消费者时触发
 readStream.onreadable //当只读流内部缓冲存在数据可被消费时触发
 readStream.onend      //当只读流内部缓冲的数据被完全消费后触发
@@ -99,7 +142,7 @@ readStream.onclose    //当只读流销毁时触发,不会再触发其他事件
 
 #### ① 只读流的自定义创建
 
-自定义创建只读流必须调用 `new stream.Readable([options])` 构造函数，并且需要实现 `readable._read()` 方法
+自定义创建只读流必须调用 `new Stream.Readable([options])` 构造函数，并且需要实现 `readStream._read()` 方法
 
 ```js
 import Stream from 'stream'
@@ -125,35 +168,35 @@ writeStream.end()
 
 只读流的可读流动状态有如下 3 种
 
-* **readable.readableFlowing === null**：当前只读流不可读，不会读取数据
-* **readable.readableFlowing === true（流动模式）**：当前只读流可读且流动，读取数据且主动触发事件流动被消费
+* **readStream.readableFlowing === null**：当前只读流不可读，不会读取数据
+* **readStream.readableFlowing === true（流动模式）**：当前只读流可读且流动，读取数据且主动触发事件流动被消费
   * `自动`从底层系统读取数据块，并通过 `EventEmitter` 接口的事件尽可能快的被提供给应用程序
-* **readable.readableFlowing === false（暂停模式）**：当前只读流可读但不流动，读取数据但暂停事件流动未被消费，因此数据可能会堆积在只读流的`内部缓冲`
-  * `手动`调用 `stream.read()` 读取数据块
+* **readStream.readableFlowing === false（暂停模式）**：当前只读流可读但不流动，读取数据但暂停事件流动未被消费，因此数据可能会堆积在只读流的`内部缓冲`
+  * `手动`调用 `readStream.read()` 读取数据块
 
 所有只读流都开始于`暂停模式`，从暂停模式切换到流动模式有如下 3 种方式，如果只读流切换到流动模式但是没有消费者处理数据，`数据将会丢失`
 
 * 添加 data 事件监听
-* 调用 stream.pipe() 方法
-* 调用 stream.resume() 方法
+* 调用 readStream.pipe() 方法
+* 调用 readStream.resume() 方法
 
 从流动模式切换回暂停模式
 
-* 如果有管道目标，则调用 stream.unpipe() 方法移除所有管道目标
-* 如果没有管道目标，则调用 stream.pause() 方法
+* 如果有管道目标，则调用 readStream.unpipe() 方法移除所有管道目标
+* 如果没有管道目标，则调用 readStream.pause() 方法
 
 #### ③ 只读流的消费 API
 
-只读流的消费 API 跨越多个 Node 版本的迭代，提供了多种消费只读流数据的方法，一般情况下，开发者应该只选择一种数据消费方法，切忌使用多种方式消费同一只读流的数据，这可能会导致不直观的行为，建议大家使用 `readable.pipe(des,[{endFlag}])` 方法，因为这是消费只读流数据的最简单方法
+只读流的消费 API 跨越多个 Node 版本的迭代，提供了多种消费只读流数据的方法，一般情况下，开发者应该只选择一种数据消费方法，切忌使用多种方式消费同一只读流的数据，这可能会导致不直观的行为，建议大家使用 `readStream.pipe(des,[{endFlag}])` 方法，因为这是消费只读流数据的最简单方法
 
 实例见下方只写流
 
-### (4) stream.Writable 类
+### (4) Stream.Writable 类
 
 ```js
-定义：const writeStream = new stream.Writable([options])
+定义：const writeStream = new Stream.Writable([options])
 属性：writeStream.writableHighWaterMark        //返回构造当前只写流时指定的highWaterMark值
-     writeStream.writableObjectMode           //返回构造当前只写流时指定的objectMode属性
+     writeStream.writableObjectMode           //返回或设置构造当前只写流时指定的objectMode属性
      writeStream.writable                     //返回当前只写流内部缓冲是否未满可写入
      writeStream.writableLength               //返回当前只写流内部缓冲的字节数
      writeStream.writableCorked               //返回为了完全unlock当前只写流需要调用writable.unlock()的次数
@@ -171,7 +214,7 @@ writeStream.end()
 
 options：
 highWaterMark   //当前只写流内部缓冲的最大字节数(默认16384,16KB)
-objectMode      //当前只写流是否可以写入字符串、Buffer以外的JS值(默认false)
+objectMode      //当前只写流是否为对象模式(默认false)
 decodeStrings   //当前只写流调用writeStream.write()方法时是否将字符串编码为buffer(默认true)
 defaultEncoding //当前只写流调用writeStream.write()方法时使用的默认字符串编码(默认utf8,优先级低于decodeStrings)
 autoDestroy     //当前只读流结束后是否应该自动调用writeStream.destroy()方法(默认false)
@@ -184,7 +227,7 @@ final           //writeStream._final()方法的实现
 destroy         //writeStream._destroy() 法的实现
 
 
-stream.Writable 事件：
+Writable 事件：
 writeStream.ondrain  //当只写流内部缓冲排空都交付给底层系统时触发
 writeStream.onpipe   //当某个只读流调用readStream.pipe()将当前只写流添加到其目标集时触发
 writeStream.onunpipe //当某个只读流调用readStream.unpipe()将当前只写流从其目标集移除时触发
@@ -195,7 +238,7 @@ writeStream.onclose  //当只写流销毁时触发,不会再触发其他事件
 
 #### ① 只写流的自定义创建
 
-自定义创建只写流必须调用 `new stream.Writable([options])` 构造函数，并且需要实现 `writeStream.write()` 方法
+自定义创建只写流必须调用 `new Stream.Writable([options])` 构造函数，并且需要实现 `writeStream.write()` 方法
 
 ```js
 import Stream from 'stream'
@@ -257,54 +300,251 @@ writeStream.uncork()
 
 ### (5) Stream.Duplex 类
 
+Stream.Duplex 类同时实现了 Stream.Readable 类的接口与 Stream.Writable 类的接口，由于 JS 不支持多重继承，因此扩展了 Stream.Duplex 类以实现双工流
+
+双工流既可以作为上游产生数据，也可以作为下游消费数据，因此常处于`数据流动管道的中间部分`
+
 ```js
-定义：const duplexStream = new stream.Duplex([options])
-属性：duplexStream.
-     duplexStream.
-方法：duplexStream.
-     duplexStream.
+rs.pipe(rws1).pipe(rws2).pipe(rws3).pipe(ws);
 ```
 
-#### ① 双工流的来源
+双工流的来源有以下 3 种
 
 * 压缩流
 * 加密流
 * TCP 套接字
 
-#### ② 双工流的自定义创建
-
-自定义创建双工流必须调用 `new stream.Duplex([options])` 构造函数，并且需要实现 `dupStream.read()、dupStream.write()` 方法
+双工流除只读流和只写流以外的其他 API 如下
 
 ```js
+定义：const duplexStream = new Stream.Duplex([options])
 
+
+options：
+readable              //当前双工流是否可读(默认true)
+writable              //当前双工流是否可写(默认true)
+readableHighWaterMark //当前双工流可读端内部缓冲最大字节数
+writableHighWaterMark //当前双工流可写端内部缓冲最大字节数
+readableObjectMode    //当前双工流可读端是否为对象模式(默认false)
+writableObjectMode    //当前双工流可写端是否为对象模式(默认false)
+allowHalfOpen         //当前双工流可读端结束时是否不自动结束可写端(默认true)
 ```
 
 ### (6) Stream.Transform 类
 
+Stream.Transform 类同时实现了 Stream.Readable 类的接口与 Stream.Writable 类的接口，由于 JS 不支持多重继承，因此扩展了 Stream.Transform 类以实现转换流，转换流与双工流不同的是，转换流的`输出是输入的转换`
+
+Stream.PassThrough 类是转换流的简单实现，只是`将输入传到输出`，没有做任何计算和转换，主要目的是用于示例和测试
+
+转换流既可以作为上游产生数据，也可以作为下游消费数据，因此常处于`数据流动管道的中间部分`
+
 ```js
-定义：const transStream = new stream.Transform([options])
-属性：transStream.
-     transStream.
-方法：transStream.destroy(error) //返回并当前转换流,触发close事件
-     transStream.
+rs.pipe(rws1).pipe(rws2).pipe(rws3).pipe(ws);
 ```
 
-#### ① 转换流的来源
+转换流的来源有以下 2 种
 
 * 压缩流
 * 加密流
 
-#### ② 转换流的自定义创建
-
-自定义创建转换流必须调用 `new stream.Transform([options])` 构造函数，并且需要实现 `transStream.read()、transStream.write()` 方法
+转换流除只读流和只写流以外的其他 API 如下
 
 ```js
+定义：const transStream = new Stream.Transform([options])
+     const transStream = new Stream.PassThrough()
 
+
+options：
+transform //transStream._transform() 方法的实现
+flush     //transStream._flush() 方法的实现
 ```
 
 ## 2. zlib 模块
 
-## 3. Buffer 模块
+zlib 模块提供了使用 `Deflate/Inflate、Brotli、Gzip` 算法实现的压缩功能，压缩和解压都是围绕 `Node Stream API` 构建的，压缩和解压流是将源流通过`转换流`管道传输到目标流完成
+
+Deflate/Inflate 压缩算法是一种`过时`的压缩算法，浏览器对其支持并不好，不建议使用
+
+### (1) zlib 常量
+
+压缩策略
+
+zlib.constants.Z_FILTERED
+zlib.constants.Z_HUFFMAN_ONLY
+zlib.constants.Z_RLE
+zlib.constants.Z_FIXED
+zlib.constants.Z_DEFAULT_STRATEGY
+
+压缩级别
+
+zlib.constants.Z_NO_COMPRESSION
+zlib.constants.Z_BEST_SPEED
+zlib.constants.Z_BEST_COMPRESSION
+zlib.constants.Z_DEFAULT_COMPRESSION
+
+压缩/解压函数的返回代码
+
+zlib.constants.Z_OK
+zlib.constants.Z_STREAM_END
+zlib.constants.Z_NEED_DICT
+zlib.constants.Z_ERRNO
+zlib.constants.Z_STREAM_ERROR
+zlib.constants.Z_DATA_ERROR
+zlib.constants.Z_MEM_ERROR
+zlib.constants.Z_BUF_ERROR
+zlib.constants.Z_VERSION_ERROR
+
+允许的刷新值
+
+zlib.constants.Z_NO_FLUSH
+zlib.constants.Z_PARTIAL_FLUSH
+zlib.constants.Z_SYNC_FLUSH
+zlib.constants.Z_FULL_FLUSH
+zlib.constants.Z_FINISH
+zlib.constants.Z_BLOCK
+zlib.constants.Z_TREES
+
+### (2) zlib 压缩和解压类
+
+* **zlib.Deflate 类**：使用 Deflate 算法压缩数据
+* **zlib.Inflate 类**：使用 Inflate 算法解压数据
+* **zlib.DeflateRaw 类**：使用 Deflate 算法压缩数据，不附加 zlib 标头
+* **zlib.InflateRaw 类**：使用 Inflate 算法解压不附加 zlib 标头的数据
+* **zlib.BrotliCompress 类**：使用 Brotli 算法压缩数据
+* **zlib.BrotliDecompress 类**：使用 Brotli 算法解压数据
+* **zlib.Gzip 类**：使用 Gzip 算法压缩数据
+* **zlib.Gunzip 类**：使用 Gzip 算法解压数据
+* **zlib.Unzip 类**：通过`自动检测标头`来解压 Gzip、Deflate 算法压缩的数据
+
+### (3) zlib Options 类
+
+每个基于 zlib 的类都有一个 options 对象
+
+* Options 类
+
+  ```js
+  flush
+  finishFlush
+  chunkSize
+  windowBits
+  level
+  memLevel
+  strategy
+  dictionary
+  info
+  maxOutputLength
+  ```
+
+* BrotliOptions 类
+
+  ```js
+  flush 
+  finishFlush 
+  chunkSize
+  params
+  maxOutputLength 
+  ```
+
+### (4) zlib 对象属性和方法
+
+```js
+定义：import zlib from 'zlib'
+属性：zlib.constants                              //返回 zlib 相关常量
+     zlib.bytesWritten                           //返回或设置压缩或解压之前写入引擎的字节数
+方法：管道 API：
+     zlib.createDeflate([options])               //返回并创建新的 Deflate 对象
+     zlib.createInflate([options])               //返回并创建新的 Inflate 对象
+     zlib.createDeflateRaw([options])            //返回并创建新的 DeflateRaw 对象
+     zlib.createInflateRaw([options])            //返回并创建新的 InflateRaw 对象
+     zlib.createBrotliCompress([options])        //返回并创建 BrotliCompress 对象
+     zlib.createBrotliDecompress([options])      //返回并创建新的 BrotliDecompress 对象
+     zlib.createGzip([options])                  //返回并创建新的 Gzip 对象
+     zlib.createGunzip([options])                //返回并创建新的 Gunzip 对象
+     zlib.createUnzip([options])                 //返回并创建新的 Unzip 对象
+     同步 API：
+     zlib.deflateSync(buffer,[options])          //返回压缩后的 buffer,使用 Deflate 算法压缩 buffer
+     zlib.inflateSync(buffer,[options])          //返回解压后的 buffer,使用 Inflate 算法解压 buffer
+     zlib.deflateRawSync(buffer,[options])       //返回压缩后的 buffer,使用 Deflate 算法压缩 buffer，不附加 zlib 标头
+     zlib.inflateRawSync(buffer,[options])       //返回解压后的 buffer,使用 Inflate 算法解压不附加 zlib 标头的 buffer
+     zlib.brotliCompressSync(buffer,[options])   //返回压缩后的 buffer,使用 Brotli 算法压缩 buffer
+     zlib.brotliDecompressSync(buffer,[options]) //返回解压后的 buffer,使用 Brotli 算法解压 buffer
+     zlib.gzipSync(buffer,[options])             //返回压缩后的 buffer,使用 Gzip 算法压缩 buffer
+     zlib.gunzipSync(buffer,[options])           //返回解压后的 buffer,使用 Gzip 算法解压 buffer
+     zlib.unzipSync(buffer,[options])            //返回解压后的 buffer,通过自动检测标头来解压 Gzip、Deflate 算法压缩的 buffer
+     异步 API：
+     zlib.deflate(buffer,[options],cb)           //无返回值,使用 Deflate 算法压缩 buffer
+     zlib.inflate(buffer,[options],cb)           //无返回值,使用 Inflate 算法解压 buffer
+     zlib.deflateRaw(buffer,[options],cb)        //无返回值,使用 Deflate 算法压缩 buffer，不附加 zlib 标头
+     zlib.inflateRaw(buffer,[options],cb)        //无返回值,使用 Inflate 算法解压不附加 zlib 标头的 buffer
+     zlib.brotliCompress(buffer,[options],cb)    //无返回值,使用 Brotli 算法压缩 buffer
+     zlib.brotliDecompress(buffer,[options],cb)  //无返回值,使用 Brotli 算法解压 buffer
+     zlib.gzip(buffer,[options],cb)              //无返回值,使用 Gzip 算法压缩 buffer
+     zlib.gunzip(buffer,[options],cb)            //无返回值,使用 Gzip 算法解压 buffer
+     zlib.unzip(buffer,[options],cb)             //无返回值,通过自动检测标头来解压 Gzip、Deflate 算法压缩的 buffer
+     其他方法：
+     zlib.params(level,strategy,cb)              //无返回值,动态更新压缩策略和压缩级别(deflate)
+     zlib.reset()                                //无返回值,将压缩器或解压器重置为出厂默认设置(deflate、inflate)
+     zlib.flush([kind],cb)                       //无返回值,刷新挂起数据
+     zlib.close([cb])                            //无返回值,关闭底层句柄
+```
+
+### (5) 实例
+
+* 管道 API
+
+  ```js
+  import fs from 'fs'
+  import zlib from 'zlib'
+
+  fs.createReadStream('input.txt')
+    .pipe(zlib.createGzip())
+    .pipe(fs.createWriteStream('output.gz'))
+  ```
+
+  ![zlib管道API]()
+
+* 同步 API
+
+  ```js
+  import fs from 'fs'
+  import zlib from 'zlib'
+
+  const buffer = zlib.gzipSync('hello world!')
+  fs.writeFile('output2.gz', buffer, null, err => {
+    if(err){
+      console.log('failed')
+    } else {
+      console.log('succed')
+    }
+  })
+  ```
+
+  ![zlib同步API]()
+
+* 异步 API
+
+  ```js
+  import fs from 'fs'
+  import zlib from 'zlib'
+
+  zlib.gzip('hello world!', null, (err, buffer) => {
+    if(!err) {
+      fs.writeFile('output3.gz', buffer, null, err => {
+        if(err){
+          console.log('failed')
+        } else {
+          console.log('succed')
+        }
+      })
+    }
+  }) 
+  ```
+
+  ![zlib异步API]()
+
+## 3. crypto 模块
+
+## 4. Buffer 模块
 
 ### (1) 字符编码
 
@@ -647,4 +887,4 @@ console.log(buf5) //buf5 <Buffer 08 07 06 05 04 03 02 01>
 console.log(buf6) //buf6 抛出 ERR_INVALID_BUFFER_SIZE 异常
 ```
 
-## 4. string_decoder 模块
+## 5. string_decoder 模块
