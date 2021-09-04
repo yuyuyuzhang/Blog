@@ -270,7 +270,7 @@ npm 安装模块版本方式如下
 
 由上述方式可知，package.json 文件只能锁定安装模块的`大版本（版本号第一位）`，无法锁定版本号后面的小版本，可能出现他人下载项目后 npm install 时小版本号不同导致一些不兼容的问题的情况
 
-package-lock.json 文件用于`记录实际安装的各个 npm package 的具体来源和版本号`，该文件需要上传到 git，以保证他人下载项目后 npm install 时`版本号完全一致`
+package-lock.json 文件用于`记录实际安装的各个 npm package 的具体来源和版本号`
 
 ### (5) npx 命令
 
