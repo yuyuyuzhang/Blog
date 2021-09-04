@@ -2,7 +2,7 @@
   "name": "vite-project",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "serve": "vite",
     "build": "vite build"
   },
   "dependencies": {
