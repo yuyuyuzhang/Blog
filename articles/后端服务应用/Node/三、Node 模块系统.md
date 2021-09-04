@@ -317,3 +317,14 @@ npx 命令可以通过 URL 直接运行 npm 仓库上发布的软件包，前提
 ```js
 npx https://gist.github.com/zkat/4bc19503fe9e9309e2bfaa2c58074d32
 ```
+
+### (6) nrm
+
+nrm 提供了一些常用的 npm 包镜像地址，能让我们快速的切换安装 npm 包时的服务器地址
+
+* npm i nrm -g
+* **nrm ls**：查看所有可用镜像地址，带星号 `*` 的地址就是当前使用地址
+  
+  ![nrm_ls]()
+
+* **nrm use xxx**：切换当前使用的镜像地址
