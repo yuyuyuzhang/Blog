@@ -110,7 +110,7 @@ nvm 常用命令如下
 
 * **配置 Node&npm 安装镜像**：nvm 安装路径下找到 `setting.txt` 文件添加如下两行代码，避免 Node 安装失败
   
-  ![nvm配置node安装镜像]()
+  ![nvm配置node安装镜像](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/nvm%E9%85%8D%E7%BD%AEnode%E5%AE%89%E8%A3%85%E9%95%9C%E5%83%8F.png)
 
 * **安装 Node**：nvm install v16.8.0，命令安装指定版本 Node
 * **安装 npm**：正常情况下安装 Node 会自动安装 npm，但是 `8.11` 以上版本的 Node 对应的 npm 都无法自动安装，需要手动安装
@@ -118,29 +118,29 @@ nvm 常用命令如下
   * 下载完成后解压并将文件夹名称改为 npm，放入 nvm 安装目录下对应版本的 Node 文件夹的 node_modules 文件夹下
   * 复制 bin 文件夹下的如下 4 个文件到 node_modules 同级目录
     
-    ![npm安装]()
+    ![npm安装](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/npm%E5%AE%89%E8%A3%85.png)
 
 * **使用 Node**：nvm use 16.8.0 命令使用指定版本 Node，会自动拷贝对应版本的 Node 安装文件夹到 nvm 安装目录下并重命名为 nodejs
   
-  ![nvm使用指定版本Node]()
+  ![nvm使用指定版本Node](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/nvm%E4%BD%BF%E7%94%A8%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACNode.png)
 
 * **修改 npm 全局安装和缓存位置**
   * nvm\nodejs 文件夹下新建如下两个文件夹
 
-    ![npm全局安装和缓存位置1]()
+    ![npm全局安装和缓存位置1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/npm%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85%E5%92%8C%E7%BC%93%E5%AD%98%E4%BD%8D%E7%BD%AE1.png)
 
   * cmd 输入以下命令
   
-    ![npm全局安装和缓存位置2]()
+    ![npm全局安装和缓存位置2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/npm%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85%E5%92%8C%E7%BC%93%E5%AD%98%E4%BD%8D%E7%BD%AE2.png)
 
 * **配置 Node 环境变量**
   * 环境变量 - 系统变量 - 新建 NODE_PATH
 
-    ![NODE_PATH]() 
+    ![NODE_PATH](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/NODE_PATH.png) 
   
   * 环境变量 - 用户变量 - PATH 修改
   
-    ![PATH变量修改]()
+    ![PATH变量修改](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/PATH%E5%8F%98%E9%87%8F%E4%BF%AE%E6%94%B9.png)
 
 ## 4. Node REPL
 
