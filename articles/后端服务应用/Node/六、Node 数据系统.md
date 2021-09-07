@@ -1,8 +1,8 @@
 # 六、Node 数据系统
 
-## 1. Stream 模块
+## 1. stream 模块
 
-### (1) Stream
+### (1) stream
 
 流最初是几十年前在 `Unix 操作系统`引入的，流是一种`数据处理方式`，以高效的方式处理读写文件、网络通信、任何类型的端到端的信息交互
 
@@ -16,7 +16,7 @@
 Node 通过 stream 模块提供流 API，所有流都是 `EevntEmitter` 类的实例
 
 ```js
-定义：import Stream from 'stream'
+定义：import stream from 'stream'
 方法：构造函数：
      stream.Readable()    //返回只读流实例,只读流构造函数,通过new命令调用
      stream.Writable()    //返回只写流实例,只写流构造函数,通过new命令调用
@@ -40,7 +40,7 @@ Node 包含以下 4 种流类型
 
 #### ② 流的对象模式
 
-Node Stream API 只能对`字符串、Buffer` 操作，但是创建流实例时只要使用 objectMode 选项切换为对象模式，流就可以使用`其他类型 JS 值`实现
+Node stream API 只能对`字符串、Buffer` 操作，但是创建流实例时只要使用 objectMode 选项切换为对象模式，流就可以使用`其他类型 JS 值`实现
 
 #### ③ 流的内部缓冲
 
@@ -110,10 +110,10 @@ rs.resume()
 
 ![stream_finished](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/stream_finished.png)
 
-### (3) Stream.Readable 类
+### (3) stream.Readable 类
 
 ```js
-定义：const readStream = new Stream.Readable([options])
+定义：const readStream = new stream.Readable([options])
 属性：readable.readableHighWaterMark       //返回构造当前只读流时指定的highWaterMark值
      readStream.readableObjectMode        //返回或设置构造当前只读流时指定的objectMode属性
      readStream.readableEncoding          //返回当前只读流指定的encoding编码
@@ -158,18 +158,18 @@ readStream.onclose    //当只读流销毁时触发,不会再触发其他事件
 
 #### ① 只读流的自定义创建
 
-自定义创建只读流必须调用 `new Stream.Readable([options])` 构造函数，并且需要实现 `readStream._read()` 方法
+自定义创建只读流必须调用 `new stream.Readable([options])` 构造函数，并且需要实现 `readStream._read()` 方法
 
 ```js
-import Stream from 'stream'
+import stream from 'stream'
 
-const readStream = new Stream.Readable({
+const readStream = new stream.Readable({
   read() {}
 })
 readStream.push('hello')
 readStream.push('world!')
 
-const writeStream = new Stream.Writable({
+const writeStream = new stream.Writable({
   write(chunk, encoding, next) {
     next()
   }
@@ -207,10 +207,10 @@ writeStream.end()
 
 实例见下方只写流
 
-### (4) Stream.Writable 类
+### (4) stream.Writable 类
 
 ```js
-定义：const writeStream = new Stream.Writable([options])
+定义：const writeStream = new stream.Writable([options])
 属性：writeStream.writableHighWaterMark        //返回构造当前只写流时指定的highWaterMark值
      writeStream.writableObjectMode           //返回或设置构造当前只写流时指定的objectMode属性
      writeStream.writable                     //返回当前只写流内部缓冲是否未满可写入
@@ -254,12 +254,12 @@ writeStream.onclose  //当只写流销毁时触发,不会再触发其他事件
 
 #### ① 只写流的自定义创建
 
-自定义创建只写流必须调用 `new Stream.Writable([options])` 构造函数，并且需要实现 `writeStream.write()` 方法
+自定义创建只写流必须调用 `new stream.Writable([options])` 构造函数，并且需要实现 `writeStream.write()` 方法
 
 ```js
-import Stream from 'stream'
+import stream from 'stream'
 
-const writeStream = new Stream.Writable({
+const writeStream = new stream.Writable({
   write(chunk, encoding, next) {
     next()
   }
@@ -273,7 +273,7 @@ writeStream.write('hello world!')
 #### ② writeStream.cork()/uncork()
 
 ```js
-const writeStream = new Stream.Writable({
+const writeStream = new stream.Writable({
   write(chunk, encoding, next) {
     console.log(chunk.toString())
     next()
@@ -286,7 +286,7 @@ writeStream.write('world!')
 ![writeStream_cork1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/writeStream_cork1.png)
 
 ```js
-const writeStream = new Stream.Writable({
+const writeStream = new stream.Writable({
   write(chunk, encoding, next) {
     console.log(chunk.toString())
     next()
@@ -300,7 +300,7 @@ writeStream.write('world!')
 ![writeStream_cork2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/writeStream_cork2.png)
 
 ```js
-const writeStream = new Stream.Writable({
+const writeStream = new stream.Writable({
   write(chunk, encoding, next) {
     console.log(chunk.toString())
     next()
@@ -314,9 +314,9 @@ writeStream.uncork()
 
 ![writeStream_cork1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/writeStream_cork1.png)
 
-### (5) Stream.Duplex 类
+### (5) stream.Duplex 类
 
-Stream.Duplex 类同时实现了 Stream.Readable 类的接口与 Stream.Writable 类的接口，由于 JS 不支持多重继承，因此扩展了 Stream.Duplex 类以实现双工流
+stream.Duplex 类同时实现了 stream.Readable 类的接口与 stream.Writable 类的接口，由于 JS 不支持多重继承，因此扩展了 stream.Duplex 类以实现双工流
 
 双工流既可以作为上游产生数据，也可以作为下游消费数据，因此常处于`数据流动管道的中间部分`
 
@@ -333,7 +333,7 @@ rs.pipe(rws1).pipe(rws2).pipe(rws3).pipe(ws);
 双工流除只读流和只写流以外的其他 API 如下
 
 ```js
-定义：const duplexStream = new Stream.Duplex([options])
+定义：const duplexStream = new stream.Duplex([options])
 
 
 options：
@@ -346,11 +346,11 @@ writableObjectMode    //当前双工流可写端是否为对象模式(默认fals
 allowHalfOpen         //当前双工流可读端结束时是否不自动结束可写端(默认true)
 ```
 
-### (6) Stream.Transform 类
+### (6) stream.Transform 类
 
-Stream.Transform 类同时实现了 Stream.Readable 类的接口与 Stream.Writable 类的接口，由于 JS 不支持多重继承，因此扩展了 Stream.Transform 类以实现转换流，转换流与双工流不同的是，转换流的`输出是输入的转换`
+stream.Transform 类同时实现了 stream.Readable 类的接口与 stream.Writable 类的接口，由于 JS 不支持多重继承，因此扩展了 stream.Transform 类以实现转换流，转换流与双工流不同的是，转换流的`输出是输入的转换`
 
-Stream.PassThrough 类是转换流的简单实现，只是`将输入传到输出`，没有做任何计算和转换，主要目的是用于示例和测试
+stream.PassThrough 类是转换流的简单实现，只是`将输入传到输出`，没有做任何计算和转换，主要目的是用于示例和测试
 
 转换流既可以作为上游产生数据，也可以作为下游消费数据，因此常处于`数据流动管道的中间部分`
 
@@ -366,8 +366,8 @@ rs.pipe(rws1).pipe(rws2).pipe(rws3).pipe(ws);
 转换流除只读流和只写流以外的其他 API 如下
 
 ```js
-定义：const transStream = new Stream.Transform([options])
-     const transStream = new Stream.PassThrough()
+定义：const transStream = new stream.Transform([options])
+     const transStream = new stream.PassThrough()
 
 
 options：
@@ -377,7 +377,7 @@ flush     //transStream._flush() 方法的实现
 
 ## 2. zlib 模块
 
-zlib 模块提供了使用 `Deflate/Inflate、Brotli、Gzip` 算法实现的压缩功能，压缩和解压都是围绕 `Node Stream API` 构建的，压缩和解压流是将源流通过`转换流`管道传输到目标流完成
+zlib 模块提供了使用 `Deflate/Inflate、Brotli、Gzip` 算法实现的压缩功能，压缩和解压都是围绕 `Node stream API` 构建的，压缩和解压流是将源流通过`转换流`管道传输到目标流完成
 
 Deflate/Inflate 压缩算法是一种`过时`的压缩算法，浏览器对其支持并不好，不建议使用
 
@@ -560,12 +560,22 @@ zlib.constants.Z_TREES
 
 ## 3. crypto 模块
 
+### crypto 对象属性和方法
+
+```js
+定义：import crypto from 'crypto'
+属性：crypto.constants //返回包含加密常量的对象
+     crypto.
+方法：crypto.checkPrime(candidate,[options],[cb])
+     crypto.checkPrimeSync(candidate,[options])
+```
+
 ### Certificate 类
 
 ```js
-Certificate.exportChallenge(spkac[, encoding])
-Certificate.exportPublicKey(spkac[, encoding])
-Certificate.verifySpkac(spkac[, encoding])
+Certificate.exportChallenge(spkac[encoding])
+Certificate.exportPublicKey(spkac,[encoding])
+Certificate.verifySpkac(spkac,[encoding])
 ```
 
 ### X509Certificate 类
@@ -573,9 +583,9 @@ Certificate.verifySpkac(spkac[, encoding])
 ```js
 new X509Certificate(buffer)
 x509.ca
-x509.checkEmail(email[, options])
-x509.checkHost(name[, options])
-x509.checkIP(ip[, options])
+x509.checkEmail(email,[options])
+x509.checkHost(name,[options])
+x509.checkIP(ip,[options])
 x509.checkIssued(otherCert)
 x509.checkPrivateKey(privateKey)
 x509.fingerprint
@@ -602,32 +612,32 @@ x509.verify(publicKey)
 ```js
 cipher.final([outputEncoding])
 cipher.getAuthTag()
-cipher.setAAD(buffer[, options])
+cipher.setAAD(buffer,[options])
 cipher.setAutoPadding([autoPadding])
-cipher.update(data[, inputEncoding][, outputEncoding])
+cipher.update(data,[inputEncoding],[outputEncoding])
 ```
 
 ### Decipher 类
 
 ```js
 decipher.final([outputEncoding])
-decipher.setAAD(buffer[, options])
-decipher.setAuthTag(buffer[, encoding])
+decipher.setAAD(buffer,[options])
+decipher.setAuthTag(buffer,[encoding])
 decipher.setAutoPadding([autoPadding])
-decipher.update(data[, inputEncoding][, outputEncoding])
+decipher.update(data,[inputEncoding],[outputEncoding])
 ```
 
 ### DiffieHellman 类
 
 ```js
-diffieHellman.computeSecret(otherPublicKey[, inputEncoding][, outputEncoding])
+diffieHellman.computeSecret(otherPublicKey,[inputEncoding],[outputEncoding])
 diffieHellman.generateKeys([encoding])
 diffieHellman.getGenerator([encoding])
 diffieHellman.getPrime([encoding])
 diffieHellman.getPrivateKey([encoding])
 diffieHellman.getPublicKey([encoding])
-diffieHellman.setPrivateKey(privateKey[, encoding])
-diffieHellman.setPublicKey(publicKey[, encoding])
+diffieHellman.setPrivateKey(privateKey,[encoding])
+diffieHellman.setPublicKey(publicKey,[encoding])
 diffieHellman.verifyError
 ```
 
@@ -636,12 +646,12 @@ diffieHellman.verifyError
 ### ECDH 类
 
 ```js
-ECDH.convertKey(key, curve[, inputEncoding[, outputEncoding[, format]]])
-ecdh.computeSecret(otherPublicKey[, inputEncoding][, outputEncoding])
-ecdh.generateKeys([encoding[, format]])
+ECDH.convertKey(key, curve,[inputEncoding,[outputEncoding,[format]]])
+ecdh.computeSecret(otherPublicKey,[inputEncoding],[outputEncoding])
+ecdh.generateKeys([encoding,[format]])
 ecdh.getPrivateKey([encoding])
-ecdh.getPublicKey([encoding][, format])
-ecdh.setPrivateKey(privateKey[, encoding])
+ecdh.getPublicKey([encoding],[format])
+ecdh.setPrivateKey(privateKey,[encoding])
 ```
 
 ### Hash 类
@@ -649,14 +659,14 @@ ecdh.setPrivateKey(privateKey[, encoding])
 ```js
 hash.copy([options])
 hash.digest([encoding])
-hash.update(data[, inputEncoding])
+hash.update(data,[inputEncoding])
 ```
 
 ### Hmac 类
 
 ```js
 hmac.digest([encoding])
-hmac.update(data[, inputEncoding])
+hmac.update(data,[inputEncoding])
 ```
 
 ### KeyObject 类
@@ -673,18 +683,18 @@ keyObject.type
 ### Sign 类
 
 ```js
-sign.sign(privateKey[, outputEncoding])
-sign.update(data[, inputEncoding])
+sign.sign(privateKey,[outputEncoding])
+sign.update(data,[inputEncoding])
 ```
 
 ### Verify 类
 
 ```js
-verify.update(data[, inputEncoding])
-verify.verify(object, signature[, signatureEncoding])
+verify.update(data,[inputEncoding])
+verify.verify(object, signature,[signatureEncoding])
 ```
 
-## 4. Buffer 模块
+## 4. buffer 模块
 
 ### (1) 字符编码
 
@@ -692,7 +702,7 @@ verify.verify(object, signature[, signatureEncoding])
 
 计算机内部所有信息都是一个`二进制值`，二进制值的每个二进制位 bit 都有 0 和 1 两种状态，一个字节 byte 具有 8 个二进制位 bit，可以组合成 256 种状态，每个状态对应一个符号，从 00000000 ~ 11111111
 
-字符集定义了`字符和二进制位`之间的对应关系，为每个字符分配唯一的`字符编号`
+字符集定义了`字符和二进制位`之间的对应关系，字符集为每个字符分配唯一的`字符编号`
 
 * **ASCII 字符集**：使用 `1` 个字节给各个字符编号，最高位为 0，剩下 7 位可表示 `128` 个英文字符
   * 上世纪 60 年代，美国制定了 ASCII 字符集，统一规定了英文字符和二进制位的关系，一直沿用至今
@@ -703,7 +713,7 @@ verify.verify(object, signature[, signatureEncoding])
 
 #### ② Unicode 字符编码
 
-字符编码定义了如何将字符编号存储到内存，故而存储在内存的仅仅是字符编号，而不是真正的字符实体
+字符编码定义了如何将字符编号存储到`内存`，故而存储在内存的仅仅是字符编号，而不是真正的字符实体
 
 Unicode 字符集有如下 3 种字符编码方式，数字表示每种字符编码存储所需的`最少比特位数`，`UTF-8` 是互联网使用最广的一种编码方式，UTF-16、UTF-32 在互联网基本不用
 
@@ -711,7 +721,7 @@ Unicode 字符集有如下 3 种字符编码方式，数字表示每种字符编
 * **UTF-16**：`既固长又变长`，使用 `2~4` 个字节存储字符编号，对于字符编号在 0~FFFF 之间的字符，使用 2 个字节直接存储字符编号，无需任何编码转换，对于字符编号在 10000~10FFFF 之间的字符，使用 4 个字节存储，将字符编号的所有比特位分成两部分
 * **UTF-32**：`固长`，使用 `4` 个字节存储字符编号，足以容纳所有的字符编号，所以直接存储字符编号即可，无需任何编码转换，浪费了空间，提高了效率
 
-Global 对象是 ES 中的`全局对象`，浏览器和 Node 对 Global 对象的实现不同
+Global 对象是 ES 中的`全局对象`，浏览器和 Node 对 Global 对象的实现不同，Global 对象上具有以下编码/解码方法
 
 ```js
 Unicode 编码/解码方法：
@@ -728,21 +738,32 @@ atob(encodedStr)        //返回Base64解码后的字符串
 
 #### ③ Node 支持的字符编码
 
-Node 目前支持以下 `6` 种类型的字符编码，通过显式地使用字符编码可以在 `buffer 实例和 JS 字符串`之间相互转换
+Node 目前支持以下 `4` 种类型的`字符编码`
+
+* 编码：字符串转 buffer
+* 解码：buffer 转字符串
 
 |字符编码|描述|
 |:------|:---|
 |ascii|ASCII 编码|
 |utf8|UTF-8 编码：互联网最常用的编码方式|
 |utf16le、ucs2（别名）|UTF-16 编码：不常用|
+|latin1、binary（别名）|latin1 编码：不常用|
+
+Node 还支持以下 `3` 种类型的`二进制转文本编码`
+
+* 编码：buffer 转字符串
+* 解码：字符串转 buffer
+
+|二进制转文本编码|描述|
+|:------|:---|
 |base64|Base64 编码：常用于加密|
 |base64url|base64url 编码：常用于加密 url|
-|latin1、binary（别名）|latin1 编码：不常用|
 |hex|hex 编码：不常用|
 
-### (2) Buffer 类
+### (2) buffer 模块（ES6 Uint8Array 类的子类）
 
-ES 没有二进制数据类型，但是 Node 处理`文件流或 TCP 流`时必须使用二进制数据，因此 Node 定义了一个 Buffer 类用于创建一个专门存放二进制数据的缓存区，Buffer 对应 `V8 堆内存之外的一块原始内存`
+ES 没有二进制数据类型，但是 Node 处理`文件流或 TCP 流`时必须使用二进制数据，因此 Node 提供了 buffer 模块用于创建一个专门存放二进制数据的缓存区，buffer 对应 `V8 堆内存之外的一块原始内存`
 
 #### ① 二进制数组 API
 
@@ -765,8 +786,8 @@ ArrayBuffer 对象表示`存储二进制数据的一段连续内存`，不能直
 
 ArrayBuffer 对象作为内存区域可以存放`多种类型的数据`，视图就是同一段内存区域的数据可以有`不同的解读格式`，视图的作用是`以指定格式解读二进制数据`
 
-* TypedArray 类数组对象只是一层视图，`本身不存储数据`，数据存储在底层的 ArrayBuffer 对象
-* 所有成员都是`同一种类型`
+* TypedArray 类数组对象只是视图，`本身不存储数据`，数据存储在底层的 ArrayBuffer 对象
+* 所有成员都是`同一类型`
 * 所有成员的默认值为 `0`
 * 所有成员是`连续`的，不会有空位
 
@@ -786,21 +807,24 @@ TypedArray 视图包括如下 9 种类型
 
 #### ④ Uint8Array 视图
 
-Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8Array 类的`子类`，Node 在支持 Buffer 的地方也支持普通的 Uint8Array
+Uint8Array 视图就是 `8 位无符号整数`，Node buffer 类就是 ES6 Uint8Array 类的`子类`，Node 在支持 buffer 的地方也支持普通的 Uint8Array
 
-### (3) Buffer API
+### (3) buffer API
+
+Node buffer 类是 ES6 Uint8Array 类、TypedArray 类的子类，因此所有 ES6 TypedArray 方法都可以在 Node buffer 上使用，但是 Node buffer API 与 ES6 TypedArray API 存在`细微的不兼容`
 
 ```js
-定义：Buffer.alloc(len,val,enc)              //返回buffer实例,使用encoding编码,val填充到指定长度len
-     Buffer.from(str,enc)                   //返回buffer实例,使用encoding编码str
+定义：import { Buffer } from 'buffer'
+     Buffer.alloc(len,val,enc)              //返回buffer实例,使用enc编码,val填充到指定长度len
+     Buffer.from(str,enc)                   //返回buffer实例,使用enc编码str
      Buffer.from(arr)                       //返回buffer实例,使用0-255范围内的字节数组分配buffer
      Buffer.from(arrayBuffer,n,len)         //返回buffer实例,创建arrayBuffer从索引n开始的len字节的视图,buffer实例与arrayBuffer共享相同的底层内存
      Buffer.from(buffer)                    //返回buffer实例,复制传入的buffer实例数据,重新分配新的内存
 属性：常量属性：
      Buffer.poolSize                        //返回用于池的预分配内部buffer实例的字节大小
-     buffer.INSPECT_MAX_BYTES               //返回调用buffer.inspect()时将返回的最大字节数
-     buffer.constants.MAX_LENGTH            //返回单个buffer实例允许的最大大小
-     buffer.constants.MAX_STRING_LENGTH     //返回单个string实例允许的最大大小
+     Buffer.INSPECT_MAX_BYTES               //返回调用buffer.inspect()时将返回的最大字节数
+     Buffer.constants.MAX_LENGTH            //返回单个buffer实例允许的最大大小
+     Buffer.constants.MAX_STRING_LENGTH     //返回单个string实例允许的最大大小
      实例属性：
      buffer.buffer                          //返回buffer基于的底层ArrayBuffer对象
      buffer.byteOffset                      //返回buffer基于的底层ArrayBuffer对象的字节偏移量byteOffset
@@ -811,6 +835,7 @@ Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8
      Buffer.isEncoding(enc)                 //返回Buffer是否支持encoding
      Buffer.byteLength(str,enc)             //返回str使用encoding编码后的字节长度
      Buffer.concat(arr,len)                 //返回新buffer,连接arr数组内的所有buffer,并截断为总长度len
+     Buffer.compare(buf1,buf2)              //返回数字,表示buf1和buf2的字符编码位置关系(-1:buf1位于buf2之前,0:buf1与buf2相同,1:buf1位于buf2之后)
      实例方法：
      buffer.toJSON()                        //返回buffer的JSON表示,JSON.stringify(buffer)时隐式调用此方法
      buffer.toString(enc,n1,n2)             //返回根据指定字符编码解码buffer索引n1到索引n2前一项后的字符串
@@ -825,7 +850,6 @@ Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8
      buffer.slice(n1,n2)                    //返回新buffer,由buffer索引n1到索引n2前一项构成,共享底层内存
      比较方法：
      buffer.equals(buffer1)                 //返回buffer与buffer1是否具有完全相同的字节
-     Buffer.compare(buf1,buf2)              //返回数字,表示buf1和buf2的字符编码位置关系(-1:buf1位于buf2之前,0:buf1与buf2相同,1:buf1位于buf2之后)
      buffer.compare(target,tn1,tn2,sn1,sn2) //返回数字,表示buffer索引sn1到索引sn2前一项与target索引tn1到索引tn2前一项的字符编码位置关系(-1:buffer位于target之前,0:buffer与target相同,1:buffer位于target之后)
      遍历方法：
      buffer.keys()                          //返回索引的遍历器对象,可使用for-of循环遍历
@@ -839,7 +863,7 @@ Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8
      buffer.readIntBE(n,len)                //返回从buffer索引n处读取的len个字节,并将结果解读为支持最高48位精度的有符号大端序整数
      buffer.readIntLE(n,len)                //返回从buffer索引n处读取的len个字节,并将结果解读为支持最高48位精度的有符号小端序整数
      buffer.readUIntBE(n,len)               //返回从buffer索引n处读取的len个字节,并将结果解读为支持最高48位精度的无符号大端序整数
-     buffer.readUIntLE(n, len)              //返回从buffer索引n处读取的len个字节,并将结果解读为支持最高48位精度的无符号小端序整数
+     buffer.readUIntLE(n,len)               //返回从buffer索引n处读取的len个字节,并将结果解读为支持最高48位精度的无符号小端序整数
      buffer.readInt8(n)                     //返回从buffer索引n处读取的有符号8位整数
      buffer.readUInt8(n)                    //返回从buffer索引n处读取的无符号8位整数
      buffer.readInt16BE(n)                  //返回从buffer索引n处读取的有符号大端序16位整数
@@ -887,6 +911,8 @@ Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8
 #### ① 创建 buffer 实例
 
 ```js
+import { Buffer } from 'buffer'
+
 //ArrayBuffer对象表示存储二进制数据的一段连续内存,不能直接读写,只能通过TypedArray/DataView视图读写
 const arraybuffer = new ArrayBuffer(6) //分配一段6字节的连续内存
 const buf1 = Buffer.alloc(6)
@@ -908,9 +934,11 @@ console.log(buf6) //<Buffer 61 61 61 61 61 61>
 #### ② 实例方法
 
 ```js
+import { Buffer } from 'buffer'
+
 const buf2 = Buffer.alloc(6, 'a')
 buf2[1] = 0x72
-console.log(buf2.toJSON())   //{type: 'Buffer', data: [ 97, 114, 97, 97, 97, 97 ]}
+console.log(buf2.toJSON())   //{type: 'buffer', data:[ 97, 114, 97, 97, 97, 97 ]}
 console.log(buf2.toString()) //'araaaa'
 ```
 
@@ -926,13 +954,15 @@ arr.lastIndexOf(a,n) //返回查找到的第一个数组项a的索引,由索引n
 buffer.indexOf(val,n,enc)     //返回查找到的第一个val的索引,由索引n处或buffer头部从前往后搜索
 buffer.lastIndexOf(val,n,enc) //返回查找到的第一个val的索引,从索引n处或buffer尾部从后往前搜索
 
+
 const str = "hello world"
 console.log(str.indexOf("o"))         //4
 console.log(str.lastIndexOf("o"))     //7
 console.log(str.indexOf("o", 6))      //7
 console.log(str.lastIndexOf("o", 6))  //4
 
-const arr = [1, 2, NaN, 4, -5, 4, 3, 2, 1]
+
+const arr =[1, 2, NaN, 4, -5, 4, 3, 2, 1]
 console.log(arr.indexOf(4))         //3
 console.log(arr.lastIndexOf(4))     //5
 console.log(arr.indexOf(4, 4))      //5
@@ -940,6 +970,8 @@ console.log(arr.lastIndexOf(4, 4))  //3
 console.log(arr.indexOf(4, -1))     //-1  index(a, -1)=index(a, 8)
 console.log(arr.lastIndexOf(4, -1)) //5   index(a, -1)=index(a, 8)
 
+
+import { Buffer } from 'buffer'
 const buf3 = Buffer.from('this is a example')
 console.log(buf3.includes('this'))     //true
 console.log(buf3.includes(97))         //true, 97 是 'a' 的十进制 ASCII 值
@@ -954,6 +986,8 @@ console.log(buf3.lastIndexOf('a', 10)) //8
 buffer.subarray()、buffer.slice() 复制得到的新 buffer 与旧 buffer `共享相同的底层内存`
 
 ```js
+import { Buffer } from 'buffer'
+
 const buf1 = Buffer.alloc(6)
 const buf2 = Buffer.alloc(6, 'a')
 buf2[1] = 0x72
@@ -971,6 +1005,8 @@ console.log(buf) //buf <Buffer 20 00 01 01 72 61>
 #### ⑤ 比较方法
 
 ```js
+import { Buffer } from 'buffer'
+
 const buf1 = Buffer.from('B')
 const buf2 = Buffer.from('A')
 const buf3 = Buffer.from('C')
@@ -981,24 +1017,28 @@ console.log(buf2.compare(buf3)) //-1
 由此可以实现 buffer 实例数组的排序 sort
 
 ```js
-console.log([buf1, buf2, buf3].sort(Buffer.compare)) 
-//[buf2, buf1, buf3] = [<Buffer 41>, <Buffer 42>, <Buffer 43>]
+console.log([buf1, buf2, buf3].sort(buffer.compare)) 
+//[buf2, buf1, buf3] =[<Buffer 41>, <Buffer 42>, <Buffer 43>]
 ```
 
 #### ⑥ 遍历方法
 
 ```js
+import { Buffer } from 'buffer'
+
 const buf = Buffer.from('this')
 console.log(buf) //buf <Buffer 74 68 69 73>
 
 for(const item of buf.entries()){
-    console.log(item) //Array [0, 116] [1, 104] [2, 105] [3, 115]
+    console.log(item) //Array[0, 116][1, 104][2, 105][3, 115]
 }
 ```
 
 #### ⑦ 解读交换方法
 
 ```js
+import { Buffer } from 'buffer'
+
 const buf1 = Buffer.from([0x1, 0x2, 0x3, 0x4])
 const buf2 = Buffer.from([0x1, 0x2, 0x3])
 console.log(buf1) //buf1 <Buffer 01 02 03 04>
@@ -1027,4 +1067,64 @@ console.log(buf5) //buf5 <Buffer 08 07 06 05 04 03 02 01>
 console.log(buf6) //buf6 抛出 ERR_INVALID_BUFFER_SIZE 异常
 ```
 
+### (4) blob API
+
+Node buffer 类用来`操作内存`，Node blob 类用来`操作二进制文件`
+
+* Node buffer 类表示`存储二进制数据的一段连续内存`，不能直接读写，只能通过 `TypedArray Uint8Array 视图`读写
+* Node blob 类表示`一个二进制文件的数据内容`，常用来读写文件
+
+```js
+定义：import { Blob } from 'buffer'
+     const blob = new Blob(array, {type: MIME})
+属性：blob.type                    //返回blob的MIME类型
+     blob.size                    //返回blob的字节大小
+方法：ES6 Blob 方法：
+     blob.slice([n1],[n2],[MIME]) //返回新Blob实例,拷贝字节索引n1到字节索引n2前一项字节
+     Node Blob 方法：
+     blob.stream()                //返回读取blob内容的只读流
+     blob.text()                  //返回Promsie实例,返回将blob内容解码成的UTF-8字符串
+     blob.arrayBuffer()           //返回Promise实例,返回并创建使用blob数据副本的ArrayBuffer实例
+```
+
+实例
+
+```js
+import { Blob } from 'buffer'
+
+const buf = new ArrayBuffer(100); //分配一段 100 字节的连续内存
+const blob = new Blob([buf])
+const copyBlob = blob.slice(20, 30)
+
+console.log(blob.size) //100
+console.log(blob.type) //''
+console.log(blob)      //Blob {size: 100, type: ''}
+console.log(copyBlob)  //Blob {size: 10, type: ''}
+```
+
 ## 5. string_decoder 模块
+
+string_decoder 模块用于`将 buffer 对象解码为字符串`
+
+```js
+定义：import { StringDecoder } from 'string_decoder'
+     const sd = new StringDecoder([encoding]) 
+方法：sd.write(buffer) //返回将buffer解码后的字符串,并将其存储在内部缓冲区直到下次调用sd.write(buffer)或sd.end([buffer])
+     sd.end([buffer]) //返回内部缓冲区的所有剩余输入,若提供buffer参数则在返回之前最后调用一次sd.write(buffer)
+```
+
+实例
+
+```js
+import { StringDecoder } from 'string_decoder'
+
+const decoder = new StringDecoder() //无参则默认UTF-8
+decoder.write(Buffer.from('小'))
+decoder.write(Buffer.from('可'))
+
+// 情况1
+console.log(decoder.end()) //''
+
+// 情况2
+console.log(decoder.end(Buffer.from('爱'))) //'爱'
+```
