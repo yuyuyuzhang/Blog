@@ -377,11 +377,13 @@ flush     //transStream._flush() 方法的实现
 
 ## 2. zlib 模块
 
+### (1) zlib 模块
+
 zlib 模块提供了使用 `Deflate/Inflate、Brotli、Gzip` 算法实现的压缩功能，压缩和解压都是围绕 `Node stream API` 构建的，压缩和解压流是将源流通过`转换流`管道传输到目标流完成
 
-Deflate/Inflate 压缩算法是一种`过时`的压缩算法，浏览器对其支持并不好，不建议使用
+Deflate/Inflate 压缩算法是一种`过时`的压缩算法，浏览器对其支持并不好，`不建议使用`
 
-### (1) zlib 常量
+### (2) zlib 常量
 
 压缩策略
 
@@ -420,7 +422,7 @@ zlib.constants.Z_FINISH
 zlib.constants.Z_BLOCK
 zlib.constants.Z_TREES
 
-### (2) zlib 压缩和解压类
+### (3) zlib 压缩和解压类
 
 * **zlib.Deflate 类**：使用 Deflate 算法压缩数据
 * **zlib.Inflate 类**：使用 Inflate 算法解压数据
@@ -432,7 +434,7 @@ zlib.constants.Z_TREES
 * **zlib.Gunzip 类**：使用 Gzip 算法解压数据
 * **zlib.Unzip 类**：通过`自动检测标头`来解压 Gzip、Deflate 算法压缩的数据
 
-### (3) zlib Options 类
+### (4) zlib Options 类
 
 每个基于 zlib 的类都有一个 options 对象
 
@@ -461,7 +463,7 @@ zlib.constants.Z_TREES
   maxOutputLength 
   ```
 
-### (4) zlib 对象属性和方法
+### (5) zlib API
 
 ```js
 定义：import zlib from 'zlib'
@@ -504,7 +506,7 @@ zlib.constants.Z_TREES
      zlib.close([cb])                            //无返回值,关闭底层句柄
 ```
 
-### (5) 实例
+### (6) 实例
 
 * 管道 API
 
@@ -560,7 +562,13 @@ zlib.constants.Z_TREES
 
 ## 3. crypto 模块
 
-### crypto 对象属性和方法
+### (1) crypto 模块
+
+Node crypto 模块提供了`加密解密功能`，实现了对 `OpenSSL` 的哈希、HMAC、加密、解密、签名、验证功能的一整套封装
+
+#### OpenSSL
+
+### (2) crypto API
 
 ```js
 定义：import crypto from 'crypto'
@@ -570,7 +578,7 @@ zlib.constants.Z_TREES
      crypto.checkPrimeSync(candidate,[options])
 ```
 
-### Certificate 类
+### Certificate 类（证书）
 
 ```js
 Certificate.exportChallenge(spkac[encoding])
@@ -607,7 +615,7 @@ x509.validTo
 x509.verify(publicKey)
 ```
 
-### Cipher 类
+### Cipher 类（加密）
 
 ```js
 cipher.final([outputEncoding])
@@ -617,7 +625,7 @@ cipher.setAutoPadding([autoPadding])
 cipher.update(data,[inputEncoding],[outputEncoding])
 ```
 
-### Decipher 类
+### Decipher 类（解密）
 
 ```js
 decipher.final([outputEncoding])
@@ -680,14 +688,14 @@ keyObject.symmetricKeySize
 keyObject.type
 ```
 
-### Sign 类
+### Sign 类（签名）
 
 ```js
 sign.sign(privateKey,[outputEncoding])
 sign.update(data,[inputEncoding])
 ```
 
-### Verify 类
+### Verify 类（验证）
 
 ```js
 verify.update(data,[inputEncoding])
@@ -761,7 +769,7 @@ Node 还支持以下 `3` 种类型的`二进制转文本编码`
 |base64url|base64url 编码：常用于加密 url|
 |hex|hex 编码：不常用|
 
-### (2) buffer 模块（ES6 Uint8Array 类的子类）
+### (2) buffer 模块
 
 ES 没有二进制数据类型，但是 Node 处理`文件流或 TCP 流`时必须使用二进制数据，因此 Node 提供了 buffer 模块用于创建一个专门存放二进制数据的缓存区，buffer 对应 `V8 堆内存之外的一块原始内存`
 
@@ -807,11 +815,11 @@ TypedArray 视图包括如下 9 种类型
 
 #### ④ Uint8Array 视图
 
-Uint8Array 视图就是 `8 位无符号整数`，Node buffer 类就是 ES6 Uint8Array 类的`子类`，Node 在支持 buffer 的地方也支持普通的 Uint8Array
+Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8Array 类的`子类`，Node 在支持 buffer 的地方也支持普通的 Uint8Array
 
-### (3) buffer API
+### (3) Buffer 类（ES6 Uint8Array 类的子类）
 
-Node buffer 类是 ES6 Uint8Array 类、TypedArray 类的子类，因此所有 ES6 TypedArray 方法都可以在 Node buffer 上使用，但是 Node buffer API 与 ES6 TypedArray API 存在`细微的不兼容`
+Node Buffer 类是 ES6 Uint8Array 类、TypedArray 类的子类，因此所有 ES6 TypedArray 方法都可以在 Node buffer 上使用，但是 Node buffer API 与 ES6 TypedArray API 存在`细微的不兼容`
 
 ```js
 定义：import { Buffer } from 'buffer'
@@ -1067,12 +1075,12 @@ console.log(buf5) //buf5 <Buffer 08 07 06 05 04 03 02 01>
 console.log(buf6) //buf6 抛出 ERR_INVALID_BUFFER_SIZE 异常
 ```
 
-### (4) blob API
+### (4) Blob 类
 
-Node buffer 类用来`操作内存`，Node blob 类用来`操作二进制文件`
+Node Buffer 类用来`操作内存`，Node Blob 类用来`操作二进制文件`
 
-* Node buffer 类表示`存储二进制数据的一段连续内存`，不能直接读写，只能通过 `TypedArray Uint8Array 视图`读写
-* Node blob 类表示`一个二进制文件的数据内容`，常用来读写文件
+* Node Buffer 类表示`存储二进制数据的一段连续内存`，不能直接读写，只能通过 `TypedArray Uint8Array 视图`读写
+* Node Blob 类表示`一个二进制文件的数据内容`，常用来读写文件
 
 ```js
 定义：import { Blob } from 'buffer'
@@ -1104,6 +1112,8 @@ console.log(copyBlob)  //Blob {size: 10, type: ''}
 
 ## 5. string_decoder 模块
 
+### (1) string_decoder API
+
 string_decoder 模块用于`将 buffer 对象解码为字符串`
 
 ```js
@@ -1113,7 +1123,7 @@ string_decoder 模块用于`将 buffer 对象解码为字符串`
      sd.end([buffer]) //返回内部缓冲区的所有剩余输入,若提供buffer参数则在返回之前最后调用一次sd.write(buffer)
 ```
 
-实例
+### (2) 实例
 
 ```js
 import { StringDecoder } from 'string_decoder'

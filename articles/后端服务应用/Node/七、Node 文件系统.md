@@ -1,10 +1,137 @@
 # 七、Node 文件系统
 
-## 1. fs 模块
+## 1. path 模块
+
+### (1) path 模块
+
+path 模块用于处理`文件和目录路径`，path 模块的默认操作因运行 Node 应用程序的操作系统而异，path 模块假定使用 `Windows` 风格的路径
+
+### (2) path API
+
+```js
+定义：import path from 'path'
+属性：path.win32                     //无返回值,提供特定于Windows的path API访问(import path from 'path/win32')
+     path.posix                     //无返回值,提供特定于POSIX的path API访问(import path from 'path/posix')
+     path.delimiter                 //返回特定于平台的路径定界符(Windows:分号、POSIX:冒号)
+     path.sep                       //返回特定于平台的路径片段分隔符(Windows:反斜杠、POSIX:斜杠)
+方法：基本方法：
+     path.isAbsolute(pathStr)       //返回布尔值,pathStr是否为绝对路径
+     path.relative(from,to)         //返回根据当前工作目录从from到to的相对路径
+     path.dirname(pathStr)          //返回pathStr目录名
+     path.basename(pathStr)         //返回pathStr文件名
+     path.extname(pathStr)          //返回pathStr文件扩展名
+     格式化方法：
+     path.parse(pathStr)            //返回pathStr解析后的pathObj对象(JS对象:具有dir,base,root,name,ext属性)
+     path.format(pathObj)           //返回pathObj格式后的pathStr字符串
+     规范化方法：
+     path.normalize(pathStr)        //返回规范化后的pathStr
+     组装路径方法：
+     path.join(pathStr1,...)        //返回使用路径片段分隔符作为路径定界符将pathStr1,...连接在一起并规范化后的路径
+     path.resolve(pathStr1,...)     //返回构建后的绝对路径,给定的路径序列从右到左处理,每个后续path被追加到前面,直到构建成绝对路径,处理完所有路径序列后仍未构建成绝对路径,则会附加当前工作目录的绝对路径
+```
+
+#### ① 路径定界符
+
+* **Windows**：分号 `;`
+* **POSIX**：冒号 `:`
+
+```js
+import path from 'path'
+
+const envPath = process.env.PATH
+console.log(envPath)                       // 'C:\Windows;D:\nvm\nodejs;'
+console.log(envPath.split(path.delimiter)) // [ 'C:\\Windows', 'D:\\nvm\\nodejs' ]
+```
+
+#### ② 路径片段分隔符
+
+* **Windows**：反斜杠 `\`
+* **POSIX**：斜杠 `/`
+
+```js
+import path from 'path'
+
+const envPath = process.env.PATH
+console.log(envPath)                 // 'C:\Windows;D:\nvm\nodejs;'
+console.log(envPath.split(path.sep)) // [ 'C:', 'Windows;D:', 'nvm', 'nodejs;' ]
+```
+
+#### ③ 基本方法
+
+```js
+import path from 'path'
+
+console.log(path.isAbsolute('/README.md')) //true
+console.log(path.isAbsolute('./index.js')) //false
+
+console.log(path.relative('E:\\Blog\\images\\JS\\ES\\ES6_reduce.png', 'E:\\Blog\\README.md')) //'..\..\..\..\README.md'
+
+const pathStr = 'E:\\Blog\\demos\\test.html'
+console.log(path.dirname(pathStr))  //'E:\Blog\demos'
+console.log(path.basename(pathStr)) //'test.html'
+console.log(path.extname(pathStr))  //'.html'
+```
+
+#### ④ 格式化方法
+
+* 存在 pathObj.dir，忽略 pathObj.root
+* 存在 pathObj.base，忽略 pathObj.name、pathObj.ext
+
+```js
+import path from 'path'
+
+const pathStr = 'E:\\Blog\\demos\\test.html'
+console.log(path.parse(pathStr))
+// {
+//   dir: 'E:\\Blog\\demos',
+//   base: 'test.html',
+//   root: 'E:\\',
+//   name: 'test',
+//   ext: '.html',
+// }
+
+const pathObj = {
+  dir: 'E:\\Blog\\demos',
+  base: 'test.html',
+}
+console.log(path.format(pathObj)) //'E:\Blog\demos\test.html'
+```
+
+#### ⑤ 规范化方法
+
+path.normalize(pathStr) 方法用于规范化 pathStr，主要用于计算包含 `.`、`..`、`\\` 等相对说明符的`实际路径`
+
+```js
+import path from 'path'
+
+console.log(path.normalize('./index.js')) //'index.js'
+console.log(path.normalize('C:\\temp\\\\foo\\bar\\..\\')) //'C:\temp\foo\'
+```
+
+#### ⑥ 组装路径方法
+
+path.resolve(pathStr1,...) 返回构建后的绝对路径，给定的路径序列`从右到左`处理，每个后续 path 被追加到前面，直到构建成绝对路径，处理完所有路径序列后仍未构建成绝对路径，则会`附加当前工作目录的绝对路径`
+
+```js
+import path from 'path'
+
+// path.join
+console.log(path.join('/users', '999', 'test', '..'))   //'\users\999'
+console.log(path.join('../users', '999', 'test', '..')) //'..\users\999'
+console.log(path.join('./users', '999', 'test.html'))   //'users\999\test.html'
+
+// path.resolve
+console.log(path.resolve('./index.js'))       //'E:\Blog\demos\后端服务应用\Node\ES6 modules\index.js'
+console.log(path.resolve('/a', 'index.js'))   //'E:\a\index.js'
+console.log(path.resolve('../a', 'index.js')) //'E:\Blog\demos\后端服务应用\Node\a\index.js'
+console.log(path.resolve('./a', 'index.js'))  //'E:\Blog\demos\后端服务应用\Node\ES6 modules\a\index.js'
+```
+
+## 2. fs 模块
 
 ### (1) 文件权限位 mode
 
-fs 模块对文件进行操作涉及到`文件操作权限`，文件操作权限分为读、写、执行、无权限 4 种类型，fs 模块针对 3 类用户分配权限：`文件所有者（自己）、文件所属组（家人）、其他用户（陌生人）`
+fs 模块对文件进行操作涉及到`文件操作权限`，fs 模块针对 3 类用户分配权限：`文件所有者（自己）、文件所属组（家人）、其他用户（陌生人）`，文件操作权限分为以下 8 种类型
 
 |数字表示（八进制）|描述|
 |:-:|:-:|
@@ -28,18 +155,18 @@ fs 模块对文件进行操作涉及到`文件操作权限`，文件操作权限
 文件标识符代表对文件的操作方式，如下图所示
 
 |符号|含义|
-|----|---|
-|r|读取文件，文件不存在则抛出异常|
-|r+|读取并写入文件，文件不存在则抛出异常，存在则追加写入|
-|rs|读取并写入文件，文件不存在则抛出异常，存在则追加写入，绕开本地文件系统缓存|
-|w|写入文件，文件不存在则新建，存在则清空后写入|
-|wx|类似 w，排他方式打开|
-|w+|读取并写入文件，文件不存在则新建，存在则清空后写入|
-|wx+|类似 w+，排他方式打开|
-|a|追加写入文件，文件不存在则新建|
-|ax|类似 a，排他方式打开|
-|a+|读取并追加写入文件，文件不存在则新建|
-|ax+|类似 a+，排他方式打开|
+|---|---|
+|r  |只读文件，文件不存在则抛出异常|
+|r+ |读写文件，文件不存在则抛出异常，存在则追加写入|
+|rs |读写文件，文件不存在则抛出异常，存在则追加写入，绕开本地文件系统缓存|
+|w  |只写文件，文件不存在则新建，存在则清空后写入|
+|wx |只写文件，类似 w，排他方式打开|
+|w+ |读写文件，文件不存在则新建，存在则清空后写入|
+|wx+|读写文件，类似 w+，排他方式打开|
+|a  |写入文件，文件不存在则新建|
+|ax |写入文件，类似 a，排他方式打开|
+|a+ |读写文件，文件不存在则新建|
+|ax+|读写文件，类似 a+，排他方式打开|
 
 ### (3) 文件描述符 fd
 
@@ -65,8 +192,8 @@ Node 的文件系统模块 fs 提供了一组标准的文件操作 API，fs 模�
      fs.readdirSync(path,{encoding}) //返回指定目录下的成员数组,读取目录
      fs.readdir(path,{encoding},(err,data)=>{})
      文件操作：
-     fs.openSync(path,flag,mode)                //无返回值,打开文件
-     fs.open(path,flag,mode,(err,fd)=>{})
+     fs.openSync(path,flag,mode)                //返回文件描述符,打开文件
+     fs.open(path,flag,mode,(err,fd)=>{})       //无返回值,打开文件
      fs.closeSync(fd)                           //无返回值,关闭文件 描述符？
      fs.close(fd,err=>{})    
      fs.unlinkSync(path)                        //无返回值,删除文件
@@ -132,9 +259,10 @@ Node 的文件系统模块 fs 提供了一组标准的文件操作 API，fs 模�
      
      fs.lchmodSync(path,mode)
      fs.lchmod(path,mode,cb)
-     
-     fs.statSync(path)
-     fs.stat(path,cb)
+     文件属性：
+     fs.statSync(path) //返回文件属性,检查文件详细信息
+     fs.stat(path,(err,stats)=>{})  //无返回值,检查文件详细信息
+
      fs.lstatSync(path)
      fs.lstat(path,cb)
      fs.lutimesSync()
@@ -174,4 +302,4 @@ Node 的文件系统模块 fs 提供了一组标准的文件操作 API，fs 模�
 
 ```
 
-## 2. path 模块
+①②③④⑤⑥⑦⑧⑨⑩
