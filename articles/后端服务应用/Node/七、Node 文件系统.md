@@ -131,175 +131,274 @@ console.log(path.resolve('./a', 'index.js'))  //'E:\Blog\demos\后端服务应�
 
 ### (1) 文件权限位 mode
 
-fs 模块对文件进行操作涉及到`文件操作权限`，fs 模块针对 3 类用户分配权限：`文件所有者（自己）、文件所属组（家人）、其他用户（陌生人）`，文件操作权限分为以下 8 种类型
+文件权限位 mode 表示`对文件的访问权限`，fs 模块对文件进行操作涉及到的`文件操作权限`如下所示
 
-|数字表示（八进制）|描述|
+|八进制数字|描述|
 |:-:|:-:|
-|0|无权限|
-|1|只可执行|
-|2|只写|
-|3|可执行、可写|
+|7|可写、可读、可执行|
+|6|可写、可读|
+|5|可读、可执行|
 |4|只读|
-|5|可执行、可读|
-|6|可读、可写|
-|7|可执行、可读、可写|
+|3|可写、可执行|
+|2|只写|
+|1|只执行|
+|0|无权限|
 
-随便在一个目录下打开 git，使用 Linux 命令 ls -al 查看当前目录下文件夹和文件的权限位
+fs 模块针对以下 3 类用户分配权限，`Windows` 并没有实现三者之间权限的区别
 
-开头第一项代表权限，第 1 位代表类型，d 开头表示文件夹，- 开头表示文件，后面 9 位按每 3 位划分，依次表示文件所有者、文件所属组、其他用户的权限
+* 文件所有者（自己）
+* 文件所属组（家人）
+* 其他用户（陌生人）
 
-![文件权限位mode](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E4%BD%8Dmode.png)
+构建文件权限位 mode 的一种最简单方式是使用 `3 个八进制数字序列`，左边数字指定文件所有者权限，中间数字指定文件所属组权限，右边数字指定其他用户权限，例如八进制值 0o765 表示如下
 
-### (2) 文件标识位 flag
+* 文件所有者：可写、可读、可执行
+* 文件所属组：可写、可读
+* 其他用户：可读、可执行
 
-文件标识符代表对文件的操作方式，如下图所示
+### (2) 文件描述符 fd
 
-|符号|含义|
-|---|---|
-|r  |只读文件，文件不存在则抛出异常|
-|r+ |读写文件，文件不存在则抛出异常，存在则追加写入|
-|rs |读写文件，文件不存在则抛出异常，存在则追加写入，绕开本地文件系统缓存|
-|w  |只写文件，文件不存在则新建，存在则清空后写入|
-|wx |只写文件，类似 w，排他方式打开|
-|w+ |读写文件，文件不存在则新建，存在则清空后写入|
-|wx+|读写文件，类似 w+，排他方式打开|
-|a  |写入文件，文件不存在则新建|
-|ax |写入文件，类似 a，排他方式打开|
-|a+ |读写文件，文件不存在则新建|
-|ax+|读写文件，类似 a+，排他方式打开|
+POSIX 系统上对于每个进程，内部维护一个当前打开的文件表，每个打开的文件都分配一个简单的数字标识符，称为文件描述符，系统级上所有文件操作系统都使用文件描述符来识别和跟踪每个特定的文件，Windows 系统使用不同概念但相似的机制来跟踪文件
 
-### (3) 文件描述符 fd
+为了方便用户，Node 抽象了操作系统之间的差异，为每个打开的文件都分配了一个`数字文件描述符`，Node 每操作一个文件，文件描述符`递增`，一般从 `3` 开始，因为前面有 0 1 2 三个比较特殊的文件描述符，分别代表标准输入 process.stdin，标准输出 process.stdout，错误输出 process.stderr
 
-操作系统会为`每个打开的文件`分配一个文件描述符，文件操作使用文件描述符来`识别和追踪每个特定的文件`
+操作系统限制了在任何给定时间可能打开的文件描述符的数量，因此`操作完成时必须关闭文件描述符`，否则可能导致内存泄漏，最终导致 Node 应用程序崩溃
 
-Node 抽象了不同操作系统之间的差异，为所有打开的文件分配`数值`的文件描述符，Node 每操作一个文件，文件描述符`递增`，一般从 `3` 开始，因为前面有 0 1 2 三个比较特殊的描述符，分别代表`标准输入 process.stdin，标准输出 process.stdout，错误输出 process.stderr`
+### (3) fs API
 
-### (4) 文件 API
+Node 的文件系统模块 fs 提供了一组标准的文件操作 API，fs 模块的所有方法均有`同步`、`异步`、`Promise` 3 个版本，异步方法性能更高，速度更快，而且没有阻塞，建议使用异步版本
 
-Node 的文件系统模块 fs 提供了一组标准的文件操作 API，fs 模块的所有方法均有`同步`和`异步`两个版本，异步方法性能更高，速度更快，而且没有阻塞，建议使用异步版本
+Promise API 使用底层 Node 线程池在事件循环线程之外执行文件系统操作，这些操作不是线程安全的，对同一文件执行多个并发修改时必须小心，否则可能会损坏数据
 
 ```js
 定义：const fs = require('fs')
-方法：目录操作：
-     fs.accessSync(path)     //有操作权限时无返回值,无操作权限时返回Error对象,查看是否对指定目录具有操作权限
-     fs.access(path,err=>{})
-     fs.mkdirSync(path)      //无返回值,创建目录,传入路径不正确会抛出异常
-     fs.mkdir(path,err=>{})
-     fs.rmdirSync(path)      //无返回值,删除目录
-     fs.rmdir(path,err=>{})
-     fs.opendirSync() //
-     fs.opendir()
-     fs.readdirSync(path,{encoding}) //返回指定目录下的成员数组,读取目录
-     fs.readdir(path,{encoding},(err,data)=>{})
-     文件操作：
-     fs.openSync(path,flag,mode)                //返回文件描述符,打开文件
-     fs.open(path,flag,mode,(err,fd)=>{})       //无返回值,打开文件
-     fs.closeSync(fd)                           //无返回值,关闭文件 描述符？
-     fs.close(fd,err=>{})    
-     fs.unlinkSync(path)                        //无返回值,删除文件
-     fs.unlink(path,err=>{})
-     文件权限：
-     fs.fchmodSync(fd,mode) //无返回值,设置文件权限
-     fs.fchmod(fd,mode,err=>{})
-     fs.chmodSync((path,mode)     //无返回值,修改文件权限
-     fs.chmod((path,mode,err=>{})
-     文件所有者：
-     fs.fchownSync(fs,uid,gid) //无返回值,设置文件所有者
-     fs.fchown(fs,uid,gid,err=>{})
-     fs.chownSync(path,uid,gid)    //无返回值,更改文件的所有者和群组
-     fs.chown(path,uid,gid,err=>{})
-
-     fs.fdatasyncSync(fd) //无返回值,将与文件关联的所有当前排队的 I/O 操作强制为操作系统的同步 I/O 完成状态
-     fs.fdatasync(fd,err=>{})
-
-     fs.fsyncSync(fd) //无返回值,同步磁盘缓存
-     fs.fsync(fd,err=>{}) //无返回值,同步磁盘缓存
-                        
-     文件单次读写：
-     fs.readFileSync(path,{encoding,flag})                 //返回文件内容,读取文件
-     fs.readFile(path,{encoding,flag},(err,data)=>{})          
-     fs.writeFileSync(path,data,{encoding,flag,mode})      //无返回值,写入文件
-     fs.writeFile(path,data,{encoding,flag:w,mode},err=>{})  
-     fs.appendFileSync(path,data,{encoding,flag,mode})     //无返回值,追加写入文件
-     fs.appendFile(path,data,{encoding,flag,mode},err=>{}) 
-     fs.copyFileSync(srcpath,dstpath)                      //返回文件内容,拷贝写入文件,目标文件不存在则新建并拷贝
-     fs.copyFile(srcpath,dstpath,(err,data)=>{})        
-     fs.readlinkSync(path,{encoding}) //返回path引用的符号路径的内容
-     fs.readlink(path,{encoding},(err,linkString)=>{})                  
-     文件多次读写：
-     fs.readSync(fd,buffer,offset,length,position) //返回文件内容,将无法一次性读取全部内容的大文件分多次读取到buffer
-     fs.read(fd,buffer,offset,length,position,(err,bytesRead,buffer)=>{}) //offset:向buffer写入的初始位置,length:读取文件的长度,position:读取文件的初始位置,bytesRead:实际读取的字节数
-     fs.writeSync(fd,buffer,offset,length,position) //无返回值,将无法一次性写入全部内容的buffer分多次写入文件
-     fs.write(fd,buffer,offset,length,position,(err,bytesWritten,buffer)=>{}) //offset:从buffer读取的初始位置,length:读取buffer的字节数,position:写入文件初始位置,bytesWritten:实际写入的字节数
-     文件二进制视图读写：
-     fs.readvSync(fd,buffer,position)                            //返回文件内容,读取指定文件并写入ArrayBufferView数组
-     fs.readv(fd,buffer,position,(err,bytesRead,buffer)=>{})     
-     fs.writevSync(fd,buffer,position)                           //
-     fs.writev(fd,buffer,position,(err,bytesWritten,buffer)=>{}) 
-     
-     同步异步：
-
-     fs.realpathSync(path,{encoding}) //
-     fs.realpath(path,{encoding},(err,resolvedPath)=>{})
-     
-     fs.renameSync()
-     fs.rename(oldPath,newPath,cb)
-     
-     fs.existsSync()
-     fs.exists()
-     fs.ftruncateSync(fd,len)
-     fs.ftruncate(fd,len,cb)
-     fs.truncateSync(path,len)
-     fs.truncate(path,len,cb)
-     
-     
-     fs.lchownSync(path,mode)
-     fs.lchown(path,mode,cb)
-     
-     
-     fs.lchmodSync(path,mode)
-     fs.lchmod(path,mode,cb)
-     文件属性：
-     fs.statSync(path) //返回文件属性,检查文件详细信息
-     fs.stat(path,(err,stats)=>{})  //无返回值,检查文件详细信息
-
-     fs.lstatSync(path)
-     fs.lstat(path,cb)
-     fs.lutimesSync()
-     fs.lutimes()
-     fs.fstatSync(fd)
-     fs.fstat(fd,cb)
-     fs.linkSync(srcpath,dstpath)
-     fs.link(srcpath,dstpath,cb)
-     fs.symlinkSync(srcpath,dstpath,type)
-     fs.symlink(srcpath,dstpath,type,cb)
-     
-     fs.unlinkSync(path)
-     fs.unlink(path,cb)
+方法：文件夹或文件属性：
+     fs.stat(path,(err,stats)=>{})            //返回并检查指定路径文件夹或文件的属性
+     fs.statSync(path) 
+     fs.fstat(fd,[options],(err,stats)=>{})   //返回并检查指定文件描述符对应文件的属性
+     fs.fstatSync(fd,[options])
+     fs.lstat(path,[options],(err,stats)=>{}) //
+     fs.lstatSync(path,[options])
+     fs.utimes(path,atime,mtime,err=>{})      //无返回值,修改指定路径文件的atime和mtime
      fs.utimesSync(path,atime,mtime)
-     fs.utimes(path,atime,mtime,cb)
+     fs.lutimes(path,atime,mtime,err=>{})     //无返回值,修改指定路径文件的atime和mtime
+     fs.lutimesSync(path,atime,mtime)
+     fs.fchown(fs,uid,gid,err=>{})            //无返回值,设置文件所有者
+     fs.fchownSync(fs,uid,gid) 
+     fs.chown(path,uid,gid,err=>{})           //无返回值,更改文件的所有者和群组
+     fs.chownSync(path,uid,gid) 
+     fs.futimes(fd,atime,mtime,err=>{})       //无返回值,更改指定文件描述符对应文件的atime和mtime
      fs.futimesSync(fd,atime,mtime)
-     fs.futimes(fd,atime,mtime,cb)
-     fs.mkdtempSync()
-     fs.mkdtemp()
-     Stream 方法：
-     fs.createReadStream()
-     fs.createWriteStream()
+     fs.fchmod(fd,mode,err=>{})               //无返回值,设置文件权限
+     fs.fchmodSync(fd,mode) 
+     fs.chmod((path,mode,err=>{})             //无返回值,修改文件权限
+     fs.chmodSync((path,mode)     
+     文件夹方法：
+     fs.opendir(path,[options],(err,dir)=>{})   //返回并打开指定路径文件夹
+     fs.opendirSync(path,[options]) 
+     fs.mkdir(path,[options],err=>{})           //无返回值,创建指定路径文件夹
+     fs.mkdirSync(path,[options])      
+     fs.mkdtemp(prefix,[options],(err,dir)=>{}) //返回并创建唯一临时文件夹
+     fs.mkdtempSync(prefix,[options])
+     fs.rmdir(path,[options],err=>{})           //无返回值,删除指定路径文件夹
+     fs.rmdirSync(path,[options])      
+     fs.readdir(path,[options],(err,data)=>{})  //返回并读取指定路径文件夹的全部内容的相对路径
+     fs.readdirSync(path,[options])
+     文件夹&文件公共方法
+     fs.access(path,[mode],err=>{})     //无返回值,查看指定路径文件夹或文件是否存在且是否具有访问权限
+     fs.accessSync(path,[mode]) 
+     fs.rename(oldPath,newPath,err=>{}) //无返回值,重命名指定路径文件夹或文件
+     fs.renameSync(oldPath,newPath)
+     fs.rm(path,[options],err=>{})      //无返回值,删除指定路径文件夹或文件(默认不递归)
+     fs.rmSync(path,[options])
+     文件方法：
+     fs.open(path,[flag],[mode],(err,fd)=>{}) //返回文件描述符,打开指定路径文件
+     fs.openSync(path,[flag],[mode])                
+     fs.close(fd,err=>{})                     //无返回值,关闭指定文件描述符
+     fs.closeSync(fd)             
+     fs.ftruncate(fd,[len],err=>{})           //无返回值,截断文件描述符为指定字节长度
+     fs.ftruncateSync(fd,[len])              
+     fs.truncate(path,len,err=>{})            //无返回值,截断文件至指定字节长度len
+     fs.truncateSync(path,len)     
+     读取文件：
+     fs.readFile(path,[options],(err,data)=>{})                 //返回并读取指定路径文件内容
+     fs.readFileSync(path,[options])        
+     fs.read(fd,[{buf,offset,len,pos}],(err,bytesRead,buf)=>{}) //返回读取字节数及内部缓冲,从指定文件描述符对应文件的位置pos开始读取len字节到内部缓冲buf的偏移offset处
+     fs.readSync(fd,buf,offset,len,pos)        
+     fs.readv(fd,bufs,[pos],(err,bytesRead,bufs)=>{})           //返回读取字节数及内部缓冲,从指定文件描述符对应文件的位置pos开始读取并存入ArrayBufferView数组
+     fs.readvSync(fd,buf,pos)      
+     写入文件：
+     fs.writeFile(path,data,[options],err=>{})                //无返回值,将数据写入指定路径文件的开头
+     fs.writeFileSync(path,data,[options])      
+     fs.appendFile(path,data,[options],err=>{})               //无返回值,将数据写入指定路径文件的末尾
+     fs.appendFileSync(path,data,[options])    
+     fs.copyFile(spath,dpath,[mode],err=>{})                  //无返回值,将源文件内容复制到目标文件,已存在则覆盖   
+     fs.copyFileSync(spath,dstpath)  
+     fs.write(fd,buf,offset,len,pos,(err,bytesWrite,buf)=>{}) //返回写入字节数及内部缓冲,从内部缓冲buf的偏移offset处写入len字节到指定文件描述符对应文件的位置pos处
+     fs.writeSync(fd,buf,offset,len,pos) 
+     fs.writev(fd,bufs,[pos],(err,bytesWrite,buf)=>{})        //
+     fs.writevSync(fd,buf,[pos])    
+     Stream API 方法：
+     fs.createReadStream(path,[options]) //返回只读流,读取指定路径文件
+     fs.createWriteStream(path,[options]) //返回只写流,写入指定路径文件
+     符号链接：
+     fs.link(spath,dpath,err=>{}) //无返回值,创建spath到dpath的链接
+     fs.linkSync(spath,dpath)
+     fs.symlink(dpath,spath,[type],err=>{}) //无返回值,创建spath到dpath的链接
+     fs.symlinkSync(dpath,spath,[type])
+     fs.unlink(path,err=>{}) //无返回值,删除指定路径文件或符号链接
+     fs.unlinkSync(path)
+     fs.readlink(path,[options],(err,linkStr)=>{})      //返回path引用的符号路径的内容
+     fs.readlinkSync(path,[options])
+     fs.realpath(path,[options],(err,resolvedPath)=>{}) //
+     fs.realpathSync(path,[options]) 
+     fs.lchown(path,uid,gid,err=>{}) //无返回值,设置符号链接的所有者
+     fs.lchownSync(path,uid,gid)
+     fs.unlink(path,err=>{})                  //无返回值,删除指定路径文件或符号链接
+     fs.unlinkSync(path)   
 
-     fs.Stats()
-     fs._toUnixTimestamp()
+     
+     文件监控：
+     fs.watch(path,[options],(et,path)=>{}) //监控指定路径文件夹或文件
+     fs.watchFile(path,[options],listner) //
+     fs.unwatchFile(path,[listener]) //无返回值,停止监控指定路径文件夹或文件
 
-     fs.watch()
-     fs.watchFile()
-     fs.unwatchFile()
+
+     fs.fdatasync(fd,err=>{}) //无返回值,将与文件关联的所有当前排队的 I/O 操作强制为操作系统的同步 I/O 完成状态
+     fs.fdatasyncSync(fd) 
+     fs.fsync(fd,err=>{}) //无返回值,同步磁盘缓存
+     fs.fsyncSync(fd) 
 ```
 
-### (5) stats 对象
-
-文件目录的 Stats 对象存储着关于这个文件夹或文件的一些重要信息，例如创建时间、最后一次访问时间、最后一次修改时间、文章所占字节、判断文件类型的多个方法等
+#### 文件属性
 
 ```js
 
 ```
+
+#### 
+
+在打开/读取/写入文件之前，不要使用 fs.access() 方法检查文件的可访问性，这样会引入竞争条件，其他进程可能会在 2 次调用之间修改文件状态，因此开发者代码应用直接打开/读取/写入文件，并处理无法访问文件时引发的错误，通常仅当文件不会被直接使用时才会检查文件的可访问性
+
+### (4) Stats 类（文件夹或文件属性）
+
+Stats 类表示`文件夹或文件属性`，存储着关于这个文件夹或文件的一些重要信息，例如创建时间、最后一次访问时间、最后一次修改时间、文章所占字节、判断文件类型的多个方法等
+
+```js
+定义：import fs from 'fs'
+     const stats = fs.stat(path,(err,stats)=>{})            
+     const stats = fs.statSync(path) 
+     const stats = fs.fstat(fd,[options],(err,stats)=>{})  
+     const stats = fs.fstatSync(fd,[options])
+     const stats = fs.lstat(path,[options],(err,stats)=>{})
+     const stats = fs.lstatSync(path,[options])
+属性：基本属性：
+     stats.uid                            //返回stats对应文件所有者标识符
+     stats.gid                            //返回stats对应文件所属组标识符
+     stats.mode                           //返回stats对应文件权限位
+     stats.size                           //返回stats对应文件字节大小
+     stats.blocks                         //返回stats对应文件被分配的块数
+     stats.nlink                          //返回stats对应文件存在的硬链接数
+     stats.rdev                           //返回设备标识符,若stats对应文件描述设备
+     stats.dev                            //返回设备标识符,包含stats对应文件的设备
+     stats.ino                            //返回stats对应文件的文件系统特定的索引节点编号
+     stats.blksize                        //返回IO操作的文件系统块大小
+     时间属性：
+     stats.birthtime                      //返回stats对应文件的创建时间
+     stats.atime                          //返回stats对应文件的最后一次访问时间
+     stats.mtime                          //返回stats对应文件的最后一次修改时间
+     stats.ctime                          //返回stats对应文件的最后一次更改文件状态时间
+     stats.birthtimeMs                    //返回stats对应文件的创建时间的时间戳
+     stats.atimeMs                        //返回stats对应文件的最后一次访问时间的时间戳
+     stats.mtimeMs                        //返回stats对应文件的最后一次修改时间的时间戳
+     stats.ctimeMs                        //返回stats对应文件的最后一次更改文件状态时间的时间戳
+方法：fs 模块方法：
+     fs.utimes(path,atime,mtime,err=>{})  //无返回值,修改指定路径文件的访问时间atime和修改时间mtime
+     fs.utimesSync(path,atime,mtime)
+     fs.lutimes(path,atime,mtime,err=>{}) //无返回值,修改指定路径文件的访问时间atime和修改时间mtime
+     fs.lutimesSync(path,atime,mtime)
+     fs.futimes(fd,atime,mtime,err=>{})   //无返回值,更改指定文件描述符对应文件的访问时间atime和修改时间mtime
+     fs.futimesSync(fd,atime,mtime)
+     fs.fchown(fs,uid,gid,err=>{})        //无返回值,设置文件所有者
+     fs.fchownSync(fs,uid,gid) 
+     fs.chown(path,uid,gid,err=>{})       //无返回值,更改文件的所有者和群组
+     fs.chownSync(path,uid,gid) 
+     fs.fchmod(fd,mode,err=>{})           //无返回值,设置文件权限
+     fs.fchmodSync(fd,mode) 
+     fs.chmod((path,mode,err=>{})         //无返回值,修改文件权限
+     fs.chmodSync((path,mode)  
+     stats 对象方法：
+     stats.isFile()                       //返回stats是否描述文件
+     stats.isDirectory()                  //返回stats是否描述文件夹
+     stats.isSymbolicLink()               //返回stats是否描述符号链接
+     stats.isBlockDevice()                //返回stats是否描述块设备
+     stats.isCharacterDevice()            //返回stats是否描述字符设备
+     stats.isFIFO()                       //返回stats是否描述先进先出管道(FIFO)
+     stats.isSocket()                     //返回stats是否描述套接字
+```
+
+实例
+
+```js
+import fs from 'fs'
+
+// 文件夹属性
+fs.stat('config', (err, stats) => {
+     if(err) throw err
+
+     console.log(stats.isDirectory()) //true
+     console.log(stats)
+     // Stats {
+     //   uid: 0,
+     //   gid: 0,
+     //   mode: 16822,
+     //   size: 0,
+     //   blocks: 0,
+     //   nlink: 1,
+     //   dev: 1723911979,
+     //   rdev: 0,
+     //   ino: 562949955908703,
+     //   blksize: 4096,
+     //   birthtime: 2021-09-04T16:29:13.478Z,
+     //   atime: 2021-09-09T08:11:09.031Z,
+     //   mtime: 2021-09-04T16:29:13.478Z,
+     //   ctime: 2021-09-04T16:29:13.478Z,
+     //   birthtimeMs: 1630772953478.4983,
+     //   atimeMs: 1631175069031.3035,
+     //   mtimeMs: 1630772953478.4983,
+     //   ctimeMs: 1630772953478.4983 
+     // }
+})
+
+// 文件属性
+fs.stat('input.txt', (err, stats) => {
+     if(err) throw err
+    
+     console.log(stats.isFile()) //true
+     console.log(stats)
+     // Stats {
+     //   uid: 0,
+     //   gid: 0,
+     //   mode: 33206,
+     //   size: 29,
+     //   blocks: 0,
+     //   nlink: 1,
+     //   dev: 1723911979,
+     //   rdev: 0,
+     //   ino: 562949955908711,
+     //   blksize: 4096,
+     //   birthtime: 2021-09-04T16:29:13.478Z,
+     //   atime: 2021-09-09T06:02:52.858Z,
+     //   mtime: 2021-09-09T03:29:08.788Z,
+     //   ctime: 2021-09-09T03:29:08.788Z,
+     //   birthtimeMs: 1630772953478.4983,
+     //   atimeMs: 1631167372857.9207,
+     //   mtimeMs: 1631158148787.9668,
+     //   ctimeMs: 1631158148787.9668
+     // }
+})
+```
+
+### (5) 
 
 ①②③④⑤⑥⑦⑧⑨⑩
