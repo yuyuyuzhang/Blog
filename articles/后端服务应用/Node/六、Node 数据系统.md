@@ -817,7 +817,7 @@ TypedArray 视图包括如下 9 种类型
 
 Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8Array 类的`子类`，Node 在支持 buffer 的地方也支持普通的 Uint8Array
 
-### (3) Buffer 类
+### (3) buffer.Buffer 类
 
 Node Buffer 类是 ES6 Uint8Array 类、TypedArray 类的子类，因此所有 ES6 TypedArray 方法都可以在 Node buffer 上使用，但是 Node buffer API 与 ES6 TypedArray API 存在`细微的不兼容`
 
@@ -1075,7 +1075,7 @@ console.log(buf5) //buf5 <Buffer 08 07 06 05 04 03 02 01>
 console.log(buf6) //buf6 抛出 ERR_INVALID_BUFFER_SIZE 异常
 ```
 
-### (4) Blob 类
+### (4) buffer.Blob 类
 
 Node Buffer 类用来`操作内存`，Node Blob 类用来`操作二进制文件`
 

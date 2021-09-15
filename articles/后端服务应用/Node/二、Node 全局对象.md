@@ -95,7 +95,7 @@ clearImmediate()
 
 事件触发机制
 
-http http2 https dgram dns tls net url
+http http2 https dgram dns tls net
 process child_process cluster worker_threads
 os v8 vm tty
 intl

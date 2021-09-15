@@ -172,42 +172,22 @@ Promise API 使用底层 Node 线程池在事件循环线程之外执行文件�
 
 ```js
 定义：const fs = require('fs')
-方法：文件夹或文件属性：
-     fs.stat(path,(err,stats)=>{})            //返回并检查指定路径文件夹或文件的属性
-     fs.statSync(path) 
-     fs.fstat(fd,[options],(err,stats)=>{})   //返回并检查指定文件描述符对应文件的属性
-     fs.fstatSync(fd,[options])
-     fs.utimes(path,atime,mtime,err=>{})      //无返回值,修改指定路径文件的atime和mtime
-     fs.utimesSync(path,atime,mtime)
-     fs.lutimes(path,atime,mtime,err=>{})     //无返回值,修改指定路径文件的atime和mtime
-     fs.lutimesSync(path,atime,mtime)
-     fs.fchown(fs,uid,gid,err=>{})            //无返回值,设置文件所有者
-     fs.fchownSync(fs,uid,gid) 
-     fs.chown(path,uid,gid,err=>{})           //无返回值,更改文件的所有者和群组
-     fs.chownSync(path,uid,gid) 
-     fs.futimes(fd,atime,mtime,err=>{})       //无返回值,更改指定文件描述符对应文件的atime和mtime
-     fs.futimesSync(fd,atime,mtime)
-     fs.fchmod(fd,mode,err=>{})               //无返回值,设置文件权限
-     fs.fchmodSync(fd,mode) 
-     fs.chmod((path,mode,err=>{})             //无返回值,修改文件权限
-     fs.chmodSync((path,mode)     
-     文件夹方法：
-     fs.opendir(path,[options],(err,dir)=>{})   //返回并打开指定路径文件夹
-     fs.opendirSync(path,[options]) 
-     fs.mkdir(path,[options],err=>{})           //无返回值,创建指定路径文件夹
-     fs.mkdirSync(path,[options])      
-     fs.mkdtemp(prefix,[options],(err,dir)=>{}) //返回并创建唯一临时文件夹
-     fs.mkdtempSync(prefix,[options])
-     fs.rmdir(path,[options],err=>{})           //无返回值,删除指定路径文件夹
-     fs.rmdirSync(path,[options])      
-     fs.readdir(path,[options],(err,data)=>{})  //返回并读取指定路径文件夹的全部内容的相对路径
-     fs.readdirSync(path,[options])
-     文件夹&文件公共方法
-     fs.access(path,[mode],err=>{})     //无返回值,查看指定路径文件夹或文件是否存在且是否具有访问权限
-     fs.accessSync(path,[mode]) 
-     fs.rename(oldPath,newPath,err=>{}) //无返回值,重命名指定路径文件夹或文件
-     fs.renameSync(oldPath,newPath)
-     文件方法：
+方法：硬链接：
+     fs.link(spath,dpath,err=>{})                       //无返回值,创建spath到dpath的硬链接
+     fs.linkSync(spath,dpath)
+     符号链接：
+     fs.symlink(spath,dpath,[type],err=>{})             //无返回值,创建spath到dpath的符号链接
+     fs.symlinkSync(spath,dpath,[type])
+     fs.readlink(path,[options],(err,linkStr)=>{})      //返回指定路径符号链接的内容
+     fs.readlinkSync(path,[options])
+     硬链接&符号链接公共方法
+     fs.lstat(path,[options],(err,stats)=>{})           //返回指定路径硬链接或符号链接的属性
+     fs.lstatSync(path,[options])
+     fs.lchown(path,uid,gid,err=>{})                    //无返回值,设置指定路径硬链接或符号链接的所有者
+     fs.lchownSync(path,uid,gid)  
+     fs.unlink(path,err=>{})                            //无返回值,删除指定路径硬链接或符号链接
+     fs.unlinkSync(path) 
+     文件操作：
      fs.open(path,[flag],[mode],(err,fd)=>{}) //返回文件描述符,打开指定路径文件
      fs.openSync(path,[flag],[mode])               
      fs.rm(path,[options],err=>{})            //无返回值,删除指定路径文件
@@ -243,28 +223,142 @@ Promise API 使用底层 Node 线程池在事件循环线程之外执行文件�
      Stream API 方法：
      fs.createReadStream(path,[options])  //返回只读流,读取指定路径文件
      fs.createWriteStream(path,[options]) //返回只写流,写入指定路径文件
-     文件监控：
+     文件夹操作：
+     fs.opendir(path,[options],(err,dir)=>{})   //返回并打开指定路径文件夹
+     fs.opendirSync(path,[options]) 
+     fs.mkdir(path,[options],err=>{})           //无返回值,创建指定路径文件夹
+     fs.mkdirSync(path,[options])      
+     fs.mkdtemp(prefix,[options],(err,dir)=>{}) //返回并创建唯一临时文件夹
+     fs.mkdtempSync(prefix,[options])
+     fs.rmdir(path,[options],err=>{})           //无返回值,删除指定路径文件夹
+     fs.rmdirSync(path,[options])      
+     fs.readdir(path,[options],(err,data)=>{})  //返回并读取指定路径文件夹的全部内容的相对路径
+     fs.readdirSync(path,[options])
+     文件&文件夹公共操作：
+     fs.access(path,[mode],err=>{})     //无返回值,查看指定路径文件夹或文件是否存在且是否具有访问权限
+     fs.accessSync(path,[mode]) 
+     fs.rename(oldPath,newPath,err=>{}) //无返回值,重命名指定路径文件夹或文件
+     fs.renameSync(oldPath,newPath)
+     文件&文件夹属性：
+     fs.stat(path,(err,stats)=>{})            //返回并检查指定路径文件夹或文件的属性
+     fs.statSync(path) 
+     fs.fstat(fd,[options],(err,stats)=>{})   //返回并检查指定文件描述符对应文件的属性
+     fs.fstatSync(fd,[options])
+     fs.utimes(path,atime,mtime,err=>{})      //无返回值,修改指定路径文件的atime和mtime
+     fs.utimesSync(path,atime,mtime)
+     fs.lutimes(path,atime,mtime,err=>{})     //无返回值,修改指定路径文件的atime和mtime
+     fs.lutimesSync(path,atime,mtime)
+     fs.fchown(fs,uid,gid,err=>{})            //无返回值,设置文件所有者
+     fs.fchownSync(fs,uid,gid) 
+     fs.chown(path,uid,gid,err=>{})           //无返回值,更改文件的所有者和群组
+     fs.chownSync(path,uid,gid) 
+     fs.futimes(fd,atime,mtime,err=>{})       //无返回值,更改指定文件描述符对应文件的atime和mtime
+     fs.futimesSync(fd,atime,mtime)
+     fs.fchmod(fd,mode,err=>{})               //无返回值,设置文件权限
+     fs.fchmodSync(fd,mode) 
+     fs.chmod((path,mode,err=>{})             //无返回值,修改文件权限
+     fs.chmodSync((path,mode)    
+     文件&文件夹监控：
      fs.watch(path,[options],(et,path)=>{}) //返回FSWatcher实例,监控指定路径文件夹或文件
      fs.watchFile(path,[options],listner)   //返回StatWatcher实例,监听指定路径文件
      fs.unwatchFile(path,[listener])        //无返回值,停止监控指定路径文件夹或文件
-     硬链接：
-     fs.link(spath,dpath,err=>{})                       //无返回值,创建spath到dpath的硬链接
-     fs.linkSync(spath,dpath)
-     符号链接：
-     fs.symlink(spath,dpath,[type],err=>{})             //无返回值,创建spath到dpath的符号链接
-     fs.symlinkSync(spath,dpath,[type])
-     fs.readlink(path,[options],(err,linkStr)=>{})      //返回指定路径符号链接的内容
-     fs.readlinkSync(path,[options])
-     硬链接&符号链接公共方法
-     fs.lstat(path,[options],(err,stats)=>{})           //返回指定路径硬链接或符号链接的属性
-     fs.lstatSync(path,[options])
-     fs.lchown(path,uid,gid,err=>{})                    //无返回值,设置指定路径硬链接或符号链接的所有者
-     fs.lchownSync(path,uid,gid)  
-     fs.unlink(path,err=>{})                            //无返回值,删除指定路径硬链接或符号链接
-     fs.unlinkSync(path)
 ```
 
-### (4) Dir 类、Dirent 类
+#### ① 链接文件
+
+fs 模块有关链接文件 API
+
+```js
+硬链接：
+fs.link(spath,dpath,err=>{})                  //无返回值,创建spath到dpath的硬链接
+fs.linkSync(spath,dpath)
+符号链接：
+fs.symlink(spath,dpath,[type],err=>{})        //无返回值,创建spath到dpath的符号链接
+fs.symlinkSync(dpath,spath,[type])
+fs.readlink(path,[options],(err,linkStr)=>{}) //返回指定路径符号链接的内容
+fs.readlinkSync(path,[options])
+硬链接&符号链接公共方法：
+fs.lstat(path,[options],(err,stats)=>{})      //返回指定路径硬链接或符号链接的属性
+fs.lstatSync(path,[options])
+fs.lchown(path,uid,gid,err=>{})               //无返回值,设置指定路径硬链接或符号链接的所有者
+fs.lchownSync(path,uid,gid)
+fs.unlink(path,err=>{})                       //无返回值,删除指定路径硬链接或符号链接
+fs.unlinkSync(path)
+```
+
+* **硬链接**：硬链接就是同一个文件的`不同文件名`，相当于创建文件副本
+  * 硬链接和源文件相互独立，可以各自操作，删除互不影响
+  * 删除符号链接不会影响源文件，删除源文件则符号链接会指向一个不存在的文件，无法再进行操作
+
+     ```js
+     fs.link('./input.txt', './link.txt', err => {
+     if(err) throw err
+
+     fs.lstat('./link.txt', (err, stat) => {
+          if(err) throw err
+          console.log(stat)
+     })
+     })
+     ```
+
+     ![link1]()
+
+     ![link2]()
+
+* **软链接/符号链接**：符号链接是一类`特殊文本文件`，仅包含一条`其他文件夹或文件`的`路径字符串`
+  * 对符号链接操作会转换成对源文件操作
+  * 删除符号链接不会影响源文件，删除源文件则符号链接会指向一个不存在的文件，无法再进行操作
+
+     ```js
+     fs.symlink('./input.txt', './symlink.txt', 'junction', err => {
+     if(err) throw err
+
+     fs.lstat('./symlink.txt', (err, stat) => {
+          if(err) throw err
+          console.log(stat)
+     })
+
+     fs.readlink('./symlink.txt', (err, linkStr) => {
+          if(err) throw err
+          console.log(linkStr) //'E:\Blog\demos\后端服务应用\Node\ES6 modules\input.txt\'
+     })
+     })
+     ```
+
+     ![symlink1]()
+
+     ![symlink2]()
+
+#### ② 文件的读取写入
+
+在`打开/读取/写入`文件之前，不要使用 fs.access() 方法检查文件的可访问性，这样会引入竞争条件，其他进程可能会在 2 次调用之间修改文件状态，因此开发者代码应该直接打开/读取/写入文件，并处理无法访问文件时引发的错误，通常仅当文件不会被直接使用时才会检查文件的可访问性
+
+```js
+fs.readFile('./input.txt', (err, data) => {
+    if(err) throw err
+
+    fs.writeFile('./output1.txt', data, err => {
+        if(err) throw err
+    })
+})
+```
+
+![readFile_writeFile]()
+
+Stream API
+
+```js
+import fs from 'fs'
+import zlib from 'zlib'
+
+fs.createReadStream('./input.txt')
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream('output.gz'))
+```
+
+![zlib管道API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E7%AE%A1%E9%81%93API.png)
+
+### (4) fs.Dir 类、fs.Dirent 类
 
 Dir 类表示`文件夹`
 
@@ -360,7 +454,7 @@ fs.mkdir('./testDir/dir1', err => {
 })
 ```
 
-### (5) Stats 类
+### (5) fs.Stats 类
 
 Stats 类表示`文件夹或文件属性`，存储着关于这个文件夹或文件的一些重要信息，例如创建时间、最后一次访问时间、最后一次修改时间、文章所占字节、判断文件类型的多个方法等
 
@@ -477,7 +571,7 @@ fs.stat('input.txt', (err, stats) => {
 })
 ```
 
-### (6) FSWatcher 类
+### (6) fs.FSWatcher 类
 
 FSWatcher 类表示`文件夹或文件监听器`
 
@@ -501,97 +595,3 @@ StatWatcher 类表示`文件夹或文件属性监听器`
 方法：statW.ref()   //
      statW.unref() //
 ```
-
-### (7) 文件的读取写入
-
-在`打开/读取/写入`文件之前，不要使用 fs.access() 方法检查文件的可访问性，这样会引入竞争条件，其他进程可能会在 2 次调用之间修改文件状态，因此开发者代码应该直接打开/读取/写入文件，并处理无法访问文件时引发的错误，通常仅当文件不会被直接使用时才会检查文件的可访问性
-
-```js
-fs.readFile('./input.txt', (err, data) => {
-    if(err) throw err
-
-    fs.writeFile('./output1.txt', data, err => {
-        if(err) throw err
-    })
-})
-```
-
-![readFile_writeFile]()
-
-Stream API
-
-```js
-import fs from 'fs'
-import zlib from 'zlib'
-
-fs.createReadStream('./input.txt')
-  .pipe(zlib.createGzip())
-  .pipe(fs.createWriteStream('output.gz'))
-```
-
-![zlib管道API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E7%AE%A1%E9%81%93API.png)
-
-### (8) 链接文件
-
-fs 模块有关链接文件 API
-
-```js
-硬链接：
-fs.link(spath,dpath,err=>{})                  //无返回值,创建spath到dpath的硬链接
-fs.linkSync(spath,dpath)
-符号链接：
-fs.symlink(spath,dpath,[type],err=>{})        //无返回值,创建spath到dpath的符号链接
-fs.symlinkSync(dpath,spath,[type])
-fs.readlink(path,[options],(err,linkStr)=>{}) //返回指定路径符号链接的内容
-fs.readlinkSync(path,[options])
-硬链接&符号链接公共方法：
-fs.lstat(path,[options],(err,stats)=>{})      //返回指定路径硬链接或符号链接的属性
-fs.lstatSync(path,[options])
-fs.lchown(path,uid,gid,err=>{})               //无返回值,设置指定路径硬链接或符号链接的所有者
-fs.lchownSync(path,uid,gid)
-fs.unlink(path,err=>{})                       //无返回值,删除指定路径硬链接或符号链接
-fs.unlinkSync(path)
-```
-
-* **硬链接**：硬链接就是同一个文件的`不同文件名`，相当于创建文件副本
-  * 硬链接和源文件相互独立，可以各自操作，删除互不影响
-  * 删除符号链接不会影响源文件，删除源文件则符号链接会指向一个不存在的文件，无法再进行操作
-
-     ```js
-     fs.link('./input.txt', './link.txt', err => {
-     if(err) throw err
-
-     fs.lstat('./link.txt', (err, stat) => {
-          if(err) throw err
-          console.log(stat)
-     })
-     })
-     ```
-
-     ![link1]()
-
-     ![link2]()
-
-* **软链接/符号链接**：符号链接是一类`特殊文本文件`，仅包含一条`其他文件夹或文件`的`路径字符串`
-  * 对符号链接操作会转换成对源文件操作
-  * 删除符号链接不会影响源文件，删除源文件则符号链接会指向一个不存在的文件，无法再进行操作
-
-     ```js
-     fs.symlink('./input.txt', './symlink.txt', 'junction', err => {
-     if(err) throw err
-
-     fs.lstat('./symlink.txt', (err, stat) => {
-          if(err) throw err
-          console.log(stat)
-     })
-
-     fs.readlink('./symlink.txt', (err, linkStr) => {
-          if(err) throw err
-          console.log(linkStr) //'E:\Blog\demos\后端服务应用\Node\ES6 modules\input.txt\'
-     })
-     })
-     ```
-
-     ![symlink1]()
-
-     ![symlink2]()

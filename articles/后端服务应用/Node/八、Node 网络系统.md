@@ -19,7 +19,7 @@ WHATWG 网址标准的`特殊协议方案`有如下 6 种，WHATWG 网址标准�
 |file||
 |ftp|21|
 
-### (2) URL 类
+### (2) url.URL 类
 
 ```js
 定义：import { URL } from 'url'
@@ -115,7 +115,7 @@ console.log(urlObj)
 // }
 ```
 
-### (3) URLSearchParams 类
+### (3) url.URLSearchParams 类
 
 URLSearchParams 类表示 `URL 的查询字符串`，用来构造、解析、处理 URL 的查询字符串
 
@@ -174,6 +174,24 @@ for(let item of urlSearch.entries()){
 }
 ```
 
-## 2. 
+## 2. http 模块
+
+### (1) http 模块
+
+为了支持所有可能的 HTTP 应用程序，Node http 模块是非常底层的，只进行流处理和消息解析，将消息解析为标头和正文，但不解析实际的标头和正文
+
+### (2) http API
+
+### (3) http.
+
+## 3. https 模块
+
+## 4. http2 模块
+
+## 5. dns 模块
+
+## 6. net 模块
+
+## 7. tls 模块
 
 ①②③④⑤⑥⑦⑧⑨⑩
