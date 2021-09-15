@@ -190,7 +190,7 @@ Node EventTarget 没有事件传播的概念，调度到 Node EventTarget 的事
      e.cancelable                      //返回e创建时是否使用cancelable选项
      e.target/currentTarget/srcElement //返回触发事件e的EventTarget实例
      e.defaultPrevented                //返回是否e.cancelable=ture且e.preventDefault()被调用
-     e.isTrusted                       //返回或设置是否触发abort事件
+     e.isTrusted                       //返回/设置是否触发abort事件
 方法：e.preventDefault()                //无返回值,当e.cancelable=true则设置e.defaultPrevented=true
      e.stopImmediatePropagation()      //无返回值,当前事件监听器完成后停止调用
 ```

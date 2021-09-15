@@ -2,7 +2,24 @@
 
 ## 1. URL 对象
 
-### (1) URL 编码
+### (1) URL 对象
+
+URL 全称统一资源定位符，又称网页地址（全球性），用于定位浏览器中显示的网页资源，浏览器使用 `WHATWG 网址标准`
+
+![url]()
+
+WHATWG 网址标准的`特殊协议方案`有如下 6 种，WHATWG 网址标准认为特殊协议在解析和序列化方面具有特殊性，不能通过 url.protocol 属性将特殊协议更改为非特殊协议，或将非特殊协议更改为特殊协议，6 种特殊协议的默认端口如下
+
+|协议|端口|
+|:---|:--|
+|http|80|
+|https|443|
+|ws|80|
+|wss|443|
+|file||
+|ftp|21|
+
+### (2) URL 编码
 
 #### ① URL 合法字符
 
@@ -42,24 +59,22 @@ console.log(encodeURI(url));          //"http://www.b.com%20#%E5%93%88"
 console.log(encodeURIComponent(url)); //"http%3A%2F%2Fwww.b.com%20%23%E5%93%88"
 ```
 
-### (2) URL 对象
-
-URL 全称统一资源定位符，又称网页地址 ( 全球性 )，用于定位浏览器中显示的网页资源
+### (3) URL API
 
 ```js
 定义：const url = new URL(urlStr);
-属性：url.href         //完整URL
-     url.origin       //源(协议、主机、端口)
-     url.protocol     //协议(包含:)
-     url.host         //主机、端口
-     url.hostname     //主机
-     url.port         //端口
-     url.pathname     //URL路径
-     url.search       //查询字符串(从?开始)
-     url.hash         //片段识别符(从#开始)
-     用户信息：
-     url.username     //用户名
-     url.password     //密码
+属性：url.href                  //返回/设置完整 URL
+     url.origin                //返回源(协议、主机、端口)
+     url.protocol              //返回/设置协议(包含:)
+     url.username              //返回/设置用户名
+     url.password              //返回/设置密码
+     url.host                  //返回/设置主机、端口
+     url.hostname              //返回/设置主机
+     url.port                  //返回/设置端口
+     url.pathname              //返回/设置 URL 路径
+     url.search                //返回/设置查询字符串(从?开始)
+     url.searchParams          //返回 URLSearchParams 对象
+     url.hash                  //返回/设置片段识别符(从#开始)
 方法：构造函数方法：
      URL.createObjectURL(file) //返回一个URL字符串,为上传/下载的文件、流媒体文件生成一个URL字符串,给File对象、Blob对象使用
      URL.revokeObjectURL(url)  //无返回值,释放浏览器内存中由URL.createObjectURL()方法生成的URL实例
@@ -85,7 +100,7 @@ console.log(url.username); //"user"
 console.log(url.password); //"passwd"
 ```
 
-#### ② URL 对象方法
+#### ② URL 对象静态方法
 
 ```js
 //通过文件流下载文件
@@ -108,13 +123,15 @@ request({
 })
 ```
 
-## 2. URL 查询字符串
+## 2. URLSearchParams 对象
 
 ### (1) URL 查询字符串
 
+URLSearchParams 对象表示 `URL 的查询字符串`，用来构造、解析、处理 URL 的查询字符串
+
 #### ① 原理
 
-查询字符串就是 URL 参数，添加在 URL 末尾的用于向服务器发送信息的字符串（键值对）
+查询字符串就是 `URL 参数`，添加在 URL 末尾的用于向服务器发送信息的字符串（键值对）
 
 #### ② 用途
 
@@ -128,19 +145,21 @@ http://www.example.com/tshirt.html
 http://www.example.com/tshirt.html?size=s
 ```
 
-### (2) URLSearchParams 对象
-
-URLSearchParams 对象表示  `URL 的查询字符串`，用来构造、解析、处理 URL 的查询字符串
+### (2) URLSearchParams API
 
 ```js
-定义：const urlSearch = new URLSearchParams(urlSearchStr); //自动编码
+定义：const urlSearch = url.searchParams
+     const urlSearch = new URLSearchParams()
+     const urlSearch = new URLSearchParams(urlSearchStr)
+     const urlSearch = new URLSearchParams(urlSearchObj)
+     const urlSearch = new URLSearchParams(iterable)
 方法：urlSearch.toString()        //返回urlSearch的字符串形式
      urlSearch.has(key)          //返回布尔值,是否包含指定键名的键值对
      urlSearch.get(key)          //返回指定键名的第一个键值
      urlSearch.getAll(key)       //返回指定键名的所有键值构成的数组
      urlSearch.set(key,value)    //无返回值,设置指定键名的键值
-     urlSearch.delete(key)       //无返回值,删除指定键名的键值对
      urlSearch.append(key,value) //无返回值,追加指定键名的键值(允许重复)
+     urlSearch.delete(key)       //无返回值,删除指定键名的键值对
      urlSearch.sort()            //无返回值,按照Unicode码点从小到大对键名排序
      遍历方法：
      urlSearch.keys()            //返回键名的遍历器
@@ -148,13 +167,12 @@ URLSearchParams 对象表示  `URL 的查询字符串`，用来构造、解析�
      urlSearch.entries()         //返回键值对的遍历器
 ```
 
-方法应用
+### (3) 实例
 
 ```js
 let urlSearch = new URLSearchParams({'f2': 2, 'f1': 1});
 urlSearch.append('f2', 3);
 console.log(urlSearch.toString());   //"f2=2&f1=1&f2=3"
-console.log(urlSearch.get('f1'));    //"1"
 console.log(urlSearch.get('f3'));    //null
 console.log(urlSearch.get('f2'));    //"2"
 console.log(urlSearch.getAll('f2')); //Array ["2", "3"]
@@ -222,7 +240,7 @@ Event对象相关属性如下
 e.state //返回浏览器History对象当前记录的state对象
 ```
 
-### (3) 用途
+### (2) 用途
 
 #### ① HTTP 请求不包括片段识别符
 
@@ -266,24 +284,26 @@ btn2.addEventListener('click', function(e){
 
 ## 4. Location 对象
 
+### (1) location API
+
 Location 对象表示`当前浏览器窗口加载的文档地址`
 
 ```js
 定义：window.location
-属性：location.href            //完整URL
-     location.origin          //源(协议、主机、端口)
-     location.protocol        //协议(包含:)
-     location.host            //主机、端口
-     location.hostname        //主机(服务器名+域名)
-     location.port            //端口
-     location.pathname        //URL路径
-     location.search          //查询字符串(从?开始)
-     location.hash            //片段识别符(从#开始)
-     用户信息：
-     location.username        //用户名
-     location.password        //密码
-     来源：
+属性：Location 属性：
      location.ancestorOrigins //返回当前浏览器窗口加载的文档的所有祖先来源
+     URL 属性：
+     location.href            //返回/设置完整 URL
+     location.origin          //返回源(协议、主机、端口)
+     location.protocol        //返回/设置协议(包含:)
+     location.username        //返回/设置用户名
+     location.password        //返回/设置密码
+     location.host            //返回/设置主机、端口
+     location.hostname        //返回/设置主机
+     location.port            //返回/设置端口
+     location.pathname        //返回/设置 URL 路径
+     location.search          //返回/设置查询字符串(从?开始)
+     location.hash            //返回/设置片段识别符(从#开始)
 方法：重载：
      location.reload(bool)    //无返回值,浏览器重载该文档(默认false,true:向服务器请求,false:从缓存中加载)
      重定向：
@@ -291,7 +311,7 @@ Location 对象表示`当前浏览器窗口加载的文档地址`
      location.replace(url)    //无返回值,浏览器重定向到新文档,替换当前文档的浏览记录
 ```
 
-### (1) 属性应用
+### (2) 属性应用
 
 #### ① location.href
 
@@ -309,7 +329,7 @@ btn.addEventListener('click', function handleChangeURL(){
 })
 ```
 
-### (2) 方法应用
+### (3) 方法应用
 
 #### ① 重载方法
 

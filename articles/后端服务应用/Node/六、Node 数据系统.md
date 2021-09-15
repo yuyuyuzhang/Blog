@@ -115,7 +115,7 @@ rs.resume()
 ```js
 定义：const readStream = new stream.Readable([options])
 属性：readable.readableHighWaterMark       //返回构造当前只读流时指定的highWaterMark值
-     readStream.readableObjectMode        //返回或设置构造当前只读流时指定的objectMode属性
+     readStream.readableObjectMode        //返回/设置构造当前只读流时指定的objectMode属性
      readStream.readableEncoding          //返回当前只读流指定的encoding编码
      readStream.readableFlowing           //返回当前只读流的可读流动状态
      readStream.readStream                //返回当前只读流内部缓冲是否存在数据可被消费
@@ -212,7 +212,7 @@ writeStream.end()
 ```js
 定义：const writeStream = new stream.Writable([options])
 属性：writeStream.writableHighWaterMark        //返回构造当前只写流时指定的highWaterMark值
-     writeStream.writableObjectMode           //返回或设置构造当前只写流时指定的objectMode属性
+     writeStream.writableObjectMode           //返回/设置构造当前只写流时指定的objectMode属性
      writeStream.writable                     //返回当前只写流内部缓冲是否未满可写入
      writeStream.writableLength               //返回当前只写流内部缓冲的字节数
      writeStream.writableCorked               //返回为了完全unlock当前只写流需要调用writable.unlock()的次数
@@ -468,7 +468,7 @@ zlib.constants.Z_TREES
 ```js
 定义：import zlib from 'zlib'
 属性：zlib.constants                              //返回 zlib 相关常量
-     zlib.bytesWritten                           //返回或设置压缩或解压之前写入引擎的字节数
+     zlib.bytesWritten                           //返回/设置压缩或解压之前写入引擎的字节数
 方法：管道 API：
      zlib.createDeflate([options])               //返回并创建新的 Deflate 对象
      zlib.createInflate([options])               //返回并创建新的 Inflate 对象
@@ -817,7 +817,7 @@ TypedArray 视图包括如下 9 种类型
 
 Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8Array 类的`子类`，Node 在支持 buffer 的地方也支持普通的 Uint8Array
 
-### (3) Buffer 类（ES6 Uint8Array 类的子类）
+### (3) Buffer 类
 
 Node Buffer 类是 ES6 Uint8Array 类、TypedArray 类的子类，因此所有 ES6 TypedArray 方法都可以在 Node buffer 上使用，但是 Node buffer API 与 ES6 TypedArray API 存在`细微的不兼容`
 

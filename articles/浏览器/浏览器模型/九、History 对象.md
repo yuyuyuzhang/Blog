@@ -10,7 +10,7 @@ History 对象保存了当前浏览器窗口浏览过的所有文档地址，由
 定义：window.history
 属性：history.length                       //返回当前浏览器窗口的访问过的文档数量(包括当前文档)
      history.state                        //返回History栈中顶层文档的state对象
-     history.scrollRestoration            //返回或设置默认滚动恢复行为(auto:恢复用户已滚动位置,manual:无需恢复用户已滚动位置)
+     history.scrollRestoration            //返回/设置默认滚动恢复行为(auto:恢复用户已滚动位置,manual:无需恢复用户已滚动位置)
 方法：状态方法：
      history.pushSate(state,title,url)    //无返回值,向history对象添加一条最新浏览记录,地址栏立刻变化,但是不会跳转
      history.replaceSate(state,title,url) //无返回值,替换history对象的当前浏览记录,地址栏立刻变化,但是不会跳转

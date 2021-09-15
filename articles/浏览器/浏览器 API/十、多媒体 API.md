@@ -14,21 +14,21 @@ H5 新增 audio、video 标签用于显示`音视频`
 
 ```js
 属性：读写属性：
-     video.mediaGroup          //返回或设置音视频所属的组合(组合用于连接多个音视频)
-     video.src                 //返回或设置音视频的当前来源
-     video.crossOrigin         //返回或设置音视频的跨域CORS设置
-     video.controls            //返回或设置音视频是否显示控件
-     video.preload             //返回或设置音视频是否在页面加载后加载
-     video.autoplay            //返回或设置音视频是否在加载完成后自动播放
-     video.loop                //返回或设置音视频是否循环播放
-     video.readyState          //返回或设置音视频的当前就绪状态
-     video.currentTime         //返回或设置音视频的当前播放位置(以秒计)
-     video.volume              //返回或设置音视频的当前音量
-     video.paused              //返回或设置音视频是否暂停
-     video.muted               //返回或设置音视频是否静音
-     video.defaultMuted        //返回或设置音视频默认是否静音
-     video.playbackRate        //返回或设置音视频的播放速度
-     video.defaultPlaybackRate //返回或设置音视频的默认播放速度
+     video.mediaGroup          //返回/设置音视频所属的组合(组合用于连接多个音视频)
+     video.src                 //返回/设置音视频的当前来源
+     video.crossOrigin         //返回/设置音视频的跨域CORS设置
+     video.controls            //返回/设置音视频是否显示控件
+     video.preload             //返回/设置音视频是否在页面加载后加载
+     video.autoplay            //返回/设置音视频是否在加载完成后自动播放
+     video.loop                //返回/设置音视频是否循环播放
+     video.readyState          //返回/设置音视频的当前就绪状态
+     video.currentTime         //返回/设置音视频的当前播放位置(以秒计)
+     video.volume              //返回/设置音视频的当前音量
+     video.paused              //返回/设置音视频是否暂停
+     video.muted               //返回/设置音视频是否静音
+     video.defaultMuted        //返回/设置音视频默认是否静音
+     video.playbackRate        //返回/设置音视频的播放速度
+     video.defaultPlaybackRate //返回/设置音视频的默认播放速度
      只读属性：
      video.startDate           //返回当前时间偏移量
      video.seeking             //返回用户是否正在音视频中进行查找
@@ -161,17 +161,17 @@ Web Audio API 中每个组件都是一个音频节点 AudioNode，声音从第�
      const source = audioCtx.createConstantSource()          //返回ConstantSourceNode对象,创建一个恒定输出的音频源
 属性：source.context                 //返回AudioContext对象,当前音频源所属的音频上下文
      source.buffer                  //返回AudioBuffer对象,当前音频源对应的内存中的音频数据
-     source.playbackRate            //返回或设置当前音频源的播放速度
+     source.playbackRate            //返回/设置当前音频源的播放速度
      source.mediaElement            //返回当前音频源对应的页面audio&video节点
-     source.offset                  //返回或设置当前恒定音频源连续输出的值
-     source.channelCount            //返回或设置当前音频源声道数量
-     source.channelCountMode        //返回或设置当前音频源声道计数模式(max,clamped-max,explicit)
-     source.channelInterpretation   //返回或设置当前音频源声道含义(speakers,discrete)
+     source.offset                  //返回/设置当前恒定音频源连续输出的值
+     source.channelCount            //返回/设置当前音频源声道数量
+     source.channelCountMode        //返回/设置当前音频源声道计数模式(max,clamped-max,explicit)
+     source.channelInterpretation   //返回/设置当前音频源声道含义(speakers,discrete)
      source.numberOfInputs          //返回当前音频源的输入数量
      source.numberOfOutputs         //返回当前音频源的输出数量
-     source.loop                    //返回或设置播放结束时是否循环
-     source.loopStart               //返回或设置循环播放的首位置
-     source.loopEnd                 //返回或设置循环播放的尾位置
+     source.loop                    //返回/设置播放结束时是否循环
+     source.loopStart               //返回/设置循环播放的首位置
+     source.loopEnd                 //返回/设置循环播放的尾位置
 方法：source.connect(destination)    //无返回值,连接音频源和音频目的地
      source.disconnect(destination) //无返回值,取消连接音频源和音频目的地
      source.start(time)             //无返回值,设置音频在指定时间开始播放
@@ -208,9 +208,9 @@ source.onend //音频源播放结束时触发
 定义：const destination = audioCtx.destination
      const destination = audioCtx.createMediaStreamDestination()
 属性：destination.context                 //返回AudioContext对象,当前音频源所属的音频上下文
-     destination.channelCount            //返回或设置当前音频目的地声道数量
-     destination.channelCountMode        //返回或设置当前音频目的地声道计数模式(max,clamped-max,explicit)
-     destination.channelInterpretation   //返回或设置当前音频目的地声道含义(speakers,discrete)
+     destination.channelCount            //返回/设置当前音频目的地声道数量
+     destination.channelCountMode        //返回/设置当前音频目的地声道计数模式(max,clamped-max,explicit)
+     destination.channelInterpretation   //返回/设置当前音频目的地声道含义(speakers,discrete)
      destination.numberOfInputs          //返回当前音频目的地的输入数量
      destination.numberOfOutputs         //返回当前音频目的地的输入数量
 方法：destination.connect(source)         //无返回值,连接音频源和音频目的地

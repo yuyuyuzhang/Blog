@@ -1,48 +1,37 @@
-import path from 'path'
-import fs from 'fs'
-import zlib from 'zlib'
+import { URL, URLSearchParams } from 'url'
 
+// const url = new URL('http://user:passwd@www.example.com:4097/path/a.html?x=111#part1')
+// const searchParams1 = url.searchParams
 
-// fs.appendFile('input.txt', 'data to append', err => {
-//     if(err) throw err
-//     console.log('data append succeed!')
-// })
+let urlSearch = new URLSearchParams({'f2': 2, 'f1': 1})
 
-// copy.txt 不存在则新建，已存在则覆盖
-// fs.copyFile('input.txt', 'copy.txt', err => {
-//     if (err) throw err
-//     console.log('input.txt was copied to copy.txt')
-// })
+urlSearch.append('f2', 3);
+console.log(urlSearch.toString());   //"f2=2&f1=1&f2=3"
+console.log(urlSearch.get('f3'));    //null
+console.log(urlSearch.get('f2'));    //"2"
+console.log(urlSearch.getAll('f2')); //Array ["2", "3"]
 
+urlSearch.set('f2', 4); 
+urlSearch.set('f2', 5); 
+urlSearch.set('f1', 1); 
+console.log(urlSearch.toString());   //"f2=5&f1=1",重复设置则覆盖
 
+urlSearch.sort();
+console.log(urlSearch.toString());   //"f1=1&f2=5",同名键则顺序不变
 
-
-
-fs.symlink('./input.txt', './symlink.txt', 'junction', err => {
-    if(err) throw err
-
-    fs.lstat('./symlink.txt', (err, stat) => {
-        if(err) throw err
-        console.log(stat)
-    })
-
-    fs.readlink('./symlink.txt', (err, linkStr) => {
-        if(err) throw err
-        console.log(linkStr) //'E:\Blog\demos\后端服务应用\Node\ES6 modules\input.txt\'
-    })
-})
+for(let item of urlSearch.keys()){
+  console.log(item); //"f1" "f2"
+}
+for(let item of urlSearch.values()){
+  console.log(item); //"1" "5"
+}
+for(let item of urlSearch.entries()){
+  console.log(item); //Array ["f1", "1"] ["f2", "5"]
+}
 
 
 
 
-// fs.lchown('./symlink.txt', 0, 0, err => {
-//     if(err) throw err
-// }) 
-
-// fs.readlink('./symlink.txt', (err, linkStr) => {
-//     if(err) throw err
-//     console.log(linkStr) //'E:\Blog\demos\后端服务应用\Node\ES6 modules\input.txt\'
-// })
 
 
 

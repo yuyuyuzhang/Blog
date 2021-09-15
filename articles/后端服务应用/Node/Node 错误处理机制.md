@@ -83,7 +83,7 @@ Node 生成的所有错误都继承自`标准的 JS Error 类`
 ```js
 定义：const err = new Error(msg)
 属性：静态属性：
-     Error.stackTraceLimit               //返回或设置堆栈跟踪收集的堆栈帧数(默认10)
+     Error.stackTraceLimit               //返回/设置堆栈跟踪收集的堆栈帧数(默认10)
      实例属性：
      err.code                            //返回错误码
      err.message                         //返回错误描述

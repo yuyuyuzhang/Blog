@@ -87,7 +87,7 @@ process.version   //返回当前Node版本
 process.versions  //返回当前Node及其内置模块版本
 process.release   //返回当前Node版本相关信息
 进程属性：
-process.title     //返回或设置当前Node进程名称
+process.title     //返回/设置当前Node进程名称
 process.pid       //返回当前Node进程pid
 process.ppid      //返回当前Node进程ppid
 process.config    //返回当前Node进程可执行文件的配置选项

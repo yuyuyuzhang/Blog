@@ -93,7 +93,8 @@ clearImmediate()
 
 ###  AbortController 类
 
-fs path
+事件触发机制
+
 http http2 https dgram dns tls net url
 process child_process cluster worker_threads
 os v8 vm tty

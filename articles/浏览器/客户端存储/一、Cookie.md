@@ -158,7 +158,7 @@ Set-Cookie: sid=value2; Domain=example.com; Path=/blog; secure; Expires=Thu, 01-
 ② 浏览器可以通过 `navigator.cookieEnabled` 设置不启用 Cookie，那么浏览器就不会接收服务器的 Cookie，也不会向服务器发送 Cookie
 
 ```js
-navigator.cookieEnabled //返回或设置浏览器是否启用Cookie
+navigator.cookieEnabled //返回/设置浏览器是否启用Cookie
 ```
 
 ③ JS 脚本可以通过 `document.cookie` 获取当前网页所有未设置 HttpOnly 属性的 Cookie 以分号 `;` 分割的字符串
