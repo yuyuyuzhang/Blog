@@ -95,11 +95,16 @@ clearImmediate()
 
 事件触发机制
 
-http http2 https dgram dns tls net
+url dns net http http2 https dgram tls
 process child_process cluster worker_threads
 os v8 vm tty
 intl
 error
 util
 report
+timers
+assert
+async_hooks
+perf_hooks
+
 ①②③④⑤⑥⑦⑧⑨⑩

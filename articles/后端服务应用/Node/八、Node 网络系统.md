@@ -87,7 +87,7 @@ request({
   document.body.append(link)
   link.style.display = 'none'
   link.href = url
-  link.setAttribute('download', fileName)
+  link.setAttribute('download',fileName)
   link.click()
   URL.revokeObjectURL(url)
   document.body.removeChild(link)
@@ -147,17 +147,17 @@ URLSearchParams 类表示 `URL 的查询字符串`，用来构造、解析、处
 实例
 
 ```js
-let urlSearch = new URLSearchParams({'f2': 2, 'f1': 1})
+let urlSearch = new URLSearchParams({'f2': 2,'f1': 1})
 
-urlSearch.append('f2', 3);
+urlSearch.append('f2',3);
 console.log(urlSearch.toString());   //"f2=2&f1=1&f2=3"
 console.log(urlSearch.get('f3'));    //null
 console.log(urlSearch.get('f2'));    //"2"
-console.log(urlSearch.getAll('f2')); //Array ["2", "3"]
+console.log(urlSearch.getAll('f2')); //Array ["2","3"]
 
-urlSearch.set('f2', 4); 
-urlSearch.set('f2', 5); 
-urlSearch.set('f1', 1); 
+urlSearch.set('f2',4); 
+urlSearch.set('f2',5); 
+urlSearch.set('f1',1); 
 console.log(urlSearch.toString());   //"f2=5&f1=1",重复设置则覆盖
 
 urlSearch.sort();
@@ -170,28 +170,354 @@ for(let item of urlSearch.values()){
   console.log(item); //"1" "5"
 }
 for(let item of urlSearch.entries()){
-  console.log(item); //Array ["f1", "1"] ["f2", "5"]
+  console.log(item); //Array ["f1","1"] ["f2","5"]
 }
 ```
 
-## 2. http 模块
+## 2. dns 模块
 
-### (1) http 模块
+### (1) dns 模块
 
-为了支持所有可能的 HTTP 应用程序，Node http 模块是非常底层的，只进行流处理和消息解析，将消息解析为标头和正文，但不解析实际的标头和正文
+dns 模块用于`域名解析（查找主机名的 IP 地址）`
 
-### (2) http API
+* **dns.lookup() 方法**：使用`操作系统工具`进行查找，可能不需要执行任何网络通信
+* **dns 模块所有其他方法**：使用`域名系统协议`进行查找，始终使用网络连接到实际的域名系统服务器执行域名解析
 
-### (3) http.
+### (2) dns API
 
-## 3. https 模块
+```js
+定义：import dns from 'dns'
+方法：操作系统工具解析方法：
+     dns.lookup(hostname,[options],(err,ip,family)=>{})    //返回将hostname解析后的IP地址
+     dns.lookupService(ip,port,(err,hostname,service)=>{}) //返回将ip,port反向解析后的主机名和服务,使用操作系统的底层getnameinfo实现解析
+     域名系统协议解析方法：
+     dns.getServers()                                      //返回域名解析时使用的域名服务器地址数组
+     dns.setServers(servers)                               //无返回值,设置域名解析时使用的域名服务器地址数组
+     dns.reverse(ip,(err,hostnames)=>{})                   //返回将ip反向域名解析后的主机名数组
+     dns.resolve(hostname,[rrtype],(err,records)=>{})      //返回将hostname解析后的资源记录数组
+     dns.resolve4(hostname,[options],(err,ips)=>{})        //返回将hostname解析后的IPv4地址数组(rrtype:A)
+     dns.resolve6(hostname,[options],(err,ips)=>{})        //返回将hostname解析后的IPv6地址数组(rrtype:AAAA)
+     dns.resolveAny(hostname,(err,records)=>{})            //返回将hostname解析后的任何记录数组(rrtype:ANY)
+     dns.resolveCaa(hostname,(err,records)=>{})            //返回将hostname解析后的CA授权记录数组(rrtype:CAA)
+     dns.resolveCname(hostname,(err,records)=>{})          //返回将hostname解析后的规范名称记录数组(rrtype:CNAME)
+     dns.resolveMx(hostname,(err,records)=>{}b)            //返回将hostname解析后的邮件交换记录数组(rrtype:MX)
+     dns.resolveNaptr(hostname,(err,records)=>{})          //返回将hostname解析后的名称授权指针记录数组(rrtype:NAPTR)
+     dns.resolveNs(hostname,(err,records)=>{})             //返回将hostname解析后的名称服务器记录数组(rrtype:NS)
+     dns.resolvePtr(hostname,(err,records)=>{})            //返回将hostname解析后的指针记录数组(rrtype:PTR)
+     dns.resolveSoa(hostname,(err,records)=>{})            //返回将hostname解析后的起始规范记录数组(rrtype:SOA)
+     dns.resolveSrv(hostname,(err,records)=>{})            //返回将hostname解析后的服务记录数组(rrtype:SRV)
+     dns.resolveTxt(hostname,(err,records)=>{})            //返回将hostname解析后的文本记录数组(rrtype:TXT)
 
-## 4. http2 模块
 
-## 5. dns 模块
+options：
+family   //0(默认)：返回IPv4和IPv6地址，4：返回IPv4地址，6：返回IPv6地址
+hints    //dns.ADDRCONFIG：返回操作系统配置的非环回地址类型，dns.V4MAPPED：指定了IPv6但未找到IPv6则返回IPv4映射的IPv6，dns.ALL：指定了dns.V4MAPPED则返回解析的IPv6以及IPv4映射的IPv6
+all      //false(默认)：返回第一个已解析地址，true：返回所有已解析地址
+verbatim //false(默认)：IPv4位于IPv6地址之前，true：按照DNS解析器返回顺序接受IPv4和IPv6地址
+```
 
-## 6. net 模块
+#### ① 操作系统工具解析方法
 
-## 7. tls 模块
+```js
+import dns, { Resolver } from 'dns'
+
+// IPv4
+dns.lookup('archive.org', (err, ip, family) => {
+  if(err) throw err
+
+  console.log(`ipv${family} ${ip}`) //'ipv4 31.13.66.6'
+})
+
+// IPv6
+const options1 = {
+  family: 6,
+  hints: dns.ADDRCONFIG | dns.V4MAPPED
+}
+dns.lookup('archive.org', options1, (err, ip, family) => {
+  if(err) throw err
+
+  console.log(`ipv${family} ${ip}`) //'ipv6 ::ffff:31.13.66.6'
+})
+```
+
+#### ② 域名系统协议解析方法
+
+```js
+import dns from 'dns'
+
+console.log(dns.getServers()) // [ '10.6.8.88', '114.114.114.114', '61.139.2.69' ]
+
+dns.resolve4('archive.org', (err, ips) => {
+  if(err) throw err
+
+  console.log("ips:", ips) // ips: [ '31.13.85.34' ]
+
+  ips.forEach(ip => {
+    dns.reverse(ip, (err, hostnames) => {
+      if(err) throw err
+
+      console.log(`reverse for ${ip}: ${JSON.stringify(hostnames)}`) // 'reverse for 31.13.85.34: ["edge-mqtt-mini-shv-01-gru2.facebook.com"]'
+    })
+  })
+})
+```
+
+### (3) dns.Resolver 类
+
+dns.Resolver 类表示`域名解析器`，可用于创建一个新的域名解析器，并且可以使用 dns API 的所有`域名系统协议解析方法`
+
+```js
+定义：import { Resolver } from 'dns'
+     const resolver = new Resolver([options])
+方法：resolver.setLocalAddress([ipv4],[ipv6]) //无返回值,设置当前域名解析器向域名系统服务器发出请求时使用的本地ipv4和ipv6地址,未设置则使用默认值
+     resolver.cancel()                       //无返回值,取消当前域名解析器进行的所有未完成的域名系统查询
+     dns API 所有域名系统协议解析方法
+
+
+options：
+timeout //查询超时
+tries   //解析器放弃尝试联系每个服务器的尝试次数(默认4)
+```
+
+## 3. net 模块
+
+net 模块提供`异步网络 API`，用于`创建基于流的 TCP 或 IPC 客户端和服务器`
+
+### (1) IPC（Inter-Process Communication，进程间通信）
+
+
+
+### (2) net API
+
+```js
+定义：import net from 'net'
+方法：net.connect()
+     net.createConnection()
+     net.createServer()
+     net.isIP(input)
+     net.isIPv4(input)
+     net.isIPv6(input)
+```
+
+### (3) net.BlockList 类
+
+```js
+
+```
+
+### (4) net.SocketAddress 类
+
+```js
+
+```
+
+### (5) net.Server 类
+
+```js
+
+```
+
+### (6) net.Socket 类
+
+```js
+
+```
+
+## 4. http、https 模块
+
+为了支持所有可能的 HTTP 应用程序，Node `http、https、http2` 模块是非常底层的，只进行`流处理和消息解析`，将消息解析后头部和正文，但不再解析实际的头部和正文
+
+### (1) http API
+
+```js
+定义：import http from 'http'
+属性：http.globalAgent                           //返回 Agent 类的全局实例
+方法：http.request(options,[cb])                 //返回并创建 ClientRequest 实例
+     http.get(options,[cb])                     //返回并创建 ClientRequest 实例,get请求并自动调用req.end()
+     http.createServer([options],[reqListener]) //返回并创建 Server 实例
+
+
+options：
+protocol //默认 http:
+hostname 
+port     //默认 80
+path
+method   //默认 GET
+headers
+...
+```
+
+### (2) https API
+
+```js
+定义：import https from 'https'
+属性：https.globalAgent                           //返回 Agent 类的全局实例
+方法：https.request(options,[cb])                 //返回并创建 ClientRequest 实例
+     https.get(options,[cb])                     //返回并创建 ClientRequest 实例,get请求并自动调用req.end()
+     https.createServer([options],[reqListener]) //返回并创建 https.Server 实例
+
+
+options：
+protocol //默认 https:
+hostname 
+port     //默认 443
+path
+method   //默认 GET
+headers
+...
+```
+
+### (3) http/https.Agent 类
+
+```js
+
+```
+
+### (4) http/https.ClientRequest 类
+
+http/https.ClientRequest 类表示`客户端请求`
+
+```js
+定义：import http from 'http'
+     import https from 'https'
+     http/https.request(url,[options],[cb])
+     http/https.get(url,[options],[cb]) 
+属性：req.protocol                                 //返回当前请求协议
+     req.host                                     //返回当前请求主机
+     req.path                                     //返回当前请求路径
+     req.method                                   //返回当前请求方法
+     req.maxHeadersCount                          //返回当前请求的限制最大标头计数
+     req.socket                                   //返回当前请求的底层套接字
+     req.reusedSocket                             //返回当前请求是否通过重用的套接字发送
+     req.writableEnded                            //返回当前请求是否完成发送,即已调用req.end()
+     req.writableFinished                         //返回当前请求是否数据均已刷新到底层系统
+     req.aborted                                  //返回当前请求是否中止
+     req.destroyed                                //返回当前请求是否销毁
+方法：标头方法：
+     req.setHeader(name,value)                    //无返回值,为当前请求设置指定标头
+     req.removeHeader(name)                       //无返回值,删除当前请求的指定标头
+     req.getHeader(name)                          //返回当前请求的指定标头
+     req.getRawHeaderNames()                      //返回当前请求的原始标头数组
+     操作方法：
+     req.write(chunk,[enc],[cb])                  //返回当前请求整个正文数据是否均被成功刷新到内核缓冲,发送一块请求正文chunk
+     req.end([data],[enc],[cb])                   //返回并完成发送当前请求,可选参数data存在则相当于先调用req.write()
+     req.destroy([err])                           //返回并销毁当前请求
+     req.flushHeaders()                           //无返回值,刷新当前请求头,Node由于效率通常会缓冲请求头直到调用req.end()或写入第一块请求数据,然后将请求头和数据打包到单个TCP数据包从而节省TCP往返
+     方法：
+     req.setNoDelay([noDelay])                    //无返回值,
+     req.setSocketKeepAlive([enable],[initDelay]) //无返回值,
+     req.setTimeout(timeout,[cb])                 //返回当前请求,
+
+
+事件：
+abort       //客户端中止当前请求时触发
+timeout     //当前请求的底层套接字因不活动而超时时触发
+response    //客户端接收到针对当前请求的响应时触发
+connect     //服务器使用 CONNECT 方法响应当前请求时触发
+continue    //服务器针对当前请求返回 100 Continue 响应时触发
+information //服务器针对当前请求返回 1xx 响应时触发(不包括 101 升级)
+upgrade     //服务器针对当前升级协议请求返回响应时触发
+```
+
+#### 发送 GET 请求
+
+```js
+import https from 'https'
+
+const options = {
+  protocol: 'https:',
+  hostname: 'nodejs.cn',
+  port: 443,
+  path: '/todos',
+  method: 'GET'
+}
+const req = https.request(options,res => {
+  console.log("res:",res)
+
+  res.on('data',d => {
+    process.stdout.write(d)
+  })
+})
+req.on('error',err => {
+  console.log("err:",err)
+})
+req.end()
+```
+
+#### 发送 POST 请求
+
+```js
+const data = JSON.stringify({ todo: '做点事情' })
+const options = {
+  protocol: 'https:',
+  hostname: 'nodejs.cn',
+  port: 443,
+  path: '/todos',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': data.length
+  }
+}
+const req = https.request(options,res => {
+  console.log("res:",res)
+
+  res.on('data',d => {
+    process.stdout.write(d)
+  })
+})
+req.on('error',err => {
+  console.log("err:",err)
+})
+req.end(data)
+```
+
+### (5) http/https.Server 类
+
+http/https.Server 类表示服务器
+
+```js
+定义：import http from 'http'
+     import https from 'https'
+     http/https.createServer([options],[reqListener])
+属性：server.headersTimeout           //
+     server.listening                //
+     server.maxHeadersCount          //
+     server.requestTimeout           //
+     server.timeout                  //
+     server.keepAliveTimeout         //
+方法：server.setTimeout([msecs],[cb]) //
+     server.listen()                 //
+     server.close([cb])              //
+
+
+事件：
+checkContinue    //
+checkExpectation //
+clientError      //
+close            //
+connect          //
+connection       //
+request          //
+upgrade          //
+```
+
+### (6) http/https.ServerResponse 类
+
+```js
+
+```
+
+### (7) http/https.IncomingMessage 类
+
+```js
+
+```
+
+## 5. http2 模块
+
+## 6. tls 模块
+
+## 7. dgram 模块
 
 ①②③④⑤⑥⑦⑧⑨⑩
