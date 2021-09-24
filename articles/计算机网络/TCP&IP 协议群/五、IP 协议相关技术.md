@@ -26,7 +26,7 @@ document.domain //返回/设置当前文档域名
 
 带域名的主机名是互联网上某一台计算机或某一组计算机的名称，用于识别单一主机名和具有分层结构的组织机构名称，带域名的主机名互联网`唯一`
 
-![url]()
+![url](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/url.png)
 
 ```js
 //新浪博客：http://blog.sina.com.cn

@@ -301,9 +301,9 @@ fs.unlinkSync(path)
      })
      ```
 
-     ![link1]()
+     ![link1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/link1.png)
 
-     ![link2]()
+     ![link2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/link2.png)
 
 * **软链接/符号链接**：符号链接是一类`特殊文本文件`，仅包含一条`其他文件夹或文件`的`路径字符串`
   * 对符号链接操作会转换成对源文件操作
@@ -325,9 +325,9 @@ fs.unlinkSync(path)
      })
      ```
 
-     ![symlink1]()
+     ![symlink1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/symlink1.png)
 
-     ![symlink2]()
+     ![symlink2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/symlink2.png)
 
 #### ② 文件的读取写入
 
@@ -343,7 +343,7 @@ fs.readFile('./input.txt', (err, data) => {
 })
 ```
 
-![readFile_writeFile]()
+![readFile_writeFile](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/readFile_writeFile.png)
 
 Stream API
 

@@ -6,7 +6,7 @@
 
 URL 全称统一资源定位符，又称网页地址（全球性），用于定位浏览器中显示的网页资源，浏览器使用 `WHATWG 网址标准`
 
-![url]()
+![url](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/url.png)
 
 WHATWG 网址标准的`特殊协议方案`有如下 6 种，WHATWG 网址标准认为特殊协议在解析和序列化方面具有特殊性，不能通过 url.protocol 属性将特殊协议更改为非特殊协议，或将非特殊协议更改为特殊协议，6 种特殊协议的默认端口如下
 

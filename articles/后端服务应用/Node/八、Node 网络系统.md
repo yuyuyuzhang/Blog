@@ -6,7 +6,7 @@
 
 url 模块用于`处理和解析网址`，Node 实现了浏览器使用的 `WHATWG 网址标准`的新版 API
 
-![url]()
+![url](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/url.png)
 
 WHATWG 网址标准的`特殊协议方案`有如下 6 种，WHATWG 网址标准认为特殊协议在解析和序列化方面具有特殊性，不能通过 url.protocol 属性将特殊协议更改为非特殊协议，或将非特殊协议更改为特殊协议，6 种特殊协议的默认端口如下
 
@@ -284,8 +284,6 @@ tries   //解析器放弃尝试联系每个服务器的尝试次数(默认4)
 net 模块提供`异步网络 API`，用于`创建基于流的 TCP 或 IPC 客户端和服务器`
 
 ### (1) IPC（Inter-Process Communication，进程间通信）
-
-
 
 ### (2) net API
 
