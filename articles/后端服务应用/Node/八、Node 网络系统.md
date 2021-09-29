@@ -279,7 +279,7 @@ timeout //查询超时
 tries   //解析器放弃尝试联系每个服务器的尝试次数(默认4)
 ```
 
-## 3. dgram、net 模块
+## 3. net、dgram 模块
 
 ### (1) 套接字
 
@@ -340,7 +340,9 @@ net 模块提供了对 `IPC、TCP 套接字`的支持，用于创建`IPC、TCP �
 
 ### (3) net.Socket 类
 
-net.Socket 类表示`套接字`，常用于创建 `IPC、TCP 客户端套接字`，或作为 net.Server 类的 connection 事件监听器的参数，即 `IPC、TCP 服务端套接字`
+net.Socket 类表示`套接字`，继承自 stream.Duplex 类
+
+常用于创建 `IPC、TCP 客户端套接字`，或作为 net.Server 类的 connection 事件监听器的参数，即 `IPC、TCP 服务端套接字`
 
 ```js
 定义：import net from 'net'
@@ -448,39 +450,7 @@ close      //当前服务器关闭时触发
 error      //当前服务器发生错误时触发(事件监听器参数为 Error 对象)
 ```
 
-### (5) TCP 客户端/服务器实例
-
-```js
-import net from 'net'
-
-// Server
-const server = net.createServer(server_socket => {
-    server_socket.on('data', data => {
-        console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
-        server_socket.write('world') // 向客户端发送响应
-    })
-}).listen(8124, '127.0.0.1', () => {
-    const address = server.address()
-    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
-})
-
-// Client
-const client_socket = net.createConnection(8124, () => {
-    console.log('客户端：已建立连接')
-    client_socket.write('hello') // 向服务器发送请求
-})
-client_socket.on('data', data => {
-    console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
-    client_socket.destroy() // 关闭客户端连接
-})
-client_socket.on('close', () => {
-    console.log("客户端：已关闭客户端套接字")
-})
-```
-
-![TCP_Socket]()
-
-### (6) dgram 模块
+### (5) dgram 模块
 
 dgram 模块提供了对 UDP 套接字的支持
 
@@ -533,7 +503,41 @@ close     //当前套接字关闭时触发
 error     //当前套接字发生错误时触发(事件监听器参数为 Error 对象)
 ```
 
-### (7) UDP 客户端/服务器实例
+### (6) 实例
+
+#### ① TCP 客户端/服务器实例
+
+```js
+import net from 'net'
+
+// Server
+const server = net.createServer(server_socket => {
+    server_socket.on('data', data => {
+        console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
+        server_socket.write('world') // 向客户端发送响应
+    })
+}).listen(8124, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+// Client
+const client_socket = net.createConnection(8124, () => {
+    console.log('客户端：已建立连接')
+    client_socket.write('hello') // 向服务器发送请求
+})
+client_socket.on('data', data => {
+    console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
+    client_socket.destroy() // 关闭客户端连接
+})
+client_socket.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
+```
+
+![TCP_Socket]()
+
+#### ② UDP 客户端/服务器实例
 
 ```js
 import dgram from 'dgram'
@@ -571,170 +575,184 @@ client.connect(41234, 'localhost', () => {
 
 ## 4. http 模块
 
-为了支持所有可能的 HTTP 应用程序，Node http 模块是非常底层的，只进行`流处理和消息解析`，将消息解析后头部和正文，但不再解析实际的头部和正文
-
 ### (1) http API
+
+为了支持所有可能的 HTTP 应用程序，Node http 模块是非常底层的，只进行`流处理和消息解析`，将消息解析为头部和正文，但不再解析实际的头部和正文
 
 ```js
 定义：import http from 'http'
-属性：http.globalAgent                           //返回 Agent 类的全局实例
-方法：http.request(options,[cb])                 //返回并创建 ClientRequest 实例
-     http.get(options,[cb])                     //返回并创建 ClientRequest 实例,get请求并自动调用req.end()
-     http.createServer([options],[reqListener]) //返回并创建 Server 实例
+属性：
+     http.METHODS                                   //返回解析器支持的 HTTP 方法列表
+     http.STATUS_CODES                              //返回解析器支持的 HTTP 响应状态码及描述的集合
+     http.globalAgent                               //返回 Agent 类的全局实例
+     http.maxHeaderSize                             //返回 HTTP 标头的最大允许大小(默认8KB)
+方法：客户端方法：
+     http.request(options,[responseListener])       //返回并创建 http.ClientRequest 实例
+     http.request(url,[options],[responseListener])           
+     http.get(options,[responseListener])           //返回并创建 http.ClientRequest 实例
+     http.get(url,[options],[responseListener])               
+     服务器方法：
+     http.createServer([options],[requestListener]) //返回并创建 http.Server 实例
 
 
 options：
 protocol //默认 http:
-hostname 
+host     //默认 localhost
 port     //默认 80
-path
+path     //默认 /
 method   //默认 GET
 headers
 ...
 ```
 
-### (3) http.Agent 类
+### (2) http.ClientRequest 类
 
-```js
-
-```
-
-### (4) http.ClientRequest 类
-
-http/https.ClientRequest 类表示`客户端请求`
+http/https.ClientRequest 类表示`客户端请求`，继承自 Stream 类
 
 ```js
 定义：import http from 'http'
-     import https from 'https'
-     http/https.request(url,[options],[cb])
-     http/https.get(url,[options],[cb]) 
-属性：req.protocol                                 //返回当前请求协议
-     req.host                                     //返回当前请求主机
-     req.path                                     //返回当前请求路径
-     req.method                                   //返回当前请求方法
-     req.maxHeadersCount                          //返回当前请求的限制最大标头计数
-     req.socket                                   //返回当前请求的底层套接字
-     req.reusedSocket                             //返回当前请求是否通过重用的套接字发送
-     req.writableEnded                            //返回当前请求是否完成发送,即已调用req.end()
-     req.writableFinished                         //返回当前请求是否数据均已刷新到底层系统
-     req.aborted                                  //返回当前请求是否中止
-     req.destroyed                                //返回当前请求是否销毁
-方法：标头方法：
-     req.setHeader(name,value)                    //无返回值,为当前请求设置指定标头
-     req.removeHeader(name)                       //无返回值,删除当前请求的指定标头
-     req.getHeader(name)                          //返回当前请求的指定标头
-     req.getRawHeaderNames()                      //返回当前请求的原始标头数组
-     操作方法：
-     req.write(chunk,[enc],[cb])                  //返回当前请求整个正文数据是否均被成功刷新到内核缓冲,发送一块请求正文chunk
-     req.end([data],[enc],[cb])                   //返回并完成发送当前请求,可选参数data存在则相当于先调用req.write()
-     req.destroy([err])                           //返回并销毁当前请求
-     req.flushHeaders()                           //无返回值,刷新当前请求头,Node由于效率通常会缓冲请求头直到调用req.end()或写入第一块请求数据,然后将请求头和数据打包到单个TCP数据包从而节省TCP往返
-     方法：
-     req.setNoDelay([noDelay])                    //无返回值,
-     req.setSocketKeepAlive([enable],[initDelay]) //无返回值,
-     req.setTimeout(timeout,[cb])                 //返回当前请求,
+     const req = http.request(options,[responseListener])
+     const req = http.request(url,[options],[responseListener])
+     const req = http.get(options,[responseListener]) 
+     const req = http.get(url,[options],[responseListener]) 
+属性：req.protocol                                 //返回当前客户端请求协议
+     req.host                                     //返回当前客户端请求主机
+     req.path                                     //返回当前客户端请求路径
+     req.method                                   //返回当前客户端请求方法
+     req.maxHeadersCount                          //返回当前客户端请求的限制最大响应头计数
+     req.socket                                   //返回当前客户端请求的底层套接字
+     req.reusedSocket                             //返回当前客户端请求是否通过重用的套接字发送
+     req.writableEnded                            //返回当前客户端请求是否完成发送,即已调用req.end()
+     req.writableFinished                         //返回当前客户端请求是否数据均已刷新到底层系统
+     req.aborted                                  //返回当前客户端请求是否已中止
+     req.destroyed                                //返回当前客户端请求是否已销毁
+方法：基本方法：
+     req.setNoDelay([noDelay])                    //无返回值,设置当前客户端请求的Nagle算法
+     req.setSocketKeepAlive([enable],[initDelay]) //无返回值,设置当前客户端请求的长连接功能
+     req.setTimeout(timeout,[cb])                 //返回当前客户端请求,设置当前客户端请求的连接超时时间
+     标头方法：
+     req.flushHeaders()                           //无返回值,刷新当前客户端请求头,Node由于效率通常会缓冲请求头直到调用req.end()或写入第一块请求数据,然后将请求头和数据打包到单个TCP数据包从而节省TCP往返
+     req.getHeader(name)                          //返回当前客户端请求的指定标头
+     req.getRawHeaderNames()                      //返回当前客户端请求的原始标头数组
+     req.setHeader(name,value)                    //无返回值,为当前客户端请求设置指定标头
+     req.removeHeader(name)                       //无返回值,为当前客户端请求删除指定标头
+     正文方法：
+     req.write(chunk,[enc],[cb])                  //返回当前客户端请求整个正文数据是否均被成功刷新到内核缓冲,写入一块请求正文chunk
+     req.end([data],[enc],[cb])                   //返回并完成当前客户端请求,请求正文任何部分未发送则将其刷新到流,可选参数data存在则相当于先调用一次req.write()
+     req.destroy([err])                           //返回并销毁当前客户端请求,丢弃响应的剩余数据并销毁客户端套接字,触发close事件
 
 
 事件：
-abort       //客户端中止当前请求时触发
-timeout     //当前请求的底层套接字因不活动而超时时触发
-response    //客户端接收到针对当前请求的响应时触发
-connect     //服务器使用 CONNECT 方法响应当前请求时触发
-continue    //服务器针对当前请求返回 100 Continue 响应时触发
-information //服务器针对当前请求返回 1xx 响应时触发(不包括 101 升级)
-upgrade     //服务器针对当前升级协议请求返回响应时触发
+abort       //当前客户端请求被中止时触发
+timeout     //当前客户端请求的底层套接字因不活动而超时时触发
+response    //当前客户端请求接收到响应时触发(事件监听器参数为 response-http.IncomingMessage)
+continue    //当前客户端请求接收到 100 响应时触发,服务器已收到请求的第一部分,要求客户端继续提出请求
+upgrade     //当前客户端请求接收到 101 响应时触发,服务器已确认升级协议的请求并准备升级
+information //当前客户端请求接收到 1xx 响应时触发
+connect     //当前 CONNECT 方法的客户端请求接收到响应时触发
 ```
 
-#### 发送 GET 请求
+### (3) http.Server 类
 
-```js
-import https from 'https'
-
-const options = {
-  protocol: 'https:',
-  hostname: 'nodejs.cn',
-  port: 443,
-  path: '/todos',
-  method: 'GET'
-}
-const req = https.request(options,res => {
-  console.log("res:",res)
-
-  res.on('data',d => {
-    process.stdout.write(d)
-  })
-})
-req.on('error',err => {
-  console.log("err:",err)
-})
-req.end()
-```
-
-#### 发送 POST 请求
-
-```js
-const data = JSON.stringify({ todo: '做点事情' })
-const options = {
-  protocol: 'https:',
-  hostname: 'nodejs.cn',
-  port: 443,
-  path: '/todos',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': data.length
-  }
-}
-const req = https.request(options,res => {
-  console.log("res:",res)
-
-  res.on('data',d => {
-    process.stdout.write(d)
-  })
-})
-req.on('error',err => {
-  console.log("err:",err)
-})
-req.end(data)
-```
-
-### (5) http.Server 类
-
-http/https.Server 类表示服务器
+http/https.Server 类表示`服务器`，继承自 net.Server 类
 
 ```js
 定义：import http from 'http'
-     import https from 'https'
-     http/https.createServer([options],[reqListener])
-属性：server.headersTimeout           //
-     server.listening                //
-     server.maxHeadersCount          //
-     server.requestTimeout           //
-     server.timeout                  //
-     server.keepAliveTimeout         //
-方法：server.setTimeout([msecs],[cb]) //
-     server.listen()                 //
-     server.close([cb])              //
+     const server = http.createServer([options],[requestListener])
+属性：基本属性：
+     server.listening                                           //返回当前服务器是否正在监听连接
+     server.maxRequestsPerSocket                                //返回当前服务器的服务端套接字可以处理的最大连接数
+     server.maxHeadersCount                                     //返回当前服务器限制最大传入标头计数
+     超时属性：
+     server.headersTimeout                                      //返回当前服务器等待接收客户端请求完整 HTTP 标头的超时时间
+     server.requestTimeout                                      //返回当前服务器等待接收客户端请求的超时时间
+     server.timeout                                             //返回当前服务器的服务端套接字的超时时间
+     server.keepAliveTimeout                                    //返回当前服务器的服务端套接字的长连接超时时间
+方法：server.setTimeout([msecs],[cb])                            //返回当前服务器,设置当前服务器的服务端套接字的超时时间
+     server.listen(path,[backlog],[listeningListener])          //无返回值,当前服务器启动 IPC 连接监听
+     server.listen([port],[host],[backlog],[listeningListener]) //无返回值,当前服务器启动 TCP 连接监听
+     server.close([closeListener])                              //无返回值,关闭当前服务器,停止接收新连接
 
 
 事件：
-checkContinue    //
-checkExpectation //
-clientError      //
-close            //
-connect          //
-connection       //
-request          //
-upgrade          //
+listening        //当前服务器启动监听后触发
+connection       //当前服务器建立新的 TCP 连接时触发
+request          //当前服务器接收到请求时触发(事件监听器参数为 request-http.IncomingMessage、response-http.ServerResponse)
+checkContinue    //当前服务器接收到 Expect: 100-continue 的请求时触发
+upgrade          //当前服务器接收到升级协议的请求时触发
+checkExpectation //当前服务器接收到 Expect 标头的请求时触发
+connect          //当前服务器接收到 CONNECT 方法的请求时触发
+close            //当前服务器关闭时触发
+error            //当前服务器发生错误时触发
+clientError      //当前服务器的客户端连接发生错误时触发
 ```
 
-### (6) http.ServerResponse 类
+### (4) http.ServerResponse 类
+
+http.ServerResponse 类表示`服务器响应`，继承自 Stream 类
+
+http.ServerResponse 类的实例由 http.Server 类内部创建，不由用户创建，作为 http.Server 类的 request 事件监听器的第二个参数
+
+```js
+定义：http.Server 类的 request 事件监听器的第二个参数
+属性：res.req                             //返回当前服务器响应的请求
+     res.socket                          //返回当前服务器响应的底层套接字
+     res.statusCode                      //返回当前服务器响应的状态码
+     res.statusMessage                   //返回当前服务器响应的状态消息
+     res.writableEnded                   //返回当前服务器响应是否已结束写入,已调用res.end()
+     res.writableFinished                //返回当前服务器响应是否已刷新到底层系统
+     res.headersSent                     //返回当前服务器响应的标头是否已发送
+方法：基本方法：
+     res.setTimeout(msecs,[cb])          //返回当前服务器响应,设置当前服务器响应对应的服务端套接字的超时时间
+     标头方法：
+     res.writeHead(code,[msg],[headers]) //返回当前服务器响应,写入响应头
+     res.writeContinue()                 //无返回值,写入 100-Continue 响应头
+     res.writeProcessing()               //无返回值,写入 102-Processing 响应头
+     res.flushHeaders()                  //无返回值,刷新响应头,Node由于效率通常会缓冲响应头直到调用res.end()或写入第一块响应数据,然后将响应头和数据打包到单个TCP数据包从而节省TCP往返
+     res.hasHeader(name)                 //返回当前服务器响应是否存在指定标头
+     res.getHeader(name)                 //返回当前服务器响应的指定标头
+     res.getHeaders()                    //返回当前服务器响应的所有标头
+     res.getHeaderNames()                //返回当前服务器响应的原始标头数组
+     res.setHeader(name,value)           //返回当前服务器响应,设置当前服务器响应的指定标头值
+     res.removeHeader(name)              //无返回值,移除当前服务器响应的指定标头
+     res.addTrailers(headers)            //无返回值,向当前服务器响应添加 HTTP 尾随标头,仅在响应使用分块编码时
+     正文方法
+     res.write(chunk,[encoding],[cb])    //返回当前服务器响应整个正文数据是否均被成功刷新到内核缓冲,写入一块响应正文chunk
+     res.end([data],[encoding],[cb])     //返回当前服务器响应,向服务器发送结束信号表明所有响应头和正文都已发送,可选参数data存在则相当于调用一次response.write()
+     res.cork()                          //无返回值,强制将调用该方法之后写入的所有数据都添加到内部缓冲而不输出到目标
+     res.uncork()                        //无返回值,将调用res.cork()以来缓冲的所有数据输出到目标
+
+
+事件：
+close  //当前服务器响应完成时触发，或其底层连接提前终止时触发
+finish //当前服务器响应发送时触发
+```
+
+### (5) http.IncomingMessage 类
+
+http.IncomingMessage 类表示
 
 ```js
 
 ```
 
-### (7) http.IncomingMessage 类
+### (6) http.Agent 类
+
+http.Agent 类表示
+
+```js
+
+```
+
+### (7) 实例
+
+#### HTTP GET 请求
+
+```js
+
+```
+
+#### HTTP POST 请求
 
 ```js
 
