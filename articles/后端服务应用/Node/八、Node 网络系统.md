@@ -322,78 +322,7 @@ tries   //解析器放弃尝试联系每个服务器的尝试次数(默认4)
 
 通过互联网进行通信时，客户端应用程序将要传输的数据写入自身主机的客户端套接字，客户端套接字通过与网卡 NIC 相连的传输介质将数据发送到服务端套接字，使服务端应用程序能够接收到这段数据
 
-### (2) dgram 模块
-
-dgram 模块提供了对 UDP 套接字的支持
-
-dgram.Socket 类表示 `UDP 套接字`，用于创建 `UDP 客户端和服务器`
-
-```js
-定义：import dgram from 'dgram'
-     const udpSocket = dgram.createSocket(type,[messageListener])
-     const udpSocket = dgram.createSocket(options1,[messageListener])
-方法：基本方法：
-     udpSocket.address()                   //返回当前套接字的地址{family,address,port}
-     udpSocket.remoteAddress()             //返回当前套接字远程连接的套接字地址{family,address,port}
-     udpSocket.bind([port],[address],[cb]) //无返回值,当前套接字绑定端口和主机
-     udpSocket.bind(options2,[cb])         //无返回值,
-     udpSocket.ref()                       //返回当前套接字,将当前套接字加入Node事件循环
-     udpSocket.unref()                     //返回当前套接字,将当前套接字移出Node事件循环
-     连接方法：
-     udpSocket.connect(port,[address],[cb])
-     udpSocket.disconnect()
-     udpSocket.close([cb]) //无返回值,关闭当前套接字
-     数据传输方法：
-     udpSocket.setTTL(ttl) //设置数据报生存时间
-
-     udpSocket.setBroadcast(flag) //设置是否启动广播
-     udpSocket.send(msg,[offset,len],[port],[address],[cb]) //广播数据报
-
-     udpSocket.setMulticastTTL(ttl) //设置组播数据报生存时间
-     udpSocket.addMembership(multicastAddress,[multicastInterface]) //添加组播成员
-     udpSocket.dropMembership(multicastAddress,[multicastInterface]) //删除组播成员
-     udpSocket.addSourceSpecificMembership(sourceAddress,groupAddress,[multicastInterface]) 
-     udpSocket.dropSourceSpecificMembership(sourceAddress,groupAddress,[multicastInterface])
-     udpSocket.getRecvBufferSize()
-     udpSocket.getSendBufferSize()
-     udpSocket.setMulticastLoopback(flag)
-     udpSocket.setRecvBufferSize(size)
-     udpSocket.setSendBufferSize(size)
-     udpSocket.setMulticastInterface(multicastInterface)
-     
-
-options1：
-type           //指定 UDP 协议类型
-reuseAddr      //
-ipv6Only       //
-recvBufferSize //
-sendBufferSize //
-lookup         //指定当前套接字的自定义域名查找函数(默认dns.lookup())
-signal         //指定可用于销毁当前套接字的中止信号
-
-options2：
-fd        //指定文件描述符可用于封装现有的套接字,不指定则创建新的套接字
-port      //指定当前套接字绑定的端口
-address   //指定当前套接字绑定的主机
-exclusive //
-
-
-
-事件：
-close     //
-connect   //
-error     //
-listening //
-message   //
-```
-
-实例
-
-```js
-
-```
-
-### (3) net 模块
+### (2) net 模块
 
 net 模块提供了对 `IPC、TCP 套接字`的支持，用于创建`IPC、TCP 客户端和服务器`
 
@@ -409,7 +338,7 @@ net 模块提供了对 `IPC、TCP 套接字`的支持，用于创建`IPC、TCP �
      net.createServer([options],[connectionListener])    //返回并创建 IPC、TCP 服务端,connectionListener参数将作为connection事件的监听器
 ```
 
-### (4) net.Socket 类
+### (3) net.Socket 类
 
 net.Socket 类表示`套接字`，常用于创建 `IPC、TCP 客户端套接字`，或作为 net.Server 类的 connection 事件监听器的参数，即 `IPC、TCP 服务端套接字`
 
@@ -418,38 +347,39 @@ net.Socket 类表示`套接字`，常用于创建 `IPC、TCP 客户端套接字`
      const ipcSocket = net.createConnection(path,[connectListener])        //返回 IPC 客户端套接字
      const tcpSocket = net.createConnection(port,[host],[connectListener]) //返回 TCP 客户端套接字
      const socket = new net.Socket([options1])                             //返回自定义套接字
-属性：连接状态：
-     socket.pending                                //返回当前套接字是否正在等待请求连接,socket.connect()尚未调用
-     socket.connecting                             //返回当前套接字是否正在发起连接请求,socket.connect()已被调用但尚未完成
-     socket.readyState                             //返回当前套接字的连接状态(opening:正在连接,open:可读可写,readOnly:只读,writeOnly:只写)
-     socket.destroyed                              //返回当前套接字是否已关闭连接,无法再传输数据
-     socket.timeout                                //返回当前套接字的连接超时时间(毫秒)
-     传输状态：
+属性：基本属性：
      socket.localAddress                           //返回当前套接字的本地IP地址
      socket.localPort                              //返回当前套接字的本地端口
      socket.remoteFamily                           //返回当前套接字远程连接的套接字IP地址类型
      socket.remoteAddress                          //返回当前套接字远程连接的套接字IP地址
      socket.remotePort                             //返回当前套接字远程连接的套接字端口
+     连接属性：
+     socket.pending                                //返回当前套接字是否正在等待请求连接,socket.connect()尚未调用
+     socket.connecting                             //返回当前套接字是否正在发起连接请求,socket.connect()已被调用但尚未完成
+     socket.readyState                             //返回当前套接字的连接状态(opening:正在连接,open:可读可写,readOnly:只读,writeOnly:只写)
+     socket.destroyed                              //返回当前套接字是否已关闭连接,无法再传输数据
+     socket.timeout                                //返回当前套接字的连接超时时间(毫秒)
+     传输属性：
      socket.bytesWritten                           //返回当前套接字发送的字节数
      socket.bytesRead                              //返回当前套接字接收的字节数
 方法：基本方法：
      socket.address()                              //返回当前套接字的地址{family,address,port}
-     socket.setEncoding([encoding])                //返回当前套接字,设置当前套接字编码
-     socket.setNoDelay([noDelay])                  //返回当前套接字,设置当前套接字的Nagle算法
-     socket.setTimeout(timeout,[cb])               //返回当前套接字,设置当前套接字的连接超时时间
-     socket.setKeepAlive([enable],[initialDelay])  //返回当前套接字,设置当前套接字的长连接功能
      socket.ref()                                  //返回当前套接字,将当前套接字加入Node事件循环
      socket.unref()                                //返回当前套接字,将当前套接字移出Node事件循环
+     socket.setEncoding([encoding])                //返回当前套接字,设置当前套接字编码
+     socket.setNoDelay([noDelay])                  //返回当前套接字,设置当前套接字的Nagle算法
+     socket.setTimeout(timeout,[timeoutListener])  //返回当前套接字,设置当前套接字的连接超时时间
+     socket.setKeepAlive([enable],[initialDelay])  //返回当前套接字,设置当前套接字的长连接功能
      连接方法：
+     socket.connect(options2,[connectListener])    //返回当前套接字,当前套接字向要连接的远程套接字发起连接请求,仅用于当前套接字连接关闭后重新发起连接
      socket.connect(path,[connectListener])        //返回当前套接字,当前套接字向要连接的远程套接字发起 IPC 连接请求
      socket.connect(port,[host],[connectListener]) //返回当前套接字,当前套接字向要连接的远程套接字发起 TCP 连接请求
-     socket.connect(options2,[connectListener])    //返回当前套接字,当前套接字向要连接的远程套接字发起连接请求
      传输数据方法：
      socket.pause()                                //返回当前套接字,当前套接字暂停读取数据,用于限制上传
      socket.resume()                               //返回当前套接字,当前套接字继续读取数据
-     socket.write(data,[encoding],[cb])            //返回当前套接字是否整个数据都已刷新到内核缓存区,当前套接字发送数据 data 给连接的套接字
-     socket.end([data],[encoding],[cb])            //返回当前套接字,半关闭当前套接字连接,data参数存在则相当于再调用一次socket.write()
-     socket.destroy([error])                       //返回当前套接字,关闭当前套接字连接并销毁流   
+     socket.write(data,[encoding],[cb])            //返回当前套接字是否整个数据都已刷新到内核缓存区,当前套接字发送数据 data 给远程连接的套接字,可选参数cb在数据最终写完后执行,可能不会立即执行
+     socket.end([data],[encoding],[cb])            //返回当前套接字,半关闭当前套接字连接,可选参数data存在则相当于再调用一次socket.write(),可选参数cb在数据最终写完后执行,可能不会立即执行
+     socket.destroy([error])                       //返回当前套接字,关闭当前套接字连接   
 
 
 options1：
@@ -469,23 +399,23 @@ hints        //指定当前套接字的 lookup 函数提示
 family       //指定当前套接字的本地 IP 地址类型(4,6,0-默认)
 localAddress //指定当前套接字的本地 IP 地址
 localPort    //指定当前套接字的本地端口
-host         //指定当前套接字应该连接的远程套接字主机(默认localhost)
-port         //指定当前套接字应该连接的远程套接字端口
+host         //指定当前套接字要连接的远程套接字主机(默认localhost)
+port         //指定当前套接字要连接的远程套接字端口
 
 
 事件：
-lookup  //当前套接字解析主机名之后建立连接之前触发
-connect //当前套接字成功与要连接的远程套接字建立连接后触发
-ready   //当前套接字准备好使用之后触发
+lookup  //当前套接字解析主机名之后建立连接之前触发,不适用于 Unix 套接字
+connect //当前套接字成功与要连接的远程套接字建立连接时触发
+ready   //当前套接字准备好使用时触发,connect事件后立即触发
 data    //当前套接字接收到数据时触发(事件监听器参数为 buffer/string)
-drain   //当前套接字写缓冲区变空时触发
-timeout //当前套接字因不活动而超时时触发,用户必须手动调用socket.end()/destroy()关闭连接
-error   //当前套接字发生错误时触发(事件监听器参数为 Error 对象)
+drain   //当前套接字写缓冲区变空时触发,可用于限制上传
 end     //当前套接字连接的远程套接字表示传输结束时触发,从而结束当前套接字的可读端
-close   //当前套接字完全关闭时触发
+close   //当前套接字完全关闭时触发(事件监听器参数 hadError 表示当前套接字是否有传输错误)
+error   //当前套接字发生错误时触发(事件监听器参数为 Error 对象)
+timeout //当前套接字因不活动而超时时触发,用户必须手动调用socket.end()/destroy()关闭连接
 ```
 
-### (5) net.Server 类
+### (4) net.Server 类
 
 net.Server 类表示`服务器`，常用于创建 `IPC、TCP 服务器`
 
@@ -493,17 +423,17 @@ net.Server 类表示`服务器`，常用于创建 `IPC、TCP 服务器`
 定义：import net from 'net'
      const server = net.createServer([options],[connectionListener])
      const server = new net.Server([options],[connectionListener])
-属性：server.listening                            //返回当前服务器是否正在监听连接
-     server.maxConnections                       //返回当前服务器允许的最大连接数
+属性：server.listening                                           //返回当前服务器是否正在监听连接
+     server.maxConnections                                      //返回当前服务器允许的最大连接数
 方法：基本方法：
-     server.address()                            //返回当前服务器的地址{family,address,port}
-     server.ref()                                //返回当前服务器,将当前服务器加入Node事件循环
-     server.unref()                              //返回当前服务器,将当前服务器加入Node事件循环
+     server.address()                                           //返回当前服务器的地址{family,address,port}
+     server.ref()                                               //返回当前服务器,将当前服务器加入Node事件循环
+     server.unref()                                             //返回当前服务器,将当前服务器加入Node事件循环
      监听方法：
-     server.listen(path,[backlog],[cb])          //无返回值,启动 IPC 连接监听
-     server.listen([port],[host],[backlog],[cb]) //无返回值,启动 TCP 连接监听
-     server.getConnections((err,count)=>{})      //返回当前服务器,异步获取当前服务器上的并发连接数
-     server.close([cb])                          //返回并关闭当前服务器,停止接收新连接并保持现有连接,直到所有连接都结束并触发close事件时调用回调函数cb,然后最终关闭服务端
+     server.listen(path,[backlog],[listeningListener])          //无返回值,当前服务器启动 IPC 连接监听
+     server.listen([port],[host],[backlog],[listeningListener]) //无返回值,当前服务器启动 TCP 连接监听
+     server.getConnections((err,count)=>{})                     //返回当前服务器,异步获取当前服务器上的并发连接数
+     server.close([closeListener])                              //返回并关闭当前服务器
 
 
 options：
@@ -518,37 +448,126 @@ close      //当前服务器关闭时触发
 error      //当前服务器发生错误时触发(事件监听器参数为 Error 对象)
 ```
 
-### (6) 实例
-
-connection 事件监听器参数为当前服务器的`服务端套接字`，`net.Socket` 实例
+### (5) TCP 客户端/服务器实例
 
 ```js
 import net from 'net'
 
-// Client
-const client_socket = net.createConnection(8124, () => {
-    console.log('客户端：向服务器发起请求')
-    client_socket.write('hello')
-})
-client_socket.on('data', data => {
-    console.log("客户端：接收到服务器响应，内容为：" + data)
-    client_socket.end() // 关闭客户端连接
-})
-
 // Server
 const server = net.createServer(server_socket => {
-    console.log('服务端：客户端建立连接')
     server_socket.on('data', data => {
-        console.log('服务端：接收到客户端请求，内容为：' + data);
-        server_socket.write('world') // 向客户端返回数据
+        console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
+        server_socket.write('world') // 向客户端发送响应
     })
-    server_socket.on('close', () => {
-        console.log("服务端：客户端断开连接")
-    })
-}).listen(8124)
+}).listen(8124, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+// Client
+const client_socket = net.createConnection(8124, () => {
+    console.log('客户端：已建立连接')
+    client_socket.write('hello') // 向服务器发送请求
+})
+client_socket.on('data', data => {
+    console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
+    client_socket.destroy() // 关闭客户端连接
+})
+client_socket.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
 ```
 
-![TCP客户端&服务器]()
+![TCP_Socket]()
+
+### (6) dgram 模块
+
+dgram 模块提供了对 UDP 套接字的支持
+
+dgram.Socket 类表示 `UDP 套接字`，用于创建 `UDP 客户端和服务器`
+
+```js
+定义：import dgram from 'dgram'
+     const udpSocket = dgram.createSocket(type,[messageListener])
+     const udpSocket = dgram.createSocket(options1,[messageListener])
+方法：基本方法：
+     udpSocket.address()                                  //返回当前套接字的地址{family,address,port}
+     udpSocket.remoteAddress()                            //返回当前套接字远程连接的套接字地址{family,address,port}
+     udpSocket.ref()                                      //返回当前套接字,将当前套接字加入Node事件循环
+     udpSocket.unref()                                    //返回当前套接字,将当前套接字移出Node事件循环
+     缓冲区方法：
+     udpSocket.setSendBufferSize(size)                    //无返回值,设置当前套接字发送缓冲区大小
+     udpSocket.setRecvBufferSize(size)                    //无返回值,设置当前套接字接收缓冲区大小
+     udpSocket.getSendBufferSize()                        //返回当前套接字发送缓冲区字节大小
+     udpSocket.getRecvBufferSize()                        //返回当前套接字接收缓冲区字节大小
+     连接方法：
+     udpSocket.bind([port],[address],[listeningListener]) //返回当前套接字,当前套接字绑定端口和地址并在其上侦听数据报消息,未绑定端口操作系统将绑定随机端口,未绑定地址操作系统将尝试侦听所有地址
+     udpSocket.bind(options2,[listeningListener])         //返回当前套接字,当前套接字绑定端口和主机并在其上侦听数据报消息
+     udpSocket.connect(port,[address],[connectListener])  //无返回值,当前套接字向要连接的远程套接字发起 UDP 连接请求,可选参数address为空,默认使用127.0.0.1(udp4)、::1(udp6)
+     数据传输方法：
+     udpSocket.send(msg,[offset,len],[cb])                //无返回值,当前套接字将msg从偏移offset处开始的len字节发送到远程连接的套接字,可选参数offset、len仅当msg为缓冲区、TypedArray、DataView时才支持,可选参数cb在数据最终写完后执行,可能不会立即执行
+     udpSocket.disconnect()                               //无返回值,当前套接字断开连接
+     udpSocket.close([closeListener])                     //返回并关闭当前套接字
+  
+
+options1：
+type           //指定 UDP 协议类型
+ipv6Only       //指定当前套接字仅适用于 IPv6 地址
+sendBufferSize //指定当前套接字的发送缓冲区大小
+recvBufferSize //指定当前套接字的接收缓冲区大小
+lookup         //指定当前套接字的自定义域名查找函数(默认dns.lookup())
+signal         //指定可用于销毁当前套接字的中止信号
+
+options2：
+fd        //指定文件描述符可用于封装现有的套接字,不指定则创建新的套接字
+port      //指定当前套接字绑定的端口
+address   //指定当前套接字绑定的主机
+exclusive //指定当前套接字是否不允许共享端口连接(默认false)
+
+
+事件：
+listening //当前套接字正在监听时触发
+connect   //当前套接字与远程套接字成功建立连接后触发
+message   //当前套接字接收到可用的数据报时触发(事件监听器参数为 msg、remoteAddress)
+close     //当前套接字关闭时触发
+error     //当前套接字发生错误时触发(事件监听器参数为 Error 对象)
+```
+
+### (7) UDP 客户端/服务器实例
+
+```js
+import dgram from 'dgram'
+
+// Server
+const server = dgram.createSocket('udp4')
+  .bind(41234, 'localhost')
+server.on('listening', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+server.on('message', (msg, remoteAddress) => {
+    console.log("服务端：接收到客户端" + "(" + remoteAddress.address + ":" + remoteAddress.port + ")" + "请求 " + msg)
+    server.send('world', remoteAddress.port, remoteAddress.address) // 向客户端发送响应
+})
+
+// Client
+const client = dgram.createSocket('udp4')
+client.connect(41234, 'localhost', () => {
+    console.log("客户端：已建立连接")
+    client.send('hello') // 向服务端发送请求
+    client.on('message', (msg, remoteAddress) => {
+        console.log("客户端：接收到服务端" + "(" + remoteAddress.address + ":" + remoteAddress.port + ")" + "响应 " + msg)
+        if(msg.toString() == 'world'){
+            client.close()
+        }
+    })
+    client.on('close', () => {
+        console.log("客户端：已关闭客户端套接字")
+    })
+})
+```
+
+![UDP_Socket]()
 
 ## 4. http 模块
 

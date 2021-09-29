@@ -1,24 +1,26 @@
 import net from 'net'
 
-// Client
-const client_socket = net.createConnection(8124, () => {
-    console.log('客户端：向服务器发起请求')
-    client_socket.write('hello')
-})
-client_socket.on('data', data => {
-    console.log("客户端：接收到服务器响应，内容为：" + data)
-    client_socket.end() // 关闭客户端连接
-})
-
 // Server
 const server = net.createServer(server_socket => {
-    console.log('服务端：客户端建立连接')
     server_socket.on('data', data => {
-        console.log('服务端：接收到客户端请求，内容为：' + data);
-        server_socket.write('world') // 向客户端返回数据
+        console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
+        server_socket.write('world') // 向客户端发送响应
     })
-    server_socket.on('close', () => {
-        console.log("服务端：客户端断开连接")
-    })
-}).listen(8124)
+}).listen(8124, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+// Client
+const client_socket = net.createConnection(8124, () => {
+    console.log('客户端：已建立连接')
+    client_socket.write('hello') // 向服务器发送请求
+})
+client_socket.on('data', data => {
+    console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
+    client_socket.destroy() // 关闭客户端连接
+})
+client_socket.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
 
