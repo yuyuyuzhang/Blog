@@ -112,10 +112,12 @@ rs.resume()
 
 ### (3) stream.Readable 类
 
+stream.Readable 类表示`只读流`
+
 ```js
 定义：const readStream = new stream.Readable([options])
 属性：readable.readableHighWaterMark       //返回构造当前只读流时指定的highWaterMark值
-     readStream.readableObjectMode        //返回/设置构造当前只读流时指定的objectMode属性
+     readStream.readableObjectMode        //返回/设置当前只读流的objectMode属性
      readStream.readableEncoding          //返回当前只读流指定的encoding编码
      readStream.readableFlowing           //返回当前只读流的可读流动状态
      readStream.readStream                //返回当前只读流内部缓冲是否存在数据可被消费
@@ -187,7 +189,7 @@ writeStream.end()
 * **readStream.readableFlowing === null**：当前只读流不可读，不会读取数据
 * **readStream.readableFlowing === true（流动模式）**：当前只读流可读且流动，读取数据且主动触发事件流动被消费
   * `自动`从底层系统读取数据块，并通过 `EventEmitter` 接口的事件尽可能快的被提供给应用程序
-* **readStream.readableFlowing === false（暂停模式）**：当前只读流可读但不流动，读取数据但暂停事件流动未被消费，因此数据可能会堆积在只读流的`内部缓冲`
+* **readStream.readableFlowing === false（暂停模式）**：当前只读流可读但不流动，读取数据但暂停事件流动数据未被消费，因此数据可能会堆积在只读流的`内部缓冲`
   * `手动`调用 `readStream.read()` 读取数据块
 
 所有只读流都开始于`暂停模式`，从暂停模式切换到流动模式有如下 3 种方式，如果只读流切换到流动模式但是没有消费者处理数据，`数据将会丢失`
@@ -209,14 +211,16 @@ writeStream.end()
 
 ### (4) stream.Writable 类
 
+stream.Writable 类表示`只写流`
+
 ```js
 定义：const writeStream = new stream.Writable([options])
 属性：writeStream.writableHighWaterMark        //返回构造当前只写流时指定的highWaterMark值
-     writeStream.writableObjectMode           //返回/设置构造当前只写流时指定的objectMode属性
+     writeStream.writableObjectMode           //返回/设置当前只写流的objectMode属性
      writeStream.writable                     //返回当前只写流内部缓冲是否未满可写入
      writeStream.writableLength               //返回当前只写流内部缓冲的字节数
      writeStream.writableCorked               //返回为了完全unlock当前只写流需要调用writable.unlock()的次数
-     writeStream.writableNeedDrain            //返回当前只写流的缓冲区是否已满且即将排空后触发drain事件
+     writeStream.writableNeedDrain            //返回当前只写流的缓冲区是否已满且即将排空并触发drain事件
      writeStream.writableEnded                //返回当前只写流是否已关闭
      writeStream.writableFinished             //返回当前只写流是否已关闭且数据都已交付给操作系统
      writeStream.destroyed                    //返回当前只写流是否已销毁

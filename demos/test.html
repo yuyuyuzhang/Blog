@@ -13,7 +13,16 @@
   
 <script>
 
+var res = {
+  extend: {a: ''},
+  msg: ''
+}
 
+if(res.extend && res.extend !== '' && JSON.stringify(res.extend) != "{}"){
+  console.log(true)
+}else{
+  console.log(false)
+}
 
 </script>
 </body>

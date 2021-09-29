@@ -279,51 +279,280 @@ timeout //查询超时
 tries   //解析器放弃尝试联系每个服务器的尝试次数(默认4)
 ```
 
-## 3. net 模块
+## 3. dgram、net 模块
 
-net 模块提供`异步网络 API`，用于`创建基于流的 TCP 或 IPC 客户端和服务器`
+### (1) 套接字
 
-### (1) IPC（Inter-Process Communication，进程间通信）
+套接字就是网络中不同主机上的应用进程之间进行双向通信的端点的抽象
 
-### (2) net API
+套接字提供了应用层进程利用网络协议交换数据的机制，套接字上联应用进程，下联网络协议栈，是应用程序通过网络协议进行通信的接口，也是应用程序与网络协议进行交互的接口
+
+#### ① 套接字的组成
+
+套接字 `Socket = IP ：Port`，套接字的表示方法是点分十进制的 IP 地址后面加上端口号，中间用冒号隔开
+
+#### ② 套接字的类型
+
+进程间通信按进程分布情况可以分为以下 2 种
+
+* 单机内的进程间通信
+* 多机间远程调用的进程间通信
+
+套接字分为以下 4 种类型
+
+* **Unix 域套接字**：仅适用于单机内的进程间通信
+* **网络套接字**：既适用于单机内的进程间通信，也适用于多机间远程调用的进程间通信
+  * **TCP 套接字（SOCK_STREAM）**：仅适用于 `TCP` 协议，只能读取 TCP 协议的数据，提供面向连接、可靠的数据传输服务
+  * **DUP 套接字（SOCK_DGRAM）**：仅适用于 `UDP` 协议，只能读取 UDP 协议的数据，提供无连接、不可靠的数据传输服务
+  * **原始套接字（SOCK_RAW）**：适用于`其他`协议，可以读取内核未处理的 IP 数据包
+
+单机内的进程间通信更推荐使用 Unix 域套接字，因为 Unix 域套接字仅仅进行数据复制，不会执行网络协议栈中的添加、删除报文头、计算校验和、计算报文顺序等复杂操作，通信开销更小
+
+#### ③ 套接字的连接过程
+
+要通过互联网进行通信，至少需要一对套接字，客户端套接字 Client Socket，服务端套接字 Server Socket
+
+* **服务器监听**：服务端套接字处于等待连接状态，实时监控网络状态，并不定位具体的客户端套接字
+* **客户端请求**：客户端套接字描述要连接的服务端套接字的 IP 地址和端口号，然后向服务端套接字发出连接请求
+* **连接确认**：服务端套接字监听到客户端套接字的连接请求，响应请求并建立一个新的线程将自身的描述发送给客户端套接字，客户端套接字确认此描述则建立连接，服务端套接字继续处于监听状态，等待其他客户端套接字的连接请求
+
+#### ④ 套接字的数据传输过程
+
+套接字之间传输的数据被称为`流`，既可以通过 buffer 对象在流中传输二进制数据，也可以通过 Unicode 编码传输字符串，2 种类型的数据最终均会被包装为`数据报`传输，套接字可以通过发送一个特殊的完成数据报 `FIN` 表明本次传输已完成
+
+通过互联网进行通信时，客户端应用程序将要传输的数据写入自身主机的客户端套接字，客户端套接字通过与网卡 NIC 相连的传输介质将数据发送到服务端套接字，使服务端应用程序能够接收到这段数据
+
+### (2) dgram 模块
+
+dgram 模块提供了对 UDP 套接字的支持
+
+dgram.Socket 类表示 `UDP 套接字`，用于创建 `UDP 客户端和服务器`
+
+```js
+定义：import dgram from 'dgram'
+     const udpSocket = dgram.createSocket(type,[messageListener])
+     const udpSocket = dgram.createSocket(options1,[messageListener])
+方法：基本方法：
+     udpSocket.address()                   //返回当前套接字的地址{family,address,port}
+     udpSocket.remoteAddress()             //返回当前套接字远程连接的套接字地址{family,address,port}
+     udpSocket.bind([port],[address],[cb]) //无返回值,当前套接字绑定端口和主机
+     udpSocket.bind(options2,[cb])         //无返回值,
+     udpSocket.ref()                       //返回当前套接字,将当前套接字加入Node事件循环
+     udpSocket.unref()                     //返回当前套接字,将当前套接字移出Node事件循环
+     连接方法：
+     udpSocket.connect(port,[address],[cb])
+     udpSocket.disconnect()
+     udpSocket.close([cb]) //无返回值,关闭当前套接字
+     数据传输方法：
+     udpSocket.setTTL(ttl) //设置数据报生存时间
+
+     udpSocket.setBroadcast(flag) //设置是否启动广播
+     udpSocket.send(msg,[offset,len],[port],[address],[cb]) //广播数据报
+
+     udpSocket.setMulticastTTL(ttl) //设置组播数据报生存时间
+     udpSocket.addMembership(multicastAddress,[multicastInterface]) //添加组播成员
+     udpSocket.dropMembership(multicastAddress,[multicastInterface]) //删除组播成员
+     udpSocket.addSourceSpecificMembership(sourceAddress,groupAddress,[multicastInterface]) 
+     udpSocket.dropSourceSpecificMembership(sourceAddress,groupAddress,[multicastInterface])
+     udpSocket.getRecvBufferSize()
+     udpSocket.getSendBufferSize()
+     udpSocket.setMulticastLoopback(flag)
+     udpSocket.setRecvBufferSize(size)
+     udpSocket.setSendBufferSize(size)
+     udpSocket.setMulticastInterface(multicastInterface)
+     
+
+options1：
+type           //指定 UDP 协议类型
+reuseAddr      //
+ipv6Only       //
+recvBufferSize //
+sendBufferSize //
+lookup         //指定当前套接字的自定义域名查找函数(默认dns.lookup())
+signal         //指定可用于销毁当前套接字的中止信号
+
+options2：
+fd        //指定文件描述符可用于封装现有的套接字,不指定则创建新的套接字
+port      //指定当前套接字绑定的端口
+address   //指定当前套接字绑定的主机
+exclusive //
+
+
+
+事件：
+close     //
+connect   //
+error     //
+listening //
+message   //
+```
+
+实例
+
+```js
+
+```
+
+### (3) net 模块
+
+net 模块提供了对 `IPC、TCP 套接字`的支持，用于创建`IPC、TCP 客户端和服务器`
 
 ```js
 定义：import net from 'net'
-方法：net.connect()
-     net.createConnection()
-     net.createServer()
-     net.isIP(input)
-     net.isIPv4(input)
-     net.isIPv6(input)
+方法：IP 方法：
+     net.isIP(input)                                     //返回 input 是否为 IP
+     net.isIPv4(input)                                   //返回 input 是否为 IPv4
+     net.isIPv6(input)                                   //返回 input 是否为 IPv6
+     套接字方法：
+     net.createConnection(path,[connectListener])        //返回并创建 IPC 客户端套接字,创建后立即使用socket.connect()发起连接请求,建立连接后触发connect事件,connectListener参数将作为connect事件的监听器
+     net.createConnection(port,[host],[connectListener]) //返回并创建 TCP 客户端套接字
+     net.createServer([options],[connectionListener])    //返回并创建 IPC、TCP 服务端,connectionListener参数将作为connection事件的监听器
 ```
 
-### (3) net.BlockList 类
+### (4) net.Socket 类
+
+net.Socket 类表示`套接字`，常用于创建 `IPC、TCP 客户端套接字`，或作为 net.Server 类的 connection 事件监听器的参数，即 `IPC、TCP 服务端套接字`
 
 ```js
+定义：import net from 'net'
+     const ipcSocket = net.createConnection(path,[connectListener])        //返回 IPC 客户端套接字
+     const tcpSocket = net.createConnection(port,[host],[connectListener]) //返回 TCP 客户端套接字
+     const socket = new net.Socket([options1])                             //返回自定义套接字
+属性：连接状态：
+     socket.pending                                //返回当前套接字是否正在等待请求连接,socket.connect()尚未调用
+     socket.connecting                             //返回当前套接字是否正在发起连接请求,socket.connect()已被调用但尚未完成
+     socket.readyState                             //返回当前套接字的连接状态(opening:正在连接,open:可读可写,readOnly:只读,writeOnly:只写)
+     socket.destroyed                              //返回当前套接字是否已关闭连接,无法再传输数据
+     socket.timeout                                //返回当前套接字的连接超时时间(毫秒)
+     传输状态：
+     socket.localAddress                           //返回当前套接字的本地IP地址
+     socket.localPort                              //返回当前套接字的本地端口
+     socket.remoteFamily                           //返回当前套接字远程连接的套接字IP地址类型
+     socket.remoteAddress                          //返回当前套接字远程连接的套接字IP地址
+     socket.remotePort                             //返回当前套接字远程连接的套接字端口
+     socket.bytesWritten                           //返回当前套接字发送的字节数
+     socket.bytesRead                              //返回当前套接字接收的字节数
+方法：基本方法：
+     socket.address()                              //返回当前套接字的地址{family,address,port}
+     socket.setEncoding([encoding])                //返回当前套接字,设置当前套接字编码
+     socket.setNoDelay([noDelay])                  //返回当前套接字,设置当前套接字的Nagle算法
+     socket.setTimeout(timeout,[cb])               //返回当前套接字,设置当前套接字的连接超时时间
+     socket.setKeepAlive([enable],[initialDelay])  //返回当前套接字,设置当前套接字的长连接功能
+     socket.ref()                                  //返回当前套接字,将当前套接字加入Node事件循环
+     socket.unref()                                //返回当前套接字,将当前套接字移出Node事件循环
+     连接方法：
+     socket.connect(path,[connectListener])        //返回当前套接字,当前套接字向要连接的远程套接字发起 IPC 连接请求
+     socket.connect(port,[host],[connectListener]) //返回当前套接字,当前套接字向要连接的远程套接字发起 TCP 连接请求
+     socket.connect(options2,[connectListener])    //返回当前套接字,当前套接字向要连接的远程套接字发起连接请求
+     传输数据方法：
+     socket.pause()                                //返回当前套接字,当前套接字暂停读取数据,用于限制上传
+     socket.resume()                               //返回当前套接字,当前套接字继续读取数据
+     socket.write(data,[encoding],[cb])            //返回当前套接字是否整个数据都已刷新到内核缓存区,当前套接字发送数据 data 给连接的套接字
+     socket.end([data],[encoding],[cb])            //返回当前套接字,半关闭当前套接字连接,data参数存在则相当于再调用一次socket.write()
+     socket.destroy([error])                       //返回当前套接字,关闭当前套接字连接并销毁流   
 
-```
 
-### (4) net.SocketAddress 类
+options1：
+fd            //指定文件描述符可用于封装现有的套接字,不指定则创建新的套接字
+readable      //指定传入 fd 时,是否允许在当前套接字上读取
+writable      //指定传入 fd 时,是否允许在当前套接字上写入
+allowHalfOpen //指定当前套接字可读端结束时,是否不自动结束可写端
+signal        //指定可用于销毁当前套接字的中止信号
 
-```js
+options2：
+onread       //指定传入数据存储的buffer及数据到达当前套接字时执行的回调函数callback
+IPC 连接：
+path         //指定当前套接字应该连接的远程套接字路径
+TCP 连接：
+lookup       //指定当前套接字的自定义域名查找函数(默认dns.lookup())
+hints        //指定当前套接字的 lookup 函数提示
+family       //指定当前套接字的本地 IP 地址类型(4,6,0-默认)
+localAddress //指定当前套接字的本地 IP 地址
+localPort    //指定当前套接字的本地端口
+host         //指定当前套接字应该连接的远程套接字主机(默认localhost)
+port         //指定当前套接字应该连接的远程套接字端口
 
+
+事件：
+lookup  //当前套接字解析主机名之后建立连接之前触发
+connect //当前套接字成功与要连接的远程套接字建立连接后触发
+ready   //当前套接字准备好使用之后触发
+data    //当前套接字接收到数据时触发(事件监听器参数为 buffer/string)
+drain   //当前套接字写缓冲区变空时触发
+timeout //当前套接字因不活动而超时时触发,用户必须手动调用socket.end()/destroy()关闭连接
+error   //当前套接字发生错误时触发(事件监听器参数为 Error 对象)
+end     //当前套接字连接的远程套接字表示传输结束时触发,从而结束当前套接字的可读端
+close   //当前套接字完全关闭时触发
 ```
 
 ### (5) net.Server 类
 
-```js
-
-```
-
-### (6) net.Socket 类
+net.Server 类表示`服务器`，常用于创建 `IPC、TCP 服务器`
 
 ```js
+定义：import net from 'net'
+     const server = net.createServer([options],[connectionListener])
+     const server = new net.Server([options],[connectionListener])
+属性：server.listening                            //返回当前服务器是否正在监听连接
+     server.maxConnections                       //返回当前服务器允许的最大连接数
+方法：基本方法：
+     server.address()                            //返回当前服务器的地址{family,address,port}
+     server.ref()                                //返回当前服务器,将当前服务器加入Node事件循环
+     server.unref()                              //返回当前服务器,将当前服务器加入Node事件循环
+     监听方法：
+     server.listen(path,[backlog],[cb])          //无返回值,启动 IPC 连接监听
+     server.listen([port],[host],[backlog],[cb]) //无返回值,启动 TCP 连接监听
+     server.getConnections((err,count)=>{})      //返回当前服务器,异步获取当前服务器上的并发连接数
+     server.close([cb])                          //返回并关闭当前服务器,停止接收新连接并保持现有连接,直到所有连接都结束并触发close事件时调用回调函数cb,然后最终关闭服务端
 
+
+options：
+allowHalfOpen  //指定当前服务器可读端结束时,是否不自动结束可写端
+pauseOnConnect //指定是否应该在连接上暂停当前服务器
+
+
+事件：
+listening  //当前服务器启动监听后触发
+connection //当前服务器建立新连接时触发(事件监听器参数为当前服务器的服务端套接字,net.Socket实例)
+close      //当前服务器关闭时触发
+error      //当前服务器发生错误时触发(事件监听器参数为 Error 对象)
 ```
 
-## 4. http、https 模块
+### (6) 实例
 
-为了支持所有可能的 HTTP 应用程序，Node `http、https、http2` 模块是非常底层的，只进行`流处理和消息解析`，将消息解析后头部和正文，但不再解析实际的头部和正文
+connection 事件监听器参数为当前服务器的`服务端套接字`，`net.Socket` 实例
+
+```js
+import net from 'net'
+
+// Client
+const client_socket = net.createConnection(8124, () => {
+    console.log('客户端：向服务器发起请求')
+    client_socket.write('hello')
+})
+client_socket.on('data', data => {
+    console.log("客户端：接收到服务器响应，内容为：" + data)
+    client_socket.end() // 关闭客户端连接
+})
+
+// Server
+const server = net.createServer(server_socket => {
+    console.log('服务端：客户端建立连接')
+    server_socket.on('data', data => {
+        console.log('服务端：接收到客户端请求，内容为：' + data);
+        server_socket.write('world') // 向客户端返回数据
+    })
+    server_socket.on('close', () => {
+        console.log("服务端：客户端断开连接")
+    })
+}).listen(8124)
+```
+
+![TCP客户端&服务器]()
+
+## 4. http 模块
+
+为了支持所有可能的 HTTP 应用程序，Node http 模块是非常底层的，只进行`流处理和消息解析`，将消息解析后头部和正文，但不再解析实际的头部和正文
 
 ### (1) http API
 
@@ -345,33 +574,13 @@ headers
 ...
 ```
 
-### (2) https API
-
-```js
-定义：import https from 'https'
-属性：https.globalAgent                           //返回 Agent 类的全局实例
-方法：https.request(options,[cb])                 //返回并创建 ClientRequest 实例
-     https.get(options,[cb])                     //返回并创建 ClientRequest 实例,get请求并自动调用req.end()
-     https.createServer([options],[reqListener]) //返回并创建 https.Server 实例
-
-
-options：
-protocol //默认 https:
-hostname 
-port     //默认 443
-path
-method   //默认 GET
-headers
-...
-```
-
-### (3) http/https.Agent 类
+### (3) http.Agent 类
 
 ```js
 
 ```
 
-### (4) http/https.ClientRequest 类
+### (4) http.ClientRequest 类
 
 http/https.ClientRequest 类表示`客户端请求`
 
@@ -470,7 +679,7 @@ req.on('error',err => {
 req.end(data)
 ```
 
-### (5) http/https.Server 类
+### (5) http.Server 类
 
 http/https.Server 类表示服务器
 
@@ -500,22 +709,44 @@ request          //
 upgrade          //
 ```
 
-### (6) http/https.ServerResponse 类
+### (6) http.ServerResponse 类
 
 ```js
 
 ```
 
-### (7) http/https.IncomingMessage 类
+### (7) http.IncomingMessage 类
 
 ```js
 
 ```
 
-## 5. http2 模块
+## 5. tls、https 模块
 
-## 6. tls 模块
+### (2) https API
 
-## 7. dgram 模块
+```js
+定义：import https from 'https'
+属性：https.globalAgent                           //返回 Agent 类的全局实例
+方法：https.request(options,[cb])                 //返回并创建 ClientRequest 实例
+     https.get(options,[cb])                     //返回并创建 ClientRequest 实例,get请求并自动调用req.end()
+     https.createServer([options],[reqListener]) //返回并创建 https.Server 实例
+
+
+options：
+protocol //默认 https:
+hostname 
+port     //默认 443
+path
+method   //默认 GET
+headers
+...
+```
+
+https.Agent
+
+https.Server
+
+## 6. http2 模块
 
 ①②③④⑤⑥⑦⑧⑨⑩

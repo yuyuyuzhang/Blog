@@ -93,9 +93,9 @@ clearImmediate()
 
 ###  AbortController 类
 
-事件触发机制
-
-url dns net http http2 https dgram tls
+5 Node事件触发机制
+7 Node文件系统
+url dns net dgram http http2 tls https  
 process child_process cluster worker_threads
 os v8 vm tty
 intl
