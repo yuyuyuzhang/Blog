@@ -2,8 +2,7 @@ import http from 'http'
 
 // Server
 const server = http.createServer((req, res) => {
-    // console.log(req)
-    console.log("服务端：接收到客户端" + "(" + req.host + ":" + req.remotePort + ")" + "请求 " + req)
+    console.log("服务端：接收到客户端请求 " + req.url)
 
     // 向客户端发送响应
     res.statusCode = 200
@@ -21,12 +20,11 @@ const options = {
     path: '/todos?name=zhangsan'
 }
 const req = http.get(options, res => {
-    console.log("客户端：接收到服务端" + "(" + res.remoteAddress + ":" + res.remotePort + ")" + "响应 " + res)
+    console.log("客户端：接收到服务端响应 " + res.statusCode + ':' + res.statusMessage)
     req.end()
 })
 req.on('close', () => {
     console.log("客户端：已关闭客户端套接字")
 })
-
 
 

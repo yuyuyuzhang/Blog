@@ -116,20 +116,20 @@ stream.Readable 类表示`只读流`
 
 ```js
 定义：const readStream = new stream.Readable([options])
-属性：readable.readableHighWaterMark       //返回构造当前只读流时指定的highWaterMark值
-     readStream.readableObjectMode        //返回/设置当前只读流的objectMode属性
-     readStream.readableEncoding          //返回当前只读流指定的encoding编码
+属性：readStream.readableObjectMode        //返回/设置当前只读流是否为对象模式
+     readStream.readableHighWaterMark     //返回当前只读流内部缓冲的最大字节数
+     readStream.readableLength            //返回当前只读流内部缓冲的字节数
+     readStream.readableEncoding          //返回当前只读流内部缓冲使用的编码
      readStream.readableFlowing           //返回当前只读流的可读流动状态
      readStream.readStream                //返回当前只读流内部缓冲是否存在数据可被消费
-     readStream.readableLength            //返回当前只读流内部缓冲可被消费的数据字节数
      readStream.readableEnded             //返回当前只读流内部缓冲的数据是否被完全消费
      readStream.destroyed                 //返回当前只读流是否被销毁
 方法：readable.setEncoding(encoding)       //返回当前只读流,为当前只读流设置字符编码,未设置字符编码则流数据默认返回buffer对象,否则返回对应字符编码的字符串
      readStream.resume()                  //返回当前只读流,将当前只读流切换为流动模式,恢复触发data事件
      readStream.pause()                   //返回当前只读流,将当前只读流切换为暂停模式,停止触发data事件
      readStream.isPaused()                //返回当前只读流是否暂停
-     readStream.push(chunk,[encoding])    //返回当前只读流内部缓冲是否未满,以指定字符编码将额外数据块chunk推入只读流内部缓冲
      readStream.read([size])              //返回读取的指定字节数据(size<=1GB),默认返回buffer对象,没有指定size返回所有可读数据,没有可读数据返回null
+     readStream.push(chunk,[encoding])    //返回当前只读流内部缓冲是否未满,以指定字符编码将额外数据块chunk推入只读流内部缓冲
      readStream.unshift(chunk,[encoding]) //无返回值,将已经消费的数据块chunk推回只读流内部缓冲,用于已消费数据但反悔的情况
      readStream.pipe(des,[{endFlag}])     //返回目标流des,将当前只读流切换到流动模式并将其所有数据推送到绑定的目标流,可选参数endFlag表示读取结束时是否结束写入(默认true)
      readStream.unpipe([des])             //返回当前只读流,解绑通过readable.pipe()绑定的目标流des
@@ -137,9 +137,9 @@ stream.Readable 类表示`只读流`
 
 
 options：
-highWaterMark //当前只读流内部缓冲的最大字节数(默认16384,16KB)
 objectMode    //当前只读流是否为对象模式(默认false)
-encoding      //当前只读流缓冲区使用的字符编码(默认null)
+highWaterMark //当前只读流内部缓冲的最大字节数(默认16384,16KB)
+encoding      //当前只读流内部缓冲使用的字符编码(默认null)
 autoDestroy   //当前只读流结束后是否应该自动调用readStream.destroy()方法(默认false)
 emitClose     //当前只读流销毁后是否应该触发close事件(默认true)
 signal        //当前只读流可能取消的信号
@@ -215,16 +215,16 @@ stream.Writable 类表示`只写流`
 
 ```js
 定义：const writeStream = new stream.Writable([options])
-属性：writeStream.writableHighWaterMark        //返回构造当前只写流时指定的highWaterMark值
-     writeStream.writableObjectMode           //返回/设置当前只写流的objectMode属性
-     writeStream.writable                     //返回当前只写流内部缓冲是否未满可写入
+属性：writeStream.writableObjectMode           //返回/设置当前只写流是否为对象模式
+     writeStream.writableHighWaterMark        //返回当前只写流内部缓冲的最大字节数
      writeStream.writableLength               //返回当前只写流内部缓冲的字节数
      writeStream.writableCorked               //返回为了完全unlock当前只写流需要调用writable.unlock()的次数
-     writeStream.writableNeedDrain            //返回当前只写流的缓冲区是否已满且即将排空并触发drain事件
      writeStream.writableEnded                //返回当前只写流是否已关闭
-     writeStream.writableFinished             //返回当前只写流是否已关闭且数据都已交付给操作系统
+     writeStream.writableFinished             //返回当前只写流是否是否数据均已刷新到底层系统
+     writeStream.writable                     //返回当前只写流内部缓冲是否未满可写入
+     writeStream.writableNeedDrain            //返回当前只写流的缓冲区是否已满且即将排空并触发drain事件
      writeStream.destroyed                    //返回当前只写流是否已销毁
-方法：writable.setDefaultEncoding(encoding)   //返回当前只写流,为当前只写流设置默认字符编码 
+方法：writeStream.setDefaultEncoding(encoding) //返回当前只写流,为当前只写流设置默认字符编码 
      writeStream.write(chunk,[encoding],[cb]) //返回当前只写流内部缓冲是否未满,写入数据块chunk到当前只写流(true:未满,false:已满),该方法一旦返回false则不建议再写入数据
      writeStream.cork()                       //无返回值,强制将调用该方法之后写入的所有数据都添加到内部缓冲而不输出到目标
      writeStream.uncork()                     //无返回值,将调用stream.cork()以来缓冲的所有数据输出到目标,建议使用process.nextTick()延迟writable.uncork()的调用
@@ -233,8 +233,8 @@ stream.Writable 类表示`只写流`
 
 
 options：
-highWaterMark   //当前只写流内部缓冲的最大字节数(默认16384,16KB)
 objectMode      //当前只写流是否为对象模式(默认false)
+highWaterMark   //当前只写流内部缓冲的最大字节数(默认16384,16KB)
 decodeStrings   //当前只写流调用writeStream.write()方法时是否将字符串编码为buffer(默认true)
 defaultEncoding //当前只写流调用writeStream.write()方法时使用的默认字符串编码(默认utf8,优先级低于decodeStrings)
 autoDestroy     //当前只读流结束后是否应该自动调用writeStream.destroy()方法(默认false)

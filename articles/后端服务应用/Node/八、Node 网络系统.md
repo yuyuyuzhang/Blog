@@ -615,31 +615,40 @@ http/https.ClientRequest 类表示`客户端请求`，继承自 Stream 类
      const req = http.request(url,[options],[responseListener])
      const req = http.get(options,[responseListener]) 
      const req = http.get(url,[options],[responseListener]) 
-属性：req.protocol                                 //返回当前客户端请求协议
+属性：请求属性：
+     req.protocol                                 //返回当前客户端请求协议
      req.host                                     //返回当前客户端请求主机
      req.path                                     //返回当前客户端请求路径
      req.method                                   //返回当前客户端请求方法
      req.maxHeadersCount                          //返回当前客户端请求的限制最大响应头计数
+     req.headersSent                              //返回当前客户端请求的标头是否已发送
+     req.aborted                                  //返回当前客户端请求是否已中止
+     套接字属性：
      req.socket                                   //返回当前客户端请求的底层套接字
      req.reusedSocket                             //返回当前客户端请求是否通过重用的套接字发送
+     req.writableObjectMode                       //返回当前客户端请求对应的套接字的可写端是否为对象模式
+     req.writableHighWaterMark                    //返回当前客户端请求对应的套接字的可写端内部缓冲的最大字节数
+     req.writableLength                           //返回当前客户端请求对应的套接字的可写端内部缓冲的字节数
      req.writableEnded                            //返回当前客户端请求是否完成发送,即已调用req.end()
      req.writableFinished                         //返回当前客户端请求是否数据均已刷新到底层系统
-     req.aborted                                  //返回当前客户端请求是否已中止
-     req.destroyed                                //返回当前客户端请求是否已销毁
+     req.destroyed                                //返回当前客户端请求对应的套接字是否已销毁
 方法：基本方法：
      req.setNoDelay([noDelay])                    //无返回值,设置当前客户端请求的Nagle算法
      req.setSocketKeepAlive([enable],[initDelay]) //无返回值,设置当前客户端请求的长连接功能
      req.setTimeout(timeout,[cb])                 //返回当前客户端请求,设置当前客户端请求的连接超时时间
      标头方法：
      req.flushHeaders()                           //无返回值,刷新当前客户端请求头,Node由于效率通常会缓冲请求头直到调用req.end()或写入第一块请求数据,然后将请求头和数据打包到单个TCP数据包从而节省TCP往返
+     req.hasHeader(name)                          //返回当前客户端请求是否存在指定标头
      req.getHeader(name)                          //返回当前客户端请求的指定标头
+     req.getHeaders()                             //返回当前客户端请求的所有标头
+     req.getHeaderNames()                         //返回当前客户端请求的标头数组
      req.getRawHeaderNames()                      //返回当前客户端请求的原始标头数组
      req.setHeader(name,value)                    //无返回值,为当前客户端请求设置指定标头
      req.removeHeader(name)                       //无返回值,为当前客户端请求删除指定标头
      正文方法：
      req.write(chunk,[enc],[cb])                  //返回当前客户端请求整个正文数据是否均被成功刷新到内核缓冲,写入一块请求正文chunk
      req.end([data],[enc],[cb])                   //返回并完成当前客户端请求,请求正文任何部分未发送则将其刷新到流,可选参数data存在则相当于先调用一次req.write()
-     req.destroy([err])                           //返回并销毁当前客户端请求,丢弃响应的剩余数据并销毁客户端套接字,触发close事件
+     req.destroy([err])                           //返回当前客户端请求,销毁当前客户端请求对应的套接字,触发close事件
 
 
 事件：
@@ -712,7 +721,8 @@ http.ServerResponse 类的实例由 http.Server 类内部创建，不由用户�
      res.hasHeader(name)                 //返回当前服务器响应是否存在指定标头
      res.getHeader(name)                 //返回当前服务器响应的指定标头
      res.getHeaders()                    //返回当前服务器响应的所有标头
-     res.getHeaderNames()                //返回当前服务器响应的原始标头数组
+     res.getHeaderNames()                //返回当前服务器响应的标头数组
+     req.getRawHeaderNames()             //返回当前服务器响应的原始标头数组
      res.setHeader(name,value)           //返回当前服务器响应,设置当前服务器响应的指定标头值
      res.removeHeader(name)              //无返回值,移除当前服务器响应的指定标头
      res.addTrailers(headers)            //无返回值,向当前服务器响应添加 HTTP 尾随标头,仅在响应使用分块编码时
@@ -724,16 +734,41 @@ http.ServerResponse 类的实例由 http.Server 类内部创建，不由用户�
 
 
 事件：
-close  //当前服务器响应完成时触发，或其底层连接提前终止时触发
+close  //当前服务器响应完成时触发,或其底层连接提前终止时触发
 finish //当前服务器响应发送时触发
 ```
 
 ### (5) http.IncomingMessage 类
 
-http.IncomingMessage 类表示
+http.IncomingMessage 类表示`接收到的消息`，继承自 stream.Readable 类
+
+http.IncomingMessage 类的实例由 http.ClientRequest、http.Server 类内部创建，不由用户创建，作为 http.ClientRequest 类的 response 事件的第一个参数，http.Server 类的 request 事件监听器的第一个参数
 
 ```js
+定义：http.ClientRequest 类的 response 事件的第一个参数
+     http.Server 类的 request 事件监听器的第一个参数
+属性：基本属性：
+     inMsg.socket                 //返回当前消息对应的底层套接字
+     inMsg.aborted                //返回当前消息是否已中止
+     inMsg.complete               //返回当前消息是否已完整接收并解析
+     inMsg.httpVersion            //返回当前消息对应的 HTTP 版本
+     inMsg.headers                //返回当前消息头部
+     inMsg.rawHeaders             //返回当前消息对应的原始标头
+     inMsg.trailers               //返回当前消息对应的尾随标头
+     inMsg.rawTrailers            //返回当前消息对应的原始尾随标头
+     request 属性：
+     inMsg.method                 //返回当前消息的请求方法
+     inMsg.url                    //返回当前消息的请求地址
+     response 属性：
+     inMsg.statusCode             //返回当前消息的状态码
+     inMsg.statusMessage          //返回当前消息的状态描述
+方法：inMsg.setTimeout(msecs,[cb]) //返回当前消息,设置当前消息对应的套接字的超时时间
+     inMsg.destroy([error])       //返回当前消息,销毁当前消息对应的套接字,触发close事件
 
+
+事件：
+aborted
+close
 ```
 
 ### (6) http.Agent 类
@@ -741,7 +776,18 @@ http.IncomingMessage 类表示
 http.Agent 类表示
 
 ```js
-
+定义：const agent = new Agent([options])
+属性：agent.freeSockets
+     agent.maxFreeSockets
+     agent.maxSockets
+     agent.maxTotalSockets
+     agent.requests
+     agent.sockets
+方法：agent.getName(options)
+     agent.keepSocketAlive(socket)
+     agent.reuseSocket(socket,request)
+     agent.createConnection(options,[cb])
+     agent.destroy()
 ```
 
 ### (7) 实例
@@ -749,14 +795,79 @@ http.Agent 类表示
 #### HTTP GET 请求
 
 ```js
+import http from 'http'
 
+// Server
+const server = http.createServer((req, res) => {
+    console.log("服务端：接收到客户端请求 " + req.url)
+
+    // 向客户端发送响应
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('world')
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+// Client
+const options = {
+    host: '127.0.0.1',
+    port: 3001,
+    path: '/todos?name=zhangsan'
+}
+const req = http.get(options, res => {
+    console.log("客户端：接收到服务端响应 " + res.statusCode + ':' + res.statusMessage)
+    req.end()
+})
+req.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
 ```
+
+![http_get]()
 
 #### HTTP POST 请求
 
 ```js
+import http from 'http'
 
+// Server
+const server = http.createServer((req, res) => {
+  console.log("服务端：接收到客户端请求 " + req.url)
+
+  // 向客户端发送响应
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/plain')
+  res.end('world')
+}).listen(3001, '127.0.0.1', () => {
+  const address = server.address()
+  console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+// Client
+const data = 'hello'
+const options = {
+  host: '127.0.0.1',
+  port: 3001,
+  path: '/todos',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': data.length
+  }
+}
+const req = http.request(options, res => {
+  console.log("客户端：接收到服务端响应 " + res.statusCode + ':' + res.statusMessage)
+  req.end()
+})
+req.write(data) // 向服务器发送请求
+req.on('close', () => {
+  console.log("客户端：已关闭客户端套接字")
+})
 ```
+
+![http_post]()
 
 ## 5. tls、https 模块
 
