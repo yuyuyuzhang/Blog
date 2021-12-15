@@ -13,17 +13,29 @@
   
 <script>
 
-var res = {
-  extend: {a: ''},
-  msg: ''
+var contentType
+var viewState
+var moduleId
+
+var url ="/common/print/lodopprint.jsp";
+if(contentType){
+  url+="?contentType="+contentType;
+  if(viewState){
+		url+="&viewState="+viewState;
+	}
+	if(moduleId){
+		url+="&moduleId="+moduleId;
+	}
+} else if(viewState) {
+  url+="?viewState="+viewState;
+  if(moduleId){
+		url+="&moduleId="+moduleId;
+	}
+} else if(moduleId) {
+  url+="?moduleId="+moduleId;
 }
 
-if(res.extend && res.extend !== '' && JSON.stringify(res.extend) != "{}"){
-  console.log(true)
-}else{
-  console.log(false)
-}
-
+console.log(url)
 </script>
 </body>
 </html>

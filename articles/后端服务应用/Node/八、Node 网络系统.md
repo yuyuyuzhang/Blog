@@ -279,7 +279,7 @@ timeout //查询超时
 tries   //解析器放弃尝试联系每个服务器的尝试次数(默认4)
 ```
 
-## 3. net、dgram 模块
+## 3. net 模块
 
 ### (1) 套接字
 
@@ -322,7 +322,7 @@ tries   //解析器放弃尝试联系每个服务器的尝试次数(默认4)
 
 通过互联网进行通信时，客户端应用程序将要传输的数据写入自身主机的客户端套接字，客户端套接字通过与网卡 NIC 相连的传输介质将数据发送到服务端套接字，使服务端应用程序能够接收到这段数据
 
-### (2) net 模块
+### (2) net API
 
 net 模块提供了对 `IPC、TCP 套接字`的支持，用于创建`IPC、TCP 客户端和服务器`
 
@@ -449,7 +449,51 @@ error   //当前套接字发生错误时触发(事件监听器参数为 Error �
 timeout //当前套接字因不活动而超时时触发,用户必须手动调用socket.end()/destroy()关闭连接
 ```
 
-### (5) dgram 模块
+### (5) 实例
+
+```js
+import net from 'net'
+
+// Server
+const server = net.createServer(server_socket => {
+    server_socket.on('data', data => {
+        console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
+        server_socket.write('world') // 向客户端发送响应
+    })
+}).listen(8124, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+// Client
+const client_socket = net.createConnection(8124, () => {
+    console.log('客户端：已建立连接')
+    client_socket.write('hello') // 向服务器发送请求
+})
+client_socket.on('data', data => {
+    console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
+    client_socket.destroy() // 关闭客户端连接
+})
+client_socket.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
+```
+
+![tcp_socket]()
+
+## 4. dgram 模块
+
+### (1) dgram API
+
+dgram 模块提供了 UDP 套接字的支持
+
+```js
+定义：import dgram from 'dgram'
+方法：dgram.createSocket(type,[messageListener])     //返回并创建 UDP 套接字
+     dgram.createSocket(options1,[messageListener]) //返回并创建 UDP 套接字
+```
+
+### (2) dgram.Socket 类
 
 dgram.Socket 类表示 `UDP 套接字`，继承自 EventEmitter 类，用于创建 `UDP 客户端和服务器`
 
@@ -501,41 +545,7 @@ close     //当前套接字关闭时触发
 error     //当前套接字发生错误时触发(事件监听器参数为 Error 对象)
 ```
 
-### (6) 实例
-
-#### ① TCP 客户端/服务器实例
-
-```js
-import net from 'net'
-
-// Server
-const server = net.createServer(server_socket => {
-    server_socket.on('data', data => {
-        console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
-        server_socket.write('world') // 向客户端发送响应
-    })
-}).listen(8124, '127.0.0.1', () => {
-    const address = server.address()
-    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
-})
-
-// Client
-const client_socket = net.createConnection(8124, () => {
-    console.log('客户端：已建立连接')
-    client_socket.write('hello') // 向服务器发送请求
-})
-client_socket.on('data', data => {
-    console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
-    client_socket.destroy() // 关闭客户端连接
-})
-client_socket.on('close', () => {
-    console.log("客户端：已关闭客户端套接字")
-})
-```
-
-![TCP_Socket]()
-
-#### ② UDP 客户端/服务器实例
+### (2) 实例
 
 ```js
 import dgram from 'dgram'
@@ -569,9 +579,9 @@ client.connect(41234, 'localhost', () => {
 })
 ```
 
-![UDP_Socket]()
+![udp_socket]()
 
-## 4. http 模块
+## 5. http 模块
 
 ### (1) http API
 
@@ -889,21 +899,47 @@ req.on('close', () => {
 
 ![http_post]()
 
-## 5. tls、https 模块
+## 6. tls 模块
 
-### (1) tls API
+### (1) OpenSSL
 
 **安全套接层协议（Secure Sockets Layer，SSL）** 可以在互联网上提供秘密性传输，其目标是保证 2 个应用间通信的保密性和可靠性，服务器和客户端同时实现支持，已经成为互联网上保密通讯的工业标准
 
 **开放式安全套接层协议（Open Secure Sockets Layer，OpenSSL）** 是一个开放源代码的软件库，应用程序可以使用这个库来进行安全通信，避免窃听，同时确认另一端连接者的身份，这个库被广泛应用在互联网的网页服务器上。OpenSSL 整个软件包大概可以分成 3 个主要的功能部分：SSL 协议库、密码算法库、应用程序，作为一个基于密码学的安全开发包，OpenSSL 提供的功能十分强大和全面，囊括了 SSL 协议、主要的密码算法、常用的密钥和证书封装管理功能，并提供了丰富的应用程序供测试和使用
 
+#### ① OpenSSL 的安装和配置
+
+* OpenSSL 官网下载 exe 安装包并安装：http://slproweb.com/products/Win32OpenSSL.html
+  ![OpenSSL安装]()
+* 配置环境变量：将 OpenSSL 安装路径下 bin 文件夹的路径添加到操作系统的系统环境变量 Path
+  ![OpenSSL配置]()
+* 测试：cmd 输入 OpenSSL
+  ![OpenSSL测试]()
+
+#### ② OpenSSL 生成服务器私钥公钥
+
+```js
+生成服务器私钥：openssl genrsa -out server_rsa_private_key.pem 1024
+生成服务器公钥：openssl rsa -in server_rsa_private_key.pem -pubout -out server_rsa_public_key.pem
+
+生成服务器CSR证书签名：openssl req -new -key server_rsa_private_key.pem -out server_cert.csr
+生成服务器CSR证书文件：openssl x509 -req -in server_cert.csr -signkey server_rsa_private_key.pem -out server_cert.pem
+```
+
+![openssl生成服务器私钥公钥]()
+
+一般生成到 C 盘用户文件夹下
+
+![密钥位置]()
+
+### (2) tls API
+
 ```js
 定义：import tls from 'tls'
-属性：tls.rootCertificates                                        //返回当前Node版本提供的捆绑Mozilla CA存储中的根证书
 方法：基本方法：
      tls.getCiphers()                                            //返回支持的 TLS 密码名称的数组
      tls.createSecureContext([options])                          //无返回值,创建一个安全上下文,用于 TLS API
-     tls.checkServerIdentity(hostname,cert)                      //返回undefined或错误对象,验证证书是否被颁发给主机名
+     tls.checkServerIdentity(hostname,cert)                      //返回undefined或错误对象,验证证书是否被颁发给指定主机
      服务器方法：
      tls.createServer([options1],[secureConnectionListener])     //返回并创建 TLS 服务器
      客户端方法：
@@ -912,7 +948,7 @@ req.on('close', () => {
      tls.connect(port,[host],[options2],[secureConnectListener]) //返回TLS客户端套接字,TLS客户端套接字向要连接的远程套接字发起 TCP 连接请求
 ```
 
-### (2) tls.Server 类
+### (3) tls.Server 类
 
 tls.Server 类表示 `TLS 服务器`，继承自 net.Server 类
 
@@ -949,7 +985,7 @@ tlsClientError   //建立安全连接之前发生错误时触发
 net.Server 类事件
 ```
 
-### (3) tls.TLSSocket 类
+### (4) tls.TLSSocket 类
 
 tls.TLSSocket 类表示 `TLS 套接字`，继承自 net.Socket 类
 
@@ -1011,15 +1047,17 @@ session       //
 net.Socket 类事件
 ```
 
-### (4) https API
+## 7. https 模块
+
+### (1) https API
 
 ```js
 定义：import https from 'https'
 属性：https.globalAgent                                //返回 https.Agent 类的全局实例
 方法：客户端方法：
-     https.request(options1,[responseListener])       //返回并创建 https.ClientRequest 实例
+     https.request(options1,[responseListener])       //返回并创建 http.ClientRequest 实例
      https.request(url,[options1],[responseListener])           
-     https.get(options1,[responseListener])           //返回并创建 https.ClientRequest 实例
+     https.get(options1,[responseListener])           //返回并创建 http.ClientRequest 实例
      https.get(url,[options1],[responseListener])               
      服务器方法：
      https.createServer([options2],[requestListener]) //返回并创建 https.Server 实例
@@ -1034,7 +1072,7 @@ headers
 ...
 ```
 
-### (5) https.Server 类
+### (2) https.Server 类
 
 https.Server 类表示`服务器`，继承自 tls.Server 类
 
@@ -1056,10 +1094,9 @@ https.Server 类表示`服务器`，继承自 tls.Server 类
      server.close([closeListener])                              //无返回值,关闭当前服务器,停止接收新连接
 
 options：
-maxHeaderSize      //指定当前服务器接收到的请求的 --max-http-header-size 值
-insecureHTTPParser //指定当前服务器是否使用不安全的 HTTP 解析器,接收无效的 HTTP 标头
-ServerResponse     //指定当前服务器要使用的 http.ServerResponse 类,用于扩展原始的 http.ServerResponse 类
-IncomingMessage    //指定当前服务器要使用的 http.IncomingMessage 类,用于扩展原始的 http.IncomingMessage 类
+key  //指定当前服务器的私钥公钥
+cert //指定当前服务器的公钥证书
+...
 
 
 事件：
@@ -1074,7 +1111,7 @@ close            //当前服务器关闭时触发
 clientError      //当前服务器的客户端连接发生错误时触发
 ```
 
-### (6) https.Agent 类
+### (3) https.Agent 类
 
 ```js
 定义：const agent = new Agent([options])
@@ -1093,12 +1130,204 @@ timeout         //指定当前代理的套接字超时时间
 keylog //当前代理管理的连接生成或接收到密钥材料时触发
 ```
 
-### (7) 实例
+### (4) 实例
+
+#### ① HTTPS GET 请求
 
 ```js
+import https from 'https'
+import fs from 'fs'
 
+// Server
+const options1 = {
+    // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
+    key: fs.readFileSync('./keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('./keys/server_cert.pem'), // 服务器证书
+}
+const server = https.createServer(options1, (req, res) => {
+    console.log("服务端：接收到客户端请求 " + req.url)
+
+    // 向客户端发送响应
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('world')
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+
+// Client
+const options2 = {
+    host: '127.0.0.1',
+    port: 3001,
+    path: '/todos?name=zhangsan'
+}
+const req = https.get(options2, res => {
+    console.log("客户端：接收到服务端响应 " + res.statusCode + ':' + res.statusMessage)
+    req.end()
+})
+req.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
+req.on('error', e => {
+    console.error(e); // Error: self signed certificate
+})
 ```
 
-## 6. http2 模块
+![https_get1]()
+
+```js
+import https from 'https'
+import fs from 'fs'
+
+// TLS 忽略自签名证书错误
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+// Server
+const options1 = {
+    // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
+    key: fs.readFileSync('./keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('./keys/server_cert.pem'), // 服务器证书
+}
+const server = https.createServer(options1, (req, res) => {
+    console.log("服务端：接收到客户端请求 " + req.url)
+
+    // 向客户端发送响应
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('world')
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+
+// Client
+const options2 = {
+    host: '127.0.0.1',
+    port: 3001,
+    path: '/todos?name=zhangsan'
+}
+const req = https.get(options2, res => {
+    console.log("客户端：接收到服务端响应 " + res.statusCode + ':' + res.statusMessage)
+    req.end()
+})
+req.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
+req.on('error', e => {
+    console.error(e); // Error: self signed certificate
+})
+```
+
+![https_get1]()
+
+#### ② HTTPS POST 请求
+
+```js
+import https from 'https'
+import fs from 'fs'
+
+// Server
+const options1 = {
+    // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
+    key: fs.readFileSync('./keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('./keys/server_cert.pem'), // 服务器证书
+}
+const server = https.createServer(options1, (req, res) => {
+    console.log("服务端：接收到客户端请求 " + req.url)
+
+    // 向客户端发送响应
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('world')
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+
+// Client
+const data = 'hello'
+const options2 = {
+    host: '127.0.0.1',
+    port: 3001,
+    path: '/todos',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    }
+}
+const req = https.request(options2, res => {
+    console.log("客户端：接收到服务端响应 " + res.statusCode + ':' + res.statusMessage)
+    req.end()
+})
+req.write(data) // 向服务器发送请求
+req.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
+req.on('error', e => {
+    console.error(e); // Error: self signed certificate
+})
+```
+
+![https_post1]()
+
+```js
+import https from 'https'
+import fs from 'fs'
+
+// TLS 忽略自签名证书错误
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+// Server
+const options1 = {
+    // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
+    key: fs.readFileSync('./keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('./keys/server_cert.pem'), // 服务器证书
+}
+const server = https.createServer(options1, (req, res) => {
+    console.log("服务端：接收到客户端请求 " + req.url)
+
+    // 向客户端发送响应
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/plain')
+    res.end('world')
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
+
+
+// Client
+const data = 'hello'
+const options2 = {
+    host: '127.0.0.1',
+    port: 3001,
+    path: '/todos',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    }
+}
+const req = https.request(options2, res => {
+    console.log("客户端：接收到服务端响应 " + res.statusCode + ':' + res.statusMessage)
+    req.end()
+})
+req.write(data) // 向服务器发送请求
+req.on('close', () => {
+    console.log("客户端：已关闭客户端套接字")
+})
+req.on('error', e => {
+    console.error(e); // Error: self signed certificate
+})
+```
+
+![https_post2]()
+
+## 8. http2 模块
 
 ①②③④⑤⑥⑦⑧⑨⑩

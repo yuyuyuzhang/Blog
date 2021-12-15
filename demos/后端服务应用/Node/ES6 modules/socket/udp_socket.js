@@ -1,8 +1,7 @@
 import dgram from 'dgram'
 
 // Server
-const server = dgram.createSocket('udp4')
-  .bind(41234, 'localhost')
+const server = dgram.createSocket('udp4').bind(41234, 'localhost')
 server.on('listening', () => {
     const address = server.address()
     console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)

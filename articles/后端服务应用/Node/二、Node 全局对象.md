@@ -93,9 +93,12 @@ clearImmediate()
 
 ###  AbortController 类
 
-5 Node事件触发机制
-7 Node文件系统
-url dns net dgram http http2 tls https  
+5 EventTarget、Event 类
+6 crypto模块
+7 fs.FSWatcher、fs.StatWatcher 类
+8 tls模块
+
+url dns net dgram http tls https http2
 process child_process cluster worker_threads
 os v8 vm tty
 intl
