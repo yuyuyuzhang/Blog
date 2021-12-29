@@ -1,6 +1,32 @@
 # 四、Node CLI 交互
 
-## 1. readline 模块
+## 1. Node 输出超过 2 层嵌套的对象
+
+```js
+const obj = {
+    name: 'joe',
+    age: 35,
+    person1: {
+        name: 'Tony',
+        age: 50,
+        person2: {
+            name: 'Albert',
+            age: 21,
+            person3: {
+                name: 'Peter',
+                age: 23
+            }
+        }
+    }
+}
+
+console.log(obj)
+console.log(JSON.stringify(obj, null, 2))
+```
+
+![输出超过2层嵌套的对象]()
+
+## 2. readline 模块
 
 Node 提供 readline 模块使 `Node CLI 程序具有交互性`
 
@@ -76,7 +102,7 @@ rl.onSIGCONT //当之前使用ctrl+z移动到后台的Node进程返回前台时�
 
   ![cli_readline](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cli_readline.png)
 
-## 2. inquirer
+## 3. inquirer
 
 ### (1) inquirer
 

@@ -95,19 +95,17 @@ clearImmediate()
 
 5 EventTarget、Event 类
 6 crypto模块
-7 fs.FSWatcher、fs.StatWatcher 类
-8 tls模块
+8 http2
 
-url dns net dgram http tls https http2
 process child_process cluster worker_threads
-os v8 vm tty
+os v8 vm
+error
+
 intl
 error
 util
-report
 timers
 assert
-async_hooks
 perf_hooks
 
 ①②③④⑤⑥⑦⑧⑨⑩

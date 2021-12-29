@@ -570,140 +570,61 @@ zlib.constants.Z_TREES
 
 Node crypto 模块提供了`加密解密功能`，实现了对 `OpenSSL` 的哈希、HMAC、加密、解密、签名、验证功能的一整套封装
 
-#### OpenSSL
-
 ### (2) crypto API
 
 ```js
 定义：import crypto from 'crypto'
-属性：crypto.constants //返回包含加密常量的对象
-     crypto.
+属性：crypto.constants
+     crypto.webcrypto
 方法：crypto.checkPrime(candidate,[options],[cb])
      crypto.checkPrimeSync(candidate,[options])
-```
-
-### Certificate 类（证书）
-
-```js
-Certificate.exportChallenge(spkac[encoding])
-Certificate.exportPublicKey(spkac,[encoding])
-Certificate.verifySpkac(spkac,[encoding])
-```
-
-### X509Certificate 类
-
-```js
-new X509Certificate(buffer)
-x509.ca
-x509.checkEmail(email,[options])
-x509.checkHost(name,[options])
-x509.checkIP(ip,[options])
-x509.checkIssued(otherCert)
-x509.checkPrivateKey(privateKey)
-x509.fingerprint
-x509.fingerprint256
-x509.infoAccess
-x509.issuer
-x509.issuerCertificate
-x509.keyUsage
-x509.publicKey
-x509.raw
-x509.serialNumber
-x509.subject
-x509.subjectAltName
-x509.toJSON()
-x509.toLegacyObject()
-x509.toString()
-x509.validFrom
-x509.validTo
-x509.verify(publicKey)
-```
-
-### Cipher 类（加密）
-
-```js
-cipher.final([outputEncoding])
-cipher.getAuthTag()
-cipher.setAAD(buffer,[options])
-cipher.setAutoPadding([autoPadding])
-cipher.update(data,[inputEncoding],[outputEncoding])
-```
-
-### Decipher 类（解密）
-
-```js
-decipher.final([outputEncoding])
-decipher.setAAD(buffer,[options])
-decipher.setAuthTag(buffer,[encoding])
-decipher.setAutoPadding([autoPadding])
-decipher.update(data,[inputEncoding],[outputEncoding])
-```
-
-### DiffieHellman 类
-
-```js
-diffieHellman.computeSecret(otherPublicKey,[inputEncoding],[outputEncoding])
-diffieHellman.generateKeys([encoding])
-diffieHellman.getGenerator([encoding])
-diffieHellman.getPrime([encoding])
-diffieHellman.getPrivateKey([encoding])
-diffieHellman.getPublicKey([encoding])
-diffieHellman.setPrivateKey(privateKey,[encoding])
-diffieHellman.setPublicKey(publicKey,[encoding])
-diffieHellman.verifyError
-```
-
-### DiffieHellmanGroup 类
-
-### ECDH 类
-
-```js
-ECDH.convertKey(key, curve,[inputEncoding,[outputEncoding,[format]]])
-ecdh.computeSecret(otherPublicKey,[inputEncoding],[outputEncoding])
-ecdh.generateKeys([encoding,[format]])
-ecdh.getPrivateKey([encoding])
-ecdh.getPublicKey([encoding],[format])
-ecdh.setPrivateKey(privateKey,[encoding])
-```
-
-### Hash 类
-
-```js
-hash.copy([options])
-hash.digest([encoding])
-hash.update(data,[inputEncoding])
-```
-
-### Hmac 类
-
-```js
-hmac.digest([encoding])
-hmac.update(data,[inputEncoding])
-```
-
-### KeyObject 类
-
-```js
-KeyObject.from(key)
-keyObject.asymmetricKeyDetails
-keyObject.asymmetricKeyType
-keyObject.export([options])
-keyObject.symmetricKeySize
-keyObject.type
-```
-
-### Sign 类（签名）
-
-```js
-sign.sign(privateKey,[outputEncoding])
-sign.update(data,[inputEncoding])
-```
-
-### Verify 类（验证）
-
-```js
-verify.update(data,[inputEncoding])
-verify.verify(object, signature,[signatureEncoding])
+     crypto.createCipheriv(algorithm,key,iv,[options])
+     crypto.createDecipheriv(algorithm,key,iv,[options])
+     crypto.createDiffieHellman(prime,[primeEncoding],[generator],[generatorEncoding])
+     crypto.createDiffieHellman(primeLength,[generator])
+     crypto.createDiffieHellmanGroup(name)
+     crypto.createECDH(curveName)
+     crypto.createHash(algorithm,[options])
+     crypto.createHmac(algorithm,key,[options])
+     crypto.createPrivateKey(key)
+     crypto.createPublicKey(key)
+     crypto.createSecretKey(key,[encoding])
+     crypto.createSign(algorithm,[options])
+     crypto.createVerify(algorithm,[options])
+     crypto.diffieHellman(options)
+     crypto.generateKey(type,options,cb)
+     crypto.generateKeyPair(type,options,cb)
+     crypto.generateKeyPairSync(type,options)
+     crypto.generateKeySync(type,options)
+     crypto.generatePrime(size,[options,[cb]])
+     crypto.generatePrimeSync(size,[options])
+     crypto.getCipherInfo(nameOrNid,[options])
+     crypto.getCiphers()
+     crypto.getCurves()
+     crypto.getDiffieHellman(groupName)
+     crypto.getFips()
+     crypto.getHashes()
+     crypto.hkdf(digest,ikm,salt,info,keylen,cb)
+     crypto.hkdfSync(digest,ikm,salt,info,keylen)
+     crypto.pbkdf2(password,salt,iterations,keylen,digest,cb)
+     crypto.pbkdf2Sync(password,salt,iterations,keylen,digest)
+     crypto.privateDecrypt(privateKey,buffer)
+     crypto.privateEncrypt(privateKey,buffer)
+     crypto.publicDecrypt(key,buffer)
+     crypto.publicEncrypt(key,buffer)
+     crypto.randomBytes(size,[cb])
+     crypto.randomFillSync(buffer,[offset],[size])
+     crypto.randomFill(buffer,[offset],[size],cb)
+     crypto.randomInt([min],max,[cb])
+     crypto.randomUUID([options])
+     crypto.scrypt(password,salt,keylen,[options],cb)
+     crypto.scryptSync(password,salt,keylen,[options])
+     crypto.secureHeapUsed()
+     crypto.setEngine(engine,[flags])
+     crypto.setFips(bool)
+     crypto.sign(algorithm,data,key,[cb])
+     crypto.timingSafeEqual(a,b)
+     crypto.verify(algorithm,data,key,signature,[cb])
 ```
 
 ## 4. buffer 模块
