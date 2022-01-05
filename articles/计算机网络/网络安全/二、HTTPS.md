@@ -1,7 +1,5 @@
 # 二、HTTPS
 
-[[_TOC_]]
-
 ## 1. HTTPS 的诞生
 
 ① HTTPS (HTTP Secure) 并非一种新的应用层协议，而是 HTTP 协议的通信接口部分用 SSL/TLS 协议代替，这样 HTTP 就拥有了 SSL/TLS 协议的加密技术、校验机制、身份认证等功能

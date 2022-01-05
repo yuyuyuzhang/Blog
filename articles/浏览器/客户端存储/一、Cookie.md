@@ -1,7 +1,5 @@
 # 一、Cookie
 
-[[_TOC_]]
-
 ## 1. Cookie
 
 ### (1) Cookie 的由来

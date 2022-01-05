@@ -1,7 +1,5 @@
 # 三、CORS
 
-[[_TOC_]]
-
 ## 1. CORS
 
 ① 跨域资源共享 CORS (Cross-origin resource sharing) 是一个 W3C 标准，允许浏览器向跨域的服务器发送 AJAX 请求，解决了 AJAX 只能同源使用的限制

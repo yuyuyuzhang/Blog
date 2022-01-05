@@ -1,14 +1,12 @@
 # 四、HTTP 报文首部字段
 
-[[_TOC_]]
-
 ## 1. HTTP 报文
 
-**HTTP 请求报文**
+### (1) HTTP 请求报文
 
 ![HTTP请求报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png)
 
-**HTTP 响应报文**
+### (2) HTTP 响应报文
 
 ![HTTP响应报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png)
 

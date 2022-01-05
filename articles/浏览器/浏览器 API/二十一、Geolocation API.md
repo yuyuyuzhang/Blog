@@ -1,7 +1,5 @@
 # 二十一、Geolocation API
 
-[[_TOC_]]
-
 ## 1. Geolocation API
 
 Geolocation API 用于`获取用户的当前地理位置`，由于涉及到用户隐私，所有浏览器会提示用户，是否同意给出地理位置，Geolocation API 只能在 `HTTPS` 环境下使用

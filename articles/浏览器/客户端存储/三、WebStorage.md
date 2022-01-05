@@ -1,7 +1,5 @@
 # 三、WebStorage
 
-[[_TOC_]]
-
 ## 1. WebStorage
 
 ### (1) WebStorage 的由来

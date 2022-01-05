@@ -1,7 +1,5 @@
 # 二十三、Clipboard API
 
-[[_TOC_]]
-
 ## 1. Clipboard API 安全限制
 
 由于用户可能将`敏感数据`例如密码放入剪贴板，故而允许 JS 脚本任意读取剪贴板会有安全风险，因此 Clipboard API 的安全限制比较多

@@ -1,7 +1,5 @@
 # 三、HTTP 报文
 
-[[_TOC_]]
-
 ## 1. HTTP 报文
 
 ① HTTP 报文就是用于 HTTP 协议交互的信息，HTTP 报文本身是由`多行数据构成的字符串文本`
@@ -10,11 +8,11 @@
 
 ③ HTTP1.1 报文首部由请求行和首部字段组成，首部字段起到通信过程中传递额外信息的作用，首部字段间使用`回车换行符 crlf` 分割，首部字段由字段名和字段值构成，中间使用`冒号 :` 分割
 
-**HTTP 请求报文**
+### (1) HTTP 请求报文
 
 ![HTTP请求报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png)
 
-**HTTP 响应报文**
+### (2) HTTP 响应报文
 
 ![HTTP响应报文](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%20%E5%8D%8F%E8%AE%AE/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png)
 

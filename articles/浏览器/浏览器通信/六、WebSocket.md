@@ -1,7 +1,5 @@
 # 六、WebSocket
 
-[[_TOC_]]
-
 ## 1. WebSocket
 
 ### (1) WebSocket 的诞生

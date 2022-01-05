@@ -1,7 +1,5 @@
 # 七、CSS 操作
 
-[[_TOC_]]
-
 ## 1. 样式表
 
 ### (1) StyleSheetList 对象

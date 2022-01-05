@@ -1,7 +1,5 @@
 # 一、Serverless
 
-[[_TOC_]]
-
 ## 1. Serverless 的兴起
 
 Serverless 的兴起史就是`云计算的发展史`，即物理机时代、虚拟机时代、容器时代、Serverless 时代

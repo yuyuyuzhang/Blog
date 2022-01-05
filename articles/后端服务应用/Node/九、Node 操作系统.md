@@ -142,7 +142,7 @@ v8 模块暴露了当前 Node 使用的 v8 引擎的 API
 定义：import v8 from 'v8'
 方法：基本方法：
      v8.cachedDataVersionTag()        //返回表示从 v8 版本、命令行标志、以及检测到的 CPU 特性派生的版本标签的整数
-     v8.setFlagsFromString(flags)     //无返回值,设置 v8 引擎命令行标志,需谨慎使用,虚拟机启动后更改设置可能会导致不可预测的行为,包括数据丢失和崩溃
+     v8.setFlagsFromString(flags)     //无返回值,设置 v8 引擎命令行标志
      v8 堆方法：
      v8.getHeapCodeStatistics()       //返回有关 v8 堆的统计信息对象
      v8.getHeapSpaceStatistics()      //返回有关 v8 堆内存的片段的统计信息
@@ -159,10 +159,25 @@ v8 模块暴露了当前 Node 使用的 v8 引擎的 API
 
 ## 3. vm 模块
 
-### (1) vm API
+### (1) vm 模块
 
-JS 是一款拥有`自动垃圾回收`功能的编程语言，市面上具有这种功能的语言一般都具有相对应的`虚拟机`，如 JAVA-JVM、C#-CLR、PHP-Zend 等，虚拟机一般实现了代码解析、内存管理、垃圾回收等功能，C/C++ 这种没有虚拟机的语言，就需要手动管理内存
+vm 模块用于`提供上下文对象并运行 JS 源码`
 
-JS 的虚拟机就是 vm
+* 对于浏览器而言，只要将 JS 代码放在 `<script>` 标签中或者通过 `<script> src` 属性远程引用，JS 代码就会执行，在 JS 代码执行之前，会首先执行未曾定义但会预先传入的`上下文对象 Window`，iframe 也有自己的 Window 且各自独立
+* Node 将一个 index.js 文件读取出来后只是一段`文本`，没有更大的作用，但要运行里面的代码，就需要一个类似于 Window 的上下文对象，而 vm 模块就是提供这个类似于 Window 的 `上下文对象 global`
+
+### (2) vm API
+
+```js
+定义：import vm from 'vm'
+方法：基础方法：
+     vm.compileFunction(code,[params,[options]])        //
+     vm.createContext([contextObject,[options]])        //
+     vm.isContext(object)                               //
+     vm.measureMemory([options])                        //
+     vm.runInContext(code,contextifiedObject,[options]) //
+     vm.runInNewContext(code,[contextObject,[options]]) //
+     vm.runInThisContext(code,[options])                //
+```
 
 ①②③④⑤⑥⑦⑧⑨⑩

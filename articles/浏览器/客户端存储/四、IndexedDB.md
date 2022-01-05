@@ -1,7 +1,5 @@
 # 四、IndexedDB
 
-[[_TOC_]]
-
 ## 1. IndexedDB
 
 ### (1) IndexedDB 的诞生

@@ -1,7 +1,5 @@
 # 四、五、Server-Sent Event
 
-[[_TOC_]]
-
 ## 1. SSE
 
 ### (1) SSE 的诞生

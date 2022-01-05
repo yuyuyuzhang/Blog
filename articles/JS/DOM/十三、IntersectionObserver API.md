@@ -1,7 +1,5 @@
 # 十三、IntersectionObserver API
 
-[[_TOC_]]
-
 ## 1. IntersectionObserver 对象
 
 ### (1) IntersectionObserver 对象属性和方法
