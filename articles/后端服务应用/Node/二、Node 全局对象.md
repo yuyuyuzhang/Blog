@@ -98,9 +98,8 @@ clearImmediate()
 8 http2
 
 process child_process cluster worker_threads
-os v8 vm
-error
 
+error
 intl
 error
 util

@@ -166,18 +166,51 @@ vm 模块用于`提供上下文对象并运行 JS 源码`
 * 对于浏览器而言，只要将 JS 代码放在 `<script>` 标签中或者通过 `<script> src` 属性远程引用，JS 代码就会执行，在 JS 代码执行之前，会首先执行未曾定义但会预先传入的`上下文对象 Window`，iframe 也有自己的 Window 且各自独立
 * Node 将一个 index.js 文件读取出来后只是一段`文本`，没有更大的作用，但要运行里面的代码，就需要一个类似于 Window 的上下文对象，而 vm 模块就是提供这个类似于 Window 的 `上下文对象 global`
 
+上下文隔离化对象意味着什么？
+
+* Node 中执行的所有 JS 代码都在上下文作用域中运行，根据 `v8 嵌入器指南`
+  > 在 V8 中，上下文是一个执行环境，它允许单独的、不相关的 JavaScript 应用程序在 V8 的单个实例中运行，必须明确指定要在其中运行任何 JavaScript 代码的上下文
+* 当调用 vm.createContext() 方法时，新创建的上下文对象在内部与 v8 上下文的新实例相关联，使得 jsCode 可以在隔离的全局环境中运行，这个过程就是上下文隔离化对象
+
 ### (2) vm API
 
 ```js
 定义：import vm from 'vm'
-方法：基础方法：
-     vm.compileFunction(code,[params,[options]])        //
-     vm.createContext([contextObject,[options]])        //
-     vm.isContext(object)                               //
-     vm.measureMemory([options])                        //
-     vm.runInContext(code,contextifiedObject,[options]) //
-     vm.runInNewContext(code,[contextObject,[options]]) //
-     vm.runInThisContext(code,[options])                //
+方法：上下文方法：
+     vm.createContext([obj,[options]])             //返回并使用可选参数obj创建单个上下文,例如模拟浏览器,该方法可用于创建表示全局对象 Window 的单个上下文,然后在当前上下文中运行所有<script>标签
+     vm.isContext(obj)                             //返回参数obj是否已使用vm.createContext()上下文隔离化
+     vm.runInContext(jsCode,contextObj,[options])  //返回在上下文contextObj中运行jsCode的结果
+     vm.runInNewContext(jsCode,[obj,[options]])    //返回并在使用可选参数obj创建的单个上下文中运行jsCode的结果
+     vm.runInThisContext(jsCode,[options])         //返回在当前global上下文中运行jsCode的结果
+     函数方法：
+     vm.compileFunction(jsCode,[params,[options]]) //返回并将给定的函数代码jsCode编译到当前global上下文,可选参数params为函数所有参数数组
+     内存方法：
+     vm.measureMemory([options])                   //返回Promise实例,测量 v8 引擎当前实例中每个 V8 特定上下文可访问的内存
 ```
 
-①②③④⑤⑥⑦⑧⑨⑩
+### (3) 实例
+
+```js
+import vm from 'vm';
+
+global.globalVar = 3;
+
+const context = { globalVar: 2 };
+vm.createContext(context);
+vm.runInContext('globalVar *= 2;', context);
+console.log(context); // { globalVal: 4 }
+
+console.log(global.globalVar); // 3
+
+
+const obj = {
+  animal: 'cat',
+  count: 2
+};
+vm.runInNewContext('count += 1; name = "kitty"', obj);
+console.log(obj); // { animal: 'cat', count: 3, name: 'kitty' }
+
+
+const vmResult = vm.runInThisContext('localVar = "vm";');
+console.log(`globalVar: '${globalVar}', localVar: '${localVar}'`); // globalVar: '3', localVar: 'vm'
+```

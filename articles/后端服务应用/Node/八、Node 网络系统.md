@@ -1147,7 +1147,7 @@ tls.TLSSocket 类表示 `TLS 套接字`，继承自 net.Socket 类
      socket.getPeerX509Certificate()                  //返回当前套接字的远程连接套接字的X509Certificate证书对象
      socket.disableRenegotiation()                    //无返回值,禁止 TLS 重新协商
      socket.renegotiate(options2,secureListener)      //返回是否启动成功,启动 TLS 重新协商
-     socket.enableTrace()                             //无返回值,将 TLS 数据包跟踪信息写入 stderr
+     socket.enableTrace()                             //无返回值,将 TLS 数据包跟踪信息写入错误输出流 stderr
      socket.exportKeyingMaterial(len,label,[context]) //返回请求的密钥材料字节
      socket.getFinished()                             //返回 TLS 握手的发送到当前套接字的最新完成信息
      socket.getPeerFinished()                         //返回从套接字接收到的最新 Finished 消息,无则返回undefined

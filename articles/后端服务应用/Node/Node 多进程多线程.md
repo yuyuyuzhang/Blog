@@ -103,7 +103,7 @@ process.argv0     //返回当前Node进程第一个命令行参数(node)
 输入输出属性：
 process.stdin     //返回一个指向标准输入流的只读流
 process.stdout    //返回一个指向标准输出流的只写流
-process.stderr    //返回一个指向标准错误流的只写流
+process.stderr    //返回一个指向标准错误输出流的只写流
 
 process.allowedNodeEnvironmentFlags //返回一组NODE_OPTIONS环境变量内允许的标志
 process.domain //
