@@ -7,23 +7,14 @@
 // });
 // target.dispatchEvent(ename)
 
-import process from 'process'
 
-console.log(process.argv)
-// node index.js
-// [
-//   'D:\\nvm\\nodejs\\node.exe',
-//   'E:\\Blog\\demos\\后端服务应用\\Node\\ES6 modules\\index.js'
-// ]
+import child_process from 'child_process'
 
+const subProcess = child_process.fork('child.js')
 
-// node index.js a b=2
-// [
-//   'D:\\nvm\\nodejs\\node.exe',
-//   'E:\\Blog\\demos\\后端服务应用\\Node\\ES6 modules\\index.js',
-//   'a',
-//   'b=2'
-// ]
+subProcess.send({ name: 'parent' })
+subProcess.on('message', childMsg => {
+    console.log("childMsg:", childMsg)
+})
 
-console.log(process.execArgv)
-// []
+console.log('hello, I am parent')
