@@ -98,7 +98,6 @@ clearImmediate()
 ###  AbortController 类
 
 5 EventTarget、Event 类
-6 timers模块、async_hooks模块
 7 crypto模块
 9 http2
 11 process child_process cluster worker_threads

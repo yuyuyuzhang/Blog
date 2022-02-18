@@ -1,15 +1,30 @@
-console.log('start')
+import process from 'process'
+import fs from 'fs'
 
-setTimeout(() => {
-    console.log('timeout')
-}, 500)
+console.log('start');
 
-setInterval((a) => {
-    console.log('interval ' + a)
-}, 500, 'zhangyu')
+setTimeout(() => { 
+    console.log('1'); 
+}, 0);
 
 setImmediate(() => {
-    console.log('immediate')
+    console.log('setImmediate 1');
+});
+
+fs.readFile('./index.js', {encoding: 'utf-8'}, (err, data) => {
+    if (err) throw err;
+    console.log('read file success');
+});
+
+process.nextTick(() => {
+    console.log('nextTick')
 })
 
-console.log('end')
+new Promise((resolve) => {
+    console.log('promise')
+    resolve();
+}).then(() => {
+    console.log('promise cb')
+})
+
+console.log('end');
