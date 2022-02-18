@@ -4,6 +4,10 @@
 
 global 对象是 Node 的`全局命名空间对象`，与浏览器环境中的 window 对象类似，都可以为用户提供全局属性和全局方法的访问能力，Node 开发人员谈及 `context` 时，一般就是指 global 对象
 
+浏览器中顶层作用域是`全局作用域`，Node 中顶层作用域是`当前模块的作用域`
+
+![模块内全局变量和局部变量]()
+
 ## 2. console 对象
 
 console 对象是 `JS 引擎`提供的调试工具，用于控制台调试输出，逐渐成为了浏览器的实施标准，Node 也沿用了这个标准，提供了与浏览器行为习惯一致的 console 对象
@@ -94,17 +98,18 @@ clearImmediate()
 ###  AbortController 类
 
 5 EventTarget、Event 类
-6 crypto模块
-8 http2
+6 timers模块、async_hooks模块
+7 crypto模块
+9 http2
+11 process child_process cluster worker_threads
 
-process child_process cluster worker_threads
-
-error
-intl
-error
-util
-timers
-assert
 perf_hooks
+inspector
+debugger
+error、report
+
+util
+assert
+intl
 
 ①②③④⑤⑥⑦⑧⑨⑩

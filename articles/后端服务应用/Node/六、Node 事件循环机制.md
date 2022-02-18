@@ -1,6 +1,75 @@
-# Node 事件循环
+# 六、Node 事件循环
 
-## 1. Node 事件循环
+## 1. timers 模块
+
+### (1) timers API
+
+timers 模块提供定时器 API，用于在未来某个时间点调用某个调度函数，timers 模块是`全局`的，因此不需要 import 导入
+
+```js
+调度定时器：
+setTimeout(cb,[delay,[...args]])  //返回并创建 timeout 实例,设置 delay 毫秒后调度 cb
+setInterval(cb,[delay,[...args]]) //返回并创建 timeout 实例,设置每隔 delay 毫秒重复调度 cb
+setImmediate(cb,[...args])        //返回并创建 immediate 实例,设置当前事件循环结束时调用 cb
+
+取消定时器：
+clearTimeout(timeout)             //无返回值,取消指定的 timeout 实例
+clearInterval(timeout)            //无返回值,取消指定的 timeout 实例
+clearImmediate(immediate)         //无返回值,取消指定的 immediate 实例
+```
+
+### (2) 实例
+
+* timers.js
+
+  ```js
+  console.log('start')
+
+  setTimeout(() => {
+      console.log('timeout')
+  }, 500)
+
+  setInterval((a) => {
+      console.log('interval ' + a)
+  }, 500, 'zhangyu')
+
+  setImmediate(() => {
+      console.log('immediate')
+  })
+
+  console.log('end')
+  ```
+
+* node timers.js
+
+  ![timers]()
+
+## 2. async_hooks 模块
+
+### (1) async_hooks API
+
+async_hooks 模块提供 API 来跟踪异步资源，如果使用 Worker，则每个线程都有独立的 async_hooks 接口，并且每个线程都会使用一组新的异步 ID
+
+```js
+定义：import async_hooks from 'async_hooks'
+方法：async_hooks.createHook(cbs)
+```
+
+### (2) AsyncHook 类
+
+```js
+定义：import async_hooks from 'async_hooks'
+     const asyncHooks = async_hooks.createHook(cbs)
+属性：asyncHooks.asyncWrapProviders
+方法：
+     asyncHooks.enable()
+     asyncHooks.disable()
+     asyncHooks.executionAsyncResource()
+     asyncHooks.executionAsyncId()
+     asyncHooks.triggerAsyncId()
+```
+
+## 3. Node 事件循环
 
 Node 是单进程单线程应用程序，
 
@@ -8,7 +77,7 @@ Node 事件循环和浏览器的事件循环原理是不一致的，一个是基
 
 事件循环机制
 
-## 2. Node 事件循环流程图
+### (1) Node 事件循环流程图
 
 Node 事件循环原理的核心流程图如下，这一流程包含 6 个阶段，每个阶段的含义如下
 
@@ -40,14 +109,14 @@ fs.readFile('./test.conf', {encoding: 'utf-8'}, (err, data) => {
 
 // 该部分将会在首次事件循环中执行
 Promise.resolve().then(()=>{
-    console.log('poll callback');
+    console.log('poll cb');
 });
 
 // 首次事件循环执行
 console.log('2');
 ```
 
-## 3. poll 回调队列
+## 4. poll 回调队列
 
 poll 过程主要处理`异步 IO 以及其他几乎所有的回调函数`，异步 IO 又分为`网络 IO` 和`文件 IO`
 
