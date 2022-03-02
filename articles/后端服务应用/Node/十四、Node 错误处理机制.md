@@ -1,4 +1,4 @@
-# Node 错误处理机制
+# 十四、Node 错误处理机制
 
 ## 1. Node 错误
 
@@ -35,9 +35,9 @@ Node 支持多种机制抛出和处理 Node 应用程序运行时发生的错误
 
     ```js
     const fs = require('fs');
-    fs.readFile('a file that does not exist', (err, data) => {
+    fs.readFile('a file that does not exist',(err,data) => {
       if (err) {
-        console.error('There was an error reading the file!', err);
+        console.error('There was an error reading the file!',err);
         return;
       }
     });
@@ -58,7 +58,7 @@ Node 支持多种机制抛出和处理 Node 应用程序运行时发生的错误
 
     setImmediate(() => {
       // 这将导致 Node 进程崩溃，因为没有添加 error 事件监听
-      emitter.emit('error', new Error('This will crash'));
+      emitter.emit('error',new Error('This will crash'));
     });
     ```
 
@@ -424,7 +424,7 @@ f3()
 
 ```js
 function ChildError1(){
-    Error.captureStackTrace(this, ChildError1)
+    Error.captureStackTrace(this,ChildError1)
 }
 function ChildError2(){
     Error.captureStackTrace(this)
@@ -456,6 +456,52 @@ RangeError 类表示`参数不在函数可接受值的范围内`
 ## 8. AssertionError 类
 
 AssertionError 类表示`断言失败`
+
+### (1) assert 模块
+
+assert 模块提供了一组用于验证`常量`的断言函数 API
+
+```js
+定义：import assert from 'assert/strict'
+方法：判断：
+     assert.fail([msg])                               //抛出带有错误消息 msg 的 AssertionError 实例
+     assert.ok(value,[msg])                           //判断 val 是否为真值
+     assert.ifError(val)                              //判断 val 是否不是 undefined null
+     相等：
+     assert.equal(actual,expected,[msg])              //判断 actual expected 是否相等(不建议使用)
+     assert.strictEqual(actual,expected,[msg])        //判断 actual expected 是否严格相等
+     assert.deepEqual(actual,expected,[msg])          //判断 actual expected 是否深度相等(不建议使用)
+     assert.deepStrictEqual(actual,expected,[msg])    //判断 actual expected 是否严格深度相等
+     assert.notEqual(actual,expected,[msg])           //判断 actual expected 是否不相等(不建议使用)
+     assert.notStrictEqual(actual,expected,[msg])     //判断 actual expected 是否不严格相等
+     assert.notDeepEqual(actual,expected,[msg])       //判断 actual expected 是否不深度相等(不建议使用)
+     assert.notDeepStrictEqual(actual,expected,[msg]) //判断 actual expected 是否不严格深度相等
+     函数：
+     assert.throws(fn,[err],[msg])                    //判断函数 f 是否抛出错误
+     assert.doesNotThrow(f,[err],[msg])               //判断函数 f 是否未抛出错误
+     正则：
+     assert.match(string,regexp,[msg])                //判断字符串 str 与正则 regexp 是否匹配
+     assert.doesNotMatch(str,regexp,[msg])            //判断字符串 str 与正则 regexp 是否不匹配
+     Promise：
+     assert.rejects(asyncFn,[err],[msg])              //判断 asyncFn promise 是否被拒绝
+     assert.doesNotReject(asyncF,[err],[msg])         //判断 asyncFn promise 是否未被拒绝
+```
+
+### (2) assert.AssertionError 类
+
+assert.AssertionError 类表示`断言错误`，assert 模块抛出的所有错误都是 AssertionError 类的实例
+
+```js
+定义：import assert from 'assert/strict'
+     const assertErro = new assert.AssertionError(options)
+
+options：
+message      //如果提供，则错误消息将设置为此值
+actual       //错误实例上的 actual 属性
+expected     //错误实例上的 expected 属性
+operator     //错误实例上的 operator 属性
+stackStartFn //如果提供，则生成的堆栈跟踪将省略此函数之前的帧
+```
 
 ## 9. SystemError 类
 

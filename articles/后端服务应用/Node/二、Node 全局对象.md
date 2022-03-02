@@ -81,34 +81,13 @@ clearImmediate()
 
 ## 4. 其他全局对象
 
-###  Buffer
 
-###  MessageChannel、MessageEvent、MessagePort
-
-###  performance
-
-###  process
-
-###  TextDecoder、TextEncoder
-
-###  URL、URLSearchParams
-
-###  WebAssembly
-
-###  AbortController 类
-
-5 EventTarget、Event 类
-7 crypto模块
+6 事件循环机制
 9 http2
 11 process child_process cluster worker_threads
-
-perf_hooks
-inspector
-debugger
-error、report
-
-util
-assert
-intl
+12 perf_hooks
+13 debugger inspector
+14 error
+15 util
 
 ①②③④⑤⑥⑦⑧⑨⑩

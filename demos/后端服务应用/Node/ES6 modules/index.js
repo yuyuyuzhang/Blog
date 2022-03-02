@@ -1,22 +1,13 @@
-// const ename = new Event('MOUSE_DOWN')
-// const target = new EventTarget();
+const target1 = new EventTarget();
+target1.addEventListener('MOUSE_DOWN', event => {
+  console.log('MOUSE_DOWN:', event)
+});
+// target.dispatchEvent(e)
 
-// target.addEventListener(ename, e => {
-//   console.log('foo event happened!');
-//   console.log(e)
-// });
-// target.dispatchEvent(ename)
+const target2 = new EventTarget();
+target2.addEventListener('foo', event => {
+  console.log('foo:', event);
+});
+target2.dispatchEvent('foo')
 
-
-// import child_process from 'child_process'
-
-// const subProcess = child_process.fork('child.js')
-
-// subProcess.send({ name: 'parent' })
-// subProcess.on('message', childMsg => {
-//     debugger;
-//     console.log("childMsg:", childMsg)
-// })
-
-// console.log('hello, I am parent')
 

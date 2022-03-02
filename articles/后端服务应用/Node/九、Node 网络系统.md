@@ -1525,5 +1525,3 @@ req.write(JSON.stringify({
 ![https_post]()
 
 ## 9. http2 模块
-
-①②③④⑤⑥⑦⑧⑨⑩

@@ -259,9 +259,9 @@ Promise API 使用底层 Node 线程池在事件循环线程之外执行文件�
      fs.chmod((path,mode,err=>{})                                 //无返回值,修改文件权限
      fs.chmodSync((path,mode)    
      文件&文件夹监听：
-     fs.watch(path,[options],(et,path)=>{})                       //返回FSWatcher实例,监听指定路径文件夹或文件
-     fs.watchFile(path,[options],listner)                         //返回StatWatcher实例,监听指定路径文件夹或文件
-     fs.unwatchFile(path,[listener])                              //无返回值,停止监听指定路径文件夹或文件
+     fs.watch(path,[options],changeListener)                      //返回FSWatcher实例,监听指定路径文件夹或文件
+     fs.watchFile(path,[options],(currStat,prevStat)=>{})         //返回StatWatcher实例,监听指定路径文件夹或文件
+     fs.unwatchFile(path,[(currStat,prevStat)=>{}])               //无返回值,停止监听指定路径文件夹或文件
 ```
 
 #### ① 链接文件
@@ -573,28 +573,114 @@ fs.stat('input.txt', (err, stats) => {
 
 ### (6) fs.FSWatcher、fs.StatWatcher 类
 
-fs.FSWatcher 类表示`文件夹或文件监听器`
+#### ① fs.FSWatcher 类
+
+fs.FSWatcher 类表示`文件夹或文件监听器`，尽可能使用 fs.watch 而非 fs.watchFile/fs.unwatchFile
 
 ```js
 定义：import fs from 'fs'
-     fs.watch(path,[options],(et,path)=>{})
-方法：fsW.ref()   //返回当前监听器,若当前监听器处于活动状态则请求Node事件循环不退出
+     const fsW = fs.watch(path,[options],changeListener)
+方法：fsW.ref()   //返回当前监听器,若当前监听器处于活动状态则请求 Node 事件循环不退出
      fsW.unref() //返回当前监听器,若当前监听器处于活动状态则取消请求
      fsW.close() //无返回值,停止监听指定文件夹/文件
 
 
+options：
+persistent //指定只要正在监听,进程是否应继续运行
+recursive  //指定是否监听当前文件夹及其所有子目录
+encoding   //指定传给监听器的文件名的字符编码(默认 utf-8)
+signal     //指定用于关闭监听器的中止信号
+
+
 事件：
-change //监听的文件夹或文件发生变化时触发
-error  //监听的文件夹或文件发生错误时触发
+change //监听的文件夹或文件发生变化时触发(eventType:发生变更的事件类型-change/rename,filename:发生变更的文件名)
+error  //监听器监听时发生错误时触发
 close  //监听器停止监听时触发
 ```
+
+监听文件夹实例
+
+* index.js
+
+     ```js
+     import fs from 'fs'
+
+     const fsw = fs.watch('./watchDir', (eventType, filename) => {
+          console.log("eventType:", eventType)
+          console.log("filename:", filename)
+     })
+     ```
+
+* 监听的空文件夹 watchDir 内新增文件 a.txt
+  
+  ![watchDir1]()
+
+  ![watchDir2]()
+
+* 监听的文件夹 watchDir 内文件 a.txt 改名为 b.txt
+
+  ![watchDir3]()
+
+  ![watchDir4]()
+
+监听文件实例
+
+* index.js
+
+     ```js
+     import fs from 'fs'
+
+     const fsw = fs.watch('./watchDir/a.txt', (eventType, filename) => {
+          console.log("eventType:", eventType)
+          console.log("filename:", filename)
+     })
+     ```
+
+* 监听的文件 a.txt 改名为 b.txt
+
+  ![watchDir1]()
+
+  ![watchDir3]()
+
+  ![watchDirFile1]()
+
+#### ② fs.StatWatcher 类
 
 fs.StatWatcher 类表示`文件夹或文件属性监听器`
 
 ```js
 定义：import fs from 'fs'
-     fs.watchFile(path,[options],listner)
-     fs.unwatchFile(path,[listener])        
-方法：statW.ref()   //返回当前监听器,若当前监听器处于活动状态则请求Node事件循环不退出
-     statW.unref() //返回当前监听器,若当前监听器处于活动状态则取消请求
+     const fsStatW = fs.watchFile(path,[options],(currStat,prevStat)=>{})
+方法：fs 模块方法：
+     fs.unwatchFile(path,[(currStat,prevStat)=>{}])
+     fsStatW 对象方法：
+     fsStatW.ref()   //返回当前监听器,若当前监听器处于活动状态则请求 Node 事件循环不退出
+     fsStatW.unref() //返回当前监听器,若当前监听器处于活动状态则取消请求
+
+options：
+persistent //指定只要正在监听,进程是否应继续运行
+interval   //指定轮询监听目标的频率,以毫秒为单位(默认5007)
+
+
+currStat 表示监听目标的当前统计对象 fs.Stat 实例
+prevStat 表示监听目标的上一个统计对象 fs.Stat 实例
 ```
+
+监听文件实例
+
+* index.js
+
+     ```js
+     import fs from 'fs'
+
+     const fsStatW = fs.watchFile('./watchDir/a.txt', (currStat, prevStat) => {
+          console.log("currStat:", currStat)
+          console.log("prevStat:", prevStat)
+     })
+     ```
+
+* 监听的文件 a.txt 改名为 b.txt
+
+  ![watchDir1]()
+
+  ![watchFile1]()
