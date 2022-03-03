@@ -78,10 +78,3 @@ clearTimeout(tId)         //无返回值,清除编号tId表示的setTimeout定�
 clearInterval(tId)        //无返回值,清除编号tId表示的setInterval定时器
 clearImmediate()
 ```
-
-## 4. 其他全局对象
-
-11 process child_process cluster worker_threads
-12 perf_hooks
-
-①②③④⑤⑥⑦⑧⑨⑩

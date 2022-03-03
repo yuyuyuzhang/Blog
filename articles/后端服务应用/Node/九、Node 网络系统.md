@@ -705,37 +705,37 @@ net.Server 类事件
 
 ### (3) http.ServerResponse 类
 
-http.ServerResponse 类表示`服务器响应`，继承自 Stream 类
+http.ServerResponse 类表示`服务端响应`，继承自 Stream 类
 
 http.ServerResponse 类的实例由 http.Server 类内部创建，不由用户创建，作为 http.Server 类的 `request 事件监听器的第二个参数`
 
 ```js
 定义：http.Server 类的 request 事件监听器的第二个参数
-属性：res.req                             //返回当前服务器响应的请求
-     res.socket                          //返回当前服务器响应的底层套接字
-     res.statusCode                      //返回当前服务器响应的状态码
-     res.statusMessage                   //返回当前服务器响应的状态消息
-     res.writableEnded                   //返回当前服务器响应是否已结束写入,已调用res.end()
-     res.writableFinished                //返回当前服务器响应是否已刷新到底层系统
-     res.headersSent                     //返回当前服务器响应的标头是否已发送
+属性：res.req                             //返回当前服务端响应的请求
+     res.socket                          //返回当前服务端响应的底层套接字
+     res.statusCode                      //返回当前服务端响应的状态码
+     res.statusMessage                   //返回当前服务端响应的状态消息
+     res.writableEnded                   //返回当前服务端响应是否已结束写入,已调用res.end()
+     res.writableFinished                //返回当前服务端响应是否已刷新到底层系统
+     res.headersSent                     //返回当前服务端响应的标头是否已发送
 方法：基本方法：
-     res.setTimeout(msecs,[cb])          //返回当前服务器响应,设置当前服务器响应对应的服务端套接字的超时时间
+     res.setTimeout(msecs,[cb])          //返回当前服务端响应,设置当前服务端响应对应的服务端套接字的超时时间
      标头方法：
-     res.writeHead(code,[msg],[headers]) //返回当前服务器响应,写入响应头
+     res.writeHead(code,[msg],[headers]) //返回当前服务端响应,写入响应头
      res.writeContinue()                 //无返回值,写入 100-Continue 响应头
      res.writeProcessing()               //无返回值,写入 102-Processing 响应头
      res.flushHeaders()                  //无返回值,刷新响应头,Node由于效率通常会缓冲响应头直到调用res.end()或写入第一块响应数据,然后将响应头和数据打包到单个TCP数据包从而节省TCP往返
-     res.hasHeader(name)                 //返回当前服务器响应是否存在指定标头
-     res.getHeader(name)                 //返回当前服务器响应的指定标头
-     res.getHeaders()                    //返回当前服务器响应的所有标头
-     res.getHeaderNames()                //返回当前服务器响应的标头数组
-     req.getRawHeaderNames()             //返回当前服务器响应的原始标头数组
-     res.setHeader(name,value)           //返回当前服务器响应,设置当前服务器响应的指定标头值
-     res.removeHeader(name)              //无返回值,移除当前服务器响应的指定标头
-     res.addTrailers(headers)            //无返回值,向当前服务器响应添加 HTTP 尾随标头,仅在响应使用分块编码时
+     res.hasHeader(name)                 //返回当前服务端响应是否存在指定标头
+     res.getHeader(name)                 //返回当前服务端响应的指定标头
+     res.getHeaders()                    //返回当前服务端响应的所有标头
+     res.getHeaderNames()                //返回当前服务端响应的标头数组
+     req.getRawHeaderNames()             //返回当前服务端响应的原始标头数组
+     res.setHeader(name,value)           //返回当前服务端响应,设置当前服务端响应的指定标头值
+     res.removeHeader(name)              //无返回值,移除当前服务端响应的指定标头
+     res.addTrailers(headers)            //无返回值,向当前服务端响应添加 HTTP 尾随标头,仅在响应使用分块编码时
      正文方法
-     res.write(chunk,[encoding],[cb])    //返回当前服务器响应整个正文数据是否均被成功刷新到内核缓冲,写入一块响应正文chunk
-     res.end([data],[encoding],[cb])     //返回当前服务器响应,向服务器发送结束信号表明所有响应头和正文都已发送,可选参数data存在则相当于调用一次response.write()
+     res.write(chunk,[encoding],[cb])    //返回当前服务端响应整个正文数据是否均被成功刷新到内核缓冲,写入一块响应正文chunk
+     res.end([data],[encoding],[cb])     //返回当前服务端响应,向服务器发送结束信号表明所有响应头和正文都已发送,可选参数data存在则相当于调用一次response.write()
      res.cork()                          //无返回值,强制将调用该方法之后写入的所有数据都添加到内部缓冲而不输出到目标
      res.uncork()                        //无返回值,将调用res.cork()以来缓冲的所有数据输出到目标
 ```
@@ -1586,7 +1586,7 @@ unknownProtocol //当前服务器连接的客户端无法协商允许的协议�
 
 ### (4) Http2ServerRequest 类
 
-http2.Http2ServerRequest 类表示`服务器响应`，继承自 Stream 类
+http2.Http2ServerRequest 类表示`服务端响应`，继承自 Stream 类
 
 http2.Http2ServerRequest 类的实例由 http2.Http2Server/Http2SecureServer 类内部创建，不由用户创建，作为 http2.Http2Server/Http2SecureServer 类的 `request 事件监听器的第一个参数`
 
@@ -1621,30 +1621,43 @@ close   //当前客户端请求的底层 Http2Stream 实例关闭时触发
 
 ### (5) Http2ServerResponse 类
 
-http2.Http2ServerResponse 类表示`服务器响应`，继承自 Stream 类
+http2.Http2ServerResponse 类表示`服务端响应`，继承自 Stream 类
 
 http2.Http2ServerResponse 类的实例由 http2.Http2Server/Http2SecureServer 类内部创建，不由用户创建，作为 http2.Http2Server/Http2SecureServer 类的 `request 事件监听器的第二个参数`
 
 ```js
 定义：http2.Http2Server 类的 request 事件监听器的第二个参数
      http2.Http2SecureServer 类的 request 事件监听器的第二个参数
-属性：response.headersSent
+属性：状态属性：
+     response.statusCode                                      //返回当前服务端响应的状态码
+     response.statusMessage                                   //返回当前服务端响应的状态信息
+     response.req                                             //返回当前服务端响应关联的 request 对象的引用
+     response.stream                                          //返回当前服务端响应关联的 ServerHttp2Session 对象的引用
+     response.socket                                          //返回当前服务端响应的套接字的 Proxy 对象
+     通信属性：
+     response.headersSent                                     //返回当前服务端响应标头是否已发送
+     response.sendDate                                        //返回当前服务端响应中的 Date 标头是否自动生成并在响应中发送
+     response.writableEnded                                   //返回当前服务端响应是否已调用 response.end()
 方法：响应头部方法：
-     response.hasHeader(name)                                //返回当前服务器响应是否包含指定标头
-     response.getHeader(name)                                //返回当前服务器响应的的指定标头值
-     response.getHeaderNames()                               //返回当前服务器响应的所有标头名称数组
-     response.getHeaders()                                   //返回当前服务器响应的所有标头键值对
-     response.removeHeader(name)                             //无返回值,删除当前服务器响应的指定标头
-     response.addTrailers(headers)                           //无返回值,当前服务器响应添加 HTTP 尾随标头
+     response.hasHeader(name)                                 //返回当前服务端响应是否包含指定标头
+     response.getHeader(name)                                 //返回当前服务端响应的的指定标头值
+     response.getHeaderNames()                                //返回当前服务端响应的所有标头名称数组
+     response.getHeaders()                                    //返回当前服务端响应的所有标头键值对
+     response.removeHeader(name)                              //无返回值,删除当前服务端响应的指定标头
+     response.addTrailers(headers)                            //无返回值,当前服务端响应添加 HTTP 尾随标头
      其他方法：
-     response.createPushResponse(headers,(err,response)=>{}) //无返回值,当前服务器响应使用指定标头调用 http2stream.pushStream()
-     response.end([data,[encoding]],[cb])                    //返回当前服务器响应,向当前服务器发出信号表明所有响应头和正文都已发送,响应流完成时调用可选参数cb
-     
+     response.setTimeout(msecs,[cb])                          //无返回值,当前服务端响应设置超时时间
+     response.setHeader(name,value)                           //无返回值,当前服务端响应为指定标头设置值
+     response.writeContinue()                                 //无返回值,当前服务端响应发送状态 100 Continue
+     response.writeHead(statusCode,[statusMessage],[headers]) //无返回值,当前服务端响应发送响应标头
+     response.write(chunk,[encoding],[cb]) //无返回值,当前服务端响应发送一块响应正文
+     response.end([data,[encoding]],[cb])                     //返回当前服务端响应,向当前服务器发出信号表明所有响应头和正文都已发送,响应流完成时调用可选参数cb
+     response.createPushResponse(headers,(err,response)=>{})  //无返回值,当前服务端响应使用指定标头调用 http2stream.pushStream()
 
 
 事件：
-finish //当前服务器响应发送时触发,具体就是响应标头和正文的最后一段已移交给 HTTP/2 多路复用以通过网络传输时触发,并不意味着客户端接收到任何东西
-close  //当前服务器响应的底层 Http2Stream 实例关闭时触发
+finish //当前服务端响应发送时触发,具体就是响应标头和正文的最后一段已移交给 HTTP/2 多路复用以通过网络传输时触发,并不意味着客户端接收到任何东西
+close  //当前服务端响应的底层 Http2Stream 实例关闭时触发
 ```
 
 ### (6) Http2Session 类
