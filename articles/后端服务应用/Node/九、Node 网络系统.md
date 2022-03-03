@@ -707,7 +707,7 @@ net.Server 类事件
 
 http.ServerResponse 类表示`服务器响应`，继承自 Stream 类
 
-http.ServerResponse 类的实例由 http.Server 类内部创建，不由用户创建，作为 http.Server 类的 request 事件监听器的第二个参数
+http.ServerResponse 类的实例由 http.Server 类内部创建，不由用户创建，作为 http.Server 类的 `request 事件监听器的第二个参数`
 
 ```js
 定义：http.Server 类的 request 事件监听器的第二个参数
@@ -1525,3 +1525,294 @@ req.write(JSON.stringify({
 ![https_post]()
 
 ## 9. http2 模块
+
+### (1) http2 API
+
+```js
+定义：import http2 from 'http2'
+方法：HTTP2 客户端方法：
+     http2.connect(authority,[options],[connectListener]) //返回并创建 ClientHttp2Session 实例
+     HTTP2 服务端方法：          
+     http2.createServer(options,[requestListener])        //返回并创建 Http2Server 实例
+     http2.createSecureServer(options,[requestListener])  //返回并创建 Http2SecureServer 实例
+```
+
+### (2) Http2Server 类
+
+Http2Server 类表示`服务器`，继承自 `net.Server 类`
+
+```js
+定义：import http2 from 'http2'
+     const server = http2.createServer(options,[requestListener])
+属性：server.timeout                               //返回当前服务器的超时时间
+方法：server.updateSettings([settings])            //无返回值,使用指定的设置更新当前服务器
+     server.setTimeout([msecs],[timeoutListener]) //返回当前服务器,设置当前服务器的超时时间及监听器
+     server.close([cb])                           //无返回值,当前服务器停止建立新会话,可选参数cb在所有活动会话关闭之后调用,由于 http2 会话的持久性,不会阻止创建新的请求流,要正常关闭服务器需要关闭所有活动会话
+
+
+事件：
+connection    //当前服务器建立新的 TCP 连接时触发
+request       //当前服务器接收到请求时触发(request:http2.http2ServerRequest、response:http2.http2ServerReponse)
+checkContinue //当前服务器收到 Expect: 100-continue 的请求时触发,未监听此事件则服务器自动响应为 100 Continue
+session       //当前服务器创建新的 ServerHttp2Session 实例时触发
+stream        //当前服务器关联的 ServerHttp2Session 对象触发 stream 事件时触发
+sessionError  //当前服务器关联的 ServerHttp2Session 对象触发 error 事件时触发
+timeout       //当前服务器超时时触发
+```
+
+### (3) Http2SecureServer 类
+
+Http2SecureServer 类表示`服务器`，继承自 `tls.Server 类`，用于创建安全的 https 连接
+
+```js
+定义：import http2 from 'http2'
+     const secureServer = http2.createServer(options,[requestListener])
+属性：secureServer.timeout                               //返回当前服务器的超时时间
+方法：secureServer.updateSettings([settings])            //无返回值,使用指定的设置更新当前服务器
+     secureServer.setTimeout([msecs],[timeoutListener]) //返回当前服务器,设置当前服务器的超时时间及监听器
+     secureServer.close([cb])                           //无返回值,当前服务器停止建立新会话,可选参数cb在所有活动会话关闭之后调用,由于 http2 会话的持久性,不会阻止创建新的请求流,要正常关闭服务器需要关闭所有活动会话
+
+
+事件：
+connection      //当前服务器建立新的 TCP 连接时触发
+request         //当前服务器接收到请求时触发(事件监听器参数为 request-http2.http2ServerRequest、response-http2.http2ServerReponse)
+checkContinue   //当前服务器收到 Expect: 100-continue 的请求时触发,未监听此事件则服务器自动响应为 100 Continue
+session         //当前服务器创建新的 ServerHttp2Session 实例时触发
+stream          //当前服务器关联的 ServerHttp2Session 对象触发 stream 事件时触发
+sessionError    //当前服务器关联的 ServerHttp2Session 对象触发 error 事件时触发
+timeout         //当前服务器超时时触发
+unknownProtocol //当前服务器连接的客户端无法协商允许的协议时触发
+```
+
+### (4) Http2ServerRequest 类
+
+http2.Http2ServerRequest 类表示`服务器响应`，继承自 Stream 类
+
+http2.Http2ServerRequest 类的实例由 http2.Http2Server/Http2SecureServer 类内部创建，不由用户创建，作为 http2.Http2Server/Http2SecureServer 类的 `request 事件监听器的第一个参数`
+
+```js
+定义：http2.Http2Server 类的 request 事件监听器的第一个参数
+     http2.Http2SecureServer 类的 request 事件监听器的第一个参数
+属性：基础属性：
+     request.httpVersion                       //返回当前客户端请求的 HTTP 版本
+     request.url                               //返回当前客户端请求的请求网址
+     request.method                            //返回当前客户端请求的方法
+     request.headers                           //返回当前客户端请求的头部对象
+     request.rawHeaders                        //返回当前客户端请求的原始头部对象
+     request.trailers                          //返回当前客户端请求的尾随标头
+     request.rawTrailers                       //返回当前客户端请求的原始尾随标头
+     request.scheme                            //返回当前客户端请求的协议伪标头域
+     request.authority                         //返回当前客户端请求的权限伪头域
+     关联对象属性：
+     request.socket                            //返回当前客户端请求的套接字 Proxy 对象
+     request.stream                            //返回当前客户端请求的 Http2Stream 对象
+     状态属性：
+     request.aborted                           //返回当前客户端请求是否已中止
+     request.complete                          //返回当前客户端请求是否已中止、完成、销毁
+方法：request.setTimeout(msecs,timeoutListener) //返回当前客户端请求,设置当前客户端请求超时时间及监听器
+     request.destroy([error])                  //无返回值,当前客户端请求在其底层 Http2Stream 实例上调用 destroy()
+
+
+
+事件：
+aborted //当前客户端请求在通信中途异常中止时触发
+close   //当前客户端请求的底层 Http2Stream 实例关闭时触发
+```
+
+### (5) Http2ServerResponse 类
+
+http2.Http2ServerResponse 类表示`服务器响应`，继承自 Stream 类
+
+http2.Http2ServerResponse 类的实例由 http2.Http2Server/Http2SecureServer 类内部创建，不由用户创建，作为 http2.Http2Server/Http2SecureServer 类的 `request 事件监听器的第二个参数`
+
+```js
+定义：http2.Http2Server 类的 request 事件监听器的第二个参数
+     http2.Http2SecureServer 类的 request 事件监听器的第二个参数
+属性：response.headersSent
+方法：响应头部方法：
+     response.hasHeader(name)                                //返回当前服务器响应是否包含指定标头
+     response.getHeader(name)                                //返回当前服务器响应的的指定标头值
+     response.getHeaderNames()                               //返回当前服务器响应的所有标头名称数组
+     response.getHeaders()                                   //返回当前服务器响应的所有标头键值对
+     response.removeHeader(name)                             //无返回值,删除当前服务器响应的指定标头
+     response.addTrailers(headers)                           //无返回值,当前服务器响应添加 HTTP 尾随标头
+     其他方法：
+     response.createPushResponse(headers,(err,response)=>{}) //无返回值,当前服务器响应使用指定标头调用 http2stream.pushStream()
+     response.end([data,[encoding]],[cb])                    //返回当前服务器响应,向当前服务器发出信号表明所有响应头和正文都已发送,响应流完成时调用可选参数cb
+     
+
+
+事件：
+finish //当前服务器响应发送时触发,具体就是响应标头和正文的最后一段已移交给 HTTP/2 多路复用以通过网络传输时触发,并不意味着客户端接收到任何东西
+close  //当前服务器响应的底层 Http2Stream 实例关闭时触发
+```
+
+### (6) Http2Session 类
+
+Http2Session 类表示`客户端和服务器之间的活动通信会话`，用户代码不会直接创建 Http2Session 实例
+
+* 客户端 ClientHttp2Session 实例通过 `http2.connect(authority,[options],[connectListener])` 方法创建
+* 服务端 ServerHttp2Session 实例是在接收到新的 HTTP2 连接时由 Http2Server/Http2SecureSerever 实例创建
+
+每个 Http2Session 实例都与 `net.Socket、tls.Socket` 相关联，当其一被摧毁时，两者都会被摧毁，一旦将 Socket 绑定到 Http2Session，用户代码应当仅仅依赖于 Http2Session 的 API
+
+```js
+属性：状态属性：
+     http2session.type                                       //返回当前会话的类型(客户端会话:http2.constants.NGHTTP2_SESSION_CLIENT,服务端会话:http2.constants.NGHTTP2_SESSION_SERVER)
+     http2session.state                                      //返回当前会话的状态信息
+     http2session.localSettings                              //返回当前会话的本地设置对象
+     http2session.remoteSettings                             //返回当前会话的远程设置对象
+     http2session.pendingSettingsAck                         //返回当前会话是否正在等待已发送的 SETTINGS 帧的确认
+     http2session.connecting                                 //返回当前会话是否仍连接
+     http2session.closed                                     //返回当前会话是否已关闭
+     http2session.destroyed                                  //返回当前会话是否已销毁
+     套接字属性：
+     http2session.socket                                     //返回当前会话的底层套接字 Proxy 对象
+     http2session.encrypted                                  //返回当前会话是否已连接到 TLSSocket,尚未连接到套接字返回 undefined
+     http2session.alpnProtocol                               //返回当前会话已连接的 TLSSocket 的 alpnProtocol 属性值,尚未连接到套接字返回 undefiend,未连接到 TLSSocket 返回 h2c
+方法：通信方法：
+     http2session.ping([payload],pingListener)               //返回是否成功,当前会话向远程对等方发送 PING 帧
+     http2session.goaway([code,[lastStreamID,[opaqueData]]]) //无返回值,当前会话向远程对等方发送 GOAWAY 帧
+     http2session.settings([settings],[cb])                  //无返回值,当前会话更新本地设置并向远程对等方发送 SETTINGS 帧
+     http2session.setLocalWindowSize(windowSize)             //无返回值,当前会话设置本地端点的窗口大小
+     http2session.setTimeout(msecs,timeoutListener)          //无返回值,当前会话设置超时时间
+     http2session.close([closeListener])                     //无返回值,关闭当前会话
+     http2session.destroy([err],[code])                      //无返回值,销毁当前会话
+     套接字方法：
+     http2session.ref()                                      //无返回值,当前会话在其底层套接字上调用 ref()
+     http2session.unref()                                    //无返回值,当前会话在其底层套接字上调用 unref()
+
+
+事件：
+connect        //当前会话成功连接到远程对等方并可以通信时触发(session,socket)
+stream         //当前会话创建新的 Http2Stream 实例时触发
+frameError     //当前会话发送帧时发生错误时触发
+goaway         //当前会话接收到 GOAWAY 帧时触发,该事件触发时当前会话实例会自动关闭
+remoteSettings //当前会话接收到 SETTINGS 帧时触发
+localSettings  //当前会话接收到确认 SETTINGS 帧时触发
+ping           //当前会话接收到 PING 帧时触发
+timeout        //当前会话超时时触发
+error          //当前会话发生错误时触发
+close          //当前会话被销毁时触发
+```
+
+### (7) ServerHttp2Session 类
+
+ServerHttp2Session 类表示`服务端的活动通信会话`，继承自 Http2Session 类，用户代码不会直接创建 ServerHttp2Session 实例，而是服务端在接收到新的 HTTP2 连接时由 Http2Server/Http2SecureSerever 实例自身创建
+
+```js
+定义：Http2Server/Http2SecureSerever 实例自身创建
+方法：ServerHttp2Session 方法：
+     serverSession.altsvc(alt,originOrStream) //当前服务端会话向连接的客户端提交 ALTSVC 帧
+     serverSession.origin(...origins)         //当前服务端会话向连接的客户端提交 ORIGIN 帧
+```
+
+### (8) ClientHttp2Session 类
+
+ClientHttp2Session 类表示`客户端的活动通信会话`，继承自 Http2Session 类，用户代码不会直接创建 ClientHttp2Session 实例，而是通过 `http2.connect(authority,[options],[connectListener])` 方法创建
+
+```js
+定义：import http2 from 'http2'
+     const clientSession = http2.connect(authority,[options],[connectListener])
+方法：ClientHttp2Session 方法：
+     clientSession.request(headers,[options]) //返回并创建 ClientHttp2Stream 实例,当前客户端会话向要连接的服务器发送 HTTP2 请求
+
+
+事件：
+altsvc //当前客户端会话接收到 ALTSVC 帧时触发
+origin //当前客户端会话接收到 ORIGIN 帧时触发
+```
+
+### (9) Http2Stream 类
+
+Http2Stream 类表示客户端和服务端间的`活动通信会话间的双向 HTTP2 通信流`，继承自 stream.Duplex 类，任何单个活动通信会话在其生命周期内最多可能拥有 `2^32 - 1` 个 Http2Stream 实例
+
+```js
+属性：状态属性：
+     http2stream.pending                           //返回当前通信流是否尚未分配 ID
+     http2stream.id                                //返回当前通信流 ID
+     http2stream.state                             //返回当前通信流的状态信息
+     http2stream.aborted                           //返回当前通信流是否异常中止
+     http2stream.closed                            //返回当前通信流是否已关闭
+     http2stream.destroyed                         //返回当前通信流是否已销毁
+     http2stream.session                           //返回当前通信流的 Http2Session 实例的引用
+     通信属性：
+     http2stream.sentHeaders                       //返回当前通信流的已发送的标头对象
+     http2stream.sentInfoHeaders                   //返回当前通信流的已发送的信息标头对象数组
+     http2stream.sentTrailers                      //返回当前通信流的已发送的尾随标头对象
+     http2stream.bufferSize                        //返回当前通信流的缓冲要写入的字节数
+     http2stream.endAfterHeaders                   //返回当前通信流接收到的 HEADERS 帧中是否设置了 END_STREAM 标志
+     http2stream.rstCode                           //返回当前通信流的 RST_STREAM 帧的错误代码 
+方法：
+     http2stream.priority(options)                 //无返回值,更新当前通信流的优先级
+     http2stream.setTimeout(msecs,timeoutListener) //无返回值,当前通信流设置超时时间及监听器
+     http2stream.sendTrailers(headers)             //无返回值,当前通信六流向远程对对等方发送尾随 HEADERS 帧
+     http2stream.close(code,[cb])                  //无返回值,当前通信流向远程对等方发送 RST_STREAM 帧来关闭当前通信流
+
+
+事件：
+ready        //当前通信流已打开、已分配 ID、可以使用时触发
+wantTrailers //当前通信流已将最后 DATA 帧排队且准备好发送尾随标头时触发
+trailers     //当前通信流接收到与尾随标头字段关联的标头块时触发
+frameError   //当前通信流发送帧时发生错误时触发
+timeout      //当前通信流超时时触发
+error        //当前通信流发生错误时触发
+aborted      //当前通信流异常中止时触发
+close        //当前通信流被销毁时触发
+```
+
+### (10) ServerHttp2Stream 类
+
+```js
+定义：ServerHttp2Session 实例触发 stream 事件而来
+属性：
+     http2stream.headersSent                               //返回当前服务端流的标头是否已发送
+     http2stream.pushAllowed                               //返回当前服务端流的客户端流是否允许接收推送流
+方法：
+     http2stream.additionalHeaders(headers)                //无返回值,当前服务端流发送 HEADERS 帧
+     http2stream.pushStream(headers,[options],cb)          //无返回值,当前服务端流启动推送流
+     http2stream.respond([headers,[options]])              //无返回值,当前服务端流发送响应
+     http2stream.respondWithFD(fd,[headers,[options]])     //无返回值,当前服务端流从指定文件描述符中读取数据作为响应
+     http2stream.respondWithFile(path,[headers,[options]]) //无返回值,当前服务端流发送普通文件作为响应
+```
+
+### (11) ClientHttp2Stream 类
+
+ClientHttp2Stream 类表示`客户端流`，继承自 Http2Stream 类
+
+```js
+定义：ClientHttp2Stream 实例触发 stream 事件而来
+
+
+事件：
+response //当前客户端流接收到服务器返回的 HEADERS 帧时触发
+continue //当前客户端流接收到服务器返回的 100 Continue 状态时触发
+headers  //当前客户端流接收到服务器返回的附加标头块时触发
+push     //当前客户端流接收到服务器推送的流的响应头时触发
+```
+
+### (12) 实例
+
+#### http2.get
+
+```js
+
+```
+
+#### http2.post
+
+```js
+
+```
+
+#### http2Secure.get
+
+```js
+
+```
+
+#### http2Secure.post
+
+```js
+
+```
