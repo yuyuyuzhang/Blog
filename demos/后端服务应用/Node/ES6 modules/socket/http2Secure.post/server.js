@@ -1,6 +1,12 @@
 import http2 from 'http2'
+import fs from 'fs'
 
-const server = http2.createServer((request, response) => {
+// 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
+const options = {
+    key: fs.readFileSync('../keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('../keys/server_cert.pem'), // 服务器证书
+}
+const server = http2.createServer(options, (request, response) => {
     // 当前服务器接收到请求的回调
 
     // POST 请求体参数需要通过 data 事件接收

@@ -1,6 +1,9 @@
 import http2 from 'http2'
 
-const clientSession = http2.connect('http://localhost:3001', (clientSession, clientSocket) => {
+// TLS 忽略自签名证书错误
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+const clientSession = http2.connect('https://localhost:3001', (clientSession, clientSocket) => {
     // 当前客户端会话成功连接到服务器并可以通信时的回调
 
     // 当前客户端通信流向服务器发送 GET 请求

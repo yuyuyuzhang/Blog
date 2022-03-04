@@ -693,7 +693,7 @@ net.Server 类属性和方法
 
 事件：
 connection       //当前服务器建立新的 TCP 连接时触发
-request          //当前服务器接收到请求时触发(事件监听器参数为 request-http.IncomingMessage、response-http.ServerResponse)
+request          //当前服务器接收到请求时触发(request:http.IncomingMessage,response:http.ServerResponse)
 checkContinue    //当前服务器接收到 Expect: 100-continue 的请求时触发
 upgrade          //当前服务器接收到升级协议的请求时触发
 checkExpectation //当前服务器接收到 Expect 标头的请求时触发
@@ -1794,7 +1794,7 @@ close        //当前通信流被销毁时触发
 ClientHttp2Stream 类表示`客户端流`，继承自 Http2Stream 类
 
 ```js
-定义：ClientHttp2Stream 实例触发 stream 事件而来
+定义：const clientStream = clientSession.request(headers,[options])
 
 
 事件：
@@ -1808,24 +1808,596 @@ push     //当前客户端流接收到服务器推送的流的响应头时触发
 
 #### http2.get
 
-```js
+server.js
 
+```js
+import http2 from 'http2'
+import { getUrlParams } from '../common.js'
+
+const server = http2.createServer((request, response) => {
+    // 当前服务器接收到请求的回调
+
+    console.log("服务端：接收到客户端请求 " + request.url)
+
+    // 获取并判断 URL 参数
+    const name = getUrlParams('name', request.url)
+    let returnData = ''
+    switch(name) {
+        case 'zhangsan':
+            returnData = [
+                {
+                    name: 'birth',
+                    introduce: '过生日'
+                }
+            ]
+            break;
+        case 'lisi':
+            returnData = [
+                {
+                    name: 'hospital',
+                    introduce: '医院复诊'
+                }
+            ]
+            break;
+    }
+    
+    // 向客户端发送响应
+    response.writeHead(200, 'OK', { 
+        'content-type': 'text/html; charset=utf-8'
+    })
+    response.end(JSON.stringify(returnData))
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
 ```
+
+client1.js
+
+```js
+import http2 from 'http2'
+
+const clientSession = http2.connect('http://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 GET 请求
+    const clientStream = clientSession.request({
+        ':method': 'GET',
+        ':path': '/todos?name=zhangsan'
+    })
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client1：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client1：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client1 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+client2.js
+
+```js
+import http2 from 'http2'
+
+const clientSession = http2.connect('http://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 GET 请求
+    const clientStream = clientSession.request({
+        ':method': 'GET',
+        ':path': '/todos?name=lisi'
+    })
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client2：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client2：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client2 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+![http2.get]()
 
 #### http2.post
 
-```js
+server.js
 
+```js
+import http2 from 'http2'
+
+const server = http2.createServer((request, response) => {
+    // 当前服务器接收到请求的回调
+
+    // POST 请求体参数需要通过 data 事件接收
+    request.on('data', data => {
+        const paramStr = data.toString()
+        console.log("服务端：接收到客户端请求 " + request.url + ' ' + paramStr)
+
+        const name = JSON.parse(paramStr).name
+        let returnData = ''
+        switch(name) {
+            case 'zhangsan':
+                returnData = [
+                    {
+                        name: 'birth',
+                        introduce: '过生日'
+                    }
+                ]
+                break;
+            case 'lisi':
+                returnData = [
+                    {
+                        name: 'hospital',
+                        introduce: '医院复诊'
+                    }
+                ]
+                break;
+        }
+
+        // 向客户端发送响应
+        response.writeHead(200, 'OK', { 
+            'content-type': 'text/html; charset=utf-8'
+        })
+        response.end(JSON.stringify(returnData))
+    })
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
 ```
+
+client1.js
+
+```js
+import http2 from 'http2'
+
+const clientSession = http2.connect('http://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 POST 请求
+    const clientStream = clientSession.request({
+        ':method': 'POST',
+        ':path': '/todos',
+        'Content-Type': 'application/json',
+    })
+    clientStream.write(JSON.stringify({
+        name: 'zhangsan'
+    }))
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client1：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client1：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client1 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+client2.js
+
+```js
+import http2 from 'http2'
+
+const clientSession = http2.connect('http://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 POST 请求
+    const clientStream = clientSession.request({
+        ':method': 'POST',
+        ':path': '/todos',
+        'Content-Type': 'application/json',
+    })
+    clientStream.write(JSON.stringify({
+        name: 'lisi'
+    }))
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client2：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client2：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client2 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+![http2.post]()
 
 #### http2Secure.get
 
-```js
+server.js
 
+```js
+import http2 from 'http2'
+import fs from 'fs'
+import { getUrlParams } from '../common.js'
+
+// 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
+const options = {
+    key: fs.readFileSync('../keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('../keys/server_cert.pem'), // 服务器证书
+}
+const server = http2.createSecureServer(options, (request, response) => {
+    // 当前服务器接收到请求的回调
+
+    console.log("服务端：接收到客户端请求 " + request.url)
+
+    // 获取并判断 URL 参数
+    const name = getUrlParams('name', request.url)
+    let returnData = ''
+    switch(name) {
+        case 'zhangsan':
+            returnData = [
+                {
+                    name: 'birth',
+                    introduce: '过生日'
+                }
+            ]
+            break;
+        case 'lisi':
+            returnData = [
+                {
+                    name: 'hospital',
+                    introduce: '医院复诊'
+                }
+            ]
+            break;
+    }
+    
+    // 向客户端发送响应
+    response.writeHead(200, 'OK', { 
+        'content-type': 'text/html; charset=utf-8'
+    })
+    response.end(JSON.stringify(returnData))
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
 ```
+
+client1.js
+
+```js
+import http2 from 'http2'
+
+// TLS 忽略自签名证书错误
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+const clientSession = http2.connect('https://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 GET 请求
+    const clientStream = clientSession.request({
+        ':method': 'GET',
+        ':path': '/todos?name=zhangsan'
+    })
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client1：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client1：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client1 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+client2.js
+
+```js
+import http2 from 'http2'
+
+// TLS 忽略自签名证书错误
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+const clientSession = http2.connect('https://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 GET 请求
+    const clientStream = clientSession.request({
+        ':method': 'GET',
+        ':path': '/todos?name=lisi'
+    })
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client2：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client2：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client2 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+![http2Secure.get]()
 
 #### http2Secure.post
 
-```js
+server.js
 
+```js
+import http2 from 'http2'
+import fs from 'fs'
+
+// 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
+const options = {
+    key: fs.readFileSync('../keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('../keys/server_cert.pem'), // 服务器证书
+}
+const server = http2.createServer(options, (request, response) => {
+    // 当前服务器接收到请求的回调
+
+    // POST 请求体参数需要通过 data 事件接收
+    request.on('data', data => {
+        const paramStr = data.toString()
+        console.log("服务端：接收到客户端请求 " + request.url + ' ' + paramStr)
+
+        const name = JSON.parse(paramStr).name
+        let returnData = ''
+        switch(name) {
+            case 'zhangsan':
+                returnData = [
+                    {
+                        name: 'birth',
+                        introduce: '过生日'
+                    }
+                ]
+                break;
+            case 'lisi':
+                returnData = [
+                    {
+                        name: 'hospital',
+                        introduce: '医院复诊'
+                    }
+                ]
+                break;
+        }
+
+        // 向客户端发送响应
+        response.writeHead(200, 'OK', { 
+            'content-type': 'text/html; charset=utf-8'
+        })
+        response.end(JSON.stringify(returnData))
+    })
+}).listen(3001, '127.0.0.1', () => {
+    const address = server.address()
+    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
+})
 ```
+
+client1.js
+
+```js
+import http2 from 'http2'
+
+// TLS 忽略自签名证书错误
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+const clientSession = http2.connect('https://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 POST 请求
+    const clientStream = clientSession.request({
+        ':method': 'POST',
+        ':path': '/todos',
+        'Content-Type': 'application/json',
+    })
+    clientStream.write(JSON.stringify({
+        name: 'zhangsan'
+    }))
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client1：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client1：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client1 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+client2.js
+
+```js
+import http2 from 'http2'
+
+// TLS 忽略自签名证书错误
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
+const clientSession = http2.connect('https://localhost:3001', (clientSession, clientSocket) => {
+    // 当前客户端会话成功连接到服务器并可以通信时的回调
+
+    // 当前客户端通信流向服务器发送 POST 请求
+    const clientStream = clientSession.request({
+        ':method': 'POST',
+        ':path': '/todos',
+        'Content-Type': 'application/json',
+    })
+    clientStream.write(JSON.stringify({
+        name: 'lisi'
+    }))
+
+    // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
+    clientStream.on('response', headers => {
+        for (const name in headers) {
+            console.log("客户端 client2：接收到服务端响应 HEADERS " + `${name}: ${headers[name]}`)
+        }
+    })
+
+    // 当前客户端通信流接收到服务器返回的 DATA 帧的回调
+    let data = ''
+    clientStream.on('data', chunk => { 
+        data += chunk
+    })
+
+    // 当前客户端通信流关闭时的回调
+    clientStream.on('end', () => {
+        console.log("客户端 client2：接收到服务端响应 DATA " + data)
+        clientStream.close() // 关闭客户端会话
+    })
+
+    // 当前客户端通信流销毁时的回调
+    clientStream.on('close', () => {
+        console.log("客户端 client2 通信流已销毁")
+    })
+
+    // 当前客户端通信流发生错误时的回调
+    clientStream.on('error', e => {
+        console.error(e);
+    })
+})
+```
+
+![http2Secure.post]()
