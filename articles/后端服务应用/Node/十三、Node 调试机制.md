@@ -16,25 +16,33 @@ pause   //暂停正在运行的代码
 
 ### (2) 实例
 
-* index.js
+* debugger.js
 
     ```js
     import child_process from 'child_process'
 
-    const subProcess = child_process.fork('child.js')
-
-    subProcess.send({ name: 'parent' })
-    subProcess.on('message', childMsg => {
+    const childProcess = child_process.fork('./childProcess.js')
+    childProcess.send({ name: 'parent' })
+    childProcess.on('message', childMsg => {
         debugger;
         console.log("childMsg:", childMsg)
     })
-
-    console.log('hello, I am parent')
     ```
 
-* node inspect index.js
+* childProcess.js
 
-![debugger]()
+    ```js
+    import process from 'process'
+
+    process.send({ name: 'child' })
+    process.on('message', parentMsg => {
+        console.log('parentMsg:', parentMsg)
+    })
+    ```
+
+* node inspect debugger.js
+
+    ![debugger]()
 
 ## 2. inspector 模块
 
@@ -71,7 +79,7 @@ inspector-protocol-method //当接收到当前检查器通知其方法字段设�
 
 ### (3) 使用 V8 检查器的 CPU 分析器 Profiler
 
-* inspect.js
+* profiler.js
 
     ```js
     import inspector from 'inspector'
@@ -96,15 +104,13 @@ inspector-protocol-method //当接收到当前检查器通知其方法字段设�
     });
     ```
 
-* node inspect.js
+* node profiler.js
 
-  ![Profiler1]()
-
-  ![Profiler2]()
+  ![Profiler]()
 
 ### (4) 使用 V8 检查器的堆分析器 profile.heapsnapshot
 
-* inspect.js
+* heapsnapshot.js
 
     ```js
     import inspector from 'inspector'
@@ -122,8 +128,6 @@ inspector-protocol-method //当接收到当前检查器通知其方法字段设�
     });
     ```
 
-* node inspect.js
+* node heapsnapshot.js
 
-  ![profile.heapsnapshot1]()
-
-  ![profile.heapsnapshot2]()
+  ![heapsnapshot]()

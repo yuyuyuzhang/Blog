@@ -1020,7 +1020,7 @@ Node Buffer 类用来`操作内存`，Node Blob 类用来`操作二进制文件`
      blob.arrayBuffer()           //返回Promise实例,返回并创建使用blob数据副本的ArrayBuffer实例
 ```
 
-实例
+### (5) 实例
 
 ```js
 import { Blob } from 'buffer'

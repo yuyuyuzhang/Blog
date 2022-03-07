@@ -190,7 +190,7 @@ rl.onSIGCONT //当之前使用ctrl+z移动到后台的Node进程返回前台时�
 
 ### (4) 实例
 
-* config/cli_readline.js
+* cli_readline.js
 
      ```js
      import readline from 'readline'
@@ -207,7 +207,7 @@ rl.onSIGCONT //当之前使用ctrl+z移动到后台的Node进程返回前台时�
      })
      ```
 
-* node config/cli_readline.js
+* node cli_readline.js
 
   ![cli_readline](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cli_readline.png)
 
@@ -248,7 +248,7 @@ editor   //编辑模式
 ### (2) 实例
 
 * npm i inquirer
-* config/cli_inquirer.js
+* cli_inquirer.js
 
      ```js
      import inquirer from 'inquirer'
@@ -318,13 +318,13 @@ editor   //编辑模式
      })
      ```
 
-* node config/cli_inquirer.js
+* node cli_inquirer.js
 
   ![cli_inquirer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cli_inquirer.png)
 
 ### (3) 模拟 npm init 命令生成 package.json 文件
 
-* config/cli_inquirer_init.js
+* cli_inquirer_init.js
 
      ```js
      import inquirer from 'inquirer'
@@ -412,7 +412,7 @@ editor   //编辑模式
      })
      ```
 
-* node config/cli_inquirer_init.js
+* node cli_inquirer_init.js
 
   ![cli_inquirer_init](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cli_inquirer_init.png)
 

@@ -291,74 +291,86 @@ fs.unlinkSync(path)
   * 删除符号链接不会影响源文件，删除源文件则符号链接会指向一个不存在的文件，无法再进行操作
 
      ```js
-     fs.link('./input.txt', './link.txt', err => {
-     if(err) throw err
+     import fs from 'fs'
 
-     fs.lstat('./link.txt', (err, stat) => {
+     fs.link('./input.txt', './link.txt', err => {
           if(err) throw err
-          console.log(stat)
-     })
+
+          fs.lstat('./link.txt', (err, stat) => {
+               if(err) throw err
+               console.log(stat)
+          })
      })
      ```
 
-     ![link1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/link1.png)
-
-     ![link2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/link2.png)
+     ![link](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/link.png)
 
 * **软链接/符号链接**：符号链接是一类`特殊文本文件`，仅包含一条`其他文件夹或文件`的`路径字符串`
   * 对符号链接操作会转换成对源文件操作
   * 删除符号链接不会影响源文件，删除源文件则符号链接会指向一个不存在的文件，无法再进行操作
 
      ```js
+     import fs from 'fs'
+
      fs.symlink('./input.txt', './symlink.txt', 'junction', err => {
-     if(err) throw err
-
-     fs.lstat('./symlink.txt', (err, stat) => {
           if(err) throw err
-          console.log(stat)
-     })
 
-     fs.readlink('./symlink.txt', (err, linkStr) => {
-          if(err) throw err
-          console.log(linkStr) //'E:\Blog\demos\后端服务应用\Node\ES6 modules\input.txt\'
-     })
+          fs.lstat('./symlink.txt', (err, stat) => {
+               if(err) throw err
+               console.log(stat)
+          })
+
+          fs.readlink('./symlink.txt', (err, linkStr) => {
+               if(err) throw err
+               console.log(linkStr) //'E:\Blog\demos\后端服务应用\Node\ES6 modules\input.txt\'
+          })
      })
      ```
 
-     ![symlink1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/symlink1.png)
-
-     ![symlink2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/symlink2.png)
+     ![symlink](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/symlink.png)
 
 #### ② 文件的读取写入
 
 在`打开/读取/写入`文件之前，不要使用 fs.access() 方法检查文件的可访问性，这样会引入竞争条件，其他进程可能会在 2 次调用之间修改文件状态，因此开发者代码应该直接打开/读取/写入文件，并处理无法访问文件时引发的错误，通常仅当文件不会被直接使用时才会检查文件的可访问性
 
-```js
-fs.readFile('./input.txt', (err, data) => {
-    if(err) throw err
+* readFile_writeFile.js
 
-    fs.writeFile('./output1.txt', data, err => {
-        if(err) throw err
-    })
-})
-```
+     ```js
+     import fs from 'fs'
 
-![readFile_writeFile](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/readFile_writeFile.png)
+     fs.readFile('./input.txt', (err, data) => {
+          if(err) throw err
+
+          fs.writeFile('./output1.txt', data, err => {
+               if(err) throw err
+          })
+     })
+     ```
+
+* node readFile_writeFile.js
+
+     ![readFile_writeFile](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/readFile_writeFile.png)
 
 Stream API
 
-```js
-import fs from 'fs'
-import zlib from 'zlib'
+* pipe.js
 
-fs.createReadStream('./input.txt')
-  .pipe(zlib.createGzip())
-  .pipe(fs.createWriteStream('output.gz'))
-```
+     ```js
+     import fs from 'fs'
+     import zlib from 'zlib'
 
-![zlib管道API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E7%AE%A1%E9%81%93API.png)
+     fs.createReadStream('./input.txt')
+          .pipe(zlib.createGzip())
+          .pipe(fs.createWriteStream('output.gz'))
+     ```
+
+* node pipe.js
+
+     ![pipe](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/pipe.png)
 
 ### (4) fs.Dir、fs.Dirent 类
+
+#### ① fs.Dir API
 
 fs.Dir 类表示`文件夹`
 
@@ -387,6 +399,8 @@ fs.Dir 类表示`文件夹`
      dir.closeSync()
 ```
 
+#### ② fs.Dirent API
+
 fs.Dirent 类表示`文件夹条目`，可以是`子文件夹或文件`
 
 ```js
@@ -406,57 +420,65 @@ fs.Dirent 类表示`文件夹条目`，可以是`子文件夹或文件`
      dirent.isSocket()          //返回dirent是否描述套接字
 ```
 
-实例
+#### ③ 实例
 
-```js
-fs.mkdir('./testDir/dir1', err => {
-    if(err) throw err
-    console.log('create dir1 succeed')
+* dir.js
 
-    fs.rename('./testDir/dir1', './testDir/dir1-1', err => {
-        if(err) throw err
-        console.log('rename dir1 succeed')
+     ```js
+     fs.mkdir('./testDir/dir1', err => {
+          if(err) throw err
+          console.log('create dir1 succeed')
 
-        fs.opendir('./testDir', (err, dir) => {
-            if(err) throw err
-            console.log('open dir1 succeed')
+          fs.rename('./testDir/dir1', './testDir/dir1-1', err => {
+               if(err) throw err
+               console.log('rename dir1 succeed')
 
-            // 全部读取
-            fs.readdir('./testDir', { withFileTypes: true }, (err, dirent) => {
-                if(err) throw err
-                console.log(dirent)
-                // [
-                //     Dirent { name: 'dir1-1', [Symbol(type)]: 2 },
-                //     Dirent { name: 'test.txt', [Symbol(type)]: 1 }
-                // ]
-            })
+               fs.opendir('./testDir', (err, dir) => {
+                    if(err) throw err
+                    console.log('open dir1 succeed')
 
-            // 一个个迭代读取
-            dir.read((err, dirent) => {
-                if(err) throw err
-
-                if(dirent) {
-                    console.log(dirent)
-                    // Dirent { name: 'dir1-1', [Symbol(type)]: 2 }
-
-                    dir.read((err, dirent) => {
-                        if(err) throw err
-        
-                        if(dirent) {
-                            console.log(dirent)
-                            // Dirent { name: 'test.txt', [Symbol(type)]: 1 }
-                        }
+                    // 全部读取
+                    fs.readdir('./testDir', { withFileTypes: true }, (err, dirent) => {
+                         if(err) throw err
+                         console.log(dirent)
+                         // [
+                         //     Dirent { name: 'dir1-1', [Symbol(type)]: 2 },
+                         //     Dirent { name: 'test.txt', [Symbol(type)]: 1 }
+                         // ]
                     })
-                }
-            })
-        })
-    })
-})
-```
+
+                    // 一个个迭代读取
+                    dir.read((err, dirent) => {
+                         if(err) throw err
+
+                         if(dirent) {
+                              console.log(dirent)
+                              // Dirent { name: 'dir1-1', [Symbol(type)]: 2 }
+
+                              dir.read((err, dirent) => {
+                              if(err) throw err
+               
+                              if(dirent) {
+                                   console.log(dirent)
+                                   // Dirent { name: 'test.txt', [Symbol(type)]: 1 }
+                              }
+                              })
+                         }
+                    })
+               })
+          })
+     })
+     ```
+
+* node dir.js
+
+ ![dir]()
 
 ### (5) fs.Stats 类
 
 fs.Stats 类表示`文件夹或文件属性`，存储着关于这个文件夹或文件的一些重要信息，例如创建时间、最后一次访问时间、最后一次修改时间、文章所占字节、判断文件类型的多个方法等
+
+#### ① fs.Stats API
 
 ```js
 定义：import fs from 'fs'
@@ -509,7 +531,9 @@ fs.Stats 类表示`文件夹或文件属性`，存储着关于这个文件夹或
      stats.isSocket()                     //返回stats是否描述套接字
 ```
 
-实例
+#### ② 实例
+
+stat.js
 
 ```js
 import fs from 'fs'
@@ -573,7 +597,7 @@ fs.stat('input.txt', (err, stats) => {
 
 ### (6) fs.FSWatcher、fs.StatWatcher 类
 
-#### ① fs.FSWatcher 类
+#### ① fs.FSWatcher API
 
 fs.FSWatcher 类表示`文件夹或文件监听器`，尽可能使用 fs.watch 而非 fs.watchFile/fs.unwatchFile
 
@@ -600,7 +624,7 @@ close  //监听器停止监听时触发
 
 监听文件夹实例
 
-* index.js
+* watchDir.js
 
      ```js
      import fs from 'fs'
@@ -615,17 +639,13 @@ close  //监听器停止监听时触发
   
   ![watchDir1]()
 
-  ![watchDir2]()
-
 * 监听的文件夹 watchDir 内文件 a.txt 改名为 b.txt
 
-  ![watchDir3]()
-
-  ![watchDir4]()
+  ![watchDir2]()
 
 监听文件实例
 
-* index.js
+* watchDirFile.js
 
      ```js
      import fs from 'fs'
@@ -638,13 +658,9 @@ close  //监听器停止监听时触发
 
 * 监听的文件 a.txt 改名为 b.txt
 
-  ![watchDir1]()
+  ![watchDirFile]()
 
-  ![watchDir3]()
-
-  ![watchDirFile1]()
-
-#### ② fs.StatWatcher 类
+#### ② fs.StatWatcher API
 
 fs.StatWatcher 类表示`文件夹或文件属性监听器`
 
@@ -668,7 +684,7 @@ prevStat 表示监听目标的上一个统计对象 fs.Stat 实例
 
 监听文件实例
 
-* index.js
+* watchFile.js
 
      ```js
      import fs from 'fs'
@@ -681,6 +697,4 @@ prevStat 表示监听目标的上一个统计对象 fs.Stat 实例
 
 * 监听的文件 a.txt 改名为 b.txt
 
-  ![watchDir1]()
-
-  ![watchFile1]()
+  ![watchFile]()

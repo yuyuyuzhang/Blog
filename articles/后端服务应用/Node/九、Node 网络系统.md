@@ -1295,8 +1295,8 @@ import { getUrlParams } from '../common.js'
 
 // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
 const options = {
-    key: fs.readFileSync('../keys/server_rsa_private_key.pem'), // 服务器私钥
-    cert: fs.readFileSync('../keys/server_cert.pem'), // 服务器证书
+    key: fs.readFileSync('../../keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('../../keys/server_cert.pem'), // 服务器证书
 }
 const server = https.createServer(options, (req_msg, server_res) => {
     // 当前服务器接收到请求的回调
@@ -1405,8 +1405,8 @@ import fs from 'fs'
 
 // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
 const options = {
-    key: fs.readFileSync('../keys/server_rsa_private_key.pem'), // 服务器私钥
-    cert: fs.readFileSync('../keys/server_cert.pem'), // 服务器证书
+    key: fs.readFileSync('../../keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('../../keys/server_cert.pem'), // 服务器证书
 }
 const server = https.createServer(options, (req_msg, server_res) => {
     // 当前服务器接收到请求的回调
@@ -1806,7 +1806,7 @@ push     //当前客户端流接收到服务器推送的流的响应头时触发
 
 ### (12) 实例
 
-#### http2.get
+#### ① http2.get
 
 server.js
 
@@ -1944,7 +1944,7 @@ const clientSession = http2.connect('http://localhost:3001', (clientSession, cli
 
 ![http2.get]()
 
-#### http2.post
+#### ② http2.post
 
 server.js
 
@@ -2092,7 +2092,7 @@ const clientSession = http2.connect('http://localhost:3001', (clientSession, cli
 
 ![http2.post]()
 
-#### http2Secure.get
+#### ③ http2Secure.get
 
 server.js
 
@@ -2103,8 +2103,8 @@ import { getUrlParams } from '../common.js'
 
 // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
 const options = {
-    key: fs.readFileSync('../keys/server_rsa_private_key.pem'), // 服务器私钥
-    cert: fs.readFileSync('../keys/server_cert.pem'), // 服务器证书
+    key: fs.readFileSync('../../keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('../../keys/server_cert.pem'), // 服务器证书
 }
 const server = http2.createSecureServer(options, (request, response) => {
     // 当前服务器接收到请求的回调
@@ -2242,7 +2242,7 @@ const clientSession = http2.connect('https://localhost:3001', (clientSession, cl
 
 ![http2Secure.get]()
 
-#### http2Secure.post
+#### ④ http2Secure.post
 
 server.js
 
@@ -2252,8 +2252,8 @@ import fs from 'fs'
 
 // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
 const options = {
-    key: fs.readFileSync('../keys/server_rsa_private_key.pem'), // 服务器私钥
-    cert: fs.readFileSync('../keys/server_cert.pem'), // 服务器证书
+    key: fs.readFileSync('../../keys/server_rsa_private_key.pem'), // 服务器私钥
+    cert: fs.readFileSync('../../keys/server_cert.pem'), // 服务器证书
 }
 const server = http2.createServer(options, (request, response) => {
     // 当前服务器接收到请求的回调

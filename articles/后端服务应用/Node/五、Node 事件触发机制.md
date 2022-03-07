@@ -2,9 +2,7 @@
 
 ## 1. events 模块
 
-浏览器通过 DOM 事件响应用户交互，Node 通过 events 模块的 EventEmitter 类处理 Node 事件
-
-### (1) events API
+浏览器通过 `DOM 事件`响应用户交互，Node 通过 events 模块的 `EventEmitter 类`处理 Node 事件
 
 ```js
 定义：import events from 'events'
@@ -15,7 +13,7 @@
      events.on(emitter,e,[options])              //返回并创建指定事件e的监听器
 ```
 
-### (2) EventEmitter 类
+## 2. events.EventEmitter 类
 
 events 模块对外提供 EventEmitter 类，EventEmitter 类通过 `new 命令`实例化
 
@@ -46,9 +44,9 @@ emitter.onremoveListener //emitter上移除事件监听时触发
 emitter.onerror          //emitter遇到异常时触发
 ```
 
-### (3) 实例
+## 3. 实例
 
-#### ① 注册 & 触发事件监听
+### (1) 注册 & 触发事件监听
 
 * 普通回调函数 this 绑定 `emitter 实例`，箭头函数 this 不绑定
 * emitter `按照注册顺序同步调用`所有监听器
@@ -84,7 +82,7 @@ emitter.onerror          //emitter遇到异常时触发
      emitter.emit('open') //'open2' 'open1'
      ```
 
-#### ② 移除事件监听
+### (2) 移除事件监听
 
 * emitter.off(e, cb)：移除单个监听器
 * emitter.removeAllListeners(e)：移除所有监听器
@@ -115,7 +113,7 @@ emitter.onerror          //emitter遇到异常时触发
      console.log(emitter.listeners('open'))     //[]
      ```
 
-#### ③ newListener & removeListener 事件
+### (3) newListener & removeListener 事件
 
 ```js
 import EventEmitter from 'events'
@@ -143,7 +141,7 @@ emitter.off('open', cb)
 // listener: [Function: cb]
 ```
 
-#### ④ error 事件
+### (4) error 事件
 
 emitter 实例遇到异常时`可能`会触发 error 事件，当`触发 error 事件且没有为 error 事件添加至少一个事件监听`时，会抛出错误，打印堆栈跟踪，退出 Node 进程
 
