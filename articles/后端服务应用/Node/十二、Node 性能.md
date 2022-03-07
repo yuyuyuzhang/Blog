@@ -36,3 +36,5 @@ performance.eventLoopUtilization([utilization1,[utilization2]]) //返回包含�
 performance.mark([name,[options]])
 performance.measure(name,[startMarkOrOptions,[endMark]])
 ```
+
+①②③④⑤⑥⑦⑧⑨⑩
