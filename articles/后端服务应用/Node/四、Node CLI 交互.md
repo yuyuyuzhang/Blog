@@ -2,29 +2,33 @@
 
 ## 1. Node 输出超过 2 层嵌套的对象
 
-```js
-const obj = {
-    name: 'joe',
-    age: 35,
-    person1: {
-        name: 'Tony',
-        age: 50,
-        person2: {
-            name: 'Albert',
-            age: 21,
-            person3: {
-                name: 'Peter',
-                age: 23
-            }
-        }
-    }
-}
+* JSONstringify.js
 
-console.log(obj)
-console.log(JSON.stringify(obj, null, 2))
-```
+     ```js
+     const obj = {
+     name: 'joe',
+     age: 35,
+     person1: {
+          name: 'Tony',
+          age: 50,
+          person2: {
+               name: 'Albert',
+               age: 21,
+               person3: {
+                    name: 'Peter',
+                    age: 23
+               }
+          }
+     }
+     }
 
-![输出超过2层嵌套的对象]()
+     console.log(obj)
+     console.log(JSON.stringify(obj, null, 2))
+     ```
+
+* node JSONstringify.js
+
+     ![Node输出超过2层嵌套的对象]()
 
 ## 2. repl 模块
 
@@ -40,8 +44,8 @@ Node 提供 repl 模块支持`交互式解释器`，repl 模块提供了一个`�
 
 options：
 prompt //指定输入提示(默认>)
-input  //指定输入流(默认process.stdin)
-output //指定输出流(默认process.stdout)
+input  //指定输入流(默认 process.stdin)
+output //指定输出流(默认 process.stdout)
 ...
 ```
 
@@ -69,8 +73,8 @@ repl.REPLServer 支持自动补全输入、补全预览、简单的 Emacs 风格
      const replServer = repl.start()
      const replServer = new repl.REPLServer(options)
 方法：replServer.clearBufferedCommand()                   //无返回值,清除任何已缓冲但尚未执行的命令
-     replServer.displayPrompt([preserveCursor])          //无返回值,将repl配置的promt输出到output并恢复input接受新输入,preserveCursor=true光标不会重置为0
-     replServer.defineCommand(keyword,param=>{})         //无返回值,自定义repl命令
+     replServer.displayPrompt([preserveCursor])          //无返回值,将 repl 配置的 promt 输出到 output 并恢复 input 接受新输入,preserveCursor=true 光标不会重置为 0
+     replServer.defineCommand(keyword,param=>{})         //无返回值,自定义 repl 命令
      replServer.setupHistory(historyPath,(err,repl)=>{}) //返回并初始化 REPL 的历史日志文件,执行 Node 二进制文件并使用命令行 REPL 时默认会初始化一个历史文件,但以编程方式创建 REPL 时需要使用此方法初始化历史日志文件
 
 
@@ -79,30 +83,34 @@ exit  //退出 repl 会话时触发(.exit / CTRL+D)
 reset //重置 repl 会话的上下文时触发(.clear)
 ```
 
+### (3) 实例
+
 #### ① replServer.defineCommand(keyword,{help,param=>{}})
 
-repl.js
+* repl.js
 
-```js
-const replServer = repl.start();
-replServer.defineCommand('sayhello', function sayhello(param) {
-    this.clearBufferedCommand();
-    console.log(`Hello, ${param}!`);
-    this.displayPrompt();
-})
-replServer.defineCommand('saybye', function saybye () {
-  console.log('Goodbye!');
-  this.close();
-});
-```
+     ```js
+     const replServer = repl.start();
+     replServer.defineCommand('sayhello', function sayhello(param) {
+          this.clearBufferedCommand();
+          console.log(`Hello, ${param}!`);
+          this.displayPrompt();
+     })
+     replServer.defineCommand('saybye', function saybye () {
+          console.log('Goodbye!');
+          this.close();
+     });
+     ```
 
-![defineCommand1]()
+* node 环境：.load repl.js
 
-![defineCommand2]()
+     ![defineCommand1]()
+
+     ![defineCommand2]()
 
 #### ② reset 事件
 
-repl.js
+* repl.js
 
 ```js
 const replServer = repl.start();
@@ -113,29 +121,33 @@ initializeContext(replServer.context);
 replServer.on('reset', initializeContext)
 ```
 
-![reset事件1]()
+* node 环境：.load repl.js
 
-电脑操作系统问题，repl 不稳定，显示有错误
+     ![reset事件1]()
 
-![reset事件2]()
+     电脑操作系统问题，repl 不稳定，显示有错误
+
+     ![reset事件2]()
 
 #### ③ exit 事件
 
-repl.js
+* repl.js
 
-```js
-const replServer = repl.start();
-replServer.on('exit', () => {
-    console.log('Received "exit" event from repl!');
-    process.exit();
-});
-```
+     ```js
+     const replServer = repl.start();
+     replServer.on('exit', () => {
+          console.log('Received "exit" event from repl!');
+          process.exit();
+     });
+     ```
 
-![exit事件1]()
+* node 环境：.load repl.js
 
-电脑操作系统问题，repl 不稳定，显示有错误
+     ![exit事件1]()
 
-![exit事件2]()
+     电脑操作系统问题，repl 不稳定，显示有错误
+
+     ![exit事件2]()
 
 ## 3. readline 模块
 
@@ -145,9 +157,9 @@ Node 提供 readline 模块使 `Node CLI 程序具有交互性`，readline 模�
 
 ```js
 定义：import readline from 'readline'
-方法：readline.createInterface(options)      //返回并创建readline.Interface实例
-     readline.emitKeypressEvents(stream,cb) //无返回值,使指定可写流触发与接收到的输入对应的keypress事件
-     readline.clearLine(stream,dir,cb)      //返回布尔值,根据指定方向dir清除指定可写流的当前行
+方法：readline.createInterface(options)      //返回并创建 readline.Interface 实例
+     readline.emitKeypressEvents(stream,cb) //无返回值,使指定可写流触发与接收到的输入对应的 keypress 事件
+     readline.clearLine(stream,dir,cb)      //返回布尔值,根据指定方向 dir 清除指定可写流的当前行
      readline.clearScreenDown(stream,cb)    //返回布尔值,从光标的当前位置清除指定可写流
      readline.cursorTo(stream,x,y,cb)       //返回布尔值,将光标移动到指定位置
      readline.moveCursor(stream,dx,dy,cb)   //返回布尔值,相对当前位置将光标移动指定距离
@@ -161,31 +173,31 @@ stream 希望调用代码在继续写入额外数据前等待 drain 事件被触
 ```js
 定义：const rl = readline.createInterface({ input, output })
 属性：rl.line                         //返回正在处理的当前输入数据
-     rl.cursor                       //返回相对于rl.line的光标位置
+     rl.cursor                       //返回相对于 rl.line 的光标位置
 方法：控制方法：
      rl.getCursorPos()               //返回光标相对于输入提示+字符串的实际位置
-     rl.pause()                      //无返回值,暂停input流
-     rl.resume()                     //无返回值,恢复input流
-     rl.close()                      //无返回值,关闭rl实例并放弃对input、output流的控制
+     rl.pause()                      //无返回值,暂停 input 流
+     rl.resume()                     //无返回值,恢复 input 流
+     rl.close()                      //无返回值,关闭 rl 实例并放弃对 input、output 流的控制
      交互方法：
-     rl.setPrompt(prompt)            //无返回值,设置调用rl.prompt()时写入output的提示字符串
+     rl.setPrompt(prompt)            //无返回值,设置调用 rl.prompt() 时写入 output 的提示字符串
      rl.getPrompt()                  //返回当前提示字符串
-     rl.prompt(preserveCursor)       //无返回值,将配置的prompt写入到output,preserveCursor=true则不重置光标位置为0
-     rl.write(data,key)              //无返回值,将data或key标识的键序列写入output,仅当output是文本终端ttf时才支持key参数,指定key则忽略data
-     rl.question(query,[options],cb) //无返回值,询问用户,用户输入完成后执行cb
+     rl.prompt(preserveCursor)       //无返回值,将配置的 prompt 写入到 output,preserveCursor=true 则不重置光标位置为 0
+     rl.write(data,key)              //无返回值,将 data 或 key 标识的键序列写入 output,仅当 output 是文本终端 ttf 时才支持 key 参数,指定 key 则忽略 data
+     rl.question(query,[options],cb) //无返回值,询问用户,用户输入完成后执行 cb
 ```
 
 ### (3) Interface 事件
 
 ```js
-rl.online    //当input流接收到行尾输入(\n、\r、\r\n)时在rl上触发,通常发生在用户按下回车或返回键
-rl.onhistory //当历史数组更改时在rl上触发
-rl.onpause   //当input流暂停时在rl上触发
-rl.onresume  //当input流恢复时在rl上触发
-rl.onclose   //当input流接收到ctrl+d或调用rl.close()方法时在rl上触发
-rl.onSIGINT  //当input流接收到ctrl+c时在rl上触发,若没有注册事件监听则触发pause、close事件
-rl.onSIGTSTP //当input流接收到ctrl+z时在rl上触发,若没有注册事件监听则Node进程将被移动到后台
-rl.onSIGCONT //当之前使用ctrl+z移动到后台的Node进程返回前台时在rl上触发
+rl.online    //当 input 流接收到行尾输入 (\n、\r、\r\n) 时在 rl 上触发,通常发生在用户按下回车或返回键
+rl.onhistory //当历史数组更改时在 rl 上触发
+rl.onpause   //当 input 流暂停时在 rl上触发
+rl.onresume  //当 input 流恢复时在 rl上触发
+rl.onclose   //当 input 流接收到 ctrl+d 或调用 rl.close() 方法时在 rl 上触发
+rl.onSIGINT  //当 input 流接收到 ctrl+c 时在 rl 上触发,若没有注册事件监听则触发 pause、close 事件
+rl.onSIGTSTP //当 input 流接收到 ctrl+z 时在 rl 上触发,若没有注册事件监听则 Node 进程将被移动到后台
+rl.onSIGCONT //当之前使用 ctrl+z 移动到后台的 Node 进程返回前台时在 rl 上触发
 ```
 
 ### (4) 实例
@@ -254,67 +266,67 @@ editor   //编辑模式
      import inquirer from 'inquirer'
 
      const prompts = [
-     {
-          type: 'input',
-          message: 'name:',
-          name: 'name'
-     },
-     {
-          type: 'password',
-          message: 'password:',
-          name: 'pwd'
-     },
-     {
-          type: 'input',
-          message: 'phone:',
-          name: 'phone',
-          validate: val => /\d{11}/g.test(val)
-     },
-     {
-          type: 'confirm',
-          message: '是否学生？',
-          name: 'isStu',
-     },
-     {
-          type: 'confirm',
-          message: '是否参加本次考核？',
-          name: 'isJoin',
-          when: answers => answers.isStu
-     },
-     {
-          type: 'list',
-          message: '请选择一种颜色：',
-          name: 'color1',
-          choices: [
-               'red',
-               'green', 
-               'blue'
-          ],
-     },
-     {
-          type: 'rawlist',
-          message: '请选择一种颜色：',
-          name: 'color2',
-          choices: [
-               'red',
-               'green',
-               'blue'
-          ],
-     },
-     {
-          type: 'checkbox',
-          message: '请选择一种颜色：',
-          name: 'color3',
-          choices: [
-               'red',
-               'green',
-               'blue'
-          ],
-     }
+          {
+               type: 'input',
+               message: 'name:',
+               name: 'name'
+          },
+          {
+               type: 'password',
+               message: 'password:',
+               name: 'pwd'
+          },
+          {
+               type: 'input',
+               message: 'phone:',
+               name: 'phone',
+               validate: val => /\d{11}/g.test(val)
+          },
+          {
+               type: 'confirm',
+               message: '是否学生？',
+               name: 'isStu',
+          },
+          {
+               type: 'confirm',
+               message: '是否参加本次考核？',
+               name: 'isJoin',
+               when: answers => answers.isStu
+          },
+          {
+               type: 'list',
+               message: '请选择一种颜色：',
+               name: 'color1',
+               choices: [
+                    'red',
+                    'green', 
+                    'blue'
+               ],
+          },
+          {
+               type: 'rawlist',
+               message: '请选择一种颜色：',
+               name: 'color2',
+               choices: [
+                    'red',
+                    'green',
+                    'blue'
+               ],
+          },
+          {
+               type: 'checkbox',
+               message: '请选择一种颜色：',
+               name: 'color3',
+               choices: [
+                    'red',
+                    'green',
+                    'blue'
+               ],
+          }
      ]
 
      inquirer.prompt(prompts).then(answers => {
-     console.log("answers:", answers)
+          console.log("answers:", answers)
      })
      ```
 
@@ -331,85 +343,85 @@ editor   //编辑模式
      import fs from 'fs'
 
      const prompts = [
-     {
-          type: 'input',
-          message: 'package name:',
-          default: 'project',
-          name: 'name'
-     },
-     {
-          type: 'input',
-          message: 'version:',
-          default: '1.0.0',
-          name: 'version'
-     },
-     {
-          type: 'input',
-          message: 'description:',
-          name: 'description'
-     },
-     {
-          type: 'input',
-          message: 'entry point:',
-          default: 'cli_inquirer.js',
-          name: 'main'
-     },
-     {
-          type: 'input',
-          message: 'test command:',
-          name: 'scripts',
-          filter: val => ({ test: val })
-     },
-     {
-          type: 'input',
-          message: 'git repository:',
-          name: 'repository',
-          filter: val => ({
-               type: 'git',
-               url: val
-          })
-     },
-     {
-          type: 'checkbox',
-          message: 'keywords:',
-          name: 'keywords',
-          choices: []
-     },
-     {
-          type: 'input',
-          message: 'author:',
-          name: 'author'
-     },
-     {
-          type: 'input',
-          message: 'license:',
-          default: 'ISC',
-          name: 'license'
-     }
+          {
+               type: 'input',
+               message: 'package name:',
+               default: 'project',
+               name: 'name'
+          },
+          {
+               type: 'input',
+               message: 'version:',
+               default: '1.0.0',
+               name: 'version'
+          },
+          {
+               type: 'input',
+               message: 'description:',
+               name: 'description'
+          },
+          {
+               type: 'input',
+               message: 'entry point:',
+               default: 'cli_inquirer.js',
+               name: 'main'
+          },
+          {
+               type: 'input',
+               message: 'test command:',
+               name: 'scripts',
+               filter: val => ({ test: val })
+          },
+          {
+               type: 'input',
+               message: 'git repository:',
+               name: 'repository',
+               filter: val => ({
+                    type: 'git',
+                    url: val
+               })
+          },
+          {
+               type: 'checkbox',
+               message: 'keywords:',
+               name: 'keywords',
+               choices: []
+          },
+          {
+               type: 'input',
+               message: 'author:',
+               name: 'author'
+          },
+          {
+               type: 'input',
+               message: 'license:',
+               default: 'ISC',
+               name: 'license'
+          }
      ]
 
      inquirer.prompt(prompts)
-     .then(answers1 => {
-          // 打印上述回答以便用户再次确认
-          console.log("answers1:", answers1)
+          .then(answers1 => {
+               // 打印上述回答以便用户再次确认
+               console.log("answers1:", answers1)
 
-          inquirer.prompt([{
-               type: 'confirm',
-               message: 'Is this OK?',
-               name: 'OK',
-               default: true,
-          }]).then(answers2 => {
-               // 生成 package.json 文件
-               if(answers2.OK){
-                    // JSON.stringify(str,replace,space) 后两个参数用于格式化
-                    fs.writeFile('./config/package.json', JSON.stringify(answers1, null, 2), (err) => {
-                         if(!err){
-                         console.log('package.json 文件创建成功')
-                         }
-                    })
-               }
+               inquirer.prompt([{
+                    type: 'confirm',
+                    message: 'Is this OK?',
+                    name: 'OK',
+                    default: true,
+               }]).then(answers2 => {
+                    // 生成 package.json 文件
+                    if(answers2.OK){
+                         // JSON.stringify(str,replace,space) 后两个参数用于格式化
+                         fs.writeFile('./packageTest.json', JSON.stringify(answers1, null, 2), (err) => {
+                              if(!err){
+                              console.log('packageTest.json 文件创建成功')
+                              }
+                         })
+                    }
+               })
           })
-     })
      ```
 
 * node cli_inquirer_init.js

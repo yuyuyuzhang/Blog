@@ -512,7 +512,9 @@ zlib.constants.Z_TREES
 
 ### (6) 实例
 
-* 管道 API
+#### ① 管道 API
+
+* pipe.js
 
   ```js
   import fs from 'fs'
@@ -523,9 +525,13 @@ zlib.constants.Z_TREES
     .pipe(fs.createWriteStream('output.gz'))
   ```
 
-  ![zlib管道API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E7%AE%A1%E9%81%93API.png)
+* node pipe.js
 
-* 同步 API
+  ![zlib_pipe](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib_pipe.png)
+
+#### ② 同步 API
+
+* sync.js
 
   ```js
   import fs from 'fs'
@@ -541,9 +547,13 @@ zlib.constants.Z_TREES
   })
   ```
 
-  ![zlib同步API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E5%90%8C%E6%AD%A5API.png)
+* node sync.js
 
-* 异步 API
+  ![zlib_sync](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib_sync.png)
+
+#### ③ 异步 API
+
+* async.js
 
   ```js
   import fs from 'fs'
@@ -562,7 +572,9 @@ zlib.constants.Z_TREES
   }) 
   ```
 
-  ![zlib异步API](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib%E5%BC%82%E6%AD%A5API.png)
+* node async.js
+
+  ![zlib_async](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/zlib_async.png)
 
 ## 3. crypto 模块
 
@@ -1022,18 +1034,24 @@ Node Buffer 类用来`操作内存`，Node Blob 类用来`操作二进制文件`
 
 ### (5) 实例
 
-```js
-import { Blob } from 'buffer'
+* buffer.js
 
-const buf = new ArrayBuffer(100); //分配一段 100 字节的连续内存
-const blob = new Blob([buf])
-const copyBlob = blob.slice(20, 30)
+  ```js
+  import { Blob } from 'buffer'
 
-console.log(blob.size) //100
-console.log(blob.type) //''
-console.log(blob)      //Blob {size: 100, type: ''}
-console.log(copyBlob)  //Blob {size: 10, type: ''}
-```
+  const buf = new ArrayBuffer(100); //分配一段 100 字节的连续内存
+  const blob = new Blob([buf])
+  const copyBlob = blob.slice(20, 30)
+
+  console.log(blob.size) //100
+  console.log(blob.type) //''
+  console.log(blob)      //Blob {size: 100, type: ''}
+  console.log(copyBlob)  //Blob {size: 10, type: ''}
+  ```
+
+* node buffer.js
+
+  ![buffer]()
 
 ## 5. string_decoder 模块
 
@@ -1050,16 +1068,22 @@ string_decoder 模块用于`将 buffer 对象解码为字符串`
 
 ### (2) 实例
 
-```js
-import { StringDecoder } from 'string_decoder'
+* string_decoder.js
 
-const decoder = new StringDecoder() //无参则默认UTF-8
-decoder.write(Buffer.from('小'))
-decoder.write(Buffer.from('可'))
+  ```js
+  import { StringDecoder } from 'string_decoder'
 
-// 情况1
-console.log(decoder.end()) //''
+  const decoder = new StringDecoder() //无参则默认UTF-8
+  decoder.write(Buffer.from('小'))
+  decoder.write(Buffer.from('可'))
 
-// 情况2
-console.log(decoder.end(Buffer.from('爱'))) //'爱'
-```
+  // 情况1
+  console.log(decoder.end()) //''
+
+  // 情况2
+  console.log(decoder.end(Buffer.from('爱'))) //'爱'
+  ```
+
+* node string_decoder.js
+
+  ![string_decoder]()

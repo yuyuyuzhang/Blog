@@ -56,37 +56,43 @@ Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事�
 * **宏任务**：setImmediate、setTimeout、setInterval、IO
   * setTimeout 如果不设置时间或者设置时间为 0，默认 1ms
 
-```js
-import process from 'process'
-import fs from 'fs'
+### (2) 实例
 
-console.log('start');
+* eventloop1.js
 
-setTimeout(() => { 
-    console.log('1'); 
-}, 0);
+    ```js
+    import process from 'process'
+    import fs from 'fs'
 
-setImmediate(() => {
-    console.log('setImmediate 1');
-});
+    console.log('start');
 
-fs.readFile('./index.js', {encoding: 'utf-8'}, (err, data) => {
-    if (err) throw err;
-    console.log('read file success');
-});
+    setTimeout(() => { 
+        console.log('1'); 
+    }, 0);
 
-process.nextTick(() => {
-    console.log('nextTick')
-})
+    setImmediate(() => {
+        console.log('setImmediate 1');
+    });
 
-new Promise((resolve) => {
-    console.log('promise')
-    resolve();
-}).then(() => {
-    console.log('promise cb')
-})
+    fs.readFile('./test.js', {encoding: 'utf-8'}, (err, data) => {
+        if (err) throw err;
+        console.log('read file success');
+    });
 
-console.log('end');
-```
+    process.nextTick(() => {
+        console.log('nextTick')
+    })
 
-![node事件循环]()
+    new Promise((resolve) => {
+        console.log('promise')
+        resolve();
+    }).then(() => {
+        console.log('promise cb')
+    })
+
+    console.log('end');
+    ```
+
+* node eventloop1.js
+
+    ![eventloop1]()

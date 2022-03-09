@@ -1,5 +1,5 @@
 import http2 from 'http2'
-import { getUrlParams } from '../common.js'
+import { getUrlParams } from '../../common.js'
 
 const server = http2.createServer((request, response) => {
     // 当前服务器接收到请求的回调

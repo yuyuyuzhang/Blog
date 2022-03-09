@@ -499,38 +499,42 @@ timeout //当前套接字因不活动而超时时触发,用户必须手动调用
 
 ### (6) 实例
 
-```js
-import net from 'net'
+* tcp_socket.js
 
-// Server
-const server = net.createServer(server_socket => {
-    // 当前服务器建立新连接的回调
+    ```js
+    import net from 'net'
 
-    server_socket.on('data', data => {
-        console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
-        server_socket.write('world') // 向客户端发送响应
+    // Server
+    const server = net.createServer(server_socket => {
+        // 当前服务器建立新连接的回调
+
+        server_socket.on('data', data => {
+            console.log("服务端：接收到客户端" + "(" + server_socket.remoteAddress + ":" + server_socket.remotePort + ")" + "请求 " + data)
+            server_socket.write('world') // 向客户端发送响应
+        })
+    }).listen(8124, '127.0.0.1', () => {
+        const address = server.address()
+        console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
     })
-}).listen(8124, '127.0.0.1', () => {
-    const address = server.address()
-    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
-})
 
-// Client
-const client_socket = net.createConnection(8124, () => {
-    // 当前套接字与远程套接字成功建立连接的回调
+    // Client
+    const client_socket = net.createConnection(8124, () => {
+        // 当前套接字与远程套接字成功建立连接的回调
 
-    client_socket.write('hello') // 向服务器发送请求
-    client_socket.on('data', data => {
-        console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
-        client_socket.destroy() // 关闭客户端连接
+        client_socket.write('hello') // 向服务器发送请求
+        client_socket.on('data', data => {
+            console.log("客户端：接收到服务端" + "(" + client_socket.remoteAddress + ":" + client_socket.remotePort + ")" + "响应 " + data)
+            client_socket.destroy() // 关闭客户端连接
+        })
+        client_socket.on('close', () => {
+            console.log("客户端：已关闭客户端套接字")
+        })    
     })
-    client_socket.on('close', () => {
-        console.log("客户端：已关闭客户端套接字")
-    })    
-})
-```
+    ```
 
-![tcp_socket]()
+* node tcp_socket.js
+
+    ![tcp_socket]()
 
 ## 5. dgram 模块
 
@@ -598,39 +602,43 @@ error     //当前套接字发生错误时触发(事件监听器参数为 Error 
 
 ### (2) 实例
 
-```js
-import dgram from 'dgram'
+* udp_socket.js
 
-// Server
-const server = dgram.createSocket('udp4').bind(41234, 'localhost')
-server.on('listening', () => {
-    const address = server.address()
-    console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
-})
-server.on('message', (req_msg, remoteAddress) => {
-    console.log("服务端：接收到客户端" + "(" + remoteAddress.address + ":" + remoteAddress.port + ")" + "请求 " + req_msg)
-    server.send('world', remoteAddress.port, remoteAddress.address) // 向客户端发送响应
-})
+    ```js
+    import dgram from 'dgram'
 
-// Client
-const client = dgram.createSocket('udp4')
-client.connect(41234, 'localhost', () => {
-    // 当前套接字与远程套接字成功建立连接的回调
-
-    client.send('hello') // 向服务端发送请求
-    client.on('message', (server_res, remoteAddress) => {
-        console.log("客户端：接收到服务端" + "(" + remoteAddress.address + ":" + remoteAddress.port + ")" + "响应 " + server_res)
-        if(server_res.toString() == 'world'){
-            client.close()
-        }
-    })  
-    client.on('close', () => {
-        console.log("客户端：已关闭客户端套接字")
+    // Server
+    const server = dgram.createSocket('udp4').bind(41234, 'localhost')
+    server.on('listening', () => {
+        const address = server.address()
+        console.log("服务端：服务器开始侦听，侦听地址为 " + address.address + ":" + address.port)
     })
-})
-```
+    server.on('message', (req_msg, remoteAddress) => {
+        console.log("服务端：接收到客户端" + "(" + remoteAddress.address + ":" + remoteAddress.port + ")" + "请求 " + req_msg)
+        server.send('world', remoteAddress.port, remoteAddress.address) // 向客户端发送响应
+    })
 
-![udp_socket]()
+    // Client
+    const client = dgram.createSocket('udp4')
+    client.connect(41234, 'localhost', () => {
+        // 当前套接字与远程套接字成功建立连接的回调
+
+        client.send('hello') // 向服务端发送请求
+        client.on('message', (server_res, remoteAddress) => {
+            console.log("客户端：接收到服务端" + "(" + remoteAddress.address + ":" + remoteAddress.port + ")" + "响应 " + server_res)
+            if(server_res.toString() == 'world'){
+                client.close()
+            }
+        })  
+        client.on('close', () => {
+            console.log("客户端：已关闭客户端套接字")
+        })
+    })
+    ```
+
+* node udp_socket.js
+
+    ![udp_socket]()
 
 ## 6. http 模块
 
@@ -865,7 +873,7 @@ server.js
 
 ```js
 import http from 'http'
-import { getUrlParams } from '../common.js'
+import { getUrlParams } from '../../common.js'
 
 const server = http.createServer((req_msg, server_res) => {
     // 当前服务器接收到请求的回调
@@ -1291,7 +1299,7 @@ server.js
 ```js
 import https from 'https'
 import fs from 'fs'
-import { getUrlParams } from '../common.js'
+import { getUrlParams } from '../../common.js'
 
 // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
 const options = {
@@ -1812,7 +1820,7 @@ server.js
 
 ```js
 import http2 from 'http2'
-import { getUrlParams } from '../common.js'
+import { getUrlParams } from '../../common.js'
 
 const server = http2.createServer((request, response) => {
     // 当前服务器接收到请求的回调
@@ -1942,7 +1950,7 @@ const clientSession = http2.connect('http://localhost:3001', (clientSession, cli
 })
 ```
 
-![http2.get]()
+![http2_get]()
 
 #### ② http2.post
 
@@ -2090,7 +2098,7 @@ const clientSession = http2.connect('http://localhost:3001', (clientSession, cli
 })
 ```
 
-![http2.post]()
+![http2_post]()
 
 #### ③ http2Secure.get
 
@@ -2099,7 +2107,7 @@ server.js
 ```js
 import http2 from 'http2'
 import fs from 'fs'
-import { getUrlParams } from '../common.js'
+import { getUrlParams } from '../../common.js'
 
 // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
 const options = {
@@ -2240,7 +2248,7 @@ const clientSession = http2.connect('https://localhost:3001', (clientSession, cl
 })
 ```
 
-![http2Secure.get]()
+![http2Secure_get]()
 
 #### ④ http2Secure.post
 
@@ -2400,4 +2408,4 @@ const clientSession = http2.connect('https://localhost:3001', (clientSession, cl
 })
 ```
 
-![http2Secure.post]()
+![http2Secure_post]()

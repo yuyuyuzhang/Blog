@@ -73,9 +73,9 @@ inquirer.prompt(prompts)
             // 生成 package.json 文件
             if(answers2.OK){
                 // JSON.stringify(str,replace,space) 后两个参数用于格式化
-                fs.writeFile('./config/package.json', JSON.stringify(answers1, null, 2), (err) => {
+                fs.writeFile('./packageTest.json', JSON.stringify(answers1, null, 2), (err) => {
                     if(!err){
-                        console.log('package.json 文件创建成功')
+                        console.log('packageTest.json 文件创建成功')
                     }
                 })
             }

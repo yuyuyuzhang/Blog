@@ -1,6 +1,6 @@
 import http2 from 'http2'
 import fs from 'fs'
-import { getUrlParams } from '../common.js'
+import { getUrlParams } from '../../common.js'
 
 // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
 const options = {

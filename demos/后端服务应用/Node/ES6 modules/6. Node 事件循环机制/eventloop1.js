@@ -11,7 +11,7 @@ setImmediate(() => {
     console.log('setImmediate 1');
 });
 
-fs.readFile('./index.js', {encoding: 'utf-8'}, (err, data) => {
+fs.readFile('./test.js', {encoding: 'utf-8'}, (err, data) => {
     if (err) throw err;
     console.log('read file success');
 });

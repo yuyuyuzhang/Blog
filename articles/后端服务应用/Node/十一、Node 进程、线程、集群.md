@@ -465,65 +465,54 @@ worker_threads.Worker 类表示`独立的 JS 执行子线程`，大多数 Node A
 ```js
 定义：import worker_threads from 'worker_threads'
      const workerThread = new Worker(filename,[options])
-属性：
-worker.threadId
-worker.resourceLimits
-worker.stderr
-worker.stdin
-worker.stdout
-方法：
-worker.getHeapSnapshot()
-worker.unref()
-worker.terminate()
-worker.postMessage(value,[transferList])
-worker.ref()
-worker.eventLoopUtilization([utilization1,[utilization2]])
-
-
-options：
-argv
-env
-execArgv
-exec
-stdin
-stdout
-stderr
-workerData
-trackUnmanagedFds
-transferList
-resourceLimits
+属性：worker.threadId                          //返回 worker 线程的 ID
+     worker.resourceLimits                    //返回 worker 线程的 JS 引擎资源约束
+     worker.stdin                             //返回 worker 线程的标准输入流
+     worker.stdout                            //返回 worker 线程的标准输出流
+     worker.stderr                            //返回 worker 线程的错误流
+     worker.performance                       //返回 worker 线程的性能对象
+方法：worker.ref()                             //无返回值,恢复 worker 线程的引用计数
+     worker.unref()                           //无返回值,取消 worker 线程的引用计数
+     worker.postMessage(value,[transferList]) //无返回值,当前主线程向 worker 线程发送消息
+     worker.terminate()                       //返回 Promise 实例,停止 worker 线程的所有 JS 代码执行
+     worker.getHeapSnapshot()                 //返回 Promise 实例,worker 线程当前状态的 V8 堆快照的可读流
 
 
 事件：
-error
-exit
-message
-messageerror
-online
+worker.onerror        //worker 线程发生错误时触发(err)
+worker.onexit         //worker 线程退出时触发(exitCode)
+worker.onmessage      //worker 线程(value)
+worker.onmessageerror //worker 线程(error)
+worker.ononline       //worker 线程开始执行 JS 代码时触发
 ```
 
-### (4) MessagePort 类
+### (4) worker_threads.MessageChannel 类
+
+worker_threads.MessageChannel 类表示 `worker 线程的异步双向通信通道`，new MessageChannel() 产生具有 port1、port2 属性的对象，其引用链接的 MessagePort 实例
 
 ```js
-定义：
-方法：
-port.ref()
-port.start()
-port.unref()
-port.close()
-port.postMessage(value,[transferList])
+定义：import { MessageChannel } from 'worker_threads'
+使用：const { port1, port2 } = new MessageChannel()
+```
+
+### (5) worker_threads.MessagePort 类
+
+worker_threads.MessagePort 类表示 `worker 线程的异步双向通信通道的一端`，用在不同的 worker 线程之间传输结构化的数据、内存区域和其他 MessagePort
+
+```js
+定义：import { MessageChannel } from 'worker_threads'
+     const { port1, port2 } = new MessageChannel()
+方法：port.ref()                             //无返回值,恢复 port 的引用计数
+     port.unref()                           //无返回值,取消 port 的引用计数
+     port.start()                           //无返回值,port 端口打开连接
+     port.close()                           //无返回值,port 端口断开连接
+     port.postMessage(value,[transferList]) //无返回值,port 端口向另一端发送消息
 
 
 事件：
-close
-message
-messageerror
-```
-
-### (5) MessageChannel 类
-
-```js
-定义：
+port.onclose        //port 端口断开连接时触发
+port.onmessage      //port 端口接收到消息时触发(value)
+port.onmessageerror //port 端口接收到的消息反序列化失败时触发(error)
 ```
 
 ①②③④⑤⑥⑦⑧⑨⑩

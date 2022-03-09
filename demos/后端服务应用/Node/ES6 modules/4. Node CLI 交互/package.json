@@ -1,8 +1,11 @@
 {
   "name": "project",
   "version": "1.0.0",
+  "author": "yuyuyuzhang",
+  "license": "ISC",
   "description": "",
-  "main": "cli_inquirer.js",
+  "keywords": [],
+  "type": "module",
   "scripts": {
     "test": "aaa"
   },
@@ -10,7 +13,7 @@
     "type": "git",
     "url": "bbb"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "inquirer": "^8.2.1"
+  }
 }

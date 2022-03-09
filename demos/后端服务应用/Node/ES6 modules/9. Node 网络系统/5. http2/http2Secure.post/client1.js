@@ -1,7 +1,7 @@
 import http2 from 'http2'
 
 // TLS 忽略自签名证书错误
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 const clientSession = http2.connect('https://localhost:3001', (clientSession, clientSocket) => {
     // 当前客户端会话成功连接到服务器并可以通信时的回调
@@ -11,10 +11,11 @@ const clientSession = http2.connect('https://localhost:3001', (clientSession, cl
         ':method': 'POST',
         ':path': '/todos',
         'Content-Type': 'application/json',
+        'body': JSON.stringify({name: 'zhangsan'})
     })
-    clientStream.write(JSON.stringify({
-        name: 'zhangsan'
-    }))
+    // clientStream.write(JSON.stringify({
+    //     name: 'zhangsan'
+    // }))
 
     // 当前客户端通信流接收到服务器返回的 HEADERS 帧的回调
     clientStream.on('response', headers => {

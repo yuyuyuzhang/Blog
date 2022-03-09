@@ -1,5 +1,5 @@
 import http from 'http'
-import { getUrlParams } from '../common.js'
+import { getUrlParams } from '../../common.js'
 
 const server = http.createServer((req_msg, server_res) => {
     // 当前服务器接收到请求的回调
