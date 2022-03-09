@@ -290,7 +290,7 @@ worker.onerror      //子进程 worker 发生错误时触发
 
 #### ① 集群创建并遍历子进程
 
-* primary1.js
+* cluster1.js
 
     ```js
     import cluster from 'cluster'
@@ -319,9 +319,9 @@ worker.onerror      //子进程 worker 发生错误时触发
     }
     ```
 
-* node primary1.js
+* node cluster1.js
 
-    ![集群创建并遍历子进程]()
+    ![cluster1]()
 
 #### ② 集群的父子进程通信
 
@@ -368,7 +368,7 @@ worker.onerror      //子进程 worker 发生错误时触发
 
 * node primary2.js
 
-    ![集群的父子进程通信]()
+    ![cluster2]()
 
 #### ③ 集群的子进程是服务器
 
@@ -428,7 +428,7 @@ worker.onerror      //子进程 worker 发生错误时触发
 
 * node primary3.js
 
-    ![集群的子进程是服务器]()
+    ![cluster3]()
 
 ## 4. worker_threads 模块
 
@@ -443,19 +443,19 @@ worker_threads 模块提供`多线程并行执行 JS 代码`，多线程对于�
 ```js
 定义：import worker_threads from 'worker_threads'
 属性：基本属性：
-      worker.threadId                                           //返回当前线程 ID
-      worker.workerData                                         //返回当前线程创建时传给构建函数的数据副本
-      worker.isMainThread                                       //返回当前线程是否为父线程
-      worker.SHARE_ENV                                          //返回当前线程的共享环境变量
-      worker.resourceLimits                                     //返回当前线程的 JS 引擎资源约束
-      worker.parentPort                                         //返回当前线程的父线程通信端口
+      worker_threads.threadId                                           //返回当前线程 ID
+      worker_threads.workerData                                         //返回当前线程创建时传给构建函数的数据副本
+      worker_threads.isMainThread                                       //返回当前线程是否为父线程
+      worker_threads.SHARE_ENV                                          //返回当前线程的共享环境变量
+      worker_threads.resourceLimits                                     //返回当前线程的 JS 引擎资源约束
+      worker_threads.parentPort                                         //返回当前线程的父线程通信端口
 方法：基本方法：
-      worker.setEnvironmentData(key,[value])                    //无返回值,设置当前线程的环境数据
-      worker.getEnvironmentData(key)                            //返回当前线程的环境数据
+      worker_threads.setEnvironmentData(key,[value])                    //无返回值,设置当前线程的环境数据
+      worker_threads.getEnvironmentData(key)                            //返回当前线程的环境数据
       传输方法：
-      worker.moveMessagePortToContext(port,contextifiedSandbox) //返回新的 MessagePort 实例,将指定 port 传输到新的 vm 上下文 contextifiedSandbox,继承其全局 Object 类,不再继承 EventEmitter,只有 port.onmessage() 可以接收事件
-      worker.markAsUntransferable(obj)                          //无返回值,将指定对象 obj 标记为不可传输
-      worker.receiveMessageOnPort(port)                         //返回当前线程从指定的 MessagePort 接收到的消息
+      worker_threads.moveMessagePortToContext(port,contextifiedSandbox) //返回新的 MessagePort 实例,将指定 port 传输到新的 vm 上下文 contextifiedSandbox,继承其全局 Object 类,不再继承 EventEmitter,只有 port.onmessage() 可以接收事件
+      worker_threads.markAsUntransferable(obj)                          //无返回值,将指定对象 obj 标记为不可传输
+      worker_threads.receiveMessageOnPort(port)                         //返回当前线程从指定的 MessagePort 接收到的消息
 ```
 
 ### (3) worker_threads.Worker 类
@@ -481,8 +481,8 @@ worker_threads.Worker 类表示`独立的 JS 执行子线程`，大多数 Node A
 事件：
 worker.onerror        //worker 线程发生错误时触发(err)
 worker.onexit         //worker 线程退出时触发(exitCode)
-worker.onmessage      //worker 线程(value)
-worker.onmessageerror //worker 线程(error)
+worker.onmessage      //worker 线程向主线程发送消息时触发(value)
+worker.onmessageerror //worker 线程向主线程发现的消息反序列化失败时触发(error)
 worker.ononline       //worker 线程开始执行 JS 代码时触发
 ```
 
@@ -515,4 +515,43 @@ port.onmessage      //port 端口接收到消息时触发(value)
 port.onmessageerror //port 端口接收到的消息反序列化失败时触发(error)
 ```
 
-①②③④⑤⑥⑦⑧⑨⑩
+### (6) 实例
+
+* worker_threads.js
+
+    ```js
+    import assert from 'assert'
+    import worker_threads, { Worker, MessageChannel } from 'worker_threads'
+
+    if(worker_threads.isMainThread) {
+        const worker = new Worker('./worker_threads.js')
+        const { port1, port2 } = new MessageChannel()
+
+        // 主线程向 worker 线程发送消息
+        worker.postMessage(
+            { 
+                workerPort: port2,
+                msg: 'hello, I am mainThread'
+            }, 
+            [port2]
+        )
+
+        // 主线程监听来自 worker 线程的消息
+        port1.on('message', message => {
+            console.log("port1:", message)
+        })
+    } else {
+        // worker 线程监听来自主线程的消息
+        worker_threads.parentPort.on('message', value => {
+            assert(value.workerPort instanceof MessagePort)
+            console.log('port2:', value.msg)
+
+            // worker 线程向主线程发送消息
+            value.workerPort.postMessage('hello, I am workerThread')
+        })
+    }
+    ```
+
+* node worker_threads.js
+
+    ![worker_threads]()

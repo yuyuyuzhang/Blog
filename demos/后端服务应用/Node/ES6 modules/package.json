@@ -1,18 +1,15 @@
 {
-    "name": "node-commonjs-project",
+    "name": "node-module-project",
     "version": "1.0.0",
     "author": "yuyuyuzhang",
     "license": "ISC",
-    "description": "a node commonJS project",
+    "description": "a node module project",
     "keywords": [
       "node",
-      "commonJS"
+      "module"
     ],
     "type": "module",      
-    "main": "index.js",
-    "scripts": {
-      "serve": "node index.js"
-    },
+    "scripts": {},
     "devDependencies": {},
     "dependencies": {
       "inquirer": "^8.1.2",

@@ -8,10 +8,7 @@
     "node",
     "commonJS"
   ],
-  "main": "index.js",
-  "scripts": {
-    "serve": "node index.js"
-  },
+  "scripts": {},
   "devDependencies": {},
   "dependencies": {
     "inquirer": "^8.1.2",

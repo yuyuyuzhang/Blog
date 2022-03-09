@@ -11,7 +11,8 @@ if(cluster.isWorker) {
     }
 
     // 创建服务器并开始监听
-    const server = https.createServer(options).listen(3001, '127.0.0.1')
+    // const server = https.createServer(options).listen(3001, '127.0.0.1')
+    const server = https.createServer(options).listen(3001, 'localhost')
 
     // 子进程向父进程发送消息
     process.send('hello, I am worker3')

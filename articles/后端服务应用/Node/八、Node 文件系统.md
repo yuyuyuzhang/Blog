@@ -10,24 +10,24 @@ path 模块用于处理`文件和目录路径`，path 模块的默认操作因�
 
 ```js
 定义：import path from 'path'
-属性：path.win32                     //无返回值,提供特定于Windows的path API访问(import path from 'path/win32')
-     path.posix                     //无返回值,提供特定于POSIX的path API访问(import path from 'path/posix')
-     path.delimiter                 //返回特定于平台的路径定界符(Windows:分号、POSIX:冒号)
-     path.sep                       //返回特定于平台的路径片段分隔符(Windows:反斜杠、POSIX:斜杠)
+属性：path.win32                     //无返回值,提供特定于 Windows 的 path API 访问(import path from 'path/win32')
+     path.posix                     //无返回值,提供特定于 POSIX 的 path API 访问(import path from 'path/posix')
+     path.delimiter                 //返回特定于平台的路径定界符(Windows:分号,POSIX:冒号)
+     path.sep                       //返回特定于平台的路径片段分隔符(Windows:反斜杠,POSIX:斜杠)
 方法：基本方法：
-     path.isAbsolute(pathStr)       //返回布尔值,pathStr是否为绝对路径
-     path.relative(from,to)         //返回根据当前工作目录从from到to的相对路径
-     path.dirname(pathStr)          //返回pathStr目录名
-     path.basename(pathStr)         //返回pathStr文件名
-     path.extname(pathStr)          //返回pathStr文件扩展名
+     path.isAbsolute(pathStr)       //返回布尔值,pathStr 是否为绝对路径
+     path.relative(from,to)         //返回根据当前工作目录从 from 到 to 的相对路径
+     path.dirname(pathStr)          //返回 pathStr 目录名
+     path.basename(pathStr)         //返回 pathStr 文件名
+     path.extname(pathStr)          //返回 pathStr 文件扩展名
      格式化方法：
-     path.parse(pathStr)            //返回pathStr解析后的pathObj对象(JS对象:具有dir,base,root,name,ext属性)
-     path.format(pathObj)           //返回pathObj格式后的pathStr字符串
+     path.parse(pathStr)            //返回 pathStr 解析后的 pathObj 对象(JS对象:具有dir,base,root,name,ext属性)
+     path.format(pathObj)           //返回 pathObj 格式后的 pathStr 字符串
      规范化方法：
-     path.normalize(pathStr)        //返回规范化后的pathStr
+     path.normalize(pathStr)        //返回规范化后的 pathStr
      组装路径方法：
-     path.join(pathStr1,...)        //返回使用路径片段分隔符作为路径定界符将pathStr1,...连接在一起并规范化后的路径
-     path.resolve(pathStr1,...)     //返回构建后的绝对路径,给定的路径序列从右到左处理,每个后续path被追加到前面,直到构建成绝对路径,处理完所有路径序列后仍未构建成绝对路径,则会附加当前工作目录的绝对路径
+     path.join(pathStr1,...)        //返回使用路径片段分隔符作为路径定界符将 pathStr1,... 连接在一起并规范化后的路径
+     path.resolve(pathStr1,...)     //返回构建后的绝对路径,给定的路径序列从右到左处理,每个后续 path 被追加到前面,直到构建成绝对路径,处理完所有路径序列后仍未构建成绝对路径,则会附加当前工作目录的绝对路径
 ```
 
 ### (3) 实例
@@ -474,7 +474,7 @@ fs.Dirent 类表示`文件夹条目`，可以是`子文件夹或文件`
 
 * node dir.js
 
- ![dir]()
+     ![dir]()
 
 ### (5) fs.Stats 类
 
