@@ -89,28 +89,3 @@ Nest 安装与使用流程如下
   ![nest_main]()
 
 ### (2) Nest Restful 实例
-
-## 6. 实现一个获取用户发帖的列表信息 API
-
-该 API 列表的内容包含两部分，一部分是从数据库获取发帖内容，另一部分是通过发帖内容中的用户 ID 获取用户信息
-
-* GET /v1/contents：获取发帖内容
-* GET /v1/userInfos：获取用户信息
-
-![v1_contents]()
-
-* 先调用 /v1/contents 从 MongoDB 获取发帖内容 contents
-* 从 contents 解析其中的 userIds
-* 再调用 /v1/userInfos 配合参数 userInfos 从 MongoDB 获取用户信息列表 userInfos
-* 通过 addUserInfo 将 userInfos 整合到 contents
-* 将 contents 返回给调用方
-
-### (1) API server
-
-解析请求路径和请求参数
-
-```js
-
-```
-
-### (2) 
