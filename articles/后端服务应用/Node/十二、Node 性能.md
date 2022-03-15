@@ -12,9 +12,29 @@ Node 支持以下 Web 性能 API
 
 ```js
 定义：import perf_hooks from 'perf_hooks'
-方法：
-     perf_hooks.createHistogram([options])       //
-     perf_hooks.monitorEventLoopDelay([options]) //
+方法：Histogram 类方法：
+     perf_hooks.createHistogram([{lowest,highest,figures}]) //返回 RecordableHistogram 实例
+     perf_hooks.monitorEventLoopDelay([{resolution}])       //返回 IntervalHistogram 实例,可随时间采样并报告事件循环延迟
+```
+
+## 2. perf_hooks.Histogram 类
+
+### (1) Histogram API
+
+```js
+
+```
+
+### (2) IntervalHistogram API
+
+```js
+
+```
+
+### (3) RecordableHistogram API
+
+```js
+
 ```
 
 ## 2. perf_hooks.performance 对象

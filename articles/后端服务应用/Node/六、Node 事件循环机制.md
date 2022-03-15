@@ -48,15 +48,20 @@ clearImmediate(immediate)         //无返回值,取消指定的 immediate 实�
 
 ### (1) Node 事件循环机制
 
-Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事件循环原理是不一致的，一个是基于 `libev 库`，一个是基于`浏览器`
+Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事件循环原理是不一致的，一个是基于 `libev 库`，一个是基于`浏览器`，Node 主线程是单线程执行的，但是 Node 存在多线程执行，包括定时器线程等等，不过主要还是主线程来循环遍历当前事件循环
 
-微任务优先级高于宏任务，只有微任务队列清空后，才会执行宏任务，而 process.nextTick 优先级高于 Promise
+微任务优先级高于宏任务，只有微任务队列清空后，才会执行宏任务
 
-* **微任务**：process.nextTick、Promise.then/catch/finally()
-* **宏任务**：setImmediate、setTimeout、setInterval、IO
-  * setTimeout 如果不设置时间或者设置时间为 0，默认 1ms
+* **微任务队列**：Promise.then/catch/finally()、process.nextTick
+* **宏任务队列**：IO、setImmediate、setTimeout、setInterval
+  * setTimeout 如果不设置时间或者设置时间为 0，默认 `1ms`
 
-### (2) 实例
+![eventloop]()
+
+#### ① 微任务及宏任务的优先级
+
+> 微任务 Promise.then/catch/finally() 优先级高于 process.nextTick
+> 宏任务 IO 操作优先级高于定时器回调，但是定时器可能比 IO 操作先执行完
 
 * eventloop1.js
 
@@ -96,3 +101,154 @@ Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事�
 * node eventloop1.js
 
     ![eventloop1]()
+
+#### ② 回调函数会阻塞主线程的执行
+
+* eventloop2.js
+
+    ```js
+    import fs from 'fs'
+
+    console.log('start')
+
+    const sleep = (n) => { 
+        const start = new Date().getTime()
+        while (true) {
+            if (new Date().getTime() - start > n) {
+                break
+            }
+        }
+    }
+
+    setTimeout(() => {
+        console.log('1')
+        sleep(10000)
+        console.log('sleep 10s')
+    }, 0)
+
+    fs.readFile('./test.conf', {encoding: 'utf-8'}, (err, data) => {
+        if (err) throw err
+        console.log('read file success')
+    })
+
+    console.log('end');
+    ```
+
+* node eventloop.js
+
+    ![eventloop]()
+
+### (2) Node 不善于处理 CPU 密集型业务
+
+Node 不善于处理 CPU 密集型业务，可能会导致性能问题，如果要实现一个耗时 CPU 的计算逻辑，处理方法有如下 2 种
+
+* 主业务进程中处理
+* 通过网络异步 IO 给其他进程处理
+
+用以上 2 个方法计算从 0 到 1000000000 之间的和对比效果
+
+#### ① 主业务进程中处理
+
+* cpuComputing1.js
+
+    ```js
+    import http from 'http'
+
+    const startCount = () => {
+        let sum = 0;
+        for(let i=0; i<500000000; i++){
+            sum = sum + i;
+        }
+        return sum;
+    }
+
+    const endCount = () => {
+        let sum = 0;
+        for(let i=500000000; i<1000000000; i++){
+            sum = sum + i;
+        }
+        return sum;
+    }
+
+    const server = http.createServer((req, res) => {
+        res.write(`${startCount() + endCount()}`)
+        res.end()
+    }).listen(4000, () => {
+        console.log("server start at http://127.0.0.1:4000")
+    })
+    ```
+
+* node cpuComputing1.js
+
+    ![cpuComputing1]()
+
+#### ② 异步网络 IO 给其他进程处理
+
+异步网络 IO 充分利用了 Node 的异步事件驱动能力，将耗时 CPU 计算逻辑交给其他进程处理，而无需等待耗时 CPU 计算，可以直接处理其他请求或者其他部分逻辑
+
+* startCount.js
+
+    ```js
+    import http from 'http'
+
+    const server = http.createServer((req, res) => {
+        let sum = 0;
+        for(let i=0; i<500000000; i++){
+            sum = sum + i;
+        }
+        res.write(`${sum}`);
+        res.end()
+    }).listen(4001, () => {
+        console.log('server start at http://127.0.0.1:4001')
+    })
+    ```
+
+* endCount.js
+
+    ```js
+    import http from 'http'
+
+    const server = http.createServer((req, res) => {
+        let sum = 0;
+        for(let i=500000000; i<1000000000; i++){
+            sum = sum + i;
+        }
+        res.write(`${sum}`);
+        res.end()
+    }).listen(4002, () => {
+        console.log('server start at http://127.0.0.1:4002')
+    })
+    ```
+
+* cpuComputing2.js
+
+    ```js
+    import http from 'http'
+    import requestPromise from 'request-promise'
+
+    const startCount = async () => {
+        await requestPromise.get('http://127.0.0.1:4001')
+    }
+    const endCount = async () => {
+        await requestPromise.get('http://127.0.0.1:4002')
+    }
+
+    const server = http.createServer((req, res) => {
+        Promise.all([
+            startCount(),
+            endCount()
+        ]).then(values => {
+            let sum = values.reduce((prev, curr) => {
+                return parseInt(prev) + parseInt(curr);
+            })
+            res.write(`${sum}`);
+            res.end(); 
+        })
+    }).listen(4000, () => {
+        console.log('server start at http://127.0.0.1:4000')
+    })
+    ```
+
+* node cpuComputing3.js
+
+    ![cpuComputing2]()

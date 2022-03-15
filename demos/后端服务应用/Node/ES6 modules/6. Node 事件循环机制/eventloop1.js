@@ -17,7 +17,7 @@ fs.readFile('./test.js', {encoding: 'utf-8'}, (err, data) => {
 });
 
 process.nextTick(() => {
-    console.log('nextTick')
+    console.log('nextTick cb')
 })
 
 new Promise((resolve) => {
@@ -28,3 +28,5 @@ new Promise((resolve) => {
 })
 
 console.log('end');
+
+// start -> promise -> end -> promise cb -> nextTick cb -> setImmediate 1 -> 1 -> read file success

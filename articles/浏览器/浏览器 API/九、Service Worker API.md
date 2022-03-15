@@ -45,7 +45,7 @@ messageerror     //
 默认情况下，Service Worker 每 24 小时被下载一次，如果下载的是最新文件，就会被重新注册和安装，但不会被激活，当所有页面都不再使用旧的而是使用最新的 Service Worker 时就会被激活，这对于开发非常不方便，因此可以在控制台 F12 的 Service Worker 中勾选 `Update on reload`，选中后每次刷新页面都会得到最新文件
 
 ```js
-navigator.serviceWorker.register('serverWorker.js', { scope: './' })
+navigator.serviceWorker.register('serviceWorker.js', { scope: './' })
   .then(reg => {
       console.log(reg) //ServiceWorkerRegistration 实例
   })
