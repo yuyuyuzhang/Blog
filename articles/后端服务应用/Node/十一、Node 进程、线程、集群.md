@@ -217,7 +217,51 @@ subprocess.onerror      //子进程 subprocess 发生错误时触发
 
 为了利用多核 CPU 系统，用户有时想要启动 Node 进程的集群来处理负载，集群可以轻松创建共享服务器端口的子进程，子进程使用 `child_process.fork()` 方法衍生，可以通过通道与父进程通信并且来回传递服务器句柄
 
-由于子进程都是独立进程，可以根据程序的需要被杀死或重新衍生而不会影响其他子进程，只要还有子进程仍然活动，服务器就会继续接收连接，如果没有子进程活动，现有连接将被丢弃，新连接将被拒绝，但是 Node 不会自动管理子进程的数量，应用程序有责任根据自己的需要管理子进程池
+由于子进程都是独立进程，可以根据程序的需要被杀死或重新衍生而不会影响其他子进程，只要还有子进程仍然活动，服务器就会继续接收连接，如果没有子进程活动，现有连接将被丢弃，新连接将被拒绝，但是 Node 不会自动管理子进程的数量，因此应用程序有责任根据自己的需要管理子进程池
+
+由以下多进程分发策略和负载均衡问题可得知，cluster 模块的原理如下
+
+> cluster 模块应用 child_process 创建子进程，子进程通过复写掉 cluster._getServer 方法，从而在 server.listen 保证只有父进程监听端口，其次父进程根据平台或者协议不同，应用两种不同模块（round_robin_handle.js/shared_handle.js）进行请求分发给子进程处理
+
+#### ① 多进程分发策略
+
+平时实例通过 node index.js 启动的 Node 服务，就只启动了一个进程，只能在一个 CPU 中计算，无法应用服务器的多核 CPU，Node cluster 模块就是`一个父进程和多个子进程`形成的一个集群的概念，使用的是`多进程分发策略：父进程监听一个端口，子进程不监听端口，通过父进程分发请求到子进程`
+
+![cluster多进程分发策略]()
+
+既然 cluster 模块的子进程不监听端口，那么实例中又是如何实现多个子进程监听同一个端口呢？
+
+这就需要关注 server.listen() 方法的内部实现，server.listen() 会调用 cluster 模块的 listenInCluster() 方法，该方法有一个关键信息如下所示，由以下代码可以看出，`在父进程启动真实的端口监听服务，而在子进程只是获取父进程的服务器句柄并监听`
+
+```js
+if (cluster.isPrimary || exclusive) {
+    // Will create a new handle
+    // _listen2 sets up the listened handle, it is still named like this
+    // to avoid breaking code that wraps this method
+    server._listen2(address, port, addressType, backlog, fd, flags)
+    return
+}
+
+const serverQuery = {
+    address: address,
+    port: port,
+    addressType: addressType,
+    fd: fd,
+    flags
+}
+
+// Get the primary's server handle, and listen on it
+cluster._getServer(server, serverQuery, listenOnPrimaryHandle)
+```
+
+#### ② 负载均衡问题
+
+cluster 模块使用主子进程方式，那么是如何处理负载均衡问题的呢？
+
+这就涉及到 cluster 模块中的 2 个模块
+
+* **shared_handle.js（Windows 平台应用模式）**：父进程将文件描述符、端口等信息传递给子进程，子进程通过信息创建相应的 SocketHandle/ServerHandle，然后进行相应的端口绑定和监听、处理请求
+* **round_robin_handle.js（非 Windows 平台应用模式）**：父进程轮询处理，分发给空闲的子进程，子进程处理完成后回到子进程池，子进程如果绑定过就会被复用，没有则会重新判断
 
 ### (2) cluster API
 
@@ -288,9 +332,7 @@ worker.onerror      //子进程 worker 发生错误时触发
 
 ### (4) 实例
 
-#### ① 集群创建并遍历子进程
-
-* cluster1.js
+* cluster.js
 
     ```js
     import cluster from 'cluster'
@@ -301,134 +343,57 @@ worker.onerror      //子进程 worker 发生错误时触发
     if (cluster.isPrimary) {
         console.log(`Master Process ${process.pid} is running`);
 
+        // 按照 CPU 数量创建子进程
         const numCPUs = os.cpus().length
         for (let i = 0; i < numCPUs; i++) {
             console.log(`Forking process number ${i + 1}...`);
             cluster.fork();
         }
 
-        // 遍历所有子进程
-        const eachWorker = (cb) => {
-            for(const id in cluster.workers) {
-                cb(cluster.workers[id])
-            }
-        }
-        eachWorker(worker => {
-            console.log(`worker[${worker.id}]`)
-        })
-    }
-    ```
-
-* node cluster1.js
-
-    ![cluster1]()
-
-#### ② 集群的父子进程通信
-
-* primary2.js
-
-    ```js
-    import cluster from 'cluster'
-
-    if(cluster.isPrimary) {
-        // 创建子进程
-        cluster.setupPrimary({
-            exec: './worker2.js',
-            args: ['--use', 'http'],
-            silent: true
-        })
-        const worker = cluster.fork()
-
-        // 子进程向父进程发送消息时触发
-        worker.on('message', message => {
-            console.log(`message: ${message}`)
-        })
-
         // 父进程接收到子进程发送的消息时触发
         cluster.on('message', (worker, message) => {
             console.log(`${worker.id}: ${message}`)
         }) 
-    }
-    ```
 
-* worker2.js
-
-    ```js
-    import cluster from 'cluster'
-    import process from 'process'
-
-    if(cluster.isWorker) {
-        process.send('hello, I am worker2')
-
-        process.on('message', message => {
-            console.log(`${message}`)
-        })
-    }
-    ```
-
-* node primary2.js
-
-    ![cluster2]()
-
-#### ③ 集群的子进程是服务器
-
-* primary3.js
-
-    ```js
-    import cluster from 'cluster'
-
-    if(cluster.isPrimary) {
-        // 创建子进程
-        cluster.setupPrimary({
-            exec: './worker3.js',
-            args: ['--use', 'https'],
-            silent: true
-        })
-        const worker = cluster.fork()
-
-        //子进程开始监听父进程时触发
-        worker.on('listening', address => {
-            console.log(`worker - listening - ${address.address} : ${address.port}`)
-        })
-
-        //子进程开始监听父进程时触发
+        // 子进程开始监听父进程时触发
         cluster.on('listening', (worker, address) => {
             console.log(`cluster - listening - ${address.address} : ${address.port}`)
         })
-
-        // 子进程向父进程发送消息时触发
-        worker.on('message', message => {
-            console.log(`message: ${message}`)
-        })
-    }
+    } else if(cluster.isWorker) {
+        import('./worker.js')
+    } 
     ```
 
-* worker3.js
+* worker.js
 
     ```js
-    import cluster from 'cluster'
-    import process from 'process'
-    import https from 'https'
-    import fs from 'fs'
+    import http from 'http'
 
-    if(cluster.isWorker) {
-        // 读取关键的配置文件时使用同步方法阻塞其他进程直到文件读取完毕
-        const options = {
-            key: fs.readFileSync('../../9. Node 网络系统/keys/server_rsa_private_key.pem'), // 服务器私钥
-            cert: fs.readFileSync('../../9. Node 网络系统/keys/server_cert.pem'), // 服务器证书
-        }
+    // 子进程向父进程发送消息
+    process.send('hello, I am worker')
 
-        // 创建服务器并开始监听
-        const server = https.createServer(options).listen(3001, '127.0.0.1')
-
-        // 子进程向父进程发送消息
-        process.send('hello, I am worker3')
-    }
+    // 创建服务器并监听 3000 端口
+    const server = http.createServer((req, res) => {
+        res.write('hello world')
+        res.end()
+    })
+    server.listen(3000, 'localhost', () => {
+        const address = server.address()
+        console.log(`listening at http://${address.address}:${address.port}`)
+    })
     ```
 
-* node primary3.js
+* node cluster.js
 
-    ![cluster3]()
+  ![cluster]()
+
+### (5) PM2（守护进程管理器）
+
+PM2 是守护进程管理器，可以帮助管理和保持应用程序在线
+
+* npm i pm2@latest -g
+* pm2 start cluster.js
+  ![pm2]()
 
 ## 4. worker_threads 模块
 
