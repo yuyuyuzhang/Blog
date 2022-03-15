@@ -68,21 +68,7 @@ Koa 安装与使用流程如下
 
 ### (2) Koa Restful 实例
 
-## 5. Egg.js
-
-### (1) Egg.js 安装与使用
-
-Koa 是一个可定制的框架，Egg.js 就是在 Koa 的基础上做了各种比较成熟的中间件和模块，是目前 Koa 的最佳实践，可以满足开发者开箱即用的特性
-
-Egg.js 安装与使用流程如下
-
-* npm i -g egg-init
-* egg-init egg-project --type=simple
-  ![egg_project]()
-
-### (2) Egg Restful 实例
-
-## 6. Nest.js
+## 5. Nest.js
 
 ### (1) Nest 安装与使用
 
@@ -104,7 +90,7 @@ Nest 安装与使用流程如下
 
 ### (2) Nest Restful 实例
 
-## 2. 实现一个获取用户发帖的列表信息 API
+## 6. 实现一个获取用户发帖的列表信息 API
 
 该 API 列表的内容包含两部分，一部分是从数据库获取发帖内容，另一部分是通过发帖内容中的用户 ID 获取用户信息
 
