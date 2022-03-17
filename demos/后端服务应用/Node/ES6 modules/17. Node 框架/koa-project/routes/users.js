@@ -1,4 +1,6 @@
-const router = require('koa-router')()
+import koaRouterF from 'koa-router'
+
+const router = koaRouterF()
 
 router.prefix('/users')
 
@@ -10,4 +12,4 @@ router.get('/bar', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
 
-module.exports = router
+export default router;

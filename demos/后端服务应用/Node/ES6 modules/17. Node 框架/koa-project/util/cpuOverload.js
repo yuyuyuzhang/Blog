@@ -1,7 +1,10 @@
+import process from 'process';
+import child_process from 'child_process';
+import util from 'util';
+import os from 'os';
+
 const platform = process.platform;
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-const os = require('os');
+const exec = util.promisify(child_process.exec);
 
 let overloadTimes = 0;
 let isOverload = false;
@@ -15,7 +18,6 @@ const maxUser = 5000;
 const canAccessList = [];
 
 class CpuOverload {
-
     /**
      * @description
      * @param {int} maxOverloadNum 
@@ -171,4 +173,4 @@ class CpuOverload {
     }
 }
 
-module.exports = CpuOverload;
+export default CpuOverload;

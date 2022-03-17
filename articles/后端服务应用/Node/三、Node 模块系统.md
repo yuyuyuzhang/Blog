@@ -148,8 +148,8 @@ Node 仅在初次加载 CommonJS 模块时执行一次，之后再次加载都�
 
 CommonJS 模块规范支持以下 2 个全局变量，ES6 modules 不支持
 
-* **__dirname**：当前模块的目录名
-* **__filename**：当前模块的文件名（包含目录的绝对路径）
+* **__dirname**：当前模块的目录名（ES6 modules -> path.resolve()）
+* **__filename**：当前模块的保护目录的绝对路径文件名
 
 在 E:\Blog\demos\后端服务应用\Node\CommonJS 目录下运行 node index.js
 
