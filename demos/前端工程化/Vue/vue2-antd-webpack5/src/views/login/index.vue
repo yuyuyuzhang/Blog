@@ -78,6 +78,7 @@
 </template>
 
 <script>
+
 export default {
   components: {},
   props: {},
@@ -131,6 +132,17 @@ export default {
     submitLoginForm() {
       // 提交到服务器
       this.isSubmit = true;
+
+      this.$http({
+        url: '/login',
+        method: 'post',
+        data: this.loginForm
+      }).then(res => {
+        this.isSubmit = false;
+        console.log("res:", res);
+      }).catch(err => {
+        console.log("err:", err)
+      })
     },
     resetLoginForm() {
       this.$refs.loginForm.resetFields();
