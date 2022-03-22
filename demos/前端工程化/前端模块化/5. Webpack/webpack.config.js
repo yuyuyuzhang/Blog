@@ -99,8 +99,8 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         template: './index.html', // HTML 文件路径
-        title: 'Webpack', // title属性
-        meta: { // meta标签
+        title: 'Webpack', // title 属性
+        meta: { // meta 标签
           viewPort: 'width=device-width'
         }
       })

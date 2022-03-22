@@ -1,5 +1,5 @@
 <template>
-  <div>小可爱</div>
+  <router-view></router-view>
 </template>
 
 <script>

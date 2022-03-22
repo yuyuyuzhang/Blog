@@ -2,7 +2,7 @@ import redis from 'redis'
 import NodeCache from 'node-cache'
 import { promisify } from 'util'
 
-class Cache {
+class UtilCache {
     constructor(localCacheEnable=true, redisEnable=true) {
         this.localCacheEnable = localCacheEnable;
         this.redisEnable = redisEnable;
@@ -66,4 +66,4 @@ class Cache {
     }
 }
 
-export default Cache;
+export default UtilCache;

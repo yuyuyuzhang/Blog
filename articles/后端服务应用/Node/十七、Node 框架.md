@@ -32,41 +32,173 @@
 
 ## 3. Express
 
-### (1) Express 安装与使用
-
-Express 框架在 Node 初期就是一个热度较高、成熟的 Web 框架，包括的应用场景非常齐全，同时基于 Express 也诞生了一些场景性的框架，例如 Nest.js
+Express 框架在 Node 初期就是一个热度较高、成熟的 Web 框架，包括的应用场景非常齐全，同时基于 Express 也诞生了一些其他的框架，例如 Koa、Nest.js
 
 * Express 封装、内置了很多中间件，例如 connect、router
 * Express 基于 callback 处理中间件
 * Express 并非严格按照洋葱模型异步执行中间件的
 
-Express 安装与使用流程如下
-
-* npm i -g express-generator
-* express --views=ejs express-project
-  --views=ejs 表示使用 ES modules 模块规范
-  ![express_project]()
-
-### (2) Express Restful 实例
-
 ## 4. Koa
 
-### (1) Koa 安装与使用
+### (1) Koa
 
 随着 Node 的不断迭代，出现了以 async/await 为核心的语法糖，Express 原班人马为实现一个高可用、高性能、更健壮、更符合当代 Node 版本的框架而开发出了 Koa
 
 * Koa 比较轻量，可以根据自身需求定制框架
-* Koa 基于 async/await 处理中间件
-* Koa 严格遵循洋葱模型异步执行中间件
+* Koa 基于 `async/await` 处理中间件
+* Koa 严格遵循`洋葱模型`异步执行中间件
+
+### (2) Koa 安装与使用
 
 Koa 安装与使用流程如下
 
-* npm i -g koa-generator
+* npm i -g koa koa-generator
 * koa2 -e koa-porject
   -e 表示使用 ES module 模块规范
   ![koa_project]()
 
-### (2) Koa Restful 实例
+### (3) Koa 实例
+
+koa 应用程序不是 HTTP 服务器的一对一展现，可以将一或多个 koa 应用程序安装在一起形成具有单个 HTTP 服务器的大型应用程序
+
+```js
+定义：import Koa from 'koa'
+     const app = new Koa()
+属性：app.env             //返回&设置当前 koa 应用程序的环境类型(默认 NODE_ENV 或 development)
+     app.context         //返回&设置当前 koa 应用程序的环境上下文 ctx
+     app.keys            //返回&设置当前 koa 应用程序的签名的 cookie 密钥数组
+     app.proxy           //返回&设置当前 koa 应用程序的代理是否值得信任
+     app.subdomainOffset //返回&设置当前 koa 应用程序的子域偏移量
+     app.proxyIpHeader   //返回&设置当前 koa 应用程序的代理 IP 消息头(默认 X-Forwarded-For)
+     app.maxIpsCount     //返回&设置当前 koa 应用程序的服务器之前的代理 IP 的最大数量
+方法：app.callback()      //返回当前 koa 应用程序的适用于 http.createServer() 方法的回调函数
+     app.listen(port)    //无返回值,当前 koa 应用程序创建并返回 HTTP 服务器
+     app.use(asyncf)     //无返回值,当前 koa 应用程序绑定指定中间件 asyncf
+
+
+app.listen() 是以下代码的语法糖
+app.listen(port) = http.createServer(app.callback()).listen(port)
+```
+
+### (3) Koa 中间件（Middleware）
+
+中间件其实就是一个如下所示的`异步函数`
+
+* **ctx**：环境上下文 ctx 参数是中间件之间的`全局变量`，包含了 HTTP 的请求和响应处理 ctx.request、ctx.response
+
+```js
+ctx.app                                //返回 koa 应用程序实例的引用
+ctx.respond                            //返回&设置是否允许 koa 处理 response 对象
+ctx.req                                //返回&设置 request 对象
+ctx.res                                //返回&设置 response 对象
+ctx.throw([status],[msg],[properties]) //无返回值,抛出错误
+ctx.cookies.get(name,[options])        //返回指定 cookie
+ctx.cookies.set(name,value,[options])  //无返回值,设置 cookie
+```
+
+* **next**：调用 await next() 方法执行下一个中间件
+
+```js
+async (ctx, next) => {
+  console.log('权限验证通过...')
+  await next() // 执行下一个中间件
+}
+```
+
+每个中间件负责`特定的小模块`，多个中间件构成了一个`执行链条`，相互配合组成一条`完整的业务通道`，一些特定成熟的功能可以抽象成一个个模块共享出来，例如路由模块、模板引擎等
+
+```js
+import Koa from 'koa'
+
+const app = new Koa()
+
+// 中间件：访问权限
+app.use(async (ctx, next) => {
+  console.log('权限验证通过...')
+  await next() // 执行下一个中间件
+})
+
+// 中间件：日志记录
+app.use(async (ctx, next) => {
+  console.log('日志记录完成...')
+  await next()
+})
+
+// 中间件：响应处理
+app.use(async (ctx, next) => {
+  ctx.response.status = 200
+  ctx.response.body = 'hi, koa'
+  await next()
+})
+
+app.listen(3000);
+```
+
+#### koa-bodyparser
+
+koa-bodyparser 中间件可以将 `POST` 请求的 koa 上下文中的 formData 数据解析到 `ctx.request.body`
+
+```js
+
+```
+
+#### koa-views
+
+koa-views 是一个`视图管理`模块，支持很多`模板引擎`，例如 ejs
+
+```js
+import Koa from 'koa';
+import views from 'koa-views';
+
+const app = new Koa()
+
+// 配置视图，支持 ejs 模板引擎
+app.use(views(dirname + '/views', {
+  extension: 'ejs'
+}))
+```
+
+![koa_views]()
+
+#### koa-static
+
+一个 HTTP 请求访问 Web 服务器静态资源，一般响应结果有以下 3 种情况
+
+* 访问文本：html、css、js、png 等
+* 访问静态目录
+* 找不到资源，抛出 404
+
+koa-static 中间件主要用于`访问并解析静态资源`
+
+* 使用中间件
+
+  ```js
+  import Koa from 'koa';
+  import Static from 'koa-static';
+  import path from 'path';
+
+  const app = new Koa();
+
+  const dirname = path.resolve(); // 返回当前工作目录的绝对路径，类似于 commonJS 中的 __dirname 全局变量
+
+  // 配置静态资源文件访问
+  app.use(Static(dirname, 'public')); // 访问并解析 public 目录的静态资源
+  ```
+
+* 访问资源
+  ![koa_static1]()
+* npm run start
+  ![koa_static2]()
+
+#### koa-logger
+
+
+
+#### koa-json
+
+#### koa-onerror
+
+### (4) 
 
 ## 5. Nest.js
 

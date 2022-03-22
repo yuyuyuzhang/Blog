@@ -1,11 +1,11 @@
 import Controller from '../core/controller.js';
-import Cache from '../util/cache.js';
+import UtilCache from '../util/cache.js';
 
-const localCache = new Cache(true, false);
-const redisCache = new Cache(false, true);
-const bothCache = new Cache(true, true);
+const localCache = new UtilCache(true, false);
+const redisCache = new UtilCache(false, true);
+const bothCache = new UtilCache(true, true);
 
-class LocalCache extends Controller {
+class ControllerCache extends Controller {
     async local() {
         const cacheKey = 'sum_result';
         let result = await localCache.get(cacheKey);
@@ -46,4 +46,4 @@ class LocalCache extends Controller {
     }
 }
 
-export default LocalCache;
+export default ControllerCache;

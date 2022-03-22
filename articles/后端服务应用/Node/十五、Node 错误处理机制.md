@@ -74,7 +74,7 @@ Node 支持多种机制抛出和处理 Node 应用程序运行时发生的错误
 
 #### ④ AssertionError 错误类
 
-## 3. Error 类
+## 2. Error 类
 
 Node 生成的所有错误都继承自`标准的 JS Error 类`
 
@@ -437,23 +437,23 @@ console.log(childErr2.stack)
 
 ![captureStackTrace()](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/captureStackTrace().png)
 
-## 4. SyntaxError 类
+## 3. SyntaxError 类
 
 SyntaxError 类表示`程序不是有效的 JS 代码`
 
-## 5. ReferenceError 类
+## 4. ReferenceError 类
 
 ReferenceError 类表示`正在尝试访问未定义的变量`
 
-## 6. TypeError 类
+## 5. TypeError 类
 
 TypeError 类表示`参数不是允许的类型`
 
-## 7. RangeError 类
+## 6. RangeError 类
 
 RangeError 类表示`参数不在函数可接受值的范围内`
 
-## 8. AssertionError 类
+## 7. AssertionError 类
 
 AssertionError 类表示`断言失败`
 
@@ -503,7 +503,7 @@ operator     //错误实例上的 operator 属性
 stackStartFn //如果提供，则生成的堆栈跟踪将省略此函数之前的帧
 ```
 
-## 9. SystemError 类
+## 8. SystemError 类
 
 SystemError 类表示 `Node 运行时环境发生异常`，通常发生在 `Node 应用程序违反操作系统的约束`时
 
@@ -539,7 +539,7 @@ error.address //返回网络连接失败的地址
 error.port    //返回不可用的网络连接端口
 ```
 
-## 10. OpenSSL 错误
+## 9. OpenSSL 错误
 
 OpenSSL 错误是`源自 crypto、tls 的错误`
 
@@ -549,3 +549,113 @@ error.function          //返回错误源自的 OpenSSL 函数
 error.library           //返回错误源自的 OpenSSL 库
 error.opensslErrorStack //返回错误源自的 OpenSSL 库中错误源的上下文数组
 ```
+
+## 10. Node 代码逻辑异常处理
+
+在前端因为某些用户的特殊性，导致的逻辑 bug 会造成这个用户服务异常，在服务端如果没有做好异常保护，可能会导致整个进程退出，从而无法提供服务，中断所有人的请求，用户体验非常差，因此如何监控和保护进程安全就显得尤为重要，并且要`尽可能在最小处进行安全保护`，这样就能最小地影响用户，不会因为这个用户影响到整个服务的用户
+
+以下是一个代码逻辑异常问题的部分汇总
+
+![代码逻辑异常]()
+
+### (1) null.property
+
+由于 JS 是一个弱类型语言，因为如果没有对数据进行严格类型判断就进行逻辑处理，会导致代码服务异常，从而影响用户体验
+
+```js
+const data = {
+    userinfo: {
+        nick: 'node',
+        name: 'nodejs',
+        age: 10
+    }
+};
+const nick = data.userinfo.nick;
+data.userinfo = null; // 中间经过一系列处理，userinfo 被设置为了 null
+
+const name = data.userinfo.name; // data.userinfo 出现异常
+console.log("name:", name); // TypeError: Cannot read property 'name' of null
+```
+
+避免上述问题的方式非常简单，就是对每一层数据都进行校验
+
+```js
+const data = {
+    userinfo: {
+        nick: 'node',
+        name: 'nodejs',
+        age: 10
+    }
+};
+const nick = data.userinfo.nick;
+data.userinfo = null; // 中间经过一系列处理，userinfo 被设置为了 null
+
+const name = data && data.userinfo && data.userinfo.name; // 先判断 data 再判断 data.userinfo
+console.log("name:", name); // null
+```
+
+但是当数据结构非常复杂时，判断逻辑也会非常复杂，从而影响开发效率，为了解决这个问题可以使用 `lodash 库的 get 方法`
+
+```js
+const data = {
+    userinfo: {
+        nick: 'node',
+        name: 'nodejs',
+        age: 10
+    }
+};
+const nick = data.userinfo.nick;
+data.userinfo = null; // 中间经过一系列处理，userinfo 被设置为了 null
+
+const name = _.get(data, 'userinfo.name', ''); // 使用 lodash._get 方法简化判断逻辑
+console.log("name:", name); // ''
+```
+
+forEach、for 循环这类问题只需要判断是否为 null 就行了，因为 null.length 会引发报错
+
+```js
+const num = null;
+const arr = [1, 2, 3];
+
+if(num) {
+    for(let i=0; i<num.length; i++) {
+        console.log(num[i]);
+    }
+}
+
+if(arr) {
+    for(let i=0; i<arr.length; i++) {
+        console.log(arr[i]);
+    }
+}
+```
+
+### (2) parameters error
+
+parameters error 错误主要来源于 JSON.parse()，JSON.parse() 很多时候会比较自然地将`其他接口或第三方数据`拿来解析，但是往往会忽略非 JSON 字符串的问题
+
+```js
+const str = 'nodejs';
+
+const obj = JSON.parse(str); // SyntaxError: Unexpected token o in JSON at position 1
+```
+
+JSON.parse() 通常需要进行 `try-catch` 判断
+
+```js
+const str = 'nodejs';
+
+try {
+    const obj = JSON.parse(str);
+} catch(err) {
+    console.log(err);
+}
+```
+
+Node fs 模块很多时候会存在`权限不足或文件不存在`等问题，因此 fs 模块方法最好也使用 `try-catch` 进行异常处理
+
+### (3) other errors
+
+Node promise 应用越来越广泛，因此对于 Promise catch 处理也应该多有重视，每个 Promise 都应该进行 catch 处理
+
+还有一些长连接服务，例如 Socket、Redis 等，需要在`连接异常`时进行处理

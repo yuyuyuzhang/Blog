@@ -45,135 +45,149 @@
 
 ### (1) 多级缓存实现
 
-基于`本地缓存`和`共享内存`实现一个 Node 缓存库，关于本地缓存，可以借助第三方库 `node-cache`，关于共享内存，可以借助第三方库 `node-redis`，
+基于`本地缓存`和`共享内存`实现一个 Node 缓存库，关于本地缓存可以借助第三方库 `node-cache`，关于共享内存可以借助第三方库 `node-redis`，一般实际应用中都是建议本地缓存和共享内存共同使用，避免因`现网发版或异常重启`导致的缓存击穿 & 穿透现象，从而引发服务异常
+
+如下代码参见 koa-project 工程
 
 * npm i node-cache redis
 * util/cache.js
 
-```js
-import redis from 'redis'
-import NodeCache from 'node-cache'
-import { promisify } from 'util'
+    ```js
+    import redis from 'redis'
+    import NodeCache from 'node-cache'
+    import { promisify } from 'util'
 
-class Cache {
-    constructor(localCacheEnable=true, redisEnable=true) {
-        this.localCacheEnable = localCacheEnable;
-        this.redisEnable = redisEnable;
-        if(localCacheEnable){
-            this.myCache = new NodeCache();
-        }
+    class UtilCache {
+        constructor(localCacheEnable=true, redisEnable=true) {
+            this.localCacheEnable = localCacheEnable;
+            this.redisEnable = redisEnable;
+            if(localCacheEnable){
+                this.myCache = new NodeCache();
+            }
 
-        if(redisEnable) {
-            this.client = redis.createClient({
-                host: 'redis-17353.c245.us-east-1-3.ec2.cloud.redislabs.com',
-                port: 17353,
-                password: 'nodejs@2021',
-                db: 0
-            });
-        }
-    }
-
-    /**
-     * 
-     * @description 获取缓存信息
-     * @param {string} key 
-     */
-    async get(key) {
-        let value;
-        if(this.localCacheEnable) {
-            value = this.myCache.get(key);
-            console.log(`local value is ${value}`);
-        }
-        if(!value && this.redisEnable) {
-            try {
-                value = await promisify(this.client.get).bind(this.client)(key);
-                console.log(`redis value is ${value}`)
-            } catch (err){
-                console.log(err);
+            if(redisEnable) {
+                this.client = redis.createClient({
+                    host: 'redis-17353.c245.us-east-1-3.ec2.cloud.redislabs.com',
+                    port: 17353,
+                    password: 'nodejs@2021',
+                    db: 0
+                });
             }
         }
-        return value;
-    }
 
-    /**
-     * 
-     * @description 保存缓存信息
-     * @param {string} key 缓存key
-     * @param {string} value 缓存值
-     * @param {int} expire 过期时间/秒
-     * @param {boolean} cacheLocal 是否本地缓存
-     */
-    async set(key, value, expire=10, cacheLocal=false) {
-        let localCacheRet, redisRet;
-        if(this.localCacheEnable && cacheLocal) {
-            localCacheRet = this.myCache.set(key, value, expire);
-        }
-        if(this.redisEnable) { 
-            try {
-                redisRet = await promisify(this.client.set).bind(this.client)(key, value, 'EX', expire);
-            } catch (err){
-                console.log(err);
+        /**
+         * 
+         * @description 获取缓存信息
+         * @param {string} key 
+         */
+        async get(key) {
+            let value;
+            if(this.localCacheEnable) {
+                value = this.myCache.get(key);
+                console.log(`local value is ${value}`);
             }
+            if(!value && this.redisEnable) {
+                try {
+                    value = await promisify(this.client.get).bind(this.client)(key);
+                    console.log(`redis value is ${value}`)
+                } catch (err){
+                    console.log(err);
+                }
+            }
+            return value;
         }
-        return localCacheRet || redisRet;
-    }
-}
 
-export default Cache;
-```
+        /**
+         * 
+         * @description 保存缓存信息
+         * @param {string} key 缓存key
+         * @param {string} value 缓存值
+         * @param {int} expire 过期时间/秒
+         * @param {boolean} cacheLocal 是否本地缓存
+         */
+        async set(key, value, expire=10, cacheLocal=false) {
+            let localCacheRet, redisRet;
+            if(this.localCacheEnable && cacheLocal) {
+                localCacheRet = this.myCache.set(key, value, expire);
+            }
+            if(this.redisEnable) { 
+                try {
+                    redisRet = await promisify(this.client.set).bind(this.client)(key, value, 'EX', expire);
+                } catch (err){
+                    console.log(err);
+                }
+            }
+            return localCacheRet || redisRet;
+        }
+    }
+
+    export default UtilCache;
+    ```
 
 * controller/cache.js
 
+    ```js
+    import Controller from '../core/controller.js';
+    import UtilCache from '../util/cache.js';
+
+    const localCache = new UtilCache(true, false);
+    const redisCache = new UtilCache(false, true);
+    const bothCache = new UtilCache(true, true);
+
+    class ControllerCache extends Controller {
+        async local() {
+            const cacheKey = 'sum_result';
+            let result = await localCache.get(cacheKey);
+            if(!result){ // result 为函数本地内存缓存
+                result = 0;
+                for(let i=0; i<1000000000; i++){
+                    result = result + i;
+                }
+                localCache.set(cacheKey, result, 10, true).then();
+            }
+            return this.resApi(true, 'success', `sum 0 - 1000000000 is ${result}`);
+        }
+
+        async redis(){
+            const cacheKey = 'sum_result';
+            let result = await redisCache.get(cacheKey);
+            if(!result){ // result 为函数本地内存缓存
+                result = 0;
+                for(let i=0; i<1000000000; i++){
+                    result = result + i;
+                }
+                redisCache.set(cacheKey, result, 10).then();
+            }
+            return this.resApi(true, 'success', `sum 0 - 1000000000 is ${result}`);
+        }
+
+        async both() {
+            const cacheKey = 'sum_result';
+            let result = await bothCache.get(cacheKey);
+            if(!result){ // result 为函数本地内存缓存
+                result = 0;
+                for(let i=0; i<1000000000; i++){
+                    result = result + i;
+                }
+                bothCache.set(cacheKey, result, 600, true).then();
+            }
+            return this.resApi(true, 'success', `sum 0 - 1000000000 is ${result}`);
+        }
+    }
+
+    export default ControllerCache;
+    ```
+
+* routes/index.js
+
 ```js
-import Controller from '../core/controller.js';
-import Cache from '../util/cache.js';
 
-const localCache = new Cache(true, false);
-const redisCache = new Cache(false, true);
-const bothCache = new Cache(true, true);
+```
 
-class LocalCache extends Controller {
-    async local() {
-        const cacheKey = 'sum_result';
-        let result = await localCache.get(cacheKey);
-        if(!result){ // result 为函数本地内存缓存
-            result = 0;
-            for(let i=0; i<1000000000; i++){
-                result = result + i;
-            }
-            localCache.set(cacheKey, result, 10, true).then();
-        }
-        return this.resApi(true, 'success', `sum 0 - 1000000000 is ${result}`);
-    }
+* app.js
 
-    async redis(){
-        const cacheKey = 'sum_result';
-        let result = await redisCache.get(cacheKey);
-        if(!result){ // result 为函数本地内存缓存
-            result = 0;
-            for(let i=0; i<1000000000; i++){
-                result = result + i;
-            }
-            redisCache.set(cacheKey, result, 10).then();
-        }
-        return this.resApi(true, 'success', `sum 0 - 1000000000 is ${result}`);
-    }
+```js
 
-    async both() {
-        const cacheKey = 'sum_result';
-        let result = await bothCache.get(cacheKey);
-        if(!result){ // result 为函数本地内存缓存
-            result = 0;
-            for(let i=0; i<1000000000; i++){
-                result = result + i;
-            }
-            bothCache.set(cacheKey, result, 600, true).then();
-        }
-        return this.resApi(true, 'success', `sum 0 - 1000000000 is ${result}`);
-    }
-}
-
-export default LocalCache;
 ```
 
 ### (2) 实际效果演示

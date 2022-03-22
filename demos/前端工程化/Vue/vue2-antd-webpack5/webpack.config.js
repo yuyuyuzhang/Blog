@@ -47,7 +47,6 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(css|postcss)$/,
-          exclude: /(node_modules)/,
           use: [ // CSS 代码单独拆包，一组链式 loader 按相反顺序执行
             MiniCssExtractPlugin.loader, 
             'css-loader'
@@ -104,8 +103,8 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         template: './index.html', // HTML 文件路径
-        title: 'Webpack', // title属性
-        meta: { // meta标签
+        title: 'Webpack', // title 属性
+        meta: { // meta 标签
           viewPort: 'width=device-width'
         }
       })
@@ -121,7 +120,16 @@ module.exports = (env, argv) => {
       hot: true,
       hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
       overlay: { errors: true, warnings: false },
-      quiet: true // 控制台输出配置：FriendlyErrorsPlugin
+      quiet: true, // 控制台输出配置：FriendlyErrorsPlugin
+      // proxy: {
+      //   '/api': {
+      //     target: 'http://127.0.0.1:3000/',
+      //     changeOrigin: true,
+      //     pathRewrite: {
+      //       '/api': '/'
+      //     }
+      //   }
+      // }
     }
     config.plugins = [
       ...config.plugins,

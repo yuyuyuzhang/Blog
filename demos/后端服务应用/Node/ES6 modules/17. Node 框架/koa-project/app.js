@@ -1,21 +1,23 @@
 import Koa from 'koa';
 import views from 'koa-views';
+import Static from 'koa-static';
+
 import json from 'koa-json';
 import onerror from 'koa-onerror';
 import bodyparser from 'koa-bodyparser';
 import logger from 'koa-logger';
-import staticF from 'koa-static';
-import path from 'path';
 
+import path from 'path';
 import index from './routes/index.js'
-import users from './routes/users.js'
+
+const dirname = path.resolve() // 返回当前工作目录的绝对路径，类似于 commonJS 中的 __dirname 全局变量
 
 const app = new Koa()
-const dirname = path.resolve() // 返回当前工作目录的绝对路径，类似于 commonJS 中的 __dirname 全局变量
-console.log(dirname)
 
-// error handler
-onerror(app)
+// 服务器产生错误时，包括之后的中间件抛出错误，都自动重定向到指定路径
+onerror(app, {
+  redirect: '/error'
+})
 
 // middlewares
 app.use(bodyparser({
@@ -23,11 +25,15 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(staticF(dirname + '/public'))
 
+
+// 配置视图，支持 ejs 模板引擎
 app.use(views(dirname + '/views', {
   extension: 'ejs'
 }))
+
+// 配置静态资源文件访问
+app.use(Static(dirname + '/public'))
 
 // logger
 app.use(async (ctx, next) => {
@@ -39,7 +45,6 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

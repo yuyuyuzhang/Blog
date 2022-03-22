@@ -1,0 +1,19 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "author": "yuyuyuzhang",
+  "license": "ISC",
+  "description": "",
+  "keywords": [],
+  "type": "module",
+  "scripts": {
+    "test": "aaa"
+  },
+  "repository": {
+    "type": "git",
+    "url": "bbb"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
