@@ -75,7 +75,6 @@
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -93,7 +92,7 @@
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json']
       },
@@ -278,7 +277,6 @@
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -296,7 +294,7 @@
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json']
       },
@@ -465,7 +463,6 @@
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -483,7 +480,7 @@
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json']
       },

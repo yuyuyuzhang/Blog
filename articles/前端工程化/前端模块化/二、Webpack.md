@@ -377,7 +377,7 @@ webpack.config.js
 
 ```js
 const path = require('path')
-const pathResolve = dir => path.join(__dirname, dir) // 将第二个参数解析为绝对路径
+const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
 
 module.exports = (env, argv) => {
   const config = {
@@ -403,8 +403,7 @@ webpack.config.js
 
 ```js
 const path = require('path')
-const pathResolve = dir => path.join(__dirname, dir) // 将第二个参数解析为绝对路径
-const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
+const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
 
 module.exports = (env, argv) => {
   const config = {
@@ -417,7 +416,7 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-      path: pathJoin('./dist'),             // 输出目录
+      path: pathResolve('./dist'),             // 输出目录
       publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
     },
   }
@@ -442,7 +441,6 @@ webpack.config.js
 ```js
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
 module.exports = (env, argv) => {
     const config = {
@@ -455,12 +453,12 @@ module.exports = (env, argv) => {
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -499,7 +497,6 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -512,12 +509,12 @@ Webpack 提供 watch 配置`设置在打包后不退出当前 node 进程`，而
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -616,7 +613,6 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -629,12 +625,12 @@ devServer 是一个本地 Web 服务器，所以开发阶段前端应用程序�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -726,7 +722,6 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -739,12 +734,12 @@ Webpack HMR 完整功能主要包含了以下 3 方面的技术
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -906,7 +901,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -919,12 +913,12 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -998,7 +992,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -1011,12 +1004,12 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -1099,7 +1092,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -1112,12 +1104,12 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -1232,7 +1224,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -1245,12 +1236,12 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -1389,7 +1380,6 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -1402,12 +1392,12 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -1600,7 +1590,6 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -1613,12 +1602,12 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -1734,7 +1723,6 @@ html-webpack-plugin 插件的使用如下
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -1747,12 +1735,12 @@ html-webpack-plugin 插件的使用如下
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -1859,7 +1847,6 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -1872,12 +1859,12 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -1994,7 +1981,6 @@ friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -2007,12 +1993,12 @@ friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时�
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -2353,7 +2339,6 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -2366,12 +2351,12 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -2525,7 +2510,6 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -2538,12 +2522,12 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
       },
       output: {
         filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-        path: pathJoin('./dist'),             // 输出目录
+        path: pathResolve('./dist'),             // 输出目录
         publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json'],
       },
@@ -2682,7 +2666,6 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -2700,7 +2683,7 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json']
       },
@@ -2855,7 +2838,6 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -2873,7 +2855,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json']
       },
@@ -3133,7 +3115,6 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -3151,7 +3132,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json']
       },
@@ -3403,7 +3384,6 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 
   const path = require('path')
   const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-  const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
   module.exports = (env, argv) => {
     const config = {
@@ -3421,7 +3401,7 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
       },
       resolve: {
         alias: {
-          '@': pathJoin('src')
+          '@': pathResolve('./src')
         },
         extensions: ['.js', '.vue', '.json']
       },

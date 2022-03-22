@@ -11,7 +11,6 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
 module.exports = (env, argv) => {
   const config = {
@@ -29,7 +28,7 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        '@': pathJoin('src')
+        '@': pathResolve('./src')
       },
       extensions: ['.js', '.vue', '.json']
     },
@@ -121,15 +120,15 @@ module.exports = (env, argv) => {
       hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
       overlay: { errors: true, warnings: false },
       quiet: true, // 控制台输出配置：FriendlyErrorsPlugin
-      // proxy: {
-      //   '/api': {
-      //     target: 'http://127.0.0.1:3000/',
-      //     changeOrigin: true,
-      //     pathRewrite: {
-      //       '/api': '/'
-      //     }
-      //   }
-      // }
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:3000/',
+          changeOrigin: true,
+          pathRewrite: {
+            '/api': '/'
+          }
+        }
+      }
     }
     config.plugins = [
       ...config.plugins,

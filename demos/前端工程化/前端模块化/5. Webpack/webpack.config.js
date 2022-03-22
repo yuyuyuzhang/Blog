@@ -12,7 +12,6 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const path = require('path')
 const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
-const pathJoin = dir => path.join(__dirname, '..', dir) // 连接路径
 
 module.exports = (env, argv) => {
   const config = {
@@ -30,7 +29,7 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        '@': pathJoin('src')
+        '@': pathResolve('./src')
       },
       extensions: ['.js', '.vue', '.json']
     },
@@ -119,7 +118,7 @@ module.exports = (env, argv) => {
   if (argv.nodeEnv === 'development') {
     config.target = 'web'
     config.devServer = {
-      port: '8082',
+      port: '8081',
       // open: true,
       hot: true,
       hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
@@ -132,7 +131,7 @@ module.exports = (env, argv) => {
       new FriendlyErrorsPlugin({
         compilationSuccessInfo: {
           messages: [
-            `Your application is running here: http://localhost:8082`
+            `Your application is running here: http://localhost:8081`
           ]
         },
         onErrors: undefined
