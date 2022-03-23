@@ -36,6 +36,14 @@ console.log(Person)
 import Info from './assets/data2.xml'
 console.log(Info)
 
+// 同步加载 markdown 模块
+import synchelloMd from './markdown/syncMd/hello.md'
+console.log('synchelloMd:', synchelloMd)
+
+// 异步加载 markdown 模块
+import asynchelloMd from './markdown/asyncMd/hello.md'
+console.log('asynchelloMd:', asynchelloMd)
+
 // 按需引入模块
 const btn = document.createElement('button')
 btn.innerHTML = '显示链接'

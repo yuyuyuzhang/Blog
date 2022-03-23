@@ -86,7 +86,18 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.xml$/,
+          exclude: /(node_modules)/,
           use: 'xml-loader'
+        },
+        {
+          test: /\.md$/,
+          include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+          use: pathResolve('./config/sync-markdown-loader.js')
+        },
+        {
+          test: /\.md$/,
+          include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+          use: pathResolve('./config/async-markdown-loader.js')
         }
       ]
     },

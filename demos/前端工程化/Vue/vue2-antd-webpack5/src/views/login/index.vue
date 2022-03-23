@@ -1,6 +1,5 @@
 <template>
   <div class="login-container">
-    <!-- labelCol: 标签占据的栅栏数，wrapperCol: 内容占据的栅栏数 -->
     <a-form-model
       ref="loginForm"
       :model="loginForm"
@@ -130,9 +129,7 @@ export default {
       });
     },
     submitLoginForm() {
-      // 提交到服务器
       this.isSubmit = true;
-
       this.$http({
         url: '/login',
         method: 'post',
@@ -141,7 +138,12 @@ export default {
         this.isSubmit = false;
         console.log("res:", res);
       }).catch(err => {
-        console.log("err:", err)
+        console.log("err:", err);
+        this.$message.error({
+          content: '登录失败，请重试！',
+          duration: 3 * 1000
+        });
+        this.resetLoginForm();
       })
     },
     resetLoginForm() {

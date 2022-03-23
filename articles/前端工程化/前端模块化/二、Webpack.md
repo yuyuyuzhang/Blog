@@ -25,13 +25,13 @@ Webpack 本质上是一个现代 JS 应用程序的静态模块打包器，Webpa
 Webpack 构建是一个`串行`的过程
 
 * **初始化配置对象**：Webpack cli 启动打包流程，整合 cli 参数和配置文件，得到一个完整的配置对象
-* **开始构建**：载入 Webpack 核心模块，使用配置对象创建和初始化 Compiler 对象，使用 Compiler 对象开始构建整个项目
-* **解析依赖关系树**：从配置的入口文件开始，根据代码中出现的 `import、require` 语句解析入口文件依赖的模块，然后再分别去解析每个依赖模块的依赖，周而复始，最终形成整个项目中所有用到的文件的`依赖关系树`
+* **开始构建**：载入 Webpack 核心模块，使用配置对象创建和初始化 `Compiler 对象`，使用 Compiler 对象开始构建整个项目
+* **解析依赖关系树**：从配置的`入口文件`开始，根据代码中出现的 `import、require` 语句解析入口文件依赖的模块，然后再分别去解析每个依赖模块的依赖，周而复始，最终形成整个项目中所有用到的文件的`依赖关系树`
 
   ![依赖关系树](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%A0%91.gif)
 
 * **编译模块**：`遍历`依赖关系树，根据配置文件将每个模块交给对应的 loader 处理，直到整个依赖关系树都处理完成
-  * Webpack 内置 loader 处理 JS 模块
+  * Webpack 内置默认 loader 处理 JS 模块
   * loader 机制处理 JS 外其他类型资源模块，例如 CSS、图片等
   * 对于无需通过 JS 代码表示的资源文件，例如超过 url-loader limit 限制的资源文件，直接通过 file-loader 拷贝到输出目录，并将这个资源文件的访问路径作为这个模块的导出成员暴露给外部
 * **组装 chunk**：合并 loader 处理完的结果，组装成一个个包含一或多个模块的 `chunk` 文件
@@ -416,7 +416,7 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
-      path: pathResolve('./dist'),             // 输出目录
+      path: pathResolve('./dist'),          // 输出目录
       publicPath: '/',                      // 输出目录中相对该目录加载资源、启动服务
     },
   }
@@ -833,7 +833,7 @@ Webpack 本身只是 JS 模块打包器，Webpack 内置 loader 只能加载 JS 
 * **JS 模块**：Webpack 内置 JS 模块加载器，无需 loader 即可加载 JS 模块，但是在工程化的项目中，我们还需要对 ES6 代码进行语法检查以及将 ES6 语法转换成浏览器可直接识别的 ES5 语法，这就需要相应的 loader 进行处理
 * **其他类型资源模块**：loader 用于将其他类型资源模块转换为 JS 模块，或将内联模块转换为 data URL，从而实现项目的整体模块化
 
-Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入是加载的资源文件内容，函数的输出是处理后的结果，loader 支持链式传递，而 loader 的原理是`在 JS 文件代码中加载其他类型资源`，因此`一组链式 loader 的最后一个必须返回 JS 代码`
+Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入即参数 source 是加载的资源文件内容，函数的输出即 return 是处理后的结果，loader 支持链式传递，而 loader 的原理是`在 JS 文件代码中加载其他类型资源`，因此`一组链式 loader 的最后一个必须返回 JS 代码`
 
 #### ① loader 的特性
 
@@ -1446,6 +1446,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
         ]
@@ -1483,6 +1484,275 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
 * npm run serve
 
   ![serve_xml_loader](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/serve_xml_loader.png)
+
+### (7) 开发一个 loader
+
+Webpack 要求 loader 必须`导出一个函数`，这个函数就是当前 loader 对资源的处理过程，通过参数 source 接收输入，即加载到的资源文件内容，通过 return 返回输出，即加工后的结果
+
+目前需求是开发一个可以加载 markdown 文件的 loader，以便在代码中可以直接导入 .md 文件，.md 文件一般是需要转换成 HTML 之后再呈现到页面上的，因此 markdown-loader 的工作原理是`接收 .md 文件，转换成 HTML 字符串，再拼接成 JS 代码`
+
+* config/sync-markdown-loader.js
+
+  ```js
+  // 导出一个处理函数
+  module.exports = function(source) {
+    console.log('source:', source)
+
+    // 必须返回 JS 代码
+    return `console.log("sync ${source}")`
+  }
+  ```
+
+* config/async-markdown-loader.js
+
+  ```js
+  // 此处不能使用箭头函数，否则函数内部取不到正确的 this
+  module.exports = function(source) {
+    // this.callback(
+    //   err: Error | null,
+    //   content: string | Buffer,
+    //   sourceMap?: SourceMap,
+    //   meta?: any
+    // );
+    const cb = this.async()
+
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve()
+      }, 3000)
+    }).then(res => {
+      cb(null, `console.log("${source}")`)
+    })
+  }
+  ```
+
+* src/index.js
+
+  ```js
+  const Title = document.createElement('h2')
+  Title.textContent = 'Hello Webpack'
+  document.body.append(Title)
+
+  import createTextarea from './components/textarea.js'
+  const Textarea = createTextarea()
+  document.body.append(Textarea)
+
+  // HMR 处理函数
+  let lastTextarea = Textarea
+  if (module.hot) { // 加上判断防止未开启 HMR 时没有 module.hot API 导致打包出错
+    module.hot.accept('./components/textarea.js', () => {
+      const value = lastTextarea.value
+      document.body.removeChild(lastTextarea)
+      lastTextarea = createTextarea()
+      lastTextarea.value = value
+      document.body.append(lastTextarea)
+    })
+  }
+
+  // 加载 CSS 模块
+  import './style/index.css'
+
+  // 加载多媒体模块
+  import movie from './assets/movie.mp4'
+  const video = document.createElement('video')
+  video.src = movie
+  video.controls = 'controls'
+  document.body.append(video)
+
+  // 加载 JSON 模块
+  import Person from './assets/data1.json'
+  console.log(Person)
+
+  // 加载 XML 模块
+  import Info from './assets/data2.xml'
+  console.log(Info)
+
+  // 同步加载 markdown 模块
+  import synchelloMd from './markdown/syncMd/hello.md'
+  console.log('synchelloMd:', synchelloMd)
+
+  // 异步加载 markdown 模块
+  import asynchelloMd from './markdown/asyncMd/hello.md'
+  console.log('asynchelloMd:', asynchelloMd)
+  ```
+
+* webpack.config.js
+
+  ```js
+  const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv === 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathResolve('./dist'), // 输出目录
+        publicPath: '/' // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathResolve('./src')
+        },
+        extensions: ['.js', '.vue', '.json']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/, // 正则匹配文件路径
+            include: /(src)/, // 提高构建速度
+            use: {
+              loader: 'babel-loader'
+            }
+          },
+          {
+            test: /\.css$/,
+            exclude: /(node_modules)/,
+            // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+            use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../' // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            exclude: /(node_modules)/,
+            use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
+        ]
+      },
+      plugins: [
+        new ESLintWebpackPlugin(),
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash].css', // 入口文件中引入的 CSS 文件
+          chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
+        }),
+        new HtmlWebpackPlugin({
+          template: './index.html', // HTML 文件路径
+          title: 'Webpack', // title 属性
+          meta: { // meta 标签
+            viewPort: 'width=device-width'
+          }
+        })
+      ]
+    }
+
+    // 开发环境
+    if (argv.nodeEnv === 'development') {
+      config.target = 'web'
+      config.devServer = {
+        port: '8081',
+        // open: true,
+        hot: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8081`
+            ]
+          },
+          onErrors: undefined
+        })
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new ScriptExtHtmlWebpackPlugin({
+          inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
+        }),
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        }),
+      ]
+      config.optimization = {
+        minimize: true,
+        minimizer: [
+          new OptimizeCssAssetsWebpackPlugin(),
+          new TerserWebpackPlugin()
+        ],
+        runtimeChunk: 'single' // 单独提取 manifest 文件
+      }
+    }
+
+    return config
+  }
+  ```
+
+* npm run serve
+
+  ![md_loader]()
 
 ## 7. 插件 plugin
 
@@ -1656,8 +1926,19 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -1789,8 +2070,19 @@ html-webpack-plugin 插件的使用如下
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -1913,8 +2205,19 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },   
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -2047,8 +2350,19 @@ friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时�
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },   
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -2405,8 +2719,19 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -2583,8 +2908,19 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -2740,8 +3076,19 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -2912,8 +3259,19 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -3086,6 +3444,14 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
   import Info from './assets/data2.xml'
   console.log(Info)
 
+  // 同步加载 markdown 模块
+  import synchelloMd from './markdown/syncMd/hello.md'
+  console.log('synchelloMd:', synchelloMd)
+
+  // 异步加载 markdown 模块
+  import asynchelloMd from './markdown/asyncMd/hello.md'
+  console.log('asynchelloMd:', asynchelloMd)
+
   // 按需引入模块
   const btn = document.createElement('button')
   btn.innerHTML = '显示链接'
@@ -3189,8 +3555,19 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -3458,8 +3835,19 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
           },
           {
             test: /\.xml$/,
+            exclude: /(node_modules)/,
             use: 'xml-loader'
           },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
         ]
       },
       plugins: [
@@ -3539,6 +3927,37 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 
 ### (1) Compiler 钩子
 
+Compiler 模块是 Webpack 的支柱引擎，通过 CLI 或 Node API 传递所有选项，创建一个 compilation 实例，Compiler 模块扩展自 `Tapable` 库，Tapable 库类似于 Node 的 `EventEmitter` 库，其实就是实现的`发布订阅模式的自定义事件`
+
+Compiler 钩子如下
+
+```js
+entryOption          //entry 配置项处理后执行
+afterPlugins         //设置完初始插件后执行
+afterResolvers       //resolver 安装完后执行
+environment          //environment 准备好之后执行
+afterEnvironment     //environment 安装完成后执行
+beforeRun            //compiler.run() 执行前执行
+run                  //开始读取 records 前执行
+watchRun             //监听模式下，compilation 触发之后，实际编译开始之前执行
+normalModuleFactory  //NormalModuleFactory 创建之后执行
+contextModuleFactory //ContextModuleFactory 创建之后执行
+beforeCompile        //compilation 参数创建之后执行
+compile              //compilation 创建之后执行
+thisCompilation      //
+compilation          //
+make                 //
+afterCompile         //
+shouldEmit           //
+needAdditionalPass   //
+emit                 //
+afterEmit            //
+done                 //
+failed               //
+invalid              //
+watchClose           //
+```
+
 ### (2) Compilation 钩子
 
 ### (3) resolver
@@ -3546,14 +3965,6 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 ### (4) parser
 
 ### (5) module API
-
-### (6) loader API
-
-#### ① loader API
-
-#### ② 开发一个 loader
-
-需求是开发一个可以加载 markdown 文件的 loader，以便在代码中可以直接导入 .md 文件，.md 文件一般是需要转换成 HTML 之后再呈现到页面上的，因此 markdown-loader 的工作原理是`接收 .md 文件，转换成 HTML 字符串，再拼接成 JS 代码`
 
 ### (7) plugin API
 
@@ -3566,3 +3977,17 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 删除 bundle.js 文件的注释，只有在 Webpack 明确需要生成的 bundle.js 文件内容后才能实施，查阅 API 文档后得知，我们需要把任务挂载到 `emit 钩子`上，emit 钩子会在 Webpack 即将向输出目录输出文件前执行
 
 Webpack 要求插件必须是一个`包含 apply() 方法的类`
+
+* config/remove-comments-plugin.js
+
+```js
+
+```
+
+* webpack.config.js
+
+```js
+
+```
+
+* npm run build

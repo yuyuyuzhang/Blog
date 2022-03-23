@@ -4,10 +4,10 @@ const router = KoaRouter()
 
 // login
 router.get('/login', async (ctx, next) => {
-  console.log("resbody:", ctx.res)
+  console.log("resbody:", ctx.req.body)
 
   // require 对应的 controller 类
-  const ControllerClass = require('../controller/login');
+  const ControllerClass = import('../controller/login.js');
 
   // 尝试调用类中的方法
   try { 
