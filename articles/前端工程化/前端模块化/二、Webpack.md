@@ -833,7 +833,7 @@ Webpack 本身只是 JS 模块打包器，Webpack 内置 loader 只能加载 JS 
 * **JS 模块**：Webpack 内置 JS 模块加载器，无需 loader 即可加载 JS 模块，但是在工程化的项目中，我们还需要对 ES6 代码进行语法检查以及将 ES6 语法转换成浏览器可直接识别的 ES5 语法，这就需要相应的 loader 进行处理
 * **其他类型资源模块**：loader 用于将其他类型资源模块转换为 JS 模块，或将内联模块转换为 data URL，从而实现项目的整体模块化
 
-Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入即参数 source 是加载的资源文件内容，函数的输出即 return 是处理后的结果，loader 支持链式传递，而 loader 的原理是`在 JS 文件代码中加载其他类型资源`，因此`一组链式 loader 的最后一个必须返回 JS 代码`
+Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入即加载的资源文件内容，函数的输出即处理后的结果，loader 支持链式传递，而 loader 的原理是`在 JS 文件代码中加载其他类型资源`，因此`一组链式 loader 的最后一个必须返回 JS 代码`
 
 #### ① loader 的特性
 
@@ -1487,7 +1487,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
 
 ### (7) 开发一个 loader
 
-Webpack 要求 loader 必须`导出一个函数`，这个函数就是当前 loader 对资源的处理过程，通过参数 source 接收输入，即加载到的资源文件内容，通过 return 返回输出，即加工后的结果
+Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处理过程，函数的输入即加载的资源文件内容，函数的输出即处理后的结果，loader 支持链式传递，而 loader 的原理是`在 JS 文件代码中加载其他类型资源`，因此`一组链式 loader 的最后一个必须返回 JS 代码`
 
 目前需求是开发一个可以加载 markdown 文件的 loader，以便在代码中可以直接导入 .md 文件，.md 文件一般是需要转换成 HTML 之后再呈现到页面上的，因此 markdown-loader 的工作原理是`接收 .md 文件，转换成 HTML 字符串，再拼接成 JS 代码`
 
@@ -3927,9 +3927,9 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
 
 ### (1) Compiler 钩子
 
-Compiler 模块是 Webpack 的支柱引擎，通过 CLI 或 Node API 传递所有选项，创建一个 compilation 实例，Compiler 模块扩展自 `Tapable` 库，Tapable 库类似于 Node 的 `EventEmitter` 库，其实就是实现的`发布订阅模式的自定义事件`
+Compiler 模块是 Webpack 的支柱引擎，通过 CLI 或 Node API 传递所有选项，创建一个 compilation 实例
 
-Compiler 钩子如下
+Compiler 模块扩展自 Tapable，并提供了以下钩子
 
 ```js
 entryOption          //entry 配置项处理后执行
@@ -3960,17 +3960,120 @@ watchClose           //
 
 ### (2) Compilation 钩子
 
-### (3) resolver
+Compilation 模块被 Compiler 用来创建`新的构建`，Compilation 会对应用程序依赖树中的所有模块进行编译，编译阶段模块会被加载（loaded）、封存（sealed）、优化（optimized）、分块（chunked）、哈希（hashed）、重新创建（restored）
 
-### (4) parser
+Compilation 类扩展自 Tapable，并提供了以下钩子
 
-### (5) module API
+```js
+buildModule
+rebuildModule
+failedModule
+succeedModule
+finishModules
+finishRebuildingModule
+seal
+unseal
+optimizeDependenciesBasic
+optimizeDependencies
+optimizeDependenciesAdvanced
+afterOptimizeDependencies
+optimize
+optimizeModulesBasic
+optimizeModules
+optimizeModulesAdvanced
+afterOptimizeModules
+optimizeChunksBasic
+optimizeChunks
+optimizeChunksAdvanced
+afterOptimizeChunks
+optimizeTree
+afterOptimizeTree
+optimizeChunkModulesBasic
+optimizeChunkModules
+optimizeChunkModulesAdvanced
+afterOptimizeChunkModules
+shouldRecord
+reviveModules
+optimizeModuleOrder
+advancedOptimizeModuleOrder
+beforeModuleIds
+moduleIds
+optimizeModuleIds
+afterOptimizeModuleIds
+reviveChunks
+optimizeChunkOrder
+beforeOptimizeChunkIds
+optimizeChunkIds
+afterOptimizeChunkIds
+recordModules
+recordChunks
+beforeHash
+afterHash
+recordHash
+record
+beforeModuleAssets
+shouldGenerateChunkAssets
+beforeChunkAssets
+additionalChunkAssets
+records
+additionalAssets
+optimizeChunkAssets
+afterOptimizeChunkAssets
+optimizeAssets
+afterOptimizeAssets
+needAdditionalSeal
+afterSeal
+chunkHash
+moduleAsset
+chunkAsset
+assetPath
+needAdditionalPass
+childCompiler
+normalModuleLoader
+```
 
-### (7) plugin API
+### (3) parser
 
-#### ① plugin API
+parser 模块用来解析 Webpack 处理过的每个模块
 
-#### ② 开发一个 plugin
+parser 类扩展自 Tapable，并提供了以下钩子，让开发者可以自定义解析过程
+
+```js
+evaluateTypeof
+evaluate
+evaluateIdentifier
+evaluateDefinedIdentifier
+evaluateCallExpressionMember
+statement
+statementIf
+label
+import
+importSpecifier
+export
+exportImport
+exportDeclaration
+exportExpression
+exportSpecifier
+exportImportSpecifier
+varDeclaration
+varDeclarationLet
+varDeclarationConst
+varDeclarationVar
+canRename
+rename
+assigned
+assign
+typeof
+call
+callAnyMember
+new
+expression
+expressionAnyMember
+expressionConditionalOperator
+program
+```
+
+### (4) 开发一个 plugin
 
 需求是开发一个打包时能够自动清除注释的插件，使得 bundle.js 文件更易阅读
 
@@ -3980,14 +4083,256 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
 
 * config/remove-comments-plugin.js
 
-```js
+  ```js
+  const {
+    SyncHook,
+    SyncBailHook,
+    SyncWaterfallHook
+  } = require('tapable')
 
-```
+  class RemoveCommentsPlugin {
+    constructor() {
+      // 最好将插件的自定义钩子暴露在类的 hooks 属性上
+      this.hooks = {
+        beforeWork: new SyncHook(['getUp']),
+        atWork: new SyncWaterfallHook(['workTask']),
+        afterWork: new SyncBailHook(['activity'])
+      }
+    }
+    apply(compiler) {
+      // Webpack 工作过程中最核心的对象,包含此次构建的所有配置信息,通过这个对象注册钩子函数
+      console.log(compiler)
+      console.log('RemoveCommentsPlugin 启动')
+
+      // 通过 compiler 对象的 hooks 属性访问 emit 钩子
+      // 再通过 tap() 方法注册同步钩子函数，第一个参数是插件名，第二个参数是同步钩子函数
+      compiler.hooks.emit.tap('RemoveCommentsPlugin', compilation => {
+        // compilation => 可以理解为此次打包的上下文
+        // assets 属性获取即将写入输出目录的文件信息
+        for (const name in compilation.assets) {
+          console.log(name) // 输出文件名
+          console.log(compilation.assets[name].source()) // 输出文件内容
+
+          // 去掉 JS 文件注释
+          if (name.endsWith('.js')) {
+            const contents = compilation.assets[name].source()
+            const noComments = contents.replace(/\/\*{2,}\/\s?/g, '')
+            compilation.assets[name] = {
+              source: () => noComments,
+              size: () => noComments.length
+            }
+          }
+        }
+      })
+    }
+    tapTap() {
+      // 同步钩子函数：同一个钩子上的所有同步钩子函数按注册顺序执行
+      this.hooks.beforeWork.tap('getOut', () => {
+        console.log('出门')
+      })
+      this.hooks.atWork.tap('makePPT', () => {
+        console.log('做 PPT')
+        return '你的 ppt'
+      })
+      this.hooks.afterWork.tap('goHome', (work) => {
+        console.log('带着工作回家：' + work)
+      })
+
+      // 异步钩子函数：callback() 类似于 generator 函数的 next()
+      this.hooks.beforeWork.tapAsync('putOnCloth', (params, callback) => {
+        console.log('穿衣服')
+        callback() // 此处无 callback，则 getOut 不会执行
+      })
+      this.hooks.beforeWork.tapAsync('getOut', (params, callback) => {
+        console.log('出门')
+        callback() // 此处无 callback，则无法跳出
+      })
+    }
+    run() {
+      this.hooks.beforeWork.call()
+      this.hooks.atWork.call()
+      this.hooks.afterWork.call()
+    }
+  }
+  module.exports = RemoveCommentsPlugin
+  ```
 
 * webpack.config.js
 
-```js
+  ```js
+  const webpack = require('webpack')
+  const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+  const TerserWebpackPlugin = require('terser-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+  const RemoveCommentsPlugin = require('./config/remove-comments-plugin.js')
+  const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
-```
+  const path = require('path')
+  const pathResolve = dir => path.resolve(__dirname, dir) // 将第二个参数解析为绝对路径
+
+  module.exports = (env, argv) => {
+    const config = {
+      target: 'web',
+      mode: argv.nodeEnv,
+      devtool: argv.nodeEnv === 'development' ? 'eval-cheap-module-source-map' : false,
+      context: pathResolve('./'), // 设置项目根目录为环境上下文
+      entry: {
+        app: './src/index.js' // 相对 context 配置
+      },
+      output: {
+        filename: 'js/[name].[chunkhash].js', // 输出 JS 文件名
+        path: pathResolve('./dist'), // 输出目录
+        publicPath: '/' // 输出目录中相对该目录加载资源、启动服务
+      },
+      resolve: {
+        alias: {
+          '@': pathResolve('./src')
+        },
+        extensions: ['.js', '.vue', '.json']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/, // 正则匹配文件路径
+            include: /(src)/, // 提高构建速度
+            use: {
+              loader: 'babel-loader'
+            }
+          },
+          {
+            test: /\.css$/,
+            exclude: /(node_modules)/,
+            // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
+            use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
+          },
+          {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000, // 文件小于 20KB url-loader 将文件转换为 DataURL,否则 file-loader 拷贝文件至输出目录
+                name: 'img/[name].[ext]', // 文件名合并文件输出目录（相对 dist 目录）
+                publicPath: '../' // 打包后引用地址（相对 name）
+              }
+            }
+          },
+          {
+            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'fonts/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.(mp4|mp3|webm|ogg|wav|flac|aac)(\?.*)?$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit: 20000,
+                name: 'media/[name].[ext]',
+                publicPath: '../'
+              }
+            }
+          },
+          {
+            test: /\.xml$/,
+            exclude: /(node_modules)/,
+            use: 'xml-loader'
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/syncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/sync-markdown-loader.js')
+          },
+          {
+            test: /\.md$/,
+            include: pathResolve('./src/markdown/asyncMd'), // 匹配特定文件夹，提高构建速度
+            use: pathResolve('./config/async-markdown-loader.js')
+          }
+        ]
+      },
+      plugins: [
+        new ESLintWebpackPlugin(),
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash].css', // 入口文件中引入的 CSS 文件
+          chunkFilename: 'css/[name].[contenthash].css' // 入口文件中未引入，通过按需加载引入的 CSS 文件
+        }),
+        new HtmlWebpackPlugin({
+          template: './index.html', // HTML 文件路径
+          title: 'Webpack', // title 属性
+          meta: { // meta 标签
+            viewPort: 'width=device-width'
+          }
+        })
+      ]
+    }
+
+    // 开发环境
+    if (argv.nodeEnv === 'development') {
+      config.target = 'web'
+      config.devServer = {
+        port: '8081',
+        // open: true,
+        hot: true,
+        hotOnly: true, // 避免 JS 模块 HMR 处理函数出现错误导致回退到自动刷新页面
+        overlay: { errors: true, warnings: false },
+        quiet: true // 控制台输出配置：FriendlyErrorsPlugin
+      }
+      config.plugins = [
+        ...config.plugins,
+        new webpack.HotModuleReplacementPlugin(),
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://localhost:8081`
+            ]
+          },
+          onErrors: undefined
+        })
+      ]
+    }
+
+    // 生产环境
+    if (argv.nodeEnv === 'production') {
+      config.plugins = [
+        ...config.plugins,
+        new ScriptExtHtmlWebpackPlugin({
+          inline: /runtime\..*\.js$/ // 将提取的 manifest 内联到 index.html，必须在 HtmlWebpackPlugin 插件之后使用
+        }),
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+          patterns: [
+            { from: './src/static/test.js', to: './static' }
+          ]
+        }),
+        new RemoveCommentsPlugin()
+      ]
+      config.optimization = {
+        minimize: true,
+        minimizer: [
+          new OptimizeCssAssetsWebpackPlugin(),
+          new TerserWebpackPlugin()
+        ],
+        runtimeChunk: 'single' // 单独提取 manifest 文件
+      }
+    }
+
+    return config
+  }
+  ```
 
 * npm run build
+
+![removeCommentsPlugin]()
