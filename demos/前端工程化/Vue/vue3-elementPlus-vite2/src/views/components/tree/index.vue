@@ -1,10 +1,10 @@
 <template>
-  <div>treeTable</div> 
+  <div>tree</div> 
 </template>
 
 <script>
 export default ({
-  name: 'treeTable',
+  name: 'tree',
   data() {
     return {}
   }

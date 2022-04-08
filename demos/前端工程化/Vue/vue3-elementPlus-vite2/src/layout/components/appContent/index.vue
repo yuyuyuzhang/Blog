@@ -1,38 +1,34 @@
 <template>
-  <div class="app-main">
-    <!-- 缓存组件 -->
+  <div class="layout-content">
     <router-view :key="key" v-slot="{ Component }">
       <keep-alive>
         <component :is="Component" />
       </keep-alive>
     </router-view>
-
-    <!-- 主题设置 -->
-    <settings></settings>
   </div>
 </template>
 
 <script>
-import Settings from '../Settings/index.vue'
-
 export default ({
-  components: {
-    Settings
-  },
+  name: 'appContent',
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
     key() {
       return this.$route.fullPath
-    }
+    },
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.app-main {
-  height: 100%;
+.layout-content {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  padding: 20px;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
 }
 </style>

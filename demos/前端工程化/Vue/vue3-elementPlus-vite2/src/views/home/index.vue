@@ -1,5 +1,5 @@
 <template>
-  <div>aa</div>
+  <el-table></el-table>
 </template>
 
 <script>

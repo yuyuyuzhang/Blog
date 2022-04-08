@@ -6,9 +6,11 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@element-plus/icons": "0.0.11",
     "axios": "^0.21.1",
     "element-plus": "^1.0.2-beta.41",
     "js-cookie": "^2.2.1",
+    "sass-loader": "^7.0.0",
     "vue": "^3.2.8",
     "vue-router": "^4.0.6",
     "vuex": "^4.0.0"

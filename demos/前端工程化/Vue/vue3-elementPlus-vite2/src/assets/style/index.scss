@@ -15,23 +15,20 @@ html, body, #app {
   padding: 0;
 }
 
-.app-wrapper {
-  width: 100%;
-  height: 100%;
-  .app-main {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    .el-overlay {
-      position: relative!important; // 侧边栏主题设置从 Continer 弹出
-    }
-  }
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.left {
-  float: left;
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.right {
-  float: right;
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

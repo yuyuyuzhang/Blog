@@ -76,7 +76,7 @@ export default {
       this.isSubmit = true;
       setTimeout(() => {
         this.isSubmit = false
-        this.$router.push({ path: '/home' })
+        this.$router.push({ path: '/home/index' })
       }, 1000)
     },
   }

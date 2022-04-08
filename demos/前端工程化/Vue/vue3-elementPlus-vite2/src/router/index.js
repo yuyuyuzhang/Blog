@@ -2,13 +2,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 // layout
-import Layout from '../layout/index.vue'
+import Layout from '@/layout/index.vue'
 
 const routes =  [
   {
     path: '/',
     name: '登录',
-    component: () => import('../views/login/index.vue'),
+    component: () => import('@/views/login/index.vue'),
     hidden: true, // 不显示在右侧菜单栏
   },
   {
@@ -20,7 +20,7 @@ const routes =  [
         path: 'index',
         name: '首页',
         meta: { title: 'home', icon: '', noCache: true, affix: true },
-        component: () => import('../views/home/index.vue'),
+        component: () => import('@/views/home/index.vue'),
       }
     ],
   },
@@ -33,19 +33,13 @@ const routes =  [
         path: 'table',
         name: '表格',
         meta: { title: 'table', icon: '', noCache: true, affix: true },
-        component: () => import('../views/components/table/index.vue'),
+        component: () => import('@/views/components/table/index.vue'),
       },
       {
         path: 'tree',
         name: '树',
         meta: { title: 'tree', icon: '', noCache: true, affix: true },
-        component: () => import('../views/components/tree/index.vue'),
-      },
-      {
-        path: 'treeTable',
-        name: '树形表格',
-        meta: { title: 'treeTable', icon: '', noCache: true, affix: true },
-        component: () => import('../views/components/treeTable/index.vue'),
+        component: () => import('@/views/components/tree/index.vue'),
       },
     ]
   }
