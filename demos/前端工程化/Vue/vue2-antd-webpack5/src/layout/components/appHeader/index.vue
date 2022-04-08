@@ -32,7 +32,6 @@
       <a-form-model
         ref="themeForm"
         :model="themeForm"
-        layout="vertical"
         :labelCol="{ span: 4 }"
         :wrapperCol="{ span: 20 }">
         <a-form-model-item label="语言" prop="language">

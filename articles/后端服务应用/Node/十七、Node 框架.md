@@ -80,7 +80,7 @@ app.listen() 是以下代码的语法糖
 app.listen(port) = http.createServer(app.callback()).listen(port)
 ```
 
-### (3) Koa 中间件（Middleware）
+### (4) Koa 中间件（Middleware）
 
 中间件其实就是一个如下所示的`异步函数`
 
@@ -134,72 +134,6 @@ app.use(async (ctx, next) => {
 app.listen(3000);
 ```
 
-#### koa-bodyparser
-
-koa-bodyparser 中间件可以将 `POST` 请求的 koa 上下文中的 formData 数据解析到 `ctx.request.body`
-
-```js
-
-```
-
-#### koa-views
-
-koa-views 是一个`视图管理`模块，支持很多`模板引擎`，例如 ejs
-
-```js
-import Koa from 'koa';
-import views from 'koa-views';
-
-const app = new Koa()
-
-// 配置视图，支持 ejs 模板引擎
-app.use(views(dirname + '/views', {
-  extension: 'ejs'
-}))
-```
-
-![koa_views]()
-
-#### koa-static
-
-一个 HTTP 请求访问 Web 服务器静态资源，一般响应结果有以下 3 种情况
-
-* 访问文本：html、css、js、png 等
-* 访问静态目录
-* 找不到资源，抛出 404
-
-koa-static 中间件主要用于`访问并解析静态资源`
-
-* 使用中间件
-
-  ```js
-  import Koa from 'koa';
-  import Static from 'koa-static';
-  import path from 'path';
-
-  const app = new Koa();
-
-  const dirname = path.resolve(); // 返回当前工作目录的绝对路径，类似于 commonJS 中的 __dirname 全局变量
-
-  // 配置静态资源文件访问
-  app.use(Static(dirname, 'public')); // 访问并解析 public 目录的静态资源
-  ```
-
-* 访问资源
-  ![koa_static1]()
-* npm run start
-  ![koa_static2]()
-
-#### koa-logger
-
-
-
-#### koa-json
-
-#### koa-onerror
-
-### (4) 
-
 ## 5. Nest.js
 
 ### (1) Nest 安装与使用
@@ -220,4 +154,4 @@ Nest 安装与使用流程如下
 * main.ts
   ![nest_main]()
 
-### (2) Nest Restful 实例
+### (2) 
