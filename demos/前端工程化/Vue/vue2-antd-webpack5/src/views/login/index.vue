@@ -1,11 +1,12 @@
 <template>
-  <div class="login-container">
+  <div class="login">
     <a-form-model
       ref="loginForm"
       :model="loginForm"
       :rules="loginFormRules"
-      :labelCol="{ span: 4 }"
-      :wrapperCol="{ span: 12 }"
+      :labelCol="{ span: 8 }"
+      :wrapperCol="{ span: 16 }"
+      label-align="right"
       class="login-form"
     >
       <a-form-model-item label="姓名" prop="name">
@@ -14,7 +15,7 @@
         </a-input>
       </a-form-model-item>
       <a-form-model-item label="密码" prop="password">
-        <a-input type="password" v-model.trim="loginForm.password">
+        <a-input v-model.trim="loginForm.password" type="password" >
           <a-icon slot="prefix" type="lock"></a-icon>
         </a-input>
       </a-form-model-item>
@@ -59,26 +60,29 @@
           v-model="loginForm.birthday"
           show-time
           type="date"
+          value-format="YYYY-MM-DD"
           placeholder="请选择日期时间">
         </a-date-picker>
       </a-form-model-item>
-      <a-form-model-item :wrapperCol="{ span: 12, offset: 4 }">
+      <a-form-model-item :wrapperCol="{ offset: 8 }">
         <a-button
+          :loading="submitLoading"
           type="primary"
-          class="login-submit"
-          :loading="isSubmit"
+          class="login-form-submit"
           @click="checkLoginForm">
           提交
         </a-button>
-        <a-button @click="resetLoginForm"> 重置 </a-button>
+        <a-button @click="resetLoginForm">
+          重置
+        </a-button>
       </a-form-model-item>
     </a-form-model>
   </div>
 </template>
 
 <script>
-
 export default {
+  name: 'login',
   components: {},
   props: {},
   data() {
@@ -87,11 +91,20 @@ export default {
         name: "",
         password: "",
         introduce: "",
-        isAnonymous: false,
-        gender: "",
+        isAnonymous: false, // 默认不匿名
+        gender: "man", // 默认性别男
         like: [],
         origin: "",
         birthday: "",
+      },
+      loginFormRules: {
+        name: [
+          { required: true, message: "请填写姓名", trigger: "blur" }
+        ],
+        password: [
+          { required: true, message: "请填写密码", trigger: "blur" },
+          { min: 8, message: "密码长度不能小于 8 位", trigger: "blur" },
+        ],
       },
       originOptions: [
         { value: "sichuan", label: "四川" },
@@ -106,14 +119,7 @@ export default {
         { value: "dance", label: "跳舞" },
         { value: "game", label: "游戏" },
       ],
-      loginFormRules: {
-        name: [{ required: true, message: "请填写姓名", trigger: "blur" }],
-        password: [
-          { required: true, message: "请填写密码", trigger: "blur" },
-          { min: 8, message: "密码长度不能小于 8 位", trigger: "blur" },
-        ],
-      },
-      isSubmit: false,
+      submitLoading: false,
     };
   },
   computed: {},
@@ -122,27 +128,27 @@ export default {
   mounted() {},
   methods: {
     checkLoginForm() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.submitLoginForm();
+          // this.submitLoginForm();
+          this.$router.push({ path: '/home/index' });
         }
       });
     },
     submitLoginForm() {
-      this.isSubmit = true;
+      this.submitLoading = true;
       this.$http({
         url: '/login',
         method: 'post',
         data: this.loginForm
       }).then(res => {
-        this.isSubmit = false;
         console.log("res:", res);
+        this.submitLoading = false;
+        this.$router.push({ path: '/home' });
       }).catch(err => {
         console.log("err:", err);
-        this.$message.error({
-          content: '登录失败，请重试！',
-          duration: 3 * 1000
-        });
+        this.submitLoading = false;
+        this.$message.error('登录失败，请重试！');
         this.resetLoginForm();
       })
     },
@@ -154,19 +160,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-container {
+.login {
   width: 100%;
   height: 100%;
   background: #f5f5f5;
-  .login-form {
+  &-form {
     width: 500px;
     height: 400px;
     margin: 0 auto;
+    &-submit {
+      margin-right: 10px;
+    }
     .ant-form-item {
-      margin: 0 0 10px 0;
-      .login-submit {
-        margin-right: 10px;
-      }
+      margin: 0;
     }
   }
 }

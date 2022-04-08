@@ -28,7 +28,8 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        '@': pathResolve('./src')
+        '@': pathResolve('./src'),
+        vue$: "vue/dist/vue.esm.js",
       },
       extensions: ['.js', '.vue', '.json']
     },
@@ -54,8 +55,28 @@ module.exports = (env, argv) => {
         {
           test: /\.(sass|scss)$/,
           exclude: /(node_modules)/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'] 
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] 
         },
+        // {
+        //   test: /\.less$/,
+        //   use: [
+        //     MiniCssExtractPlugin.loader, 
+        //     'css-loader', 
+        //     {
+        //       loader: 'less-loader',
+        //       options: {
+        //         lessOptions: {
+        //           javascriptEnabled: true,
+        //           modifyVars: {
+        //             'primary-color': '#1DA57A',
+        //             'link-color': '#1DA57A',
+        //             'border-radius-base': '2px',
+        //           },
+        //         }
+        //       }
+        //     }
+        //   ] 
+        // },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
           exclude: /(node_modules)/,
