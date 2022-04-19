@@ -13,7 +13,7 @@
 
 ### (2) stream 模块
 
-Node 通过 stream 模块提供流 API，所有流都是 `EevntEmitter` 类的实例
+Node 通过 stream 模块提供流 API，所有流都是 `EevntEmitter` 类的实例，顾名思义，流可以触发事件，也可以捕获事件并处理数据
 
 ```js
 定义：import stream from 'stream'
@@ -438,7 +438,7 @@ zlib.constants.Z_TREES
 * **zlib.Gunzip 类**：使用 Gzip 算法解压数据
 * **zlib.Unzip 类**：通过`自动检测标头`来解压 Gzip、Deflate 算法压缩的数据
 
-### (4) zlib Options 类
+### (4) zlib.Options 类
 
 每个基于 zlib 的类都有一个 options 对象
 
@@ -706,18 +706,16 @@ Node 还支持以下 `3` 种类型的`二进制转文本编码`
 |base64url|base64url 编码：常用于加密 url|
 |hex|hex 编码：不常用|
 
-### (2) buffer 模块
-
-ES 没有二进制数据类型，但是 Node 处理`文件流或 TCP 流`时必须使用二进制数据，因此 Node 提供了 buffer 模块用于创建一个专门存放二进制数据的缓存区，buffer 对应 `V8 堆内存之外的一块原始内存`
+### (2) ES6 二进制数组 API
 
 #### ① 二进制数组 API
 
-WebGL 是浏览器与显卡间的通信接口，为了满足 JS 与显卡间大量实时的数据交换，两者之间的数据通信必须是`二进制`而非传统的`文本格式`，由此 ES6 新增二进制数组 API，允许开发者以`数组下标`的形式直接操作内存，与操作系统的原生接口进行`二进制通信`
+WebGL 是浏览器与显卡间的通信接口，为了满足浏览器 JS 与显卡间大量实时的数据交换，两者之间的数据通信必须是`二进制`而非传统的`文本格式`，由此 ES6 新增二进制数组 API，允许开发者以`数组下标`的形式直接操作内存，与操作系统的原生接口进行`二进制通信`
 
 * **文本格式**：传递一个 `32 位整数`，JS 脚本与显卡都要进行数据转换，非常耗时
 * **二进制数据**：直接操作字节，将 4 个字节的 32 位整数，以`二进制形式`原封不动地送入显卡，JS 脚本的性能将大幅度提升
 
-二进制数组 API 如下
+ES6 二进制数组 API 如下
 
 * ArrayBuffer 对象
 * TypedArray 视图
@@ -750,13 +748,17 @@ TypedArray 视图包括如下 9 种类型
 | Float32  | 4        | 32位浮点数                  | float           |
 | Float64  | 8        | 64位浮点数                  | double          |
 
-#### ④ Uint8Array 视图
+### (3) Node buffer 模块
 
-Uint8Array 视图就是 `8 位无符号整数`，Node Buffer 类就是 ES6 Uint8Array 类的`子类`，Node 在支持 buffer 的地方也支持普通的 Uint8Array
+Node 虽然可以操作 ES6 二进制数组 API，但实际上 Node 中大部分跟二进制有关的功能还是使用 Node 自身提供的 buffer 模块实现的，buffer 模块用于创建一个专门存放二进制数据的`缓存区`，对应 `V8 堆内存之外的一块原始内存`，一旦分配存储空间，就不能再修改空间大小
 
-### (3) buffer.Buffer 类
+```js
+import { Buffer, Blob } from 'buffer'
+```
 
-Node Buffer 类是 ES6 Uint8Array 类、TypedArray 类的子类，因此所有 ES6 TypedArray 方法都可以在 Node buffer 上使用，但是 Node buffer API 与 ES6 TypedArray API 存在`细微的不兼容`
+### (4) buffer.Buffer 类
+
+Node buffer.Buffer 类是 ES6 Uint8Array 类（8 位无符号整数）的`子类`，因此所有 ES6 TypedArray 方法都可以在 buffer.Buffer 上使用，但是 API 上存在`细微的不兼容`
 
 ```js
 定义：import { Buffer } from 'buffer'
@@ -1012,12 +1014,12 @@ console.log(buf5) //buf5 <Buffer 08 07 06 05 04 03 02 01>
 console.log(buf6) //buf6 抛出 ERR_INVALID_BUFFER_SIZE 异常
 ```
 
-### (4) buffer.Blob 类
+### (5) buffer.Blob 类
 
-Node Buffer 类用来`操作内存`，Node Blob 类用来`操作二进制文件`
+buffer.Buffer 类用来`操作内存`，buffer.Blob 类用来`操作二进制文件`
 
-* Node Buffer 类表示`存储二进制数据的一段连续内存`，不能直接读写，只能通过 `TypedArray Uint8Array 视图`读写
-* Node Blob 类表示`一个二进制文件的数据内容`，常用来读写文件
+* buffer.Buffer 类表示`存储二进制数据的一段连续内存`，不能直接读写，只能通过 `TypedArray Uint8Array 视图`读写
+* buffer.Blob 类表示`一个二进制文件的数据内容`，常用来读写文件
 
 ```js
 定义：import { Blob } from 'buffer'
@@ -1032,9 +1034,9 @@ Node Buffer 类用来`操作内存`，Node Blob 类用来`操作二进制文件`
      blob.arrayBuffer()           //返回Promise实例,返回并创建使用blob数据副本的ArrayBuffer实例
 ```
 
-### (5) 实例
+实例
 
-* buffer.js
+* blob.js
 
   ```js
   import { Blob } from 'buffer'
@@ -1043,27 +1045,63 @@ Node Buffer 类用来`操作内存`，Node Blob 类用来`操作二进制文件`
   const blob = new Blob([buf])
   const copyBlob = blob.slice(20, 30)
 
-  console.log(blob.size) //100
-  console.log(blob.type) //''
-  console.log(blob)      //Blob {size: 100, type: ''}
-  console.log(copyBlob)  //Blob {size: 10, type: ''}
+  console.log(blob.size) // 100
+  console.log(blob.type) // ''
+  console.log(blob)      // Blob {size: 100, type: ''}
+  console.log(copyBlob)  // Blob {size: 10, type: ''}
   ```
 
 * node buffer.js
 
+  ![blob]()
+
+### (6) Node 读写数据
+
+buffer 是 Node 读写文件的`默认数据类型`，除非读写文件时指定编码，否则都会通过 buffer 进行
+
+* buffer 转字符串
+  * buffer.toString()
+  * 使用 string_decoder 模块
+* buffer 转 JSON
+  * JSON.stringify(buffer)
+
+实例
+
+* buffer.js
+
+```js
+import fs from 'fs'
+import { StringDecoder } from 'string_decoder'
+
+fs.readFile('./input.txt', (err, data) => {
+    if(err) throw err
+
+    console.log(data) // <Buffer e5 b0 8f e5 8f af e7 88 b1>
+
+    // buffer 转字符串
+    console.log(data.toString()) // 小可爱 
+    const str = new StringDecoder()
+    console.log(str.write(data)) // 小可爱
+
+    // buffer 转 JSON
+    console.log(JSON.stringify(data)) // {"type":"Buffer","data":[229,176,143,229,143,175,231,136,177]}
+})
+```
+
+* node buffer.js
   ![buffer]()
 
 ## 5. string_decoder 模块
 
 ### (1) string_decoder API
 
-string_decoder 模块用于`将 buffer 对象解码为字符串`
+string_decoder 模块用于`将 buffer 对象解码为字符串`，默认 utf8 字符串
 
 ```js
 定义：import { StringDecoder } from 'string_decoder'
      const sd = new StringDecoder([encoding]) 
-方法：sd.write(buffer) //返回将buffer解码后的字符串,并将其存储在内部缓冲区直到下次调用sd.write(buffer)或sd.end([buffer])
-     sd.end([buffer]) //返回内部缓冲区的所有剩余输入,若提供buffer参数则在返回之前最后调用一次sd.write(buffer)
+方法：sd.write(buffer) //返回将 buffer 解码后的字符串,并将其存储在内部缓冲区直到下次调用 sd.write(buffer) 或sd.end([buffer])
+     sd.end([buffer]) //返回内部缓冲区的所有剩余输入,若提供 buffer 参数则在返回之前最后调用一次 sd.write(buffer)
 ```
 
 ### (2) 实例

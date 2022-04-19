@@ -15,6 +15,8 @@
 * **模块名**：用于加载 `Node 原生模块`和 `node_modules 文件夹模块`
 
   ```js
+  import http from 'http'
+
   const http = require('http')
   ```
 
@@ -23,6 +25,8 @@
   * 绝对路径
 
   ```js
+  import circle from './circle.js'
+
   const circle = require('./circle.js')
   ```
 
@@ -118,7 +122,7 @@ CommonJS 模块的加载机制是`输出值的拷贝`，某个模块一旦输出
 
 ### (5) 模块缓存
 
-Node 仅在初次加载 CommonJS 模块时执行一次，之后再次加载都是直接从缓存中读取该模块的 `module.exports` 属性，想要每次加载时都执行某个模块，有以下 2 种方式
+Node 仅在初次加载 CommonJS 模块时执行一次，之后再次加载都是直接从`缓存`中读取该模块的 `module.exports` 属性，这样可以减少因文件查找而引起的延迟，如果想要每次加载时都执行某个模块，有以下 2 种方式
 
 * 让模块输出一个函数
 
@@ -221,9 +225,9 @@ package.json 文件用于`管理当前项目的 npm 包`
     "name": "node-commonjs-project",
     "version": "1.0.0",    // 大版本-次要版本-小版本
     "author": "yuyuyuzhang",
-    "license": "ISC",
+    "license": "ISC",      // 协议列表
     "description": "a node commonJS project",
-    "keywords": [
+    "keywords": [          // 搜索关键词列表
       "node",
       "commonJS"
     ],

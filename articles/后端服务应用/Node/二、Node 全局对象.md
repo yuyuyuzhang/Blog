@@ -2,9 +2,24 @@
 
 ## 1. global 对象
 
-global 对象是 Node 的`全局命名空间对象`，与浏览器环境中的 window 对象类似，都可以为用户提供全局属性和全局方法的访问能力，Node 开发人员谈及 `context` 时，一般就是指 global 对象
+### (1) 浏览器 global 对象
 
-浏览器中顶层作用域是`全局作用域`，Node 中顶层作用域是`当前模块的作用域`
+浏览器 window 对象表示`浏览器窗口`，浏览器 window 对象具有双重角色
+
+* 既是通过 JS 访问浏览器窗口的一个接口
+* 又是 JS 中规定的 `global 对象`，因而全局作用域中声明的变量和函数都是 window 对象的属性和方法
+
+浏览器 global 对象作为 `window 对象的一部分`来实现
+
+* ES5 规定全局上下文中声明的 var、function 变量，都是 global 对象的属性，也就是 window 对象的属性
+* ES6 规定全局上下文中声明的 const、let、class 变量，不属于 global 对象的属性，从 ES6 开始，全局变量将逐步与 global 对象分离
+
+### (2) Node global 对象
+
+Node global 对象指的是`当前模块的全局命名空间对象`，Node 中顶层作用域也就是`当前模块的作用域`，Node 开发人员谈及上下文环境 `context` 时，一般就是指 global 对象
+
+* ES6 规定当前模块中声明的 var、function 变量，都是当前模块的 global 对象的属性
+* ES6 规定当前模块中声明的 const、let、class 变量，不属于当前模块的 global 对象的属性，从 ES6 开始，当前模块的全局变量将逐渐与当前模块的 global 对象分离
 
 ![模块内全局变量和局部变量]()
 

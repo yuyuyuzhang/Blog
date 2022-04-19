@@ -4,13 +4,21 @@
 
 ### (1) process API
 
+process 模块在 `Node 应用程序`及其`运行环境`之间架起了桥梁，提供了对 Node 环境及其当前运行环境的信息的访问
+
+**标准流**：标准流是一些`预先建立的、用于 Node 应用和运行环境沟通的通道`，这些通道可以帮助 Node 应用和控制台进行通信，也可以帮助开发者和 Node 应用进行通信
+
+* 标准输入流：process.stdin
+* 标准输出流：process.stdout
+* 标准错误流：process.stderr
+
 ```js
 定义：import process from 'process'
 属性：操作系统属性：
      process.arch                                      //返回当前进程所在操作系统的CPU架构
      process.platform                                  //返回当前进程所在操作系统平台
-     用户环境属性：
-     process.env                                       //返回当前进程所在的用户环境对象
+     环境变量属性：
+     process.env                                       //返回当前进程所在环境的环境变量对象
      Node 属性：
      process.release                                   //返回当前进程使用的 Node 版本对象
      process.version                                   //返回当前进程使用的 Node 版本
@@ -29,7 +37,7 @@
      process.noDeprecation                             //返回当前进程是否设置了 --no-deprecation 标志
      process.throwDeprecation                          //返回当前进程是否设置了 --throw-deprecation 标志
      process.traceDeprecation                          //返回当前进程是否设置了 --trace-deprecation 标志
-     输入输出属性：
+     标准流属性：
      process.stdin                                     //返回当前进程的标准输入流
      process.stdin.fd                                  //返回当前进程的标准输入流的底层文件名描述符
      process.stdout                                    //返回当前进程的标准输出流

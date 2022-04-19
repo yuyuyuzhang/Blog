@@ -1,8 +1,18 @@
 # 五、Window 对象
 
-window 对象表示`浏览器窗口`，浏览器中 window 对象具有双重角色，既是通过 JS 访问浏览器窗口的一个接口，又是 ES 中规定的 `Global对象`，因而全局作用域中声明的变量和函数都是 window 对象的属性和方法
+## 1. Window 对象
 
-## 1. Window 对象属性
+浏览器 window 对象表示`浏览器窗口`，浏览器 window 对象具有双重角色
+
+* 既是通过 JS 访问浏览器窗口的一个接口
+* 又是 JS 中规定的 `global 对象`，因而全局作用域中声明的变量和函数都是 window 对象的属性和方法
+
+浏览器 global 对象作为 `window 对象的一部分`来实现
+
+* ES5 规定全局上下文中声明的 var、function 变量，都是 global 对象的属性，也就是 window 对象的属性
+* ES6 规定全局上下文中声明的 const、let、class 变量，不属于 global 对象的属性，从 ES6 开始，全局变量将逐步与 global 对象分离
+
+## 2. Window 对象属性
 
 ```js
 客户端存储：
@@ -68,7 +78,7 @@ window.speechSynthesis     //返回Web Speech API,用于语音合成
 window.createImageBitmap   //返回Promise实例,将图像源裁剪为指定规格的像素矩阵
 ```
 
-## 2. Window 对象方法
+## 3. Window 对象方法
 
 ```js
 对话框方法：

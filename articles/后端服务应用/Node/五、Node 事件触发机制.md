@@ -167,3 +167,47 @@ emitter.emit('error')
 ```
 
 ![error事件2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/error%E4%BA%8B%E4%BB%B62.png)
+
+## 4. 创建一个继承 events.EventEmitter 类的子类
+
+* InputChecker.js
+
+     ```js
+     import EventEmitter from 'events';
+     import fs from 'fs';
+
+     class InputChecker extends EventEmitter {
+          constructor(name, file) {
+               super(); // 先调用父类构造函数新建实例
+
+               this.name = name;
+               this.writeStream = fs.createWriteStream('./' + file + '.txt');
+          }
+          check(input) {
+               const command = input.trim().substr(0, 3)
+               if(command == 'wr:') {
+                    this.emit('write', input.substr(3, input.length))
+               } else {
+                    this.emit('end')
+               }
+          }
+     }
+
+     const ic = new InputChecker('yuyuyuzhang', 'output')
+          ic.on('write', function(data) {
+          this.writeStream.write(data, 'utf8')
+     })
+     ic.on('end', function() {
+          process.exit()
+     })
+
+     process.stdin.setEncoding('utf8')
+     process.stdin.on('readable', function() {
+          const input = process.stdin.read()
+          input && ic.check(input) 
+     })
+     ```
+
+* node InputChecker.js
+
+  ![InputChecker]()

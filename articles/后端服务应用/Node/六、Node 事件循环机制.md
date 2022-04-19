@@ -46,7 +46,61 @@ clearImmediate(immediate)         //无返回值,取消指定的 immediate 实�
 
 ## 2. Node 事件循环
 
-### (1) Node 事件循环机制
+### (1) Node 异步回调函数
+
+Node 异步回调函数必须满足以下几个关键点，其他一切都是可变的
+
+* 最后一个参数是`回调函数`
+* 有错误发生时，创建一个 `Error 对象`并将其作为回调函数的第一个参数
+* 无错误发生时，调用回调函数，其第一个参数设为 `null`，并传入相关数据
+* 回调函数必须在 `process.nextTick()` 中调用，从而确保进程不被阻塞
+
+```js
+const fib = n => {
+    if(n < 2) return n
+    return fib(n - 1) + fib(n - 2)
+}
+
+const Obj = function() {}
+
+Obj.prototype.doSomeThing = function(_arg) {
+    // 最后一个参数为回调函数
+    let cb = arguments[arguments.length - 1] 
+    cb === typeof cb === 'function' ? cb : null
+
+    const arg = typeof _arg === 'number' ? _arg : null
+
+    if(!arg) {
+        return cb(new Error('first _arg missing or not a number'))
+    } else {
+        process.nextTick(() => {
+            const data = fib(arg)
+            cb(null, data)
+        })
+    }
+}
+
+// 实例测试
+const test = new Obj()
+const num = 10
+test.doSomeThing(10, (err, res) => {
+    if(err) {
+        console.error(err)
+    } else {
+        console.log(res)   // 55
+    }
+})
+
+test.doSomeThing('10', (err, res) => {
+    if(err) {
+        console.error(err) // Error: first _arg missing or not a number
+    } else {
+        console.log(res)
+    }
+})
+```
+
+### (2) Node 事件循环机制
 
 Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事件循环原理是不一致的，一个是基于 `libev 库`，一个是基于`浏览器`，Node 主线程是单线程执行的，但是 Node 存在多线程执行，包括定时器线程等等，不过主要还是主线程来循环遍历当前事件循环
 
@@ -60,8 +114,8 @@ Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事�
 
 #### ① 微任务及宏任务的优先级
 
-> 微任务 Promise.then/catch/finally() 优先级高于 process.nextTick
-> 宏任务 IO 操作优先级高于定时器回调，但是定时器可能比 IO 操作先执行完
+> 微任务中 Promise.then/catch/finally() 优先级高于 process.nextTick
+> 宏任务中 IO 操作优先级高于定时器回调（但定时器可能比 IO 操作先执行完），定时器中 setImmediate 优先级最高，优于 setTimeout(cb, 0)
 
 * eventloop1.js
 
@@ -138,7 +192,7 @@ Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事�
 
     ![eventloop]()
 
-### (2) Node 不善于处理 CPU 密集型业务
+### (3) Node 不善于处理 CPU 密集型业务
 
 Node 不善于处理 CPU 密集型业务，可能会导致性能问题，如果要实现一个耗时 CPU 的计算逻辑，处理方法有如下 2 种
 

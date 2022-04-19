@@ -9,33 +9,17 @@
 </head>
 <body>
 
-
+  <button id="btn">点击</button>
   
 <script>
 
-var contentType
-var viewState
-var moduleId
+const btn = document.querySelector('#btn');
+document.body.addEventListener('click', function(e){
+  console.log(e.target);        //<button id="btn">
+  console.log(e.currentTarget); //<body>
+  console.log(this);            //<body>
+});
 
-var url ="/common/print/lodopprint.jsp";
-if(contentType){
-  url+="?contentType="+contentType;
-  if(viewState){
-		url+="&viewState="+viewState;
-	}
-	if(moduleId){
-		url+="&moduleId="+moduleId;
-	}
-} else if(viewState) {
-  url+="?viewState="+viewState;
-  if(moduleId){
-		url+="&moduleId="+moduleId;
-	}
-} else if(moduleId) {
-  url+="?moduleId="+moduleId;
-}
-
-console.log(url)
 </script>
 </body>
 </html>
