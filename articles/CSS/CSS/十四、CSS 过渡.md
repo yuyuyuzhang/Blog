@@ -1,6 +1,6 @@
-# 、transition
+# 十四、CSS 过渡
 
-## 1. transition
+## 1. CSS 过渡
 
 ## 2. 过渡事件
 

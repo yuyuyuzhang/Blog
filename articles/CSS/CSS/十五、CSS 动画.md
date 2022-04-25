@@ -1,6 +1,6 @@
-# 、Animation
+# 十五、动画
 
-## 1. animation
+## 1. CSS 动画
 
 ```js
 @keyframes animationname { keyframes-selector: { css-styles } }

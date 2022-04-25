@@ -6,6 +6,30 @@
 background-color //设置背景颜色
 ```
 
+### (1) 背景颜色透明度
+
+```html
+<div class="div1">我是小可爱</div>
+<div class="div2">我是大可爱</div>
+```
+
+```css
+div {
+    width: 100px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+.div1 {
+    background-color: rgb(106, 90, 205); /* #6A5ACD */
+    opacity: 0.5;
+}
+.div2 {
+    background-color: rgba(106, 90, 205, 0.5);
+}
+```
+
+![background_color](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/background_color.png)
+
 ## 2. 背景图像
 
 ```js
@@ -61,3 +85,129 @@ div {
 ![padding](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/padding.png)
 
 ![content](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/content.png)
+
+## 3. 背景渐变
+
+CSS 渐变可以在多个颜色之间平稳过渡
+
+* **线性渐变**：某个方向上的渐变
+* **径向渐变**：由中心向周围的渐变
+
+### (1) 线性渐变
+
+线性渐变是某个方向上的渐变
+
+```css
+/* 单个线性渐变 */
+background-image: linear-gradient([direction/angle], color1 size1, color2 size2, ...)
+
+/* 重复线性渐变 */
+background-image: repeating-linear-gradient([direction/angle], color1 size1, color2 size2, ...)
+```
+
+#### ① 某个方向的线性渐变
+
+```html
+<div></div>
+```
+
+```css
+div {
+    width: 100px;
+    height: 80px;
+    background-image: linear-gradient(to bottom right, red, yellow);
+}
+```
+
+![linear_gradient1](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/linear_gradient1.png)
+
+#### ② 某个角度的线性渐变
+
+![angle](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/angle.png)
+
+```html
+<div></div>
+```
+
+```css
+div {
+    width: 100px;
+    height: 80px;
+    background-image: linear-gradient(45deg, rgba(65,105,225,0.8), rgba(138,43,226,0.8), rgba(0,128,128,0.8));
+}
+```
+
+![linear_gradient2](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/linear_gradient2.png)
+
+#### ③ 重复的线性渐变
+
+```html
+<div></div>
+```
+
+```css
+div {
+    width: 100px;
+    height: 80px;
+    background-image: repeating-linear-gradient(45deg, rgba(65,105,225,0.8) 10%, rgba(138,43,226,0.8) 20%);
+}
+```
+
+![repeat_linear_gradient](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/repeat_linear_gradient.png)
+
+### (2) 径向渐变
+
+径向渐变是由中心向周围的渐变
+
+```css
+background-image: radial-gradient([shape size center], color1 size1, color2 size2, ...)
+
+background-image: repeating-radial-gradient([shape size center], color1 size1, color2 size2, ...)
+
+
+
+shape：
+ellipsis //椭圆形(默认)
+circle   //圆形
+
+size：
+closest-side    //以距离中心点最近的边计算渐变圆半径
+farthest-side   //以距离中心点最远的边计算渐变圆半径
+closest-corner  //以距离中心点最近的角计算渐变圆半径
+farthest-corner //以距离中心点最远的角计算渐变圆半径
+
+center：
+at position //设置中心点
+```
+
+#### ① 圆形的径向渐变
+
+```html
+<div></div>
+```
+
+```css
+div {
+    width: 100px;
+    height: 80px;
+    background-image: radial-gradient(circle farthest-side at 50% 50%, rgba(65,105,225,0.8), rgba(138,43,226,0.8))
+}
+```
+
+![radial_gradient1](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/radial_gradient1.png)
+
+#### ② 重复的径向渐变
+
+```html
+<div></div>
+```
+
+```css
+div {
+    width: 100px;
+    height: 80px;
+    
+}
+```
+
+![radial_gradient2](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/radial_gradient2.png)
