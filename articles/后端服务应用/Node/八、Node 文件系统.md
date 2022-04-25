@@ -474,7 +474,7 @@ fs.Dirent 类表示`文件夹条目`，可以是`子文件夹或文件`
 
 * node dir.js
 
-     ![dir]()
+     ![dir](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/dir.png)
 
 ### (5) fs.Stats 类
 
@@ -639,11 +639,11 @@ close  //监听器停止监听时触发
 
 * 监听的空文件夹 watchDir 内新增文件 a.txt
   
-  ![watchDir1]()
+  ![watchDir1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/watchDir1.png)
 
 * 监听的文件夹 watchDir 内文件 a.txt 改名为 b.txt
 
-  ![watchDir2]()
+  ![watchDir2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/watchDir2.png)
 
 监听文件实例
 
@@ -660,7 +660,7 @@ close  //监听器停止监听时触发
 
 * 监听的文件 a.txt 改名为 b.txt
 
-  ![watchDirFile]()
+  ![watchDirFile](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/watchDirFile.png)
 
 #### ② fs.StatWatcher API
 
@@ -699,4 +699,4 @@ prevStat 表示监听目标的上一个统计对象 fs.Stat 实例
 
 * 监听的文件 a.txt 改名为 b.txt
 
-  ![watchFile]()
+  ![watchFile](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/watchFile.png)

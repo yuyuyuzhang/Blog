@@ -1053,7 +1053,7 @@ buffer.Buffer 类用来`操作内存`，buffer.Blob 类用来`操作二进制文
 
 * node buffer.js
 
-  ![blob]()
+  ![blob](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/blob.png)
 
 ### (6) Node 读写数据
 
@@ -1089,7 +1089,7 @@ fs.readFile('./input.txt', (err, data) => {
 ```
 
 * node buffer.js
-  ![buffer]()
+  ![buffer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/buffer.png)
 
 ## 5. string_decoder 模块
 
@@ -1124,4 +1124,4 @@ string_decoder 模块用于`将 buffer 对象解码为字符串`，默认 utf8 �
 
 * node string_decoder.js
 
-  ![string_decoder]()
+  ![string_decoder](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/string_decoder.png)

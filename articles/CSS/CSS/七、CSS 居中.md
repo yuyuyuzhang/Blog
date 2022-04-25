@@ -36,7 +36,7 @@ body {
 }
 ```
 
-![center1_absolute]()
+![center1_absolute](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center1_absolute.png)
 
 ### (2) flex 布局
 
@@ -68,7 +68,7 @@ body {
 }
 ```
 
-![center1_flex]()
+![center1_flex](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center1_flex.png)
 
 ### (3) margin: 0 auto
 
@@ -99,7 +99,7 @@ body {
 }
 ```
 
-![center1_margin]()
+![center1_margin](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center1_margin.png)
 
 ## 2. 垂直居中
 
@@ -137,7 +137,7 @@ body {
 }
 ```
 
-![center2_absolute]()
+![center2_absolute](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center2_absolute.png)
 
 ### (2) flex 布局
 
@@ -169,7 +169,7 @@ body {
 }
 ```
 
-![center2_flex]()
+![center2_flex](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center2_flex.png)
 
 ## 3. 垂直水平居中
 
@@ -208,7 +208,7 @@ body {
 }
 ```
 
-![center3_absolute]()
+![center3_absolute](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center3_absolute.png)
 
 ### (2) flex 布局
 
@@ -241,4 +241,4 @@ body {
 }
 ```
 
-![center3_flex]()
+![center3_flex](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center3_flex.png)

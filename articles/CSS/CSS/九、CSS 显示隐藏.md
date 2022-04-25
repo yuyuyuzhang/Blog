@@ -42,10 +42,10 @@
 }
 ```
 
-![display_none]()
+![display_none](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/display_none.png)
 
-![visibility_hidden]()
+![visibility_hidden](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/visibility_hidden.png)
 
-![opacity_0]()
+![opacity_0](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/opacity_0.png)
 
-![scale_0]()
+![scale_0](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/scale_0.png)

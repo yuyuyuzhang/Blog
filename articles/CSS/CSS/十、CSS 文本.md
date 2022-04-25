@@ -30,7 +30,7 @@ span {
 }
 ```
 
-![font_face]()
+![font_face](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/font_face.png)
 
 ## 2. CSS 文本
 
@@ -70,7 +70,7 @@ p {
 }
 ```
 
-![间距]()
+![间距](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/%E9%97%B4%E8%B7%9D.png)
 
 ### (2) 文本样式
 
@@ -86,7 +86,7 @@ p {
 }
 ```
 
-![文本样式]()
+![文本样式](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/%E6%96%87%E6%9C%AC%E6%A0%B7%E5%BC%8F.png)
 
 ### (3) 单行文本溢出隐藏
 
@@ -111,9 +111,9 @@ p {
 }
 ```
 
-![ellipsis1]()
+![ellipsis1](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/ellipsis1.png)
 
-![ellipsis2]()
+![ellipsis2](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/ellipsis2.png)
 
 ### (4) 多行文本溢出隐藏
 
@@ -136,4 +136,4 @@ p {
 }
 ```
 
-![ellipsis_2]()
+![ellipsis_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/ellipsis_2.png)

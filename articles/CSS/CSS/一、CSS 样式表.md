@@ -35,6 +35,6 @@ big.css
 }
 ```
 
-![small]()
+![small](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/small.png)
 
-![big]()
+![big](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/big.png)

@@ -27,7 +27,7 @@ position: static：静态定位即没有定位，`HTML 元素遵循正常的文�
 }
 ```
 
-![static]()
+![static](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/static.png)
 
 ## 2. 相对定位 relative
 
@@ -57,7 +57,7 @@ position: relative 相对定位即 `HTML 元素相对其正常位置`
 }
 ```
 
-![relative]()
+![relative](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/relative.png)
 
 ## 3. 绝对定位 absolute
 
@@ -90,7 +90,7 @@ position: absolute 绝对定位即 `HTML 元素相对其最近的已定位的父
 }
 ```
 
-![absolute_a]()
+![absolute_a](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/absolute_a.png)
 
 ### (2) 相对于 html 元素
 
@@ -112,7 +112,7 @@ position: absolute 绝对定位即 `HTML 元素相对其最近的已定位的父
 }
 ```
 
-![absolute_html]()
+![absolute_html](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/absolute_html.png)
 
 ## 4. 固定定位 fixed
 
@@ -142,7 +142,7 @@ position: fixed 固定定位即 `HTML 元素相对于浏览器窗口`
 }
 ```
 
-![fixed]()
+![fixed](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/fixed.png)
 
 ## 6. 粘性定位 sticty
 
@@ -169,7 +169,7 @@ body {
 }
 ```
 
-![relative]()
+![relative](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/relative.png)
 
 ## 7. 浮动 float
 
@@ -203,7 +203,7 @@ body {
 }
 ```
 
-![float]()
+![float](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/float.png)
 
 ### (2) 清除浮动
 
@@ -242,7 +242,7 @@ body {
 }
 ```
 
-![clear1]()
+![clear1](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/clear1.png)
 
 #### ② 父元素设置 clearfix 类，添加一个 ::after 伪元素，使用 clear:both 清除浮动
   
@@ -282,4 +282,4 @@ body {
 }
 ```
 
-![clear2]()
+![clear2](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/clear2.png)

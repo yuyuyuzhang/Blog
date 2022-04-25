@@ -21,7 +21,7 @@ Node global 对象指的是`当前模块的全局命名空间对象`，Node 中�
 * ES6 规定当前模块中声明的 var、function 变量，都是当前模块的 global 对象的属性
 * ES6 规定当前模块中声明的 const、let、class 变量，不属于当前模块的 global 对象的属性，从 ES6 开始，当前模块的全局变量将逐渐与当前模块的 global 对象分离
 
-![模块内全局变量和局部变量]()
+![模块内全局变量和局部变量](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E6%A8%A1%E5%9D%97%E5%86%85%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F.png)
 
 ## 2. console 对象
 

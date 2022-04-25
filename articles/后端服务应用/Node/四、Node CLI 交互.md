@@ -28,7 +28,7 @@
 
 * node JSONstringify.js
 
-     ![Node输出超过2层嵌套的对象]()
+     ![Node输出超过2层嵌套的对象](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/Node%E8%BE%93%E5%87%BA%E8%B6%85%E8%BF%872%E5%B1%82%E5%B5%8C%E5%A5%97%E7%9A%84%E5%AF%B9%E8%B1%A1.png)
 
 ## 2. repl 模块
 
@@ -104,9 +104,9 @@ reset //重置 repl 会话的上下文时触发(.clear)
 
 * node 环境：.load repl.js
 
-     ![defineCommand1]()
+     ![defineCommand1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/defineCommand1.png)
 
-     ![defineCommand2]()
+     ![defineCommand2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/defineCommand2.png)
 
 #### ② reset 事件
 
@@ -123,11 +123,11 @@ replServer.on('reset', initializeContext)
 
 * node 环境：.load repl.js
 
-     ![reset事件1]()
+     ![reset事件1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/reset%E4%BA%8B%E4%BB%B61.png)
 
      电脑操作系统问题，repl 不稳定，显示有错误
 
-     ![reset事件2]()
+     ![reset事件2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/reset%E4%BA%8B%E4%BB%B62.png)
 
 #### ③ exit 事件
 
@@ -143,11 +143,11 @@ replServer.on('reset', initializeContext)
 
 * node 环境：.load repl.js
 
-     ![exit事件1]()
+     ![exit事件1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/exit%E4%BA%8B%E4%BB%B61.png)
 
      电脑操作系统问题，repl 不稳定，显示有错误
 
-     ![exit事件2]()
+     ![exit事件2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/exit%E4%BA%8B%E4%BB%B62.png)
 
 ## 3. readline 模块
 

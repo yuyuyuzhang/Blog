@@ -28,7 +28,7 @@ CSS 伪元素用于`创建一些不在 DOM 树中的元素并为其添加样式`
 }
 ```
 
-![after]()
+![after](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/after.png)
 
 ### (2) ::first-letter、::first-line
 
@@ -48,7 +48,7 @@ p::first-letter {
 }
 ```
 
-![first_letter_first_line]()
+![first_letter_first_line](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/first_letter_first_line.png)
 
 ### (3) ::selection
 
@@ -62,7 +62,7 @@ p::selection {
 }
 ```
 
-![selection]()
+![selection](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/selection.png)
 
 ## 2. CSS 伪类
 
@@ -111,7 +111,7 @@ CSS 伪类用于 `DOM 树中已有元素处于某种状态时为其添加样式`
 }
 ```
 
-![nth_child]()
+![nth_child](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/nth_child.png)
 
 ### (2) 链接状态伪类
 
@@ -131,7 +131,7 @@ a:hover {
 }
 ```
 
-![visited]()
+![visited](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/visited.mp4)
 
 ### (3) 表单相关伪类
 
@@ -149,4 +149,4 @@ input:disabled {
 }
 ```
 
-![disabled]()
+![disabled](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/disabled.png)

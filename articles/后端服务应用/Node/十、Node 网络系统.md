@@ -22,7 +22,7 @@ localhost 是`本机域名`，位于以下目录的 hosts 文件，操作系统�
 
 一般 ping 127.0.0.1 可以作为测试本机 TCP/IP 协议栈正常与否的判断之一
 
-![localhost]()
+![localhost](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/localhost.png)
 
 ### (3) 虚拟专用网络（Virtual Private Network，VPN）
 
@@ -534,7 +534,7 @@ timeout //当前套接字因不活动而超时时触发,用户必须手动调用
 
 * node tcp_socket.js
 
-    ![tcp_socket]()
+    ![tcp_socket](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/tcp_socket.png)
 
 ## 5. dgram 模块
 
@@ -638,7 +638,7 @@ error     //当前套接字发生错误时触发(事件监听器参数为 Error 
 
 * node udp_socket.js
 
-    ![udp_socket]()
+    ![udp_socket](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/UDP_Socket.png)
 
 ## 6. http 模块
 
@@ -964,7 +964,7 @@ const req = http.get(options, server_res => {
 })
 ```
 
-![http_get]()
+![http_get](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/http_get.png)
 
 #### ② HTTP POST 请求
 
@@ -1081,7 +1081,7 @@ req.write(JSON.stringify({
 })) 
 ```
 
-![http_post]()
+![http_post](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/http_post.png)
 
 ## 7. tls 模块
 
@@ -1094,11 +1094,11 @@ req.write(JSON.stringify({
 #### ① OpenSSL 的安装和配置
 
 * OpenSSL 官网下载 exe 安装包并安装：http://slproweb.com/products/Win32OpenSSL.html
-  ![OpenSSL安装]()
+  ![OpenSSL安装](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/OpenSSL%E5%AE%89%E8%A3%85.png)
 * 配置环境变量：将 OpenSSL 安装路径下 bin 文件夹的路径添加到操作系统的系统环境变量 Path
-  ![OpenSSL配置]()
+  ![OpenSSL配置](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/OpenSSL%E9%85%8D%E7%BD%AE.png)
 * 测试：cmd 输入 OpenSSL
-  ![OpenSSL测试]()
+  ![OpenSSL测试](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/OpenSSL%E6%B5%8B%E8%AF%95.png)
 
 #### ② OpenSSL 生成服务器私钥公钥
 
@@ -1110,11 +1110,11 @@ req.write(JSON.stringify({
 生成服务器CSR证书文件：openssl x509 -req -in server_cert.csr -signkey server_rsa_private_key.pem -out server_cert.pem
 ```
 
-![openssl生成服务器私钥公钥]()
+![openssl生成服务器私钥公钥](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/openssl%E7%94%9F%E6%88%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A7%81%E9%92%A5%E5%85%AC%E9%92%A5.png)
 
 一般生成到 C 盘用户文件夹下
 
-![密钥位置]()
+![密钥位置](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E5%AF%86%E9%92%A5%E4%BD%8D%E7%BD%AE.png)
 
 ### (2) tls API
 
@@ -1401,7 +1401,7 @@ const req = https.get(options2, server_res => {
 })
 ```
 
-![https_get]()
+![https_get](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/https_get.png)
 
 #### ② HTTPS POST 请求
 
@@ -1530,7 +1530,7 @@ req.write(JSON.stringify({
 })) 
 ```
 
-![https_post]()
+![https_post](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/https_post.png)
 
 ## 9. http2 模块
 
@@ -1950,7 +1950,7 @@ const clientSession = http2.connect('http://localhost:3001', (clientSession, cli
 })
 ```
 
-![http2_get]()
+![http2_get](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/http2_get.png)
 
 #### ② http2.post
 
@@ -2098,7 +2098,7 @@ const clientSession = http2.connect('http://localhost:3001', (clientSession, cli
 })
 ```
 
-![http2_post]()
+![http2_post](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/http2_post.png)
 
 #### ③ http2Secure.get
 
@@ -2248,7 +2248,7 @@ const clientSession = http2.connect('https://localhost:3001', (clientSession, cl
 })
 ```
 
-![http2Secure_get]()
+![http2Secure_get](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/http2Secure_get.png)
 
 #### ④ http2Secure.post
 

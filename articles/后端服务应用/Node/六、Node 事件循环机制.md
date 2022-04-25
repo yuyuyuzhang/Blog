@@ -42,7 +42,7 @@ clearImmediate(immediate)         //无返回值,取消指定的 immediate 实�
 
 * node timers.js
 
-  ![timers]()
+  ![timers](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/timers.png)
 
 ## 2. Node 事件循环
 
@@ -110,7 +110,7 @@ Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事�
 * **宏任务队列**：IO、setImmediate、setTimeout、setInterval
   * setTimeout 如果不设置时间或者设置时间为 0，默认 `1ms`
 
-![eventloop]()
+![eventloop](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/eventloop.png)
 
 #### ① 微任务及宏任务的优先级
 
@@ -154,7 +154,7 @@ Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事�
 
 * node eventloop1.js
 
-    ![eventloop1]()
+    ![eventloop1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/eventloop1.png)
 
 #### ② 回调函数会阻塞主线程的执行
 
@@ -188,9 +188,9 @@ Node 是`单进程单线程应用程序`，Node 事件循环和浏览器的事�
     console.log('end');
     ```
 
-* node eventloop.js
+* node eventloop2.js
 
-    ![eventloop]()
+    ![eventloop2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/eventloop2.png)
 
 ### (3) Node 不善于处理 CPU 密集型业务
 
@@ -234,7 +234,7 @@ Node 不善于处理 CPU 密集型业务，可能会导致性能问题，如果�
 
 * node cpuComputing1.js
 
-    ![cpuComputing1]()
+    ![cpuComputing1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cpuComputing1.png)
 
 #### ② 异步网络 IO 给其他进程处理
 
@@ -305,4 +305,4 @@ Node 不善于处理 CPU 密集型业务，可能会导致性能问题，如果�
 
 * node cpuComputing3.js
 
-    ![cpuComputing2]()
+    ![cpuComputing2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cpuComputing2.png)

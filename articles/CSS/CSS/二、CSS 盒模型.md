@@ -6,7 +6,7 @@
 
 所有 HTML 元素都可以看作是一个盒子，包括：外边距 margin、边框 border、内边距 padding、实际内容 content
 
-![box_model]()
+![box_model](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/box_model.gif)
 
 ### (2) CSS 盒大小 box-sizing
 
@@ -65,4 +65,4 @@ div {
   }
 ```
 
-![box_shadow]()
+![box_shadow](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/box_shadow.png)

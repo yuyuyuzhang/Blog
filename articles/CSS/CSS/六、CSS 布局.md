@@ -46,11 +46,11 @@ body {
 }
 ```
 
-![screen1]()
+![screen1](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/screen1.png)
 
-![screen2]()
+![screen2](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/screen2.png)
 
-![screen3]()
+![screen3](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/screen3.png)
 
 ## 2. flex 布局
 
@@ -103,7 +103,7 @@ body {
 }
 ```
 
-![row]()
+![row](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/row.png)
 
 ### (2) 纵向排列 - 主轴纵向
 
@@ -139,7 +139,7 @@ body {
 }
 ```
 
-![column]()
+![column](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/column.png)
 
 ### (3) 换行
 
@@ -174,9 +174,9 @@ body {
 }
 ```
 
-![wrap]()
+![wrap](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/wrap.png)
 
-![wrap-reverse]()
+![wrap-reverse](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/wrap-reverse.png)
 
 ### (4) 垂直水平居中
 
@@ -210,4 +210,4 @@ body {
 }
 ```
 
-![center_center]()
+![center_center](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/center_center.png)

@@ -1752,7 +1752,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
 
 * npm run serve
 
-  ![md_loader]()
+  ![md_loader](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/md_loader.png)
 
 ## 7. 插件 plugin
 
@@ -4335,4 +4335,4 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
 
 * npm run build
 
-![removeCommentsPlugin]()
+![removeCommentsPlugin](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/Webpack/removeCommentsPlugin.png)

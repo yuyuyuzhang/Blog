@@ -35,9 +35,9 @@ div {
 }
 ```
 
-![cover]()
+![cover](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/cover.png)
 
-![contain]()
+![contain](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/contain.png)
 
 ### (2) 背景图像绘制区域
 
@@ -56,8 +56,8 @@ div {
 }
 ```
 
-![border]()
+![border](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/border.png)
 
-![padding]()
+![padding](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/padding.png)
 
-![content]()
+![content](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/content.png)

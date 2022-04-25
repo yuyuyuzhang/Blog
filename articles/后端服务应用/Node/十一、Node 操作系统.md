@@ -76,7 +76,7 @@ v8 引擎一方面提供了多种可调用的 API 如读写文件、网络请求
 
 Chrome v8 引擎架构如下
 
-![v8引擎架构]()
+![v8引擎架构](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/v8%E5%BC%95%E6%93%8E%E6%9E%B6%E6%9E%84.png)
 
 * **Parse**：负责将 JS 源码转换成 `AST 抽象语法树`
   * **词法分析**：将 JS 源码拆分成最小的、不可再分的`词法单元（token）`，忽略空格

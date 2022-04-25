@@ -210,4 +210,4 @@ emitter.emit('error')
 
 * node InputChecker.js
 
-  ![InputChecker]()
+  ![InputChecker](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/InputChecker.png)

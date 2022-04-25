@@ -217,7 +217,7 @@ subprocess.onerror      //子进程 subprocess 发生错误时触发
     ```
 
 * node mainProcess.js
-  ![异步父子进程通信]()
+  ![异步父子进程通信](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E5%BC%82%E6%AD%A5%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1.png)
 
 ## 3. cluster 模块
 
@@ -235,7 +235,7 @@ subprocess.onerror      //子进程 subprocess 发生错误时触发
 
 平时实例通过 node index.js 启动的 Node 服务，就只启动了一个进程，只能在一个 CPU 中计算，无法应用服务器的多核 CPU，Node cluster 模块就是`一个父进程和多个子进程`形成的一个集群的概念，使用的是`多进程分发策略：父进程监听一个端口，子进程不监听端口，通过父进程分发请求到子进程`
 
-![cluster多进程分发策略]()
+![cluster多进程分发策略](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cluster%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%88%86%E5%8F%91%E7%AD%96%E7%95%A5.png)
 
 既然 cluster 模块的子进程不监听端口，那么实例中又是如何实现多个子进程监听同一个端口呢？
 
@@ -393,7 +393,7 @@ worker.onerror      //子进程 worker 发生错误时触发
 
 * node cluster.js
 
-  ![cluster]()
+  ![cluster](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/cluster.png)
 
 ### (5) PM2（守护进程管理器）
 
@@ -401,7 +401,7 @@ PM2 是守护进程管理器，可以帮助管理和保持应用程序在线
 
 * npm i pm2@latest -g
 * pm2 start cluster.js
-  ![pm2]()
+  ![pm2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/pm2.png)
 
 ## 4. worker_threads 模块
 
@@ -527,4 +527,4 @@ port.onmessageerror //port 端口接收到的消息反序列化失败时触发(e
 
 * node worker_threads.js
 
-    ![worker_threads]()
+    ![worker_threads](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/worker_threads.png)

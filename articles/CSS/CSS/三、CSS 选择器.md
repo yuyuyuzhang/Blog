@@ -28,7 +28,7 @@ div~p {
 }
 ```
 
-![后续兄弟选择器]()
+![后续兄弟选择器](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/%E5%90%8E%E7%BB%AD%E5%85%84%E5%BC%9F%E9%80%89%E6%8B%A9%E5%99%A8.png)
 
 ### (2) 后代选择器
 
@@ -48,7 +48,7 @@ div p {
 }
 ```
 
-![后代选择器]()
+![后代选择器](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/%E5%90%8E%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8.png)
 
 ## 2. CSS 属性选择器
 
@@ -92,4 +92,4 @@ p[title$=cut] {
 }
 ```
 
-![属性选择器]()
+![属性选择器](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8.png)

@@ -4,7 +4,7 @@
 
 ### (1) MVC 架构
 
-![MVC]()
+![MVC](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/MVC.png)
 
 * **Model（模型层）**：处理数据库相关操作，提供数据
 * **View（视图层）**：用户界面显示和交互，展示数据
@@ -14,7 +14,7 @@
 
 ### (2) MSVC 架构
 
-![MSVC]()
+![MSVC](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/MSVC.png)
 
 * **Model（模型层）**：处理数据库相关操作，提供数据
 * **Service（）**：复用的业务逻辑处理
@@ -28,7 +28,7 @@
 * 由外向内的过程是一个关键字 next()
 * 由内向外则是每个中间件执行完成后，进入下一层中间件，直到最后一层
 
-![洋葱模型]()
+![洋葱模型](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B.png)
 
 ## 3. Express
 
@@ -55,7 +55,7 @@ Koa 安装与使用流程如下
 * npm i -g koa koa-generator
 * koa2 -e koa-porject
   -e 表示使用 ES module 模块规范
-  ![koa_project]()
+  ![koa_project](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/koa_project.png)
 
 ### (3) Koa 实例
 
@@ -144,7 +144,7 @@ Nest 安装与使用流程如下
 
 * npm i -g @nestjs/cli
 * nest new project-name
-    ![nest_project]()
+    ![nest_project](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/nest_project.png)
 * src 核心文件概要简述
   * app.controller.ts：带有单个路由的基本控制器示例
   * app.controller.spec.ts：对于基本控制器的单元测试样例
@@ -152,6 +152,4 @@ Nest 安装与使用流程如下
   * app.service.ts：带有单个方法的基本服务
   * main.ts：应用程序入口文件
 * main.ts
-  ![nest_main]()
-
-### (2) 
+  ![nest_main](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/nest_main.png)

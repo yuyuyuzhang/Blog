@@ -556,7 +556,7 @@ error.opensslErrorStack //返回错误源自的 OpenSSL 库中错误源的上下
 
 以下是一个代码逻辑异常问题的部分汇总
 
-![代码逻辑异常]()
+![代码逻辑异常](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91%E5%BC%82%E5%B8%B8.png)
 
 ### (1) null.property
 

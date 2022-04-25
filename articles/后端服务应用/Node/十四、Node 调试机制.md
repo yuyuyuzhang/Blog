@@ -42,7 +42,7 @@ pause   //暂停正在运行的代码
 
 * node inspect debugger.js
 
-    ![debugger]()
+    ![debugger](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/debugger.png)
 
 ## 2. inspector 模块
 
@@ -107,7 +107,7 @@ inspector-protocol-method //当接收到当前检查器通知其方法字段设�
 
 * node profiler.js
 
-  ![Profiler]()
+  ![Profiler](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/Profiler.png)
 
 ### (4) 使用 V8 检查器的堆分析器 profile.heapsnapshot
 
@@ -131,4 +131,4 @@ inspector-protocol-method //当接收到当前检查器通知其方法字段设�
 
 * node heapsnapshot.js
 
-  ![heapsnapshot]()
+  ![heapsnapshot](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91/Node/heapsnapshot.png)
