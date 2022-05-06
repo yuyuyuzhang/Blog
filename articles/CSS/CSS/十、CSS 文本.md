@@ -70,7 +70,7 @@ p {
 }
 ```
 
-![间距](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/%E9%97%B4%E8%B7%9D.png)
+![word_letter_spacing](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/word_letter_spacing.png)
 
 ### (2) 文本样式
 
@@ -86,7 +86,7 @@ p {
 }
 ```
 
-![文本样式](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/%E6%96%87%E6%9C%AC%E6%A0%B7%E5%BC%8F.png)
+![text_shadow_transform](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/text_shadow_transform.png)
 
 ### (3) 单行文本溢出隐藏
 

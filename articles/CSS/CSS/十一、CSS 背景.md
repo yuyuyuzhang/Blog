@@ -206,7 +206,7 @@ div {
 div {
     width: 100px;
     height: 80px;
-    
+    background-image: repeating-radial-gradient(circle farthest-side at 50% 50%, rgba(65,105,225,0.8) 10%, rgba(138,43,226,0.8) 20%)
 }
 ```
 

@@ -144,7 +144,7 @@ position: fixed 固定定位即 `HTML 元素相对于浏览器窗口`
 
 ![fixed](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/fixed.png)
 
-## 6. 粘性定位 sticty
+## 5. 粘性定位 sticty
 
 position: sticty 粘性定位即 `HTML 元素依赖于用户的滚动，在相对定位和固定定位之间切换，跨越特定阈值 top、left、right、bottom 之前为相对定位，达到特定阈值后为固定定位`
 
@@ -169,9 +169,9 @@ body {
 }
 ```
 
-![relative](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/relative.png)
+![sticty](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/sticty.mp4)
 
-## 7. 浮动 float
+## 6. 浮动 float
 
 ### (1) 浮动
 

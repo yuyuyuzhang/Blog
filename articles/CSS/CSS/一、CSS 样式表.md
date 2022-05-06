@@ -35,6 +35,4 @@ big.css
 }
 ```
 
-![small](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/small.png)
-
-![big](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/big.png)
+![@import](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/@import.mp4)

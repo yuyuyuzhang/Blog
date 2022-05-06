@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+<style>
+body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.parent {
+    width: 100%;
+    height: 100%;
+
+    position: relative; /* 父元素相对定位 */
+}
+.child {
+    width: 100px;
+    height: 100px;
+    border: 1px solid red;
+
+    box-sizing: border-box; /* 涉及宽度计算，需要设置 border-box */
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); /* 沿 X 轴反方向移动自身一半距离 */
+}
+</style>
+</head>
+<body>
+
+<div class="parent">
+    <div class="child"></div>
+</div>
+
+<script>
+</script>
+</body>
+</html>

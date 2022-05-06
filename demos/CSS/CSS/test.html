@@ -13,18 +13,33 @@
     }
     div {
       width: 100px;
-      height: 80px;
-      border: 1px solid red;
+      height: 50px;
+      border: 2px solid black;
       position: relative;
-      transform: translate(50px, 100px);
+      top: 100px;
+      left: 100px;
+
+      transition-property: width;
+      transition-duration: 5s;
+      transition-timing-function: ease;
+    }
+    div:hover {
+      width: 300px;
     }
   </style>
 </head>
 <body>
 
-<div></div>
+<div id="block"></div>
 
 <script>
+const block = document.querySelector('#block');
+block.addEventListener('transitionstart', () => {
+  console.log('过渡开始')
+})
+block.addEventListener('transitionend', () => {
+  console.log('过渡结束')
+})
 </script>
 </body>
 </html>

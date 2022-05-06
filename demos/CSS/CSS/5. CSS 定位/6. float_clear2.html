@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>static</title>
+<style>
+.parent {
+    border: 1px solid blue;
+}
+.child {
+    width: 100px;
+    height: 100px;
+    border: 1px solid red;
+    display: inline-block;
+}
+.float-right {
+    height: 200px;
+    float: right;
+}
+
+.clearfix {
+    zoom: 1 /* IE 专有属性，解决 ie6、ie7 浮动问题 */
+}
+.clearfix::after {
+    clear: both;
+    display: block;
+    content: "";
+    height: 0;
+    visibility: hidden; /* 允许浏览器渲染但不显示 */
+}
+</style>
+</head>
+<body>
+
+<div class="parent clearfix">
+    <div class="child"></div>
+    <div class="child float-right"></div>
+</div>
+
+<script>
+</script>
+</body>
+</html>

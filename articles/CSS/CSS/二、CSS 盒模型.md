@@ -62,7 +62,7 @@ div {
     border-radius: 4px;
     background-color:red;
     box-shadow: 10px 10px 5px #888888;
-  }
+}
 ```
 
 ![box_shadow](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/box_shadow.png)
