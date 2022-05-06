@@ -7,14 +7,53 @@
 <meta name="referrer" content="no-referrer" />
 <title>test</title>
 <style>
-
+div {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    animation: a 3s;
+}
+@keyframes a {
+    0% {
+        top: 0;
+        left: 0;
+        background-color: red;
+    }
+    25% {
+        top: 0;
+        left: 200px;
+        background-color: blue;
+    }
+    50% {
+        top: 200px;
+        left: 200px;
+        background-color: green;
+    }
+    75% {
+        top: 200px;
+        left: 0;
+        background-color: gray;
+    }
+    100% {
+        top: 0;
+        left: 0;
+        background-color: red;
+    }
+}
 </style>
 </head>
 <body>
 
-
+<div id="block"></div>
 
 <script>
+const block = document.querySelector('#block')
+block.addEventListener('animationstart', () => {
+    console.log('动画开始')
+})
+block.addEventListener('animationend', () => {
+    console.log('动画结束')
+})
 </script>
 </body>
 </html>

@@ -8,7 +8,7 @@ CSS 过渡是元素从一种样式逐渐转换成另一种样式的效果，要�
 transition-property        //指定应用过渡效果的 CSS 属性名称
 transition-delay           //指定过渡效果从何时开始(默认 0)
 transition-duration        //指定过渡效果的持续时间(默认 0)
-transition-timing-function //指定过渡效果的时间曲线(linear:以相同速度从开始到结束,ease-in:以慢速开始,ease-out:以慢速结束,ease-in-out:以慢速开始和结束,ease:以慢速开始然后变快最后以慢速结束,cubic-bezier(n,n,n,n))
+transition-timing-function //指定过渡效果的速度曲线(linear:以相同速度从开始到结束,ease-in:以慢速开始,ease-out:以慢速结束,ease-in-out:以慢速开始和结束,ease:以慢速开始然后变快最后以慢速结束,cubic-bezier(n,n,n,n))
 ```
 
 ![linear](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/linear.png)
