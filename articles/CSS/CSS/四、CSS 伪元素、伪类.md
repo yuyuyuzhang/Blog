@@ -131,7 +131,7 @@ a:hover {
 }
 ```
 
-![visited](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/visited.mp4)
+![visited](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/visited.gif)
 
 ### (3) 表单相关伪类
 

@@ -46,7 +46,7 @@ body {
 }
 ```
 
-![screen](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/screen.mp4)
+![screen](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/screen.gif)
 
 ## 2. flex 布局
 

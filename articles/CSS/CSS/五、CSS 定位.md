@@ -169,7 +169,7 @@ body {
 }
 ```
 
-![sticty](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/sticty.mp4)
+![sticty](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/sticty.gif)
 
 ## 6. 浮动 float
 

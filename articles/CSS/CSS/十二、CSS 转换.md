@@ -112,9 +112,9 @@ div {
 }
 ```
 
-![skew2x](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/skew2x.mp4)
+![skew2x](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/skew2x.gif)
 
-![skew2y](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/skew2y.mp4)
+![skew2y](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/skew2y.gif)
 
 ## 3. CSS 3D 转换
 
@@ -330,7 +330,7 @@ card.addEventListener('click', () => {
 });
 ```
 
-![card](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/card.mp4)
+![card](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/card.gif)
 
 ### (2) 立方体
 
@@ -430,4 +430,4 @@ changeSide();
 radioGroup.addEventListener('change', changeSide );
 ```
 
-![cube](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/cube.mp4)
+![cube](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/cube.gif)

@@ -90,4 +90,4 @@ block.addEventListener('animationend', () => {
 })
 ```
 
-![animation](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/animation.mp4)
+![animation](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/animation.gif)

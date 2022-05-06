@@ -35,4 +35,4 @@ big.css
 }
 ```
 
-![@import](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/@import.mp4)
+![@import](https://github.com/yuyuyuzhang/Blog/blob/master/images/CSS/CSS/@import.gif)
