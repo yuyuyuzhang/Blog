@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+}
+.scene {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  perspective: 400px; /* 设置透视距离 */
+}
+.cube {
+  width: 200px;
+  height: 200px;
+  position: relative; /* 给绝对定位的子元素以参考点 */
+  transition: transform 1s; /* 设置过渡以查看 3D 转化效果 */
+  transform-style: preserve-3d; /* 将 3D 视角和空间传递给子元素 */
+  transform: translateZ(-100px);
+}
+.cube-face {
+  position: absolute; /* 绝对定位 */
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+  text-align: center;
+  line-height: 200px;
+  font-weight: bold;
+  font-size: 40px;
+  color: white;
+}
+
+.cube-face_front  { background: hsla(  0, 100%, 50%, 0.7); }
+.cube-face_right  { background: hsla( 60, 100%, 50%, 0.7); }
+.cube-face_back   { background: hsla(120, 100%, 50%, 0.7); }
+.cube-face_left   { background: hsla(180, 100%, 50%, 0.7); }
+.cube-face_top    { background: hsla(240, 100%, 50%, 0.7); }
+.cube-face_bottom { background: hsla(300, 100%, 50%, 0.7); }
+
+.cube-face_front  { transform: rotateY(  0deg) translateZ(100px); }
+.cube-face_right  { transform: rotateY( 90deg) translateZ(100px); }
+.cube-face_back   { transform: rotateY(180deg) translateZ(100px); }
+.cube-face_left   { transform: rotateY(-90deg) translateZ(100px); }
+.cube-face_top    { transform: rotateX( 90deg) translateZ(100px); }
+.cube-face_bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+.cube.show-front  { transform: translateZ(-100px) rotateY(   0deg); }
+.cube.show-right  { transform: translateZ(-100px) rotateY( -90deg); }
+.cube.show-back   { transform: translateZ(-100px) rotateY(-180deg); }
+.cube.show-left   { transform: translateZ(-100px) rotateY(  90deg); }
+.cube.show-top    { transform: translateZ(-100px) rotateX( -90deg); }
+.cube.show-bottom { transform: translateZ(-100px) rotateX(  90deg); }
+
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="cube">
+    <div class="cube-face cube-face_front">front</div>
+    <div class="cube-face cube-face_back">back</div>
+    <div class="cube-face cube-face_right">right</div>
+    <div class="cube-face cube-face_left">left</div>
+    <div class="cube-face cube-face_top">top</div>
+    <div class="cube-face cube-face_bottom">bottom</div>
+  </div>
+</div>
+<p class="radio-group">
+  <input type="radio" name="rotate-cube-side" value="front" checked /> front
+  <input type="radio" name="rotate-cube-side" value="right" /> right
+  <input type="radio" name="rotate-cube-side" value="back" /> back
+  <input type="radio" name="rotate-cube-side" value="left" /> left
+  <input type="radio" name="rotate-cube-side" value="top" /> top
+  <input type="radio" name="rotate-cube-side" value="bottom" /> bottom
+</p>
+  
+<script>
+const cube = document.querySelector('.cube');
+const radioGroup = document.querySelector('.radio-group');
+let currentClass = '';
+
+function changeSide() {
+  const checkedRadio = radioGroup.querySelector(':checked');
+  const showClass = 'show-' + checkedRadio.value;
+  if (currentClass) {
+    cube.classList.remove(currentClass);
+  }
+  cube.classList.add(showClass);
+  currentClass = showClass;
+}
+
+changeSide();
+
+radioGroup.addEventListener('change', changeSide );
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+}
+.scene {
+  width: 200px;
+  height: 260px;
+  border: 1px solid black;
+  perspective: 600px; /* 设置透视距离 */
+}
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative; /* 给绝对定位的子元素以参考点 */
+  cursor: pointer;
+  transition: transform 1s; /* 设置过渡以查看 3D 转化效果 */
+  transform-style: preserve-3d; /* 将 3D 视角和空间传递给子元素 */
+}
+.card.is-flipped {
+  transform: rotateY(-180deg);
+}
+.card-face {
+  position: absolute; /* 绝对定位 */
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* 背面隐藏 */
+  backface-visibility: hidden;
+  text-align: center;
+  line-height: 260px;
+  font-weight: bold;
+  font-size: 40px;
+  color: white;
+}
+.card-face_front {
+  background: red;
+}
+.card-face_back {
+  background: blue;
+  transform: rotateY(180deg);
+}
+</style>
+</head>
+<body>
+
+<p>点击卡片可翻转</p>
+
+<div class="scene">
+  <div class="card">
+    <div class="card-face card-face_front">front</div>
+    <div class="card-face card-face_back">back</div>
+  </div>
+</div>
+
+<script>
+const card = document.querySelector('.card');
+card.addEventListener('click', () => {
+  card.classList.toggle('is-flipped');
+});
+</script>
+</body>
+</html>
