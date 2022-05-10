@@ -11,24 +11,20 @@
 <button id="btn">点击</button>
 
 <script>
-
-const f = async () => {
+const btn = document.getElementById('btn')
+btn.addEventListener('click', async () => {
   const isBluetooth = await navigator.bluetooth.getAvailability()
   if(isBluetooth){
-    const bluetoothDevices = await navigator.bluetooth.requestDevice({
+    const bluetoothDevice = await navigator.bluetooth.requestDevice({
       acceptAllDevices: true
     })
-    console.log(bluetoothDevices)
+    console.log(bluetoothDevice)
+
+    bluetoothDevice.addEventListener('gattserverdisconnected', () => {
+      console.log('disconnected')
+    })
   }
-}
-
-const btn = document.getElementById('btn')
-btn.addEventListener('click', f)
-
-
-
-
-
+})
 </script>
 </body>
 </html>

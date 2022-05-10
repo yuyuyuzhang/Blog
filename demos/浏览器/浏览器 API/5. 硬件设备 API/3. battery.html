@@ -12,6 +12,16 @@
 
 
 <script>
+const f = async () => {
+  const batteryManager = await navigator.getBattery()
+  console.log(batteryManager)
+
+  // 拔掉充电器测试
+  batteryManager.addEventListener('chargingchange', e => {
+    console.log('chargingchange')
+  })
+}
+f()
 </script>
 </body>
 </html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+</head>
+<body>
+
+<button id="btn1">查询 USB 设备</button>
+
+<button id="btn2">显示已连接的 USB 设备</button>
+
+<script>
+navigator.usb.addEventListener('connect', () => {
+    console.log('connect')
+})
+navigator.usb.addEventListener('disconnect', () => {
+    console.log('disconnect')
+})
+
+const btn1 = document.getElementById('btn1')
+btn1.addEventListener('click', async () => {
+    const usbDevice = await navigator.usb.requestDevice({
+        filters: []
+    })
+    console.log(usbDevice)
+})
+
+const btn2 = document.getElementById('btn2')
+btn2.addEventListener('click', async () => {
+    navigator.usb.getDevices()
+        .then(devices => {
+            console.log("Total devices: " + devices.length);
+            devices.forEach(device => {
+                console.log("Product name: " + device.productName + ", serial number " + device.serialNumber);
+            });
+        });
+})
+</script>
+</body>
+</html>

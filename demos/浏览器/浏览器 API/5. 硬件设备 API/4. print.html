@@ -6,12 +6,20 @@
 <meta name="renderer" content="webkit" />
 <meta name="referrer" content="no-referrer" />
 <title>test</title>
+<style>
+</style>
 </head>
 <body>
 
-
+<p>Ctrl + P 快捷键唤起打印</p>
 
 <script>
+window.addEventListener('beforeprint', e => {
+  console.log('beforeprint:', e)
+})
+window.addEventListener('afterprint', e => {
+  console.log('afterprint:', e)
+})
 </script>
 </body>
 </html>
