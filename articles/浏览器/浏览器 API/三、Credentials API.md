@@ -16,10 +16,10 @@ CredentialsContainer 对象表示
 
 ```js
 定义：const credentialsContainer = navigator.credentials
-方法：credentials.get()                 //返回Promise实例,
-     credentials.create()              //返回Promise实例,
-     credentials.store()               //返回Promise实例,
-     credentials.preventSilentAccess() //返回Promise实例,
+方法：credentials.get()                 //返回 Promise 实例,
+     credentials.create()              //返回 Promise 实例,
+     credentials.store()               //返回 Promise 实例,
+     credentials.preventSilentAccess() //返回 Promise 实例,
 ```
 
 ## 3. Credential 对象

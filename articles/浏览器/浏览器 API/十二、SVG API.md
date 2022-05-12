@@ -66,7 +66,7 @@ SVG 形状有如下 6 种：直线、折线、圆形、椭圆、矩形、多边�
 </svg>
 ```
 
-![svg_shape](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_shape.mp4)
+![svg_shape](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_shape.png)
 
 ## 3. SVG 其他标签
 
@@ -127,7 +127,7 @@ SVG 形状有如下 6 种：直线、折线、圆形、椭圆、矩形、多边�
 </svg>
 ```
 
-![svg_other](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_other.mp4)
+![svg_other](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_other.gif)
 
 ## 4. SVG DOM 使用
 
@@ -173,7 +173,7 @@ div {
 <div>小可爱</div>
 ```
 
-![svg_dom](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_dom.mp4)
+![svg_dom](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_dom.png)
 
 ## 5. SVG 转 Cavnas
 
@@ -202,4 +202,4 @@ img.onload = () => {
 };
 ```
 
-![svg_canvas](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_canvas.mp4)
+![svg_canvas](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/svg_canvas.png)
