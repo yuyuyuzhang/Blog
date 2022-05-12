@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+</head>
+<body>
+
+<svg
+  id="svg"
+  width="500"
+  height="500">
+  <image xlink:href="./cat.jpg" style="height: 600px;"></image>
+  
+  <g id="circle" style="fill: green;">
+    <text x="0" y="20">圆形</text>
+    <circle cx="25" cy="50" r="25"></circle>
+  </g>
+
+  <g id="ellipse" style="fill: green;">
+    <text x="75" y="20">椭圆形</text>
+    <ellipse cx="100" cy="50" rx="25" ry="15"/>
+  </g>
+
+  <use href="#circle" x="0" y="100"/>
+
+  <use href="#ellipse" x="0" y="100"/>
+
+  <pattern id="a" patternUnits="userSpaceOnUse" width="40" height="40">
+    <circle cx="10" cy="10" r="10" fill="#bee9e8"/>
+  </pattern>
+  <rect x="0" y="200" width="200" height="100" fill="url(#a)"/>
+
+  <rect x="0" y="320" width="100" height="50" fill="#feac5e">
+    <animate attributeName="x" from="0" to="500" dur="2s" repeatCount="indefinite" />
+    <animate attributeName="width" from="100" to="500" dur="2s" repeatCount="indefinite" />
+  </rect>  
+
+  <rect x="100" y="400" width="50" height="50" fill="#4bc0c8">
+    <animateTransform attributeName="transform" type="rotate" begin="0s" dur="5s" from="0 250 250" to="360 250 250" repeatCount="indefinite" />
+  </rect>
+</svg>
+
+<script>
+</script>
+</body>
+</html>
