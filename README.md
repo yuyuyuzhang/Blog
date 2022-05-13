@@ -208,7 +208,6 @@ CSS 系列之 SASS 已完成
 12. [滚动事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E4%BA%8C%E3%80%81%E6%BB%9A%E5%8A%A8%E4%BA%8B%E4%BB%B6.md)
 13. [全屏事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E4%B8%89%E3%80%81%E5%85%A8%E5%B1%8F%E4%BA%8B%E4%BB%B6.md)
 14. [画中画事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E5%9B%9B%E3%80%81%E7%94%BB%E4%B8%AD%E7%94%BB%E4%BA%8B%E4%BB%B6.md)
-<!-- 15. [其他事件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/JS/%E4%BA%8B%E4%BB%B6/%E5%8D%81%E4%BA%94%E3%80%81%E5%85%B6%E4%BB%96%E4%BA%8B%E4%BB%B6.md) -->
 
 ## JS 系列之 ES5
 

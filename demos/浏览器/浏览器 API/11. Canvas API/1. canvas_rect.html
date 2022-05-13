@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+// 边框矩形
+ctx.strokeStyle = 'red'
+ctx.strokeRect(10, 10, 100, 50)
+
+ctx.strokeStyle = 'green'
+ctx.strokeRect(30, 30, 100, 50)
+
+// 填充矩形
+ctx.fillStyle = 'red'
+ctx.fillRect(150, 10, 100, 50)
+
+ctx.fillStyle = 'green'
+ctx.fillRect(170, 30, 100, 50)
+</script>
+</body>
+</html>
