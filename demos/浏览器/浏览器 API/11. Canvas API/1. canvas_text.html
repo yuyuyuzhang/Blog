@@ -14,6 +14,16 @@
 <script>
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
+
+ctx.font = '44px Times New Roman'
+ctx.fillStyle = 'green'
+ctx.shadowColor = 'red'
+ctx.shadowBlur = 3
+ctx.shadowOffsetX = 5
+ctx.shadowOffsetY = 5
+
+ctx.fillText('我是小可爱', 50, 50)
+ctx.strokeText('我是大可爱', 50, 130)
 </script>
 </body>
 </html>

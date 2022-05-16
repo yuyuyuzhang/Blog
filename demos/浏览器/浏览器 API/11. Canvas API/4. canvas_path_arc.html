@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+ctx.strokeStyle="red"
+ctx.beginPath()
+
+ctx.moveTo(200, 50)
+ctx.arcTo(150, 100, 50, 75, 50)
+ctx.stroke()
+
+ctx.moveTo(150, 100)
+ctx.arc(100, 100, 50, 0, 90 * Math.PI / 180) // 0 ~ 90
+ctx.stroke()
+
+ctx.moveTo(75, 50)
+ctx.arc(50, 50, 25, 0, 2 * Math.PI) // 0 ~ 360 => 圆
+ctx.stroke()
+
+
+</script>
+</body>
+</html>

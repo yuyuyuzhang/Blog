@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+const gradient = ctx.createLinearGradient(0, 0, 100, 0)
+gradient.addColorStop(0, 'yellow')
+gradient.addColorStop(1, 'red')
+
+ctx.fillStyle = gradient
+ctx.fillRect(0, 0, 100, 100)
+</script>
+</body>
+</html>
