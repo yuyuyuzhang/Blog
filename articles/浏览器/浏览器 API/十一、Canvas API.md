@@ -18,7 +18,7 @@ canvas 采用左手背面坐标体系，以像素为单位（px），以画布�
 * canvas 遵循现实绘画的原则，后画的内容会覆盖先画的内容
 * canvas 绘画的内容不会超过画板范围
 
-![canvas坐标体系]()
+![canvas坐标体系](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas%E5%9D%90%E6%A0%87%E4%BD%93%E7%B3%BB.png)
 
 ```js
 定义：const ctx = canvas.getContext('2d')
@@ -154,14 +154,14 @@ CanvasImageSource 是一个`辅助类型`，不是一个接口，也没有 API�
 
 canvas 绘制文本使用`六线五格基线图`，ctx.textBaseline 属性指定文本基线（默认 alphabetic），ctx.fillText(text,x,y) 方法的绘制点 (x,y) 指定基线的起始点位置
 
-![六线五格图]()
+![六线五格图](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AD%E7%BA%BF%E4%BA%94%E6%A0%BC%E5%9B%BE.png)
 
 canvas 字体分为衬线字体和非衬线字体
 
 * 衬线字体：笔画有粗有细，例如宋体
 * 非衬线字体：笔画粗细均匀，例如黑体，
 
-![font]()
+![font](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/font.png)
 
 ```html
 <canvas id="canvas"></canvas>
@@ -181,7 +181,7 @@ ctx.fillText('我是小可爱', 50, 50)
 ctx.strokeText('我是大可爱', 50, 130)
 ```
 
-![canvas_text]()
+![canvas_text](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_text.png)
 
 ### (2) canvas 绘制矩形
 
@@ -208,7 +208,7 @@ ctx.fillStyle = 'green'
 ctx.fillRect(170, 30, 100, 50)
 ```
 
-![canvas_rect]()
+![canvas_rect](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_rect.png)
 
 ### (3) canvas 绘制直线路径
 
@@ -231,17 +231,17 @@ ctx.closePath()
 ctx.stroke()
 ```
 
-![canvas_path_line]()
+![canvas_path_line](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_line.png)
 
 ### (4) canvas 绘制弧线路径
 
 canvas 绘制弧线涉及到切线原理，弧线就是以新路径终点作为起点（x0, y0），给定 2 个参考点（x1, y1）、（x2, y2），弧的大小取决于给定半径 r
 
-![arcTo]()
+![arcTo](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/arcTo.png)
 
 canvas 绘制圆弧就是以圆心 (x, y)，半径 r，起始角度 deg1，结束角度 deg2 绘制的，方向 dir 默认 false 为顺时针
 
-![arc]()
+![arc](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/arc.png)
 
 ```html
 <canvas id="canvas"></canvas>
@@ -266,22 +266,22 @@ ctx.arc(50, 50, 25, 0, 2 * Math.PI) // 0 ~ 360 => 圆
 ctx.stroke()
 ```
 
-![canvas_path_arc]()
+![canvas_path_arc](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_arc.png)
 
 ### (5) canvas 绘制贝塞尔曲线路径
 
 使用 de Casteljau 算法绘制二次贝塞尔曲线（二次指的是 2 轮取点操作）
 
 * 平面内任选 3 个不共线的点，依次用线段连接，得到 A-B-C
-  ![ABC]()
+  ![ABC](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/ABC.png)
 * 线段 AB 上任取点 D，线段 BC 上取点 E，使得 BE/BC = AD/AB，并连接 DE 两点
-  ![DE]()
+  ![DE](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/DE.png)
 * 线段 DE 上取点 F，使得 DF/DE = BE/BC = AD/AB
-  ![F]()
+  ![F](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/F.png)
 * 就此得到二次贝塞尔曲线如下
-  ![二次贝塞尔曲线]()
+  ![二次贝塞尔曲线](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E6%AC%A1%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF.png)
 * 同理，三次贝塞尔曲线如下
-  ![三次贝塞尔曲线]()
+  ![三次贝塞尔曲线](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%89%E6%AC%A1%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF.png)
 
 ```html
 <canvas id="canvas" height="300"></canvas>
@@ -295,13 +295,13 @@ ctx.bezierCurveTo(117,87,86,260,149,237);
 ctx.stroke()
 ```
 
-![bezierCurveTo]()
+![bezierCurveTo](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/bezierCurveTo.png)
 
 ### (6) canvas 填充闭合路径
 
 如果调用了 ctx.closePath() 方法闭合路径，那么就可以调用 ctx.fill() 方法以特定颜色填充路径，填充规则有奇偶环绕和非零环绕
 
-![fillRule]()
+![fillRule](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/fillRule.png)
 
 ```html
 <canvas id="canvas"></canvas>
@@ -323,26 +323,26 @@ ctx.fill()
 ctx.stroke()
 ```
 
-![canvas_fill]()
+![canvas_fill](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_fill.png)
 
 ### (7) canvas 虚线路径
 
 canvas 绘制路径默认实线，也可以使用 ctx.setLineDash(segments) 将路径设置为虚线
 
 * ctx.setLineDash([1,2])
-  ![setLineDash_1_2]()
+  ![setLineDash_1_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/setLineDash_1_2.png)
 * ctx.setLineDash([1,2,3])
   canvas 绘制`条形码`就是使用这种方法
-  ![setLineDash_1_2_3]()
+  ![setLineDash_1_2_3](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/setLineDash_1_2_3.png)
 
 canvas 绘制的虚线路径可以使用 ctx.lineDashOffset 属性设置偏移量
 
 * ctx.setLineDash([1,2,3])
-  ![setLineDash_1_2_3]()
+  ![setLineDash_1_2_3](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/setLineDash_1_2_3.png)
 * ctx.lineDashOffset = 2（正数则向左移动）
-  ![lineDashOffset_left]()
+  ![lineDashOffset_left](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/lineDashOffset_left.png)
 * ctx.lineDashOffset = -2（负数则向右移动）
-  ![lineDashOffset_right]()
+  ![lineDashOffset_right](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/lineDashOffset_right.png)
 * 虚线边框的`跑马灯效果`
 
      ```html
@@ -373,7 +373,7 @@ canvas 绘制的虚线路径可以使用 ctx.lineDashOffset 属性设置偏移�
      march()
      ```
 
-     ![canvas_path_dash]()
+     ![canvas_path_dash](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_dash.png)
 
 ### (8) canvas 渐变效果
 
@@ -395,7 +395,7 @@ ctx.fillStyle = gradient
 ctx.fillRect(0, 0, 100, 100)
 ```
 
-![canvas_gradient_line]()
+![canvas_gradient_line](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_gradient_line.png)
 
 #### ② 径向渐变
 
@@ -417,7 +417,7 @@ ctx.fill()
 ctx.stroke()
 ```
 
-![canvas_gradient_linear]()
+![canvas_gradient_linear](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_gradient_linear.png)
 
 ### (9) canvas 纹理效果
 
@@ -440,7 +440,7 @@ img.addEventListener('load', () => {
 })
 ```
 
-![canvas_pattern]()
+![canvas_pattern](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_pattern.png)
 
 ### (10) canvas 绘制图像
 
@@ -463,7 +463,7 @@ img.addEventListener('load', () => {
 })
 ```
 
-![canvas_img_1]()
+![canvas_img_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_1.png)
 
 #### 在画板指定区域绘制整个图片
 
@@ -484,7 +484,7 @@ img.addEventListener('load', () => {
 })
 ```
 
-![canvas_img_2]()
+![canvas_img_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_2.png)
 
 #### 在画板指定区域绘制图片的一部分
 
@@ -505,7 +505,7 @@ img.addEventListener('load', () => {
 })
 ```
 
-![canvas_img_3]()
+![canvas_img_3](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_3.png)
 
 #### 绘制位图 ImageBitmap
 
