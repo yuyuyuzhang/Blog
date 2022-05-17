@@ -142,9 +142,9 @@ CSS 系列之 SASS 已完成
 8. [Web Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AB%E3%80%81Web%20Worker%20API.md)
 <!-- 9. [Service Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B9%9D%E3%80%81Service%20Worker%20API.md) -->
 <!-- 10. [多媒体 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E3%80%81%E5%A4%9A%E5%AA%92%E4%BD%93%20API.md) -->
-<!-- 11. [Canvas API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%80%E3%80%81Canvas%20API.md) -->
+11. [ImageBitmap API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%80%E3%80%81ImageBitmap%20API.md)
 12. [SVG API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%BA%8C%E3%80%81SVG%20API.md)
-<!-- 13. [ImageBitmap API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%89%E3%80%81ImageBitmap%20API.md) -->
+<!-- 13. [Canvas API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%89%E3%80%81Canvas%20API.md) -->
 <!-- 14. [Presentation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%9B%9B%E3%80%81Presentation%20API.md)
 15. [Web HID API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%BA%94%E3%80%81Web%20HID%20API.md)
 16. [WebGL API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%85%AD%E3%80%81WebGL%20API.md)

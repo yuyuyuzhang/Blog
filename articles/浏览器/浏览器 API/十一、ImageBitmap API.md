@@ -56,4 +56,4 @@ img.addEventListener('load', () => {
 })
 ```
 
-![canvas_img_bit]()
+![canvas_img_bit](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_bit.png)
