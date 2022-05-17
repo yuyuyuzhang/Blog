@@ -1,4 +1,4 @@
-# 十一、Canvas API
+# 十三、Canvas API
 
 ## 1. Canvas API
 
@@ -444,7 +444,7 @@ img.addEventListener('load', () => {
 
 ### (10) canvas 绘制图像
 
-#### 在画板指定位置绘制整个图片
+#### ① 在画板指定位置绘制整个图片
 
 ctx.drawImage(img,dx,dy) 在画板指定位置 (dx,dy) 绘制整个图片
 
@@ -465,7 +465,7 @@ img.addEventListener('load', () => {
 
 ![canvas_img_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_1.png)
 
-#### 在画板指定区域绘制整个图片
+#### ② 在画板指定区域绘制整个图片
 
 ctx.drawImage(img,dx,dy,dw,dh) 在画板指定区域 (dx,dy) dw dh 绘制整个图片
 
@@ -486,7 +486,7 @@ img.addEventListener('load', () => {
 
 ![canvas_img_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_2.png)
 
-#### 在画板指定区域绘制图片的一部分
+#### ③ 在画板指定区域绘制图片的一部分
 
 ctx.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh) 在画板指定区域 (dx,dy) dw dh 绘制图片的一部分 (sx,sy) sw sh
 
@@ -507,17 +507,27 @@ img.addEventListener('load', () => {
 
 ![canvas_img_3](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_3.png)
 
-#### 绘制位图 ImageBitmap
+#### ④ 绘制位图 ImageBitmap
 
 ```html
-
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
 ```
 
 ```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
 
+const img = new Image()
+img.src = './cat.jpg'
+img.addEventListener('load', () => {
+    window.createImageBitmap(img, 10, 10, 100, 100).then(res => {
+        ctx.drawImage(res, 0, 0)
+        res.close()
+    })
+})
 ```
 
-![]()
+![canvas_img_bit]()
 
 ### (11) canvas 几何变换
 
