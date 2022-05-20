@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+</head>
+<body>
+
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+<button id="restoreBtn">恢复</button>
+<button id="drawBtn">绘制</button>
+
+<script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+// 红色图层
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 50)
+ctx.save()
+
+// 绿色图层
+ctx.fillStyle = 'green'
+ctx.fillRect(100, 100, 100, 50)
+
+// 恢复之前图层
+const restoreBtn = document.querySelector('#restoreBtn')
+restoreBtn.addEventListener('click', () => {
+    ctx.restore()
+})
+
+// 使用当前图层绘制
+const drawBtn = document.querySelector('#drawBtn')
+drawBtn.addEventListener('click', () => {
+    ctx.fillRect(200, 200, 100, 50)
+})
+</script>
+</body>
+</html>

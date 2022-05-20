@@ -11,7 +11,7 @@ Canvas 是一个 HTML 元素，也是一个画本，通常使用 JS 脚本来绘
 
 ## 2. CanvasRenderingContext2D 对象
 
-canvas 起初是空白的，JS 脚本首先需要找到渲染上下文，然后在上下文中绘制
+canvas 起初是空白的，JS 脚本首先需要找到绘图上下文，然后在上下文中绘制
 
 canvas 采用左手背面坐标体系，以像素为单位（px），以画布左上角为坐标原点（0, 0）
 
@@ -23,7 +23,7 @@ canvas 采用左手背面坐标体系，以像素为单位（px），以画布�
 ```js
 定义：const ctx = canvas.getContext('2d')
 属性：基本属性：
-     ctx.canvas      //返回当前渲染上下文对应的 canvas 节点
+     ctx.canvas      //返回当前绘图上下文对应的 canvas 节点
      填充属性：
      ctx.fillStyle   //返回或设置填充样式(color/gradient/img)
      路径属性：
@@ -56,14 +56,17 @@ canvas 采用左手背面坐标体系，以像素为单位（px），以画布�
      ctx.filter
      ctx.globalAlpha
      ctx.globalCompositeOperation
-方法：绘制文本
+方法：绘图上下文：
+     ctx.save() //保存当前 canvas 状态并添加到图层栈顶部
+     ctx.restore() //弹出图层栈顶部图层并恢复之前的 canvas 状态
+     ctx.reset()
+     绘制文本
      ctx.measureText(text) //返回 TextMetrics 实例,包含文本尺寸信息
-     ctx.fillText(text,x,y) //无返回值,绘制文本 text,以坐标 (x,y) 为基线起点
-     ctx.strokeText(text,x,y) //无返回值,绘制文本 text 骨架,以坐标 (x,y) 为基线起点
+     ctx.fillText(text,x,y) //绘制文本 text,以坐标 (x,y) 为基线起点
+     ctx.strokeText(text,x,y) //绘制文本 text 骨架,以坐标 (x,y) 为基线起点
      绘制矩形：
-     ctx.strokeRect(x,y,w,h) //无返回值,绘制矩形,指定起点坐标 (x,y) 及矩形宽高
-     ctx.fillRect(x,y,w,h)   //无返回值,绘制并填充矩形,指定起点坐标 (x,y) 及矩形宽高
-     ctx.clearRect()
+     ctx.strokeRect(x,y,w,h) //绘制矩形,指定起点坐标 (x,y) 及矩形宽高
+     ctx.fillRect(x,y,w,h)   //绘制并填充矩形,指定起点坐标 (x,y) 及矩形宽高
      ctx.roundRect()
      绘制路径：
      ctx.beginPath() //开始一个新路径
@@ -77,7 +80,7 @@ canvas 采用左手背面坐标体系，以像素为单位（px），以画布�
      ctx.stroke()    //真实绘制当前新路径
      虚线路径：
      ctx.getLineDash()             
-     ctx.setLineDash(segments) //无返回值,设置路径为虚线()
+     ctx.setLineDash(segments) //设置路径为虚线()
      渐变效果：
      ctx.createLinearGradient(x1,y1,x2,y2) //返回 CanvasGradient 实例,起点 (x1,y1),终点 (x2,y2)
      ctx.reateRadialGradient(x1,y1,r1,x2,y2,r2)  //返回 CanvasGradient 实例,起始圆 (x1,y1) r1,终点圆 (x2,y2) r2
@@ -87,30 +90,31 @@ canvas 采用左手背面坐标体系，以像素为单位（px），以画布�
      ctx.drawImage(canvasImageSource,dx,dy) //在画板指定位置 (dx,dy) 绘制整个图片
      ctx.drawImage(canvasImageSource,dx,dy,dw,dh) //在画板指定区域 (dx,dy) dw dh 绘制整个图片
      ctx.drawImage(canvasImageSource,sx,sy,sw,sh,dx,dy,dw,dh) //在画板指定区域 (dx,dy) dw dh 绘制图片的一部分 (sx,sy) sw sh
+     几何变换：
+     ctx.translate(dx,dy) //将画布沿水平和垂直方向移动 dx dy 距离
+     ctx.scale(sx,sy) //将画布水平和垂直方向缩放 sx sy
+     ctx.rotate(deg) //将画布顺时针旋转 deg
+     ctx.transform(a,b,c,d,e,f) //将画布进行矩阵变换(a:水平缩放,b:水平倾斜,c:垂直倾斜,d:垂直缩放,e:水平移动,f:垂直移动)
+     ctx.getTransform()
+     ctx.setTransform()
+     ctx.resetTransform()
+     裁剪效果：
+     ctx.clip([path],[fillRule]) //裁剪画布(evenodd:奇偶环绕,nonzero:非零环绕)
+     橡皮擦效果：
+     ctx.clearRect(x,y,w,h) //设置指定矩形区域内所有像素变成透明,并擦除其中绘制的所有内容
+
 
      ctx.createImageData()
      ctx.getImageData()
      ctx.putImageData()
-     
-     ctx.clip()
      ctx.createConicGradient()
      ctx.drawFocusIfNeeded()
      ctx.ellipse()
      ctx.getContextAttributes()
-     ctx.getTransform()
      ctx.isContextLost()
      ctx.isPointInPath()
      ctx.isPointInStroke()
      ctx.quadraticCurveTo()
-     ctx.reset()
-     ctx.resetTransform()
-     ctx.restore()
-     ctx.rotate()
-     ctx.save()
-     ctx.scale()
-     ctx.setTransform()
-     ctx.transform()
-     ctx.translate()
 ```
 
 ## 3. TextMetrics 对象
@@ -150,7 +154,49 @@ CanvasImageSource 是一个`辅助类型`，不是一个接口，也没有 API�
 
 ## 7. 实例
 
-### (1) canvas 绘制文本
+### (1) canvas 绘图上下文
+
+canvas 绘图上下文虽然一直被称为画布，但实际上应该理解为 Photoshop 中的`图层集合`
+
+canvas 图层是按照`栈`结构进行管理的，而`图层代表 canvas 状态`，调用 ctx.save() 方法会保存当前 canvas 状态作为一个新图层并添加到图层栈顶部，调用 ctx.restore() 方法会弹出图层栈顶部图层并恢复之前的 canvas 状态
+
+![图层](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas.png)
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+<button id="restoreBtn">恢复</button>
+<button id="drawBtn">绘制</button>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+// 红色图层
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 50)
+ctx.save()
+
+// 绿色图层
+ctx.fillStyle = 'green'
+ctx.fillRect(100, 100, 100, 50)
+
+// 恢复之前图层
+const restoreBtn = document.querySelector('#restoreBtn')
+restoreBtn.addEventListener('click', () => {
+    ctx.restore()
+})
+
+// 使用当前图层绘制
+const drawBtn = document.querySelector('#drawBtn')
+drawBtn.addEventListener('click', () => {
+    ctx.fillRect(200, 200, 100, 50)
+})
+```
+
+![canvas_layer]()
+
+### (2) canvas 绘制文本
 
 canvas 绘制文本使用`六线五格基线图`，ctx.textBaseline 属性指定文本基线（默认 alphabetic），ctx.fillText(text,x,y) 方法的绘制点 (x,y) 指定基线的起始点位置
 
@@ -183,7 +229,7 @@ ctx.strokeText('我是大可爱', 50, 130)
 
 ![canvas_text](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_text.png)
 
-### (2) canvas 绘制矩形
+### (3) canvas 绘制矩形
 
 ```html
 <canvas id="canvas"></canvas>
@@ -210,9 +256,9 @@ ctx.fillRect(170, 30, 100, 50)
 
 ![canvas_rect](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_rect.png)
 
-### (3) canvas 绘制直线路径
+### (4) canvas 绘制直线路径
 
-canvas 绘制路径其实就是`连点成线`，现在渲染上下文中画很多点，再用直线或者曲线将其连接起来，就组成了各种不同的图形
+canvas 绘制路径其实就是`连点成线`，现在绘图上下文中画很多点，再用直线或者曲线将其连接起来，就组成了各种不同的图形
 
 ```html
 <canvas id="canvas"></canvas>
@@ -233,7 +279,7 @@ ctx.stroke()
 
 ![canvas_path_line](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_line.png)
 
-### (4) canvas 绘制弧线路径
+### (5) canvas 绘制弧线路径
 
 canvas 绘制弧线涉及到切线原理，弧线就是以新路径终点作为起点（x0, y0），给定 2 个参考点（x1, y1）、（x2, y2），弧的大小取决于给定半径 r
 
@@ -268,7 +314,7 @@ ctx.stroke()
 
 ![canvas_path_arc](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_arc.png)
 
-### (5) canvas 绘制贝塞尔曲线路径
+### (6) canvas 绘制贝塞尔曲线路径
 
 使用 de Casteljau 算法绘制二次贝塞尔曲线（二次指的是 2 轮取点操作）
 
@@ -297,7 +343,7 @@ ctx.stroke()
 
 ![bezierCurveTo](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/bezierCurveTo.png)
 
-### (6) canvas 填充闭合路径
+### (7) canvas 填充闭合路径
 
 如果调用了 ctx.closePath() 方法闭合路径，那么就可以调用 ctx.fill() 方法以特定颜色填充路径，填充规则有奇偶环绕和非零环绕
 
@@ -325,7 +371,7 @@ ctx.stroke()
 
 ![canvas_fill](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_fill.png)
 
-### (7) canvas 虚线路径
+### (8) canvas 虚线路径
 
 canvas 绘制路径默认实线，也可以使用 ctx.setLineDash(segments) 将路径设置为虚线
 
@@ -375,7 +421,7 @@ canvas 绘制的虚线路径可以使用 ctx.lineDashOffset 属性设置偏移�
 
      ![canvas_path_dash](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_dash.png)
 
-### (8) canvas 渐变效果
+### (9) canvas 渐变效果
 
 #### ① 线性渐变
 
@@ -419,7 +465,7 @@ ctx.stroke()
 
 ![canvas_gradient_linear](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_gradient_linear.png)
 
-### (9) canvas 纹理效果
+### (10) canvas 纹理效果
 
 canvas 纹理就是`使用图片实现填充效果`
 
@@ -442,7 +488,7 @@ img.addEventListener('load', () => {
 
 ![canvas_pattern](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_pattern.png)
 
-### (10) canvas 绘制图像
+### (11) canvas 绘制图像
 
 #### ① 在画板指定位置绘制整个图片
 
@@ -527,13 +573,152 @@ img.addEventListener('load', () => {
 })
 ```
 
-![canvas_img_bit](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_bit.png)
+![canvas_img_bit](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_bit.png
 
-### (11) canvas 几何变换
+### (12) canvas 几何变换
 
-### (11) canvas 动画
+canvas 几何变换的不是图形，而是`整个画布`，从显示结果来看变换的是图形，而实际上变换的是整个画布和坐标系
 
-### (12) canvas
+#### ① 平移 translate
+
+canvas 平移就是将画布往水平方向和垂直方向移动一定距离 (dx, dy)
+
+![translate]()
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 50)
+
+ctx.translate(100, 50)
+ctx.fillStyle = 'green'
+ctx.fillRect(0, 0, 100, 50)
+```
+
+![canvas_transform_translate]()
+
+#### ② 缩放 sacale
+
+canvas 缩放就是画布围绕`左上角`，然后将宽高乘以一定的缩放因子 (sx, sy)，缩放因子 = 1 则不变
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 50)
+
+ctx.scale(0.5, 2)
+ctx.fillStyle = 'green'
+ctx.fillRect(0, 50, 100, 50)
+```
+
+![canvas_transform_scale]()
+
+#### ③ 旋转 rotate
+
+canvas 旋转就是画布围绕`左上角`，顺时针旋转一定弧度 deg（deg * Math.PI / 180）
+
+![rotate]()
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 50)
+
+ctx.rotate(30 * Math.PI / 180) // 顺时针旋转 30 度
+ctx.fillStyle = 'green'
+ctx.fillRect(0, 0, 100, 50)
+```
+
+![canvas_transform_rotate]()
+
+#### ④ 变形 transforms
+
+canvas 变形就是将前 3 种几何变换：平移、缩放、旋转融合在一起，使用`矩阵`来操作多种几何变换
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 50)
+
+ctx.transform(1, 1, 0, 1, 0, 0)
+ctx.fillStyle = 'green'
+ctx.fillRect(0, 0, 100, 50)
+```
+
+![canvas_transform_transform]()
+
+### (13) canvas 裁剪
+
+canvas 裁剪针对`画布本身`，裁剪区域由路径定义，所以必须先绘制一个路径，然后调用 clip() 方法将该路径设定为裁剪区域，`一旦设定好裁剪区域，就只有落在裁剪区域内的图形才能绘制出来`，裁剪区域外的绘制将没有任何效果，默认裁剪区域是`整个画布`
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+// 设定裁剪区域为圆形内
+ctx.fillStyle = 'red'
+ctx.beginPath()
+ctx.arc(50, 50, 50, 0, Math.PI*2)
+ctx.fill()
+ctx.stroke()
+ctx.clip()
+
+// 绘制矩形
+ctx.fillStyle = 'green'
+ctx.fillRect(50, 50, 100, 50)
+```
+
+![canvas_clip]()
+
+### (14) canvas 橡皮擦
+
+ctx.clearRect(x,y,w,h) 方法可以设置指定矩形区域内所有像素变成透明，并擦除其中绘制的所有内容，从而实现橡皮擦效果
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.fillRect(0, 0, 100, 50)
+ctx.clearRect(0, 0, 50, 25)
+```
+
+![canvas_clean]()
+
+### (15) canvas 动画
+
+### (16) canvas 滤镜
 
 ```html
 

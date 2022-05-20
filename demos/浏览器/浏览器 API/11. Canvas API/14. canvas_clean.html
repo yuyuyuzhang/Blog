@@ -9,9 +9,14 @@
 </head>
 <body>
 
-<iframe id="aaa" name="bbb"></iframe>
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
 
 <script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.fillRect(0, 0, 100, 50)
+ctx.clearRect(0, 0, 50, 25)
 </script>
 </body>
 </html>

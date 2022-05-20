@@ -9,9 +9,18 @@
 </head>
 <body>
 
-<iframe id="aaa" name="bbb"></iframe>
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
 
 <script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 50)
+
+ctx.translate(100, 50)
+ctx.fillStyle = 'green'
+ctx.fillRect(0, 0, 100, 50)
 </script>
 </body>
 </html>
