@@ -160,7 +160,7 @@ canvas 绘图上下文虽然一直被称为画布，但实际上应该理解为 
 
 canvas 图层是按照`栈`结构进行管理的，而`图层代表 canvas 状态`，调用 ctx.save() 方法会保存当前 canvas 状态作为一个新图层并添加到图层栈顶部，调用 ctx.restore() 方法会弹出图层栈顶部图层并恢复之前的 canvas 状态
 
-![图层](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas.png)
+![图层](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%9B%BE%E5%B1%82.png)
 
 ```html
 <canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
@@ -194,7 +194,7 @@ drawBtn.addEventListener('click', () => {
 })
 ```
 
-![canvas_layer]()
+![canvas_layer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_layer.gif)
 
 ### (2) canvas 绘制文本
 
@@ -583,7 +583,7 @@ canvas 几何变换的不是图形，而是`整个画布`，从显示结果来�
 
 canvas 平移就是将画布往水平方向和垂直方向移动一定距离 (dx, dy)
 
-![translate]()
+![translate](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/translate.mp4)
 
 ```html
 <canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
@@ -601,7 +601,7 @@ ctx.fillStyle = 'green'
 ctx.fillRect(0, 0, 100, 50)
 ```
 
-![canvas_transform_translate]()
+![canvas_transform_translate](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_transform_translate.png)
 
 #### ② 缩放 sacale
 
@@ -623,13 +623,13 @@ ctx.fillStyle = 'green'
 ctx.fillRect(0, 50, 100, 50)
 ```
 
-![canvas_transform_scale]()
+![canvas_transform_scale](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_transform_scale.png)
 
 #### ③ 旋转 rotate
 
 canvas 旋转就是画布围绕`左上角`，顺时针旋转一定弧度 deg（deg * Math.PI / 180）
 
-![rotate]()
+![rotate](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/rotate.png)
 
 ```html
 <canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
@@ -647,7 +647,7 @@ ctx.fillStyle = 'green'
 ctx.fillRect(0, 0, 100, 50)
 ```
 
-![canvas_transform_rotate]()
+![canvas_transform_rotate](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_transform_rotate.png)
 
 #### ④ 变形 transforms
 
@@ -669,7 +669,7 @@ ctx.fillStyle = 'green'
 ctx.fillRect(0, 0, 100, 50)
 ```
 
-![canvas_transform_transform]()
+![canvas_transform_transform](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_transform_transform.png)
 
 ### (13) canvas 裁剪
 
@@ -696,7 +696,7 @@ ctx.fillStyle = 'green'
 ctx.fillRect(50, 50, 100, 50)
 ```
 
-![canvas_clip]()
+![canvas_clip](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_clip.png)
 
 ### (14) canvas 橡皮擦
 
@@ -714,7 +714,7 @@ ctx.fillRect(0, 0, 100, 50)
 ctx.clearRect(0, 0, 50, 25)
 ```
 
-![canvas_clean]()
+![canvas_clean](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_clean.png)
 
 ### (15) canvas 动画
 
