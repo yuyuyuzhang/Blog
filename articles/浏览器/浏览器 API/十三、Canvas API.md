@@ -52,10 +52,12 @@ canvas 采用左手背面坐标体系，以像素为单位（px），以画布�
      图像属性：
      ctx.imageSmoothingEnabled
      ctx.imageSmoothingQuality
+     图层混排模式：
+     ctx.globalCompositeOperation //返回或设置图像混排模式
 
      ctx.filter
      ctx.globalAlpha
-     ctx.globalCompositeOperation
+     
 方法：绘图上下文：
      ctx.save() //保存当前 canvas 状态并添加到图层栈顶部
      ctx.restore() //弹出图层栈顶部图层并恢复之前的 canvas 状态
@@ -196,7 +198,32 @@ drawBtn.addEventListener('click', () => {
 
 ![canvas_layer](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_layer.gif)
 
-### (2) canvas 绘制文本
+### (2) canvas 图层混排模式
+
+图层混排模式可以简单地理解为 2 个图层按照不同模式组合成不同的结果，先绘制的图层是`目标图层 dst`，后绘制的图层是`源图层 src`
+
+ctx.globalCompositeOperation 属性设置绘制新图层时采用的图层混排模式，共有 26 种值，效果如下所示
+
+![图层混排模式]()
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.globalCompositeOperation = 'xor'
+ctx.fillStyle = 'red'
+ctx.fillRect(0, 0, 100, 100)
+ctx.fillStyle = 'green'
+ctx.fillRect(50, 50, 100, 100)
+```
+
+![globalCompositeOperation](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/globalCompositeOperation.png)
+
+### (3) canvas 绘制文本
 
 canvas 绘制文本使用`六线五格基线图`，ctx.textBaseline 属性指定文本基线（默认 alphabetic），ctx.fillText(text,x,y) 方法的绘制点 (x,y) 指定基线的起始点位置
 
@@ -229,7 +256,7 @@ ctx.strokeText('我是大可爱', 50, 130)
 
 ![canvas_text](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_text.png)
 
-### (3) canvas 绘制矩形
+### (4) canvas 绘制矩形
 
 ```html
 <canvas id="canvas"></canvas>
@@ -256,7 +283,7 @@ ctx.fillRect(170, 30, 100, 50)
 
 ![canvas_rect](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_rect.png)
 
-### (4) canvas 绘制直线路径
+### (5) canvas 绘制直线路径
 
 canvas 绘制路径其实就是`连点成线`，现在绘图上下文中画很多点，再用直线或者曲线将其连接起来，就组成了各种不同的图形
 
@@ -279,7 +306,7 @@ ctx.stroke()
 
 ![canvas_path_line](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_line.png)
 
-### (5) canvas 绘制弧线路径
+### (6) canvas 绘制弧线路径
 
 canvas 绘制弧线涉及到切线原理，弧线就是以新路径终点作为起点（x0, y0），给定 2 个参考点（x1, y1）、（x2, y2），弧的大小取决于给定半径 r
 
@@ -314,7 +341,7 @@ ctx.stroke()
 
 ![canvas_path_arc](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_arc.png)
 
-### (6) canvas 绘制贝塞尔曲线路径
+### (7) canvas 绘制贝塞尔曲线路径
 
 使用 de Casteljau 算法绘制二次贝塞尔曲线（二次指的是 2 轮取点操作）
 
@@ -343,7 +370,7 @@ ctx.stroke()
 
 ![bezierCurveTo](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/bezierCurveTo.png)
 
-### (7) canvas 填充闭合路径
+### (8) canvas 填充闭合路径
 
 如果调用了 ctx.closePath() 方法闭合路径，那么就可以调用 ctx.fill() 方法以特定颜色填充路径，填充规则有奇偶环绕和非零环绕
 
@@ -371,7 +398,7 @@ ctx.stroke()
 
 ![canvas_fill](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_fill.png)
 
-### (8) canvas 虚线路径
+### (9) canvas 虚线路径
 
 canvas 绘制路径默认实线，也可以使用 ctx.setLineDash(segments) 将路径设置为虚线
 
@@ -421,7 +448,7 @@ canvas 绘制的虚线路径可以使用 ctx.lineDashOffset 属性设置偏移�
 
      ![canvas_path_dash](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_path_dash.png)
 
-### (9) canvas 渐变效果
+### (10) canvas 渐变效果
 
 #### ① 线性渐变
 
@@ -465,7 +492,7 @@ ctx.stroke()
 
 ![canvas_gradient_linear](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_gradient_linear.png)
 
-### (10) canvas 纹理效果
+### (11) canvas 纹理效果
 
 canvas 纹理就是`使用图片实现填充效果`
 
@@ -488,7 +515,7 @@ img.addEventListener('load', () => {
 
 ![canvas_pattern](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_pattern.png)
 
-### (11) canvas 绘制图像
+### (12) canvas 绘制图像
 
 #### ① 在画板指定位置绘制整个图片
 
@@ -575,7 +602,7 @@ img.addEventListener('load', () => {
 
 ![canvas_img_bit](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_img_bit.png
 
-### (12) canvas 几何变换
+### (13) canvas 几何变换
 
 canvas 几何变换的不是图形，而是`整个画布`，从显示结果来看变换的是图形，而实际上变换的是整个画布和坐标系
 
@@ -671,7 +698,7 @@ ctx.fillRect(0, 0, 100, 50)
 
 ![canvas_transform_transform](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_transform_transform.png)
 
-### (13) canvas 裁剪
+### (14) canvas 裁剪
 
 canvas 裁剪针对`画布本身`，裁剪区域由路径定义，所以必须先绘制一个路径，然后调用 clip() 方法将该路径设定为裁剪区域，`一旦设定好裁剪区域，就只有落在裁剪区域内的图形才能绘制出来`，裁剪区域外的绘制将没有任何效果，默认裁剪区域是`整个画布`
 
@@ -698,7 +725,7 @@ ctx.fillRect(50, 50, 100, 50)
 
 ![canvas_clip](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_clip.png)
 
-### (14) canvas 橡皮擦
+### (15) canvas 橡皮擦
 
 ctx.clearRect(x,y,w,h) 方法可以设置指定矩形区域内所有像素变成透明，并擦除其中绘制的所有内容，从而实现橡皮擦效果
 
@@ -716,9 +743,9 @@ ctx.clearRect(0, 0, 50, 25)
 
 ![canvas_clean](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_clean.png)
 
-### (15) canvas 动画
+### (16) canvas 动画
 
-### (16) canvas 滤镜
+### (17) canvas 滤镜
 
 ```html
 
