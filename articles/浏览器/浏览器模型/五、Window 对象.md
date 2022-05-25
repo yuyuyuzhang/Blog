@@ -118,11 +118,11 @@ DOM 方法：
 window.getSelection()                           //返回鼠标在文档中选取的区域
 CSS 方法：
 window.getComputedStyle(elem)                   //返回elem计算后的样式对象
+动画方法：
+window.requestAnimationFrame(cb)                //返回回调标识 id,60次/s 定时执行回调 cb(主流液晶显示器的刷新频率就是 60Hz),类似 setInterval
+window.cancelAnimationFrame(id)                 //无返回值,取消 id 标识的回调执行
 渲染推迟方法：
-window.requestAnimationFrame(callback)          //返回整数n,推迟callback到浏览器下次重流时执行
-window.requestIdleCallback(callback,options)    //返回整数n,推迟callback到系统资源空闲时执行,配置对象options仅timeout属性,
-                                                //指定推迟执行的最大毫秒数
-window.cancelAnimationFrame(n)                  //无返回值,取消callback的执行,n为requestAnimationFrame()返回值
+window.requestIdleCallback(cb,options)          //返回整数n,推迟callback到系统资源空闲时执行,配置对象options仅timeout属性,指定推迟执行的最大毫秒数
 window.cancelIdleCallback(n)                    //无返回值,取消callback的执行,n为requestIdleCallback()返回值
 事件循环方法：
 window.queueMicrotask(cb)                       //无返回值,将回调函数cb添加到JS引擎线程的微任务队列末尾

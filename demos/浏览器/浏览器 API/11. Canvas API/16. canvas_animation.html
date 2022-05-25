@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="referrer" content="no-referrer" />
+<title>test</title>
+</head>
+<body>
+
+<canvas id="canvas" height="300"></canvas>
+
+<script>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+const sun = new Image()
+const moon = new Image()
+const earth = new Image()
+sun.src = './sun.png'
+moon.src = './moon.png'
+earth.src = './earth.png'
+
+// 定时重绘
+setInterval(() => {
+    draw()
+}, 1000/60)
+
+function draw() {
+    ctx.globalCompositeOperation = 'destination-over'
+    ctx.clearRect(0, 0, 300, 300) // 橡皮擦效果清空 canvas
+
+    ctx.fillStyle = 'rgba(0,0,0,0.4)'
+    ctx.strokeStyle = 'rgba(0,153,255,0.4)'
+    ctx.save()
+    ctx.translate(150,150)
+
+    // earth
+    const time = new Date()
+    ctx.rotate(((2*Math.PI)/60)*time.getSeconds() + ((2*Math.PI)/60000)*time.getMilliseconds())
+    ctx.translate(105,0)
+    ctx.fillRect(0,-12,50,24) // Shadow
+    ctx.drawImage(earth,-12,-12)
+
+    // Moon
+    ctx.save()
+    ctx.rotate(((2*Math.PI)/6)*time.getSeconds() + ((2*Math.PI)/6000)*time.getMilliseconds())
+    ctx.translate(0,28.5)
+    ctx.drawImage(moon,-3.5,-3.5)
+
+    ctx.restore()
+    ctx.restore()
+
+    ctx.beginPath()
+    ctx.arc(150,150,105,0,Math.PI*2,false) // Earth orbit
+    ctx.stroke()
+    ctx.drawImage(sun,0,0,300,300)
+
+    window.requestAnimationFrame(draw)
+}
+</script>
+</body>
+</html>

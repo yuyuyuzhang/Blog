@@ -7,6 +7,7 @@ Canvas 是一个 HTML 元素，也是一个画本，通常使用 JS 脚本来绘
 ```js
 定义：const canvas = document.querySelector('#canvas')
 方法：canvas.getContext('2d') //返回一个 2D 画布绘图上下文
+     canvas.toDataURL()      //返回当前 canvas 图像导出的 data: URL 字符串
 ```
 
 ## 2. CanvasRenderingContext2D 对象
@@ -23,100 +24,81 @@ canvas 采用左手背面坐标体系，以像素为单位（px），以画布�
 ```js
 定义：const ctx = canvas.getContext('2d')
 属性：基本属性：
-     ctx.canvas      //返回当前绘图上下文对应的 canvas 节点
-     填充属性：
-     ctx.fillStyle   //返回或设置填充样式(color/gradient/img)
-     路径属性：
-     ctx.strokeStyle //返回或设置画笔样式(color/gradient/img)
-     ctx.lineCap     //返回或设置路径线条末端样式(butt:方形,round:圆形,square:方形但增加一个线段一半厚度的矩形)
-     ctx.lineJoin    //返回或设置路径线条连接处样式(round:弧形拐角,bevel:矩形拐角,miter:菱形拐角)
-     ctx.miterLimit  //返回或设置路径线条连接处为菱形拐角时的接合处最大限制长度,超过限制连接处样式变成 bevel
-     ctx.lineWidth   //返回或设置路径宽度(默认 1)
-     ctx.lineDashOffset //返回或设置虚线路径偏移量
-     文本属性：
-     ctx.font        //返回或设置字体大小和类型
-     ctx.fontKerning
-     ctx.fontStretch
-     ctx.fontVariantCaps
-     ctx.letterSpacing
-     ctx.textAlign    //返回或设置文本以绘制点为参考的水平对齐方式(left,right,center,start,end)
-     ctx.textBaseline //返回或设置文本基线(top,hanging,middle,alphabetic-默认,ideographic,bottom)
-     ctx.textRendering
-     ctx.wordSpacing
-     ctx.direction //返回或设置文本绘制方法(ltr,rtl)
-     阴影属性：
-     ctx.shadowBlur //返回或设置阴影模糊距离
-     ctx.shadowColor //返回或设置阴影颜色
-     ctx.shadowOffsetX //返回或设置阴影在 X 轴的延伸距离
-     ctx.shadowOffsetY //返回或设置阴影在 Y 轴的延伸距离
-     图像属性：
-     ctx.imageSmoothingEnabled
-     ctx.imageSmoothingQuality
+     ctx.canvas                   //返回当前绘图上下文对应的 canvas 节点
      图层混排模式：
-     ctx.globalCompositeOperation //返回或设置图像混排模式
-
-     ctx.filter
-     ctx.globalAlpha
-     
+     ctx.globalCompositeOperation //返回或设置图层混排模式
+     填充属性：
+     ctx.fillStyle                //返回或设置填充样式(color/gradient/img)
+     路径属性：
+     ctx.strokeStyle              //返回或设置画笔样式(color/gradient/img)
+     ctx.lineCap                  //返回或设置路径线条末端样式(butt:方形,round:圆形,square:方形但增加一个线段一半厚度的矩形)
+     ctx.lineJoin                 //返回或设置路径线条连接处样式(round:弧形拐角,bevel:矩形拐角,miter:菱形拐角)
+     ctx.miterLimit               //返回或设置路径线条连接处为菱形拐角时的接合处最大限制长度,超过限制连接处样式变成 bevel
+     ctx.lineWidth                //返回或设置路径宽度(默认 1)
+     ctx.lineDashOffset           //返回或设置虚线路径偏移量
+     文本属性：
+     ctx.font                     //返回或设置字体大小和类型
+     ctx.textAlign                //返回或设置文本以绘制点为参考的水平对齐方式(left,right,center,start,end)
+     ctx.textBaseline             //返回或设置文本基线(top,hanging,middle,alphabetic-默认,ideographic,bottom)
+     ctx.direction                //返回或设置文本绘制方法(ltr,rtl)
+     阴影属性：
+     ctx.shadowBlur               //返回或设置阴影模糊距离
+     ctx.shadowColor              //返回或设置阴影颜色
+     ctx.shadowOffsetX            //返回或设置阴影在 X 轴的延伸距离
+     ctx.shadowOffsetY            //返回或设置阴影在 Y 轴的延伸距离
+     图像属性：
+     ctx.imageSmoothingEnabled    //返回或设置图层是否平滑(默认平滑 true)
+     透明度属性：
+     ctx.globalAlpha              //返回或设置全局透明度(0 ~ 1)
 方法：绘图上下文：
-     ctx.save() //保存当前 canvas 状态并添加到图层栈顶部
-     ctx.restore() //弹出图层栈顶部图层并恢复之前的 canvas 状态
-     ctx.reset()
+     ctx.save()                                               //保存当前 canvas 状态并添加到图层栈顶部
+     ctx.restore()                                            //弹出图层栈顶部图层并恢复之前的 canvas 状态
      绘制文本
-     ctx.measureText(text) //返回 TextMetrics 实例,包含文本尺寸信息
-     ctx.fillText(text,x,y) //绘制文本 text,以坐标 (x,y) 为基线起点
-     ctx.strokeText(text,x,y) //绘制文本 text 骨架,以坐标 (x,y) 为基线起点
+     ctx.measureText(text)                                    //返回 TextMetrics 实例,包含文本尺寸信息
+     ctx.fillText(text,x,y)                                   //绘制文本 text,以坐标 (x,y) 为基线起点
+     ctx.strokeText(text,x,y)                                 //绘制文本 text 骨架,以坐标 (x,y) 为基线起点
      绘制矩形：
-     ctx.strokeRect(x,y,w,h) //绘制矩形,指定起点坐标 (x,y) 及矩形宽高
-     ctx.fillRect(x,y,w,h)   //绘制并填充矩形,指定起点坐标 (x,y) 及矩形宽高
-     ctx.roundRect()
+     ctx.strokeRect(x,y,w,h)                                  //绘制矩形,指定起点坐标 (x,y) 及矩形宽高
+     ctx.fillRect(x,y,w,h)                                    //绘制并填充矩形,指定起点坐标 (x,y) 及矩形宽高
      绘制路径：
-     ctx.beginPath() //开始一个新路径
-     ctx.moveTo(x,y) //画笔从当前新路径起点移动到坐标 (x,y)
-     ctx.lineTo(x,y) //画笔从当前新路径终点虚拟绘制直线到坐标 (x,y)
-     ctx.arcTo(x1,y1,x2,y2,r) //画笔使用坐标 (x1,y1)、(x2,y2),半径 r 虚拟绘制从当前新路径终点开始的弧线
-     ctx.arc(x,y,r,deg1,deg2,dir) //画笔以圆心 (x,y),半径 r,起始角度 deg1,结束角度 deg2 虚拟绘制从当前新路径终点开始的圆弧,dir 默认 false 顺时针 
-     ctx.bezierCurveTo(x1,y1,x2,y2,x3,y3) //画笔以当前新路径终点为起点,控制点 (x1,y1)、(x2,y2),终点 (x3,y3) 虚拟绘制三次贝塞尔曲线
-     ctx.closePath() //画笔返回到当前新路径起点
-     ctx.fill(path,fillRule) //画笔填充闭合路径(evenodd:奇偶环绕,nonzero:非零环绕)
-     ctx.stroke()    //真实绘制当前新路径
+     ctx.beginPath()                                          //开始一个新路径
+     ctx.moveTo(x,y)                                          //画笔从当前新路径起点移动到坐标 (x,y)
+     ctx.lineTo(x,y)                                          //画笔从当前新路径终点虚拟绘制直线到坐标 (x,y)
+     ctx.arcTo(x1,y1,x2,y2,r)                                 //画笔使用坐标 (x1,y1)、(x2,y2),半径 r 虚拟绘制从当前新路径终点开始的弧线
+     ctx.arc(x,y,r,deg1,deg2,dir)                             //画笔以圆心 (x,y),半径 r,起始角度 deg1,结束角度 deg2 虚拟绘制从当前新路径终点开始的圆弧,dir 默认 false 顺时针 
+     ctx.bezierCurveTo(x1,y1,x2,y2,x3,y3)                     //画笔以当前新路径终点为起点,控制点 (x1,y1)、(x2,y2),终点 (x3,y3) 虚拟绘制三次贝塞尔曲线
+     ctx.closePath()                                          //画笔返回到当前新路径起点
+     ctx.fill(path,fillRule)                                  //画笔填充闭合路径(evenodd:奇偶环绕,nonzero:非零环绕)
+     ctx.stroke()                                             //真实绘制当前新路径
+     ctx.isPointInStroke(x,y)                                 //返回当前坐标点 (x,y) 是否在绘制的路径描边线上
+     ctx.isPointInPath(x,y)                                   //返回当前坐标点 (x,y) 是否在绘制的路径填充区域内
      虚线路径：
-     ctx.getLineDash()             
-     ctx.setLineDash(segments) //设置路径为虚线()
+     ctx.setLineDash(segments)                                //设置路径为虚线
+     ctx.getLineDash()                                        //返回设置的虚线路径
      渐变效果：
-     ctx.createLinearGradient(x1,y1,x2,y2) //返回 CanvasGradient 实例,起点 (x1,y1),终点 (x2,y2)
-     ctx.reateRadialGradient(x1,y1,r1,x2,y2,r2)  //返回 CanvasGradient 实例,起始圆 (x1,y1) r1,终点圆 (x2,y2) r2
+     ctx.createLinearGradient(x1,y1,x2,y2)                    //返回 CanvasGradient 实例,起点 (x1,y1),终点 (x2,y2)
+     ctx.reateRadialGradient(x1,y1,r1,x2,y2,r2)               //返回 CanvasGradient 实例,起始圆 (x1,y1) r1,终点圆 (x2,y2) r2
      纹理效果：
-     ctx.createPattern(canvasImageSource,repeation) //返回 CanvasPattern 实例(repeat,repeat-x,repeat-y,no-repeat)
-     绘制图像：
-     ctx.drawImage(canvasImageSource,dx,dy) //在画板指定位置 (dx,dy) 绘制整个图片
-     ctx.drawImage(canvasImageSource,dx,dy,dw,dh) //在画板指定区域 (dx,dy) dw dh 绘制整个图片
+     ctx.createPattern(canvasImageSource,repeation)           //返回 CanvasPattern 实例(repeat,repeat-x,repeat-y,no-repeat)
+     绘制图片：
+     ctx.drawImage(canvasImageSource,dx,dy)                   //在画板指定位置 (dx,dy) 绘制整个图片
+     ctx.drawImage(canvasImageSource,dx,dy,dw,dh)             //在画板指定区域 (dx,dy) dw dh 绘制整个图片
      ctx.drawImage(canvasImageSource,sx,sy,sw,sh,dx,dy,dw,dh) //在画板指定区域 (dx,dy) dw dh 绘制图片的一部分 (sx,sy) sw sh
      几何变换：
-     ctx.translate(dx,dy) //将画布沿水平和垂直方向移动 dx dy 距离
-     ctx.scale(sx,sy) //将画布水平和垂直方向缩放 sx sy
-     ctx.rotate(deg) //将画布顺时针旋转 deg
-     ctx.transform(a,b,c,d,e,f) //将画布进行矩阵变换(a:水平缩放,b:水平倾斜,c:垂直倾斜,d:垂直缩放,e:水平移动,f:垂直移动)
-     ctx.getTransform()
-     ctx.setTransform()
-     ctx.resetTransform()
+     ctx.translate(dx,dy)                                     //将画布沿水平和垂直方向移动 dx dy 距离
+     ctx.scale(sx,sy)                                         //将画布水平和垂直方向缩放 sx sy
+     ctx.rotate(deg)                                          //将画布顺时针旋转 deg
+     ctx.transform(a,b,c,d,e,f)                               //将画布进行矩阵变换(a:水平缩放,b:水平倾斜,c:垂直倾斜,d:垂直缩放,e:水平移动,f:垂直移动)
      裁剪效果：
-     ctx.clip([path],[fillRule]) //裁剪画布(evenodd:奇偶环绕,nonzero:非零环绕)
+     ctx.clip([path],[fillRule])                              //裁剪画布(evenodd:奇偶环绕,nonzero:非零环绕)
      橡皮擦效果：
-     ctx.clearRect(x,y,w,h) //设置指定矩形区域内所有像素变成透明,并擦除其中绘制的所有内容
-
-
-     ctx.createImageData()
-     ctx.getImageData()
-     ctx.putImageData()
-     ctx.createConicGradient()
-     ctx.drawFocusIfNeeded()
-     ctx.ellipse()
-     ctx.getContextAttributes()
-     ctx.isContextLost()
-     ctx.isPointInPath()
-     ctx.isPointInStroke()
-     ctx.quadraticCurveTo()
+     ctx.clearRect(x,y,w,h)                                   //设置指定矩形区域内所有像素变成透明,并擦除其中绘制的所有内容
+     像素数据：
+     ctx.createImageData(imageData)                           //从现有的 imageData 实例复制一个相同宽高的透明图像
+     ctx.createImageData(width,height)                        //创建一个指定宽高的透明图像
+     ctx.getImageData(sx,sy,sw,sh)                            //获取当前画布指定区域 (sx,sy) sw sh 的像素数据
+     ctx.putImageData(imageData,sx,sy)                        //将 imageData 全部绘制到画布指定区域 (dx,dy)
+     ctx.putImageData(imageData,sx,sy,dx,dy,dw,dh)            //将 imageData 指定部分 (dx,dy) dw dh 绘制到画布指定区域 (sx,sy)
 ```
 
 ## 3. TextMetrics 对象
@@ -154,7 +136,47 @@ CanvasImageSource 是一个`辅助类型`，不是一个接口，也没有 API�
 * CanvasRenderingContext2D
 * ImageBitmap
 
-## 7. 实例
+## 7. ImageData 对象
+
+### (1) ImageData API
+
+```js
+定义：const imageData = new ImageData([Uint8ClampedArray],width,height)
+     const imageData = ctx.createImageData(imageData)
+     const imageData = ctx.createImageData(width,height)
+属性：imageData.data   //返回当前 canvas 对象像素数据,Uint8ClampedArray 类型的一维数组,包含 RGBA 格式的整型数据
+     imageData.width  //返回当前 canvas 对象宽度
+     imageData.height //返回当前 canavs 对象高度
+```
+
+如下 canvas 图像，如果以 1 像素为单位绘制网格，就会有 width * height 个像素格子，每个像素格子一个颜色，就有 width * height 个颜色，canvas 存储颜色使用`四字节表示法 RGBA`，也就是一个颜色用 4 个字节存储，那么 canvas 存储这张图片就需要 width * height * 4 bytes，因此 Uint8ClampedArray 是一个 width * height * 4 bytes 的一维数组
+
+![ImageData](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/ImageData.png)
+
+Uint8ClampedArray 如何存放每个像素的颜色呢？首先创建一个 width * height * 4 bytes 的字节数组，然后按照以下公式存放第 m 行 n 列颜色
+
+R = 4 * (m-1) * (n-1) + 0
+G = 4 * (m-1) * (n-1) + 1
+B = 4 * (m-1) * (n-1) + 2
+A = 4 * (m-1) * (n-1) + 3
+
+![Uint8ClampedArray](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/Uint8ClampedArray.png)
+
+因此想要获取第 m 行第 n 列颜色值的 B 值，就可以使用如下公式
+
+ImageData.data[4*(m-1)*(n-1)+2]
+
+### (2) 创建 ImageData 对象
+
+使用构造函数创建 ImageData 实例时，参数必须满足 `Uint8ClampedArray = 4 * width * height`，如果参数 Uint8ClampedArray 为空，就会自动创建一个`透明图像`
+
+```js
+console.log(new ImageData(1, 1))
+```
+
+![canvas_imageData_1](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_imageData_1.png)
+
+## 8. 实例
 
 ### (1) canvas 绘图上下文
 
@@ -204,7 +226,7 @@ drawBtn.addEventListener('click', () => {
 
 ctx.globalCompositeOperation 属性设置绘制新图层时采用的图层混排模式，共有 26 种值，效果如下所示
 
-![图层混排模式]()
+![图层混排模式](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%9B%BE%E5%B1%82%E6%B7%B7%E6%8E%92%E6%A8%A1%E5%BC%8F.png)
 
 ```html
 <canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
@@ -515,7 +537,7 @@ img.addEventListener('load', () => {
 
 ![canvas_pattern](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_pattern.png)
 
-### (12) canvas 绘制图像
+### (12) canvas 绘制图片
 
 #### ① 在画板指定位置绘制整个图片
 
@@ -745,16 +767,99 @@ ctx.clearRect(0, 0, 50, 25)
 
 ### (16) canvas 动画
 
-### (17) canvas 滤镜
+canvas 是 HTML 元素，还有强大的 JS 作为操作语言，因此在 canvas 中实现动画相当容易，但是图层一旦绘制出来，就保持不变了，想要移动就只能对所有东西进行`重绘`，重绘相当耗时并且很依赖性能
+
+canvas 实现动画的基本步骤
+
+* 绘制一帧动画
+  * 清空 canvas
+  * 保存 canvas 状态
+  * 绘制当前帧的动画图层
+  * 恢复 canvas 状态
+* 定时重绘
 
 ```html
-
+<canvas id="canvas" height="300"></canvas>
 ```
 
 ```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
 
+const sun = new Image()
+const moon = new Image()
+const earth = new Image()
+sun.src = './sun.png'
+moon.src = './moon.png'
+earth.src = './earth.png'
+
+// 定时重绘
+setInterval(() => {
+    draw()
+}, 1000/60)
+
+function draw() {
+    ctx.globalCompositeOperation = 'destination-over'
+    ctx.clearRect(0, 0, 300, 300) // 橡皮擦效果清空 canvas
+
+    ctx.fillStyle = 'rgba(0,0,0,0.4)'
+    ctx.strokeStyle = 'rgba(0,153,255,0.4)'
+    ctx.save()
+    ctx.translate(150,150)
+
+    // earth
+    const time = new Date()
+    ctx.rotate(((2*Math.PI)/60)*time.getSeconds() + ((2*Math.PI)/60000)*time.getMilliseconds())
+    ctx.translate(105,0)
+    ctx.fillRect(0,-12,50,24) // Shadow
+    ctx.drawImage(earth,-12,-12)
+
+    // Moon
+    ctx.save()
+    ctx.rotate(((2*Math.PI)/6)*time.getSeconds() + ((2*Math.PI)/6000)*time.getMilliseconds())
+    ctx.translate(0,28.5)
+    ctx.drawImage(moon,-3.5,-3.5)
+
+    ctx.restore()
+    ctx.restore()
+
+    ctx.beginPath()
+    ctx.arc(150,150,105,0,Math.PI*2,false) // Earth orbit
+    ctx.stroke()
+    ctx.drawImage(sun,0,0,300,300)
+
+    window.requestAnimationFrame(draw)
+}
 ```
 
-![]()
+![canvas_animation](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_animation.gif)
 
-①②③④⑤⑥⑦⑧⑨⑩
+### (17) canvas 画布像素
+
+canvas 提供了 ImageData 对象来操作画布本身的像素能力，ImageData 对象存储着 canvas 对象的真实像素数据
+
+```html
+<canvas id="canvas" height="300" style="border: 1px solid black;"></canvas>
+```
+
+```js
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+ctx.save();
+ctx.translate(50,50);
+ctx.fillStyle = "green"
+ctx.fillRect(0,0,50,200);
+ctx.rotate(-30 * Math.PI / 180)
+ctx.fillStyle = "blue"
+ctx.fillRect(0,0,50,200);
+ctx.restore();
+
+const data = ctx.getImageData(50,50,50,50);
+ctx.putImageData(data,200,100,);
+
+ctx.strokeStyle = "red"
+ctx.strokeRect(50,50,50,50);
+```
+
+![canvas_imageData_2](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/canvas_imageData_2.png)
