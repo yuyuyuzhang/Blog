@@ -1,4 +1,4 @@
-# 十一、ImageBitmap API
+# 八、ImageBitmap API
 
 ## 1. ImageBitmap API
 

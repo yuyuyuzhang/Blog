@@ -1,4 +1,4 @@
-# 一、NetworkInformation API
+# 十二、NetworkInformation API
 
 ## 1. 浏览器在线/离线
 

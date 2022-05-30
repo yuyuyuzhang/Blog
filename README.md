@@ -132,32 +132,25 @@ CSS 系列之 SASS 已完成
 
 ## 浏览器系列之浏览器 API
 
-1. [NetworkInformation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%80%E3%80%81NetworkInformation%20API.md)
-2. [Permissions API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E3%80%81Permissions%20API.md)
-<!-- 3. [Credentials API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%89%E3%80%81Credentials%20API.md) -->
-<!-- 4. [Performace API](ht tps://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%9B%9B%E3%80%81Performance%20API.md) -->
-5. [硬件设备 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%94%E3%80%81%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87%20API.md)
-<!-- 6. [Web Serial API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AD%E3%80%81Web%20Serial%20API.md) -->
-<!-- 7. [Web Locks API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%83%E3%80%81Web%20Locks%20API.md) -->
-8. [Web Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AB%E3%80%81Web%20Worker%20API.md)
-<!-- 9. [Service Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B9%9D%E3%80%81Service%20Worker%20API.md) -->
-<!-- 10. [多媒体 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E3%80%81%E5%A4%9A%E5%AA%92%E4%BD%93%20API.md) -->
-11. [ImageBitmap API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%80%E3%80%81ImageBitmap%20API.md)
-12. [SVG API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%BA%8C%E3%80%81SVG%20API.md)
-13. [Canvas API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%89%E3%80%81Canvas%20API.md)
-<!-- 14. [Presentation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%9B%9B%E3%80%81Presentation%20API.md)
-15. [Web HID API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%BA%94%E3%80%81Web%20HID%20API.md)
-16. [WebGL API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%85%AD%E3%80%81WebGL%20API.md)
-17. [WebVR API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%83%E3%80%81WebVR%20API.md)
-18. [WebXR API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%85%AB%E3%80%81WebXR%20API.md) -->
-19. [FontFace API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B9%9D%E3%80%81FontFace%20API.md)
-20. [Intl.RelativeTimeFormat API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E3%80%81Intl.RelativeTimeFormat%20%20API.md)
-21. [Geolocation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%B8%80%E3%80%81Geolocation%20API.md)
-22. [Notification API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81Notification%20API.md)
-23. [Clipboard API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%B8%89%E3%80%81Clipboard%20API.md)
-24. [Web Share API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E5%9B%9B%E3%80%81Web%20Share%20API.md)
-<!-- 25. [Badge API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%BA%94%E3%80%81Badge%20API.md)
-26. [Payment Request API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E5%85%AD%E3%80%81Payment%20Request%20API.md) -->
+1. [Permissions API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E3%80%81Permissions%20API.md)
+2. [FontFace API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B9%9D%E3%80%81FontFace%20API.md)
+3. [Intl.RelativeTimeFormat API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E3%80%81Intl.RelativeTimeFormat%20%20API.md)
+4. [Clipboard API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%B8%89%E3%80%81Clipboard%20API.md)
+5. [Geolocation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%B8%80%E3%80%81Geolocation%20API.md)
+6. [Notification API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81Notification%20API.md)
+7. [Web Share API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E5%9B%9B%E3%80%81Web%20Share%20API.md)
+8. [ImageBitmap API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%80%E3%80%81ImageBitmap%20API.md)
+9. [SVG API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%BA%8C%E3%80%81SVG%20API.md)
+10. [Canvas API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%89%E3%80%81Canvas%20API.md)
+<!-- 11. [多媒体 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E3%80%81%E5%A4%9A%E5%AA%92%E4%BD%93%20API.md) -->
+12. [NetworkInformation API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%80%E3%80%81NetworkInformation%20API.md)
+13. [Web Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%85%AB%E3%80%81Web%20Worker%20API.md)
+<!-- 14. [Service Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B9%9D%E3%80%81Service%20Worker%20API.md) -->
+<!-- 15. [Performace API](ht tps://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%9B%9B%E3%80%81Performance%20API.md) -->
+<!-- 16. [Credentials API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%B8%89%E3%80%81Credentials%20API.md) -->
+<!-- 17. [Payment Request API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E5%85%AD%E3%80%81Payment%20Request%20API.md) -->
+<!-- 18. [Badge API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%8C%E5%8D%81%E4%BA%94%E3%80%81Badge%20API.md) -->
+19. [硬件设备 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E4%BA%94%E3%80%81%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87%20API.md)
 
 ## 浏览器系列之浏览器通信
 

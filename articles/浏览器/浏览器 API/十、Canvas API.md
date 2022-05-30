@@ -1,4 +1,4 @@
-# 十三、Canvas API
+# 十、Canvas API
 
 ## 1. Canvas API
 

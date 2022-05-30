@@ -1,4 +1,4 @@
-# 二十、Intl.RelativeTimeFormat API
+# 三、Intl.RelativeTimeFormat API
 
 ## 1. Intl.RelativeTimeFormat 对象
 
