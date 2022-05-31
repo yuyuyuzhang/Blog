@@ -6,7 +6,7 @@ navigator.permissions 属性返回 Permissions API，用于`查询用户对于�
 
 ```js
 定义：const permissions = navigator.permissions
-方法：permissions.query({ name: API }) //返回Promise实例,请求指定浏览器API的用户权限状态
+方法：permissions.query({ name: API }) //返回 Promise 实例,请求指定浏览器 API 的用户权限状态
 ```
 
 当前 Permissions API 能够查询用户权限的浏览器 API 如下：

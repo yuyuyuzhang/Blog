@@ -147,10 +147,7 @@ CSS 系列之 SASS 已完成
 13. [Web Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%89%E3%80%81Web%20Worker%20API.md)
 <!-- 14. [Service Worker API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%9B%9B%E3%80%81Service%20Worker%20API.md) -->
 <!-- 15. [Performance API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%BA%94%E3%80%81Performance%20API.md) -->
-<!-- 16. [Credentials API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%85%AD%E3%80%81Credentials%20API.md) -->
-<!-- 17. [Payment Request API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B8%83%E3%80%81Payment%20Request%20API.md) -->
-<!-- 18. [Badge API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E5%85%AB%E3%80%81Badge%20API.md) -->
-19. [硬件设备 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B9%9D%E3%80%81%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87%20API.md)
+16. [硬件设备 API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%20API/%E5%8D%81%E4%B9%9D%E3%80%81%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87%20API.md)
 
 ## 浏览器系列之浏览器通信
 
