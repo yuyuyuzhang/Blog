@@ -374,27 +374,7 @@ btn.addEventListener('click', e => {
 })
 ```
 
-## 3. Web Speech API
-
-Web Speech API 用于`语音合成`
-
-```js
-定义：const speechSynthesis = window.speechSynthesis
-属性：speechSynthesis.speaking    //
-     speechSynthesis.pending     //
-     speechSynthesis.paused      //
-方法：speechSynthesis.getVoices() //
-     speechSynthesis.cancel()    //
-     speechSynthesis.pause()     //
-     speechSynthesis.resume()    //
-     speechSynthesis.speak()     //
-
-
-事件：
-voiceschanged //
-```
-
-## 4. MediaCapabilities API
+## 3. MediaCapabilities API
 
 navigator.mediaCapabilities 属性返回 MediaCapabilities API，表示`浏览器对指定多媒体格式的支持能力`
 
@@ -431,7 +411,7 @@ f()
 
 ![mediaCapabilities]()
 
-## 5. MediaDevices API
+## 4. MediaDevices API
 
 navigator.mediaDevices 属性返回 MediaDevices API，表示`可用的多媒体设备`
 
@@ -517,7 +497,7 @@ f()
 
 ![共享屏幕]()
 
-## 6. WebRTC API
+## 5. WebRTC API
 
 ### (1) WebRTC API
 
@@ -534,7 +514,7 @@ WebRTC（网络实时通信，Web Real Time Communication） API 允许快速轻
 
 #### ② WebRTC API 架构
 
-整个 WebRTC 架构具有很高的复杂性，
+整个 WebRTC 架构具有很高的复杂性
 
 * **适用于 Web 开发人员的 API**：getUserMedia、RTCPeerConnection、RTCDataChannel
   * getUserMedia：浏览器获取多媒体设备麦克风和摄像头
@@ -569,7 +549,24 @@ WebRTC（网络实时通信，Web Real Time Communication） API 允许快速轻
 
 ### (2) getUserMedia
 
-#### ① MediaStream 对象
+#### ① getUserMedia 方法
+
+`navigator.getUserMedia()` 方法主要用于`浏览器获取多媒体设备麦克风和摄像头`，浏览器会询问用户是否同意浏览器调用麦克风和摄像头，用户同意则执行第一个回调函数，不同意就执行第二个回调函数
+
+* 第一个回调函数参数是一个 MediaStream 对象
+* 第二个回调函数参数是一个 Error 对象，其 code 属性有如下 3 种取值说明错误类型
+  * MANDATORY_UNSATISFIED_ERROR：浏览器未发现指定硬件设备
+  * NOT_SUPPORTED_ERROR：浏览器不支持指定硬件设备
+  * PERMISSION_DENIED：用户拒绝浏览器使用指定硬件设备
+
+```js
+navigator.getUserMedia({
+  audio, //麦克风
+  video, //摄像头
+}, stream => {}, err => {})
+```
+
+#### ② MediaStream 对象
 
 MediaStream 对象表示`媒体流`，一个媒体流包含多个轨道，例如音频轨道、视频轨道
 
@@ -592,7 +589,7 @@ stream.onaddtrack    //当前媒体流对象添加新的MediaStreamTrack对象�
 stream.onremovetrack //当前媒体流对象移除旧的MediaStreamTrack对象时触发
 ```
 
-#### ② MediaStreamTrack 对象
+#### ③ MediaStreamTrack 对象
 
 MediaStreamTrack 对象表示`媒体流的一个轨道`，例如音频轨道、视频轨道
 
@@ -620,23 +617,6 @@ MediaStreamTrack 对象表示`媒体流的一个轨道`，例如音频轨道、�
 track.onreadystate //当前轨道状态改变时触发
 track.onended      //当前轨道无效时触发
 track.onunmute     //当前轨道静音时触发
-```
-
-#### ③ getUserMedia 方法
-
-`navigator.getUserMedia()` 方法主要用于`浏览器获取多媒体设备麦克风和摄像头`，浏览器会询问用户是否同意浏览器调用麦克风和摄像头，用户同意则执行第一个回调函数，不同意就执行第二个回调函数
-
-* 第一个回调函数参数是一个 MediaStream 对象
-* 第二个回调函数参数是一个 Error 对象，其 code 属性有如下 3 种取值说明错误类型
-  * MANDATORY_UNSATISFIED_ERROR：浏览器未发现指定硬件设备
-  * NOT_SUPPORTED_ERROR：浏览器不支持指定硬件设备
-  * PERMISSION_DENIED：用户拒绝浏览器使用指定硬件设备
-
-```js
-navigator.getUserMedia({
-  audio, //麦克风
-  video, //摄像头
-}, stream => {}, err => {})
 ```
 
 #### ④ 实例：WebRTC 音频源
