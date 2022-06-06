@@ -1,4 +1,4 @@
-# 十、ArrayBuffer 对象
+# 九、ArrayBuffer 对象
 
 ## 1. 二进制数组 API
 

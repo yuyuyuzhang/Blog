@@ -1,4 +1,4 @@
-# 七、Navigator 对象
+# 六、Navigator 对象
 
 ## 1. Navigator 对象
 

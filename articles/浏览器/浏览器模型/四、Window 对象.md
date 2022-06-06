@@ -1,4 +1,4 @@
-# 五、Window 对象
+# 四、Window 对象
 
 ## 1. Window 对象
 

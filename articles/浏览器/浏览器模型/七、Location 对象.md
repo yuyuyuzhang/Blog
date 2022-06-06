@@ -1,4 +1,4 @@
-# 八、Location 对象
+# 七、Location 对象
 
 ## 1. URL 对象
 
