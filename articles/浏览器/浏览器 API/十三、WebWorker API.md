@@ -1,4 +1,4 @@
-# 十三、Web Worker API
+# 十三、WebWorker API
 
 ## 1. 异步的原理（事件循环机制）
 
@@ -68,11 +68,11 @@ f4()
 
 ![事件循环机制](https://github.com/yuyuyuzhang/Blog/blob/master/images/JS/ES/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6.png)
 
-## 2. Web Worker 概述
+## 2. WebWorker 概述
 
 随着电脑计算能力的增强，尤其是`多核 CPU` 的出现，JS 引擎单线程模型无法充分发挥计算机的计算能力，带来很大的不便
 
-Web Worker 就是为 JS 语言创造多线程环境，`允许 JS 引擎线程创建 Wroker 线程`，将一些任务分配给 Worker 线程运行，JS 引擎线程运行的同时，Wroker 线程在后台运行，两者互不干扰，Worker 线程完成计算任务再将结果返回给 JS 引擎线程，这样的好处是一些`计算密集型或高延迟任务`可以交给 Worker 线程运行，JS 引擎线程能够保持流畅不被阻塞或拖慢
+WebWorker 就是为 JS 语言创造多线程环境，`允许 JS 引擎线程创建 Wroker 线程`，将一些任务分配给 Worker 线程运行，JS 引擎线程运行的同时，Wroker 线程在后台运行，两者互不干扰，Worker 线程完成计算任务再将结果返回给 JS 引擎线程，这样的好处是一些`计算密集型或高延迟任务`可以交给 Worker 线程运行，JS 引擎线程能够保持流畅不被阻塞或拖慢
 
 Werker 线程一旦被创建，就会始终运行，不会被 JS 引擎线程上的活动打断，这样有利于随时响应 JS 引擎线程的通信，但也导致了 Worker 线程比较耗费资源，不应该过度使用，而且一旦使用完毕就应该关闭
 
