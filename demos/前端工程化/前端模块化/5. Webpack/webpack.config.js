@@ -44,7 +44,6 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.css$/,
-          exclude: /(node_modules)/,
           // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
         },
@@ -62,7 +61,6 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-          exclude: /(node_modules)/,
           use: {
             loader: 'url-loader',
             options: {

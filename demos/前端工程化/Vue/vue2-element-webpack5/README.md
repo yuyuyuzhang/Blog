@@ -105,7 +105,6 @@
           },
           {
             test: /\.(css|postcss)$/,
-            exclude: /(node_modules)/,
             use: [ // CSS 代码单独拆包，一组链式 loader 按相反顺序执行
               MiniCssExtractPlugin.loader, 
               'css-loader'
@@ -113,7 +112,6 @@
           },
           {
             test: /\.(sass|scss)$/,
-            exclude: /(node_modules)/,
             use: [MiniCssExtractPlugin.loader, 'css-loader'] 
           },
           {
@@ -129,8 +127,7 @@
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -307,7 +304,6 @@
           },
           {
             test: /\.(css|postcss)$/,
-            exclude: /(node_modules)/,
             use: [ // CSS 代码单独拆包，一组链式 loader 按相反顺序执行
               MiniCssExtractPlugin.loader, 
               'css-loader'
@@ -315,7 +311,6 @@
           },
           {
             test: /\.(sass|scss)$/,
-            exclude: /(node_modules)/,
             use: [MiniCssExtractPlugin.loader, 'css-loader'] 
           },
           {
@@ -331,8 +326,7 @@
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -498,7 +492,6 @@
           },
           {
             test: /\.(css|postcss)$/,
-            exclude: /(node_modules)/,
             use: [ // CSS 代码单独拆包，一组链式 loader 按相反顺序执行
               MiniCssExtractPlugin.loader, 
               'css-loader'
@@ -506,7 +499,6 @@
           },
           {
             test: /\.(sass|scss)$/,
-            exclude: /(node_modules)/,
             use: [MiniCssExtractPlugin.loader, 'css-loader'] 
           },
           {
@@ -522,8 +514,7 @@
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {

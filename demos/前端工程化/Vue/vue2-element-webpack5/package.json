@@ -6,8 +6,8 @@
     "build": "webpack --node-env=production"
   },
   "dependencies": {
-    "ant-design-vue": "^1.7.8",
     "axios": "^0.26.1",
+    "element-ui": "^2.15.9",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
@@ -22,7 +22,7 @@
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.0",
-    "css-loader": "^5.2.6",
+    "css-loader": "^5.2.5",
     "eslint": "^7.28.0",
     "eslint-plugin-vue": "^7.10.0",
     "eslint-webpack-plugin": "^2.5.4",

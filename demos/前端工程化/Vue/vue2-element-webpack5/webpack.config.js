@@ -54,32 +54,11 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(sass|scss)$/,
-          exclude: /(node_modules)/,
           use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] 
         },
-        // {
-        //   test: /\.less$/,
-        //   use: [
-        //     MiniCssExtractPlugin.loader, 
-        //     'css-loader', 
-        //     {
-        //       loader: 'less-loader',
-        //       options: {
-        //         lessOptions: {
-        //           javascriptEnabled: true,
-        //           modifyVars: {
-        //             'primary-color': '#1DA57A',
-        //             'link-color': '#1DA57A',
-        //             'border-radius-base': '2px',
-        //           },
-        //         }
-        //       }
-        //     }
-        //   ] 
-        // },
         {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-          exclude: /(node_modules)/,
+          // exclude: /(node_modules)/,
           use: {
             loader: 'url-loader',
             options: {
@@ -90,8 +69,7 @@ module.exports = (env, argv) => {
           }
         },
         {
-          test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-          exclude: /(node_modules)/,
+          test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
           use: {
             loader: 'url-loader',
             options: {
@@ -180,7 +158,6 @@ module.exports = (env, argv) => {
       // })
     ]
     config.optimization = {
-      minimize: true,
       minimizer: [
         new OptimizeCssAssetsWebpackPlugin(),
         new TerserWebpackPlugin()

@@ -926,7 +926,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
         ]
@@ -1017,7 +1016,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -1117,7 +1115,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -1133,8 +1130,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/, 
             use: {
               loader: 'url-loader',
               options: {
@@ -1249,7 +1245,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/,
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -1265,8 +1260,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/, 
             use: {
               loader: 'url-loader',
               options: {
@@ -1405,7 +1399,6 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
         rules: [
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -1421,8 +1414,7 @@ Webpack 还支持加载数据文件，例如 JSON 文件、XML 文件等，JSON 
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -1624,7 +1616,6 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
           },
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
             use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
           },
@@ -1641,8 +1632,7 @@ Webpack 规定 loader 导出一个`函数`，这个函数就是对资源的处�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -1885,7 +1875,6 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -1901,8 +1890,7 @@ clean-webpack-plugin 插件就是在每次打包之前，清除磁盘 dist 目�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -2029,7 +2017,7 @@ html-webpack-plugin 插件的使用如下
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
+
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -2045,8 +2033,7 @@ html-webpack-plugin 插件的使用如下
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/, 
             use: {
               loader: 'url-loader',
               options: {
@@ -2164,7 +2151,6 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -2180,8 +2166,7 @@ copy-webpack-plugin 插件用于在打包时将无需通过 file-loader 处理�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/, 
             use: {
               loader: 'url-loader',
               options: {
@@ -2309,7 +2294,6 @@ friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时�
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
           },
           {
@@ -2325,8 +2309,7 @@ friendly-errors-webpack-plugin 插件用于配置 Webpack `devServer` 运行时�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/, 
             use: {
               loader: 'url-loader',
               options: {
@@ -2678,7 +2661,6 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
         rules: [
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] 
           },
           {
@@ -2694,8 +2676,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/, 
             use: {
               loader: 'url-loader',
               options: {
@@ -2867,7 +2848,6 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
           },
           {
             test: /\.css$/, 
-            exclude: /(node_modules)/, 
             use: ['style-loader', 'css-loader'] 
           },
           {
@@ -2883,8 +2863,7 @@ ESlint 是一个使用 Node 编写的开源 JS 代码检查工具
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/, 
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/, 
             use: {
               loader: 'url-loader',
               options: {
@@ -3034,7 +3013,6 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
           },
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
             use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
           },
@@ -3051,8 +3029,7 @@ CSS 文件一般会使用 css-loader、style-loader 处理，最终打包结果�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -3217,7 +3194,6 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
           },
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
             use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
           },
@@ -3234,8 +3210,7 @@ Webpack 认为如果配置了 optimization.minimizer，就表示开发者需要�
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -3513,7 +3488,6 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
           },
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
             use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
           },
@@ -3530,8 +3504,7 @@ Webpack 由此提供了 `ES6 Modules import() 按需加载功能`，所有动态
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -3793,7 +3766,6 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
           },
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
             use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
           },
@@ -3810,8 +3782,7 @@ runtimeChunk.xxx.js 文件非常小又经常会改变，每次都需要重新请
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {
@@ -4206,7 +4177,6 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
           },
           {
             test: /\.css$/,
-            exclude: /(node_modules)/,
             // use: ['style-loader', 'css-loader'] // 一组链式 loader 按相反顺序执行
             use: [MiniCssExtractPlugin.loader, 'css-loader'] // CSS 代码单独拆包
           },
@@ -4223,8 +4193,7 @@ Webpack 要求插件必须是一个`包含 apply() 方法的类`
             }
           },
           {
-            test: /\.(woff2|eot|ttf|otf)(\?.*)?$/,
-            exclude: /(node_modules)/,
+            test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
             use: {
               loader: 'url-loader',
               options: {

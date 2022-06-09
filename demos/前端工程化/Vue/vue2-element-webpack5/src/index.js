@@ -3,14 +3,17 @@ import App from './App.vue'
 import router from './router/index.js'
 import store from './store/index.js'
 
+// 全局样式
+import './assets/style/index.scss'
+
 // api
 import Api from './api/request.js'
 Vue.use(Api)
 
-// antd 组件库
-import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
-Vue.use(Antd)
+// element 组件库
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
 
 new Vue({
   el: '#app',

@@ -26,28 +26,28 @@ const constantRoutes = [
         name: '首页',
         meta: { title: 'home', icon: '', noCache: true, affix: true },
         component: () => import('@/views/home/index.vue'),
-      },
+      }
     ],
   },
   {
-    path: '/home2',
-    name: 'aaa',
+    path: '/component',
+    name: '组件',
     component: Layout,
     children: [
       {
-        path: 'index1',
-        name: 'bbb',
-        meta: { title: 'home', icon: '', noCache: true, affix: true },
-        component: () => import('@/views/home/index.vue'),
+        path: 'tableTest',
+        name: '表格',
+        meta: { title: 'tableTest', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/components/tableTest/index.vue'),
       },
       {
-        path: 'index2',
-        name: 'ccc',
-        meta: { title: 'home', icon: '', noCache: true, affix: true },
-        component: () => import('@/views/home/index.vue'),
+        path: 'treeTest',
+        name: '树',
+        meta: { title: 'treeTest', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/components/treeTest/index.vue'),
       },
-    ],
-  },
+    ]
+  }
 ]
 
 const router = new Router({

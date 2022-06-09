@@ -1,12 +1,10 @@
 <template>
-  <div class="home">
-    <a-table></a-table>
-  </div>
+  <div>treeTest</div> 
 </template>
 
 <script>
 export default ({
-  name: 'home',
+  name: 'treeTest',
   data() {
     return {}
   }

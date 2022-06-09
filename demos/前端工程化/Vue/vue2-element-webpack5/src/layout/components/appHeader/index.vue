@@ -1,81 +1,78 @@
 <template>
   <div class="layout-header flex-row">
-    <a-icon
-      :type="menuCollapse ? 'menu-unfold' : 'menu-fold'"
-      class="layout-header-icon"
-      @click="menuCollapse = !menuCollapse"
-    />
+    <i :class="['layout-header-icon', menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold']"
+      @click="menuCollapse = !menuCollapse"></i>
   
     <div class="layout-header-operation">
-      <a-icon 
-        type="setting" 
-        class="layout-header-icon layout-header-operation-item" 
-        @click="handleThemeDialogShow">
-      </a-icon>
+      <i class="el-icon-setting layout-header-icon layout-header-operation-item"
+        @click="handleThemeDialogShow"></i>
 
-      <a-dropdown>
-        <a-icon type="user" class="layout-header-icon layout-header-operation-item"></a-icon>
-        <a-menu slot="overlay" @click="handleCommand">
-          <a-menu-item key="about">关于</a-menu-item>
-          <a-menu-item key="logout">退出</a-menu-item>
-        </a-menu>
-      </a-dropdown>
+      <el-dropdown @command="handleCommand">
+        <i class="el-icon-user layout-header-icon"></i>
+        <template #dropdown>
+            <el-dropdown-menu>
+                <el-dropdown-item command="about">关于</el-dropdown-item>
+                <el-dropdown-item command="logout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
 
-    <a-modal
-      v-model="themeDialogVisiable"
+    <el-dialog
+      :visible.sync="themeDialogVisiable"
       title="主题设置"
-      :width="500"
-      :mask-closable="false"
-      @cancel="themeDialogVisiable = false;"
-      @ok="handleThemeFormSubmit">
-      <a-form-model
+      width="500"
+      :close-on-click-modal="false">
+      <el-form
         ref="themeForm"
         :model="themeForm"
-        :labelCol="{ span: 4 }"
-        :wrapperCol="{ span: 20 }">
-        <a-form-model-item label="语言" prop="language">
-          <a-select v-model="themeForm.language">
-            <a-select-option 
-              v-for="item in languageOptions" 
-              :key="item.key" 
-              :value="item.key">
-              {{ item.name }}
-            </a-select-option>
-          </a-select>
-        </a-form-model-item>
-        <a-form-model-item label="颜色" prop="color">
-          <a-radio-group v-model="themeForm.color">
-            <a-radio 
-              v-for="item in colorOptions" 
-              :key="item.key" 
-              :value="item.key">
-              {{ item.name }}
-            </a-radio>
-          </a-radio-group>
-        </a-form-model-item>
-        <a-form-model-item label="大小" prop="size">
-          <a-radio-group v-model="themeForm.size">
-            <a-radio 
-              v-for="item in sizeOptions" 
-              :key="item.key" 
-              :value="item.key">
-              {{ item.name }}
-            </a-radio>
-          </a-radio-group>
-        </a-form-model-item>
-      </a-form-model>
-    </a-modal>
+        label-position="right"
+        label-width="100px">
+        <el-form-item label="语言" prop="language">
+            <el-select v-model="themeForm.language">
+                <el-option
+                  v-for="item in languageOptions"
+                  :key="item.key"
+                  :value="item.key"
+                  :label="item.name">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="颜色" prop="color">
+            <el-radio-group v-model="themeForm.color">
+                <el-radio
+                  v-for="item in colorOptions"
+                  :key="item.key"
+                  :label="item.key">
+                  {{ item.name }}
+                </el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="大小" prop="size">
+            <el-radio-group v-model="themeForm.size">
+                <el-radio
+                  v-for="item in sizeOptions"
+                  :key="item.key"
+                  :label="item.key">
+                  {{ item.name }}
+                </el-radio>
+            </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button type="primary" size="medium" @click="handleThemeFormSubmit">确定</el-button>
+        <el-button size="medium" @click="themeDialogVisiable = false;">取消</el-button>
+      </template>
+    </el-dialog>
 
-    <a-modal
-      v-model="aboutDialogVisiable"
+    <el-dialog
+      :visible.sync="aboutDialogVisiable"
       title="关于"
-      :width="400"
-      :footer="null"
-      :mask-closable="false">
+      width="400"
+      :close-on-click-modal="false">
       <div>版本：V1.0.0</div>
       <div>作者：yuyuyuzhang</div>
-    </a-modal>
+    </el-dialog>
   </div>
 </template>
 
@@ -127,7 +124,7 @@ export default {
     }
   },
   methods: {
-    handleCommand({ key }) {
+    handleCommand(key) {
       switch(key){
         case 'about':
           this.aboutDialogVisiable = true
@@ -175,6 +172,8 @@ export default {
   padding: 0 20px;
   font-size: 20px;
   &-icon {
+    font-size: 20px;
+    color: #606266;
     cursor: pointer;
   }
   &-operation {
