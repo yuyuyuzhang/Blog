@@ -2,11 +2,7 @@
 
 ## 1. 真实 DOM
 
-浏览器的渲染引擎线程解析 HTML 代码生成 DOM 树
-
-浏览器的渲染引擎线程解析 CSS 代码生成 CSSOM 树
-
-浏览器的渲染引擎线程将 DOM 树和 CSSOM 树关联起来，构建 Render 树，每个 DOM 节点都有一个 attach 方法接受样式信息，返回 render 对象，这些 render 对象构成一个 Render 树
+浏览器的渲染引擎线程解析 HTML 代码生成 DOM 树，解析 CSS 代码生成 CSSOM 树，将 DOM 树和 CSSOM 树关联起来，构建 Render 树，每个 DOM 节点都有一个 attach 方法接受样式信息，返回 render 对象，这些 render 对象构成一个 Render 树
 
 浏览器的渲染引擎线程遍历 Render 树开始布局，为每个节点确定一个显示屏上的精确坐标
 
@@ -26,7 +22,7 @@
 
 Vue 通过建立虚拟 DOM 来追踪如何改变真实 DOM
 
-### (1) 模板
+### (1) 模板 temlate
 
 Vue 使用了基于 HTML 的模板语法，偏向于 HTML 但不是 HTML，因此无法被浏览器直接识别
 
@@ -47,7 +43,7 @@ export default {
 </script>
 ```
 
-### (2) 渲染函数
+### (2) 渲染函数 render
 
 绝大多数情况下，使用模板更加简单，但是在一些场景中需要 JS 的完全编程的能力，这时可以使用渲染函数 render
 
@@ -94,13 +90,13 @@ render 渲染函数的参数函数 createElement 返回的并不是一个实际�
 
 ![diff比较](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/diff%E6%AF%94%E8%BE%83.jpg)
 
-**diff 比较过程**
+##### diff 比较过程
 
 * 图中很清楚的说明了，diff 的比较过程只会在`同层级比较`，不会跨级比较
 * 整体的比较过程可以理解为一个层层递进的过程，每一级都是一个 vnode 数组，当比较其中一个 vnode 时，若 children 不一样，就会进入 `updateChildren()` 函数（其主要入参为 newChildren 和 oldChildren，此时 newChildren 和 oldChildren 为同级的 vnode 数组），然后逐一比较 children 里的节点，对于 children 的 children，再循环以上步骤
 * updateChildren() 函数就是 diff 最核心的算法
 
-**updateChildren()**
+##### updateChildren()
 
 * updateChildren() 函数中有一个 `saveVnode()` 函数，源码如下
 * 也就是说，判断两个节点是否为同一节点（也就是是否可复用），标准是 `key 相同且 tag 相同`
@@ -111,7 +107,7 @@ render 渲染函数的参数函数 createElement 返回的并不是一个实际�
   }
   ```
 
-**v-for key 原理**
+##### v-for key 原理
 
 * 最大化利用节点，diff 比较时减少性能消耗，如下图，所有 Vnode tag 相同
 * 不加 kay 属性时，diff 比较如下
@@ -138,7 +134,7 @@ Vue 更新 DOM 是异步执行的，Vue 侦听到数据变化，将开启一个�
 
   > 虚拟 DOM 提升了 DOM 操作的性能下限，降低了 DOM 操作的性能上限
 
-## 3. 指令
+## 3. Vue 指令
 
 Vue 的 14 个指令如下
 
@@ -794,4 +790,482 @@ export default {
   }
 };
 </script>
+```
+
+## 4. Vue 全局 API
+
+### (1) 资源 API
+
+全局注册往往是不够理想的，因为如果使用 Webpack 构建系统，即使全局注册的内容不再被使用，也都会包含在最终的构建结果中，这会造成用户下载的 JS 代码的无谓增加
+
+```js
+Vue.extend(options)        //全局注册一个扩展,返回一个Vue子类
+Vue.component(name,define) //全局注册一个组件,父组件引用后使用
+Vue.mixin(mixin)           //全局注册一个混入,组件引用后使用
+Vue.filter(name,cb)        //全局注册一个过滤器,组件引用后使用
+Vue.directive(name,define) //全局注册一个指令,组件引用后使用
+```
+
+#### ① Vue.extend(options)
+
+Vue.extend 基于 Vue 基础实例构造器（new Vue），生成一个 Vue 扩展实例构造器，参数是一个包含组件选项的对象
+
+Vue.component 的原理就是`自动调用`实例构造器生成组件实例，然后将组件实例挂载到`自定义元素`上
+
+Vue.extend 比起 Vue.component 的优势是用于实现某些特殊需求，组件实例并不一定必须要挂载到某个 DOM 元素上，Vue.extend 可以实现组件实例动态插入到文档中，例如 `document.body.appendChild(组件实例.$el)`
+
+* 扩展组件的生命周期钩子和组件的生命周期钩子将被合并为一个数组，因此都将被调用，但是扩展组件的生命周期钩子在组件`之前`调用
+* 扩展组件的其他选项将和组件的选项合并，发生同名冲突时`以组件优先`
+
+```html
+<template>
+  <div class="message" :class="type" v-show="isShow">
+    <i class="icon"></i>
+    <span class="text">{{ text }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Message'
+}
+</script>
+
+<style scoped>
+.info {
+  background-color: "#00aaee";
+}
+.success {
+  background-color: "#00ee6b";
+}
+.warning {
+  background-color: "#eea300";
+}
+.danger {
+  background-color: "#ee000c";
+}
+</style>
+```
+
+全局注册扩展
+
+```js
+import Vue from "vue";
+import Message from "@/views/Message";
+
+//子类VueMessage继承自Vue类
+const VueMessage = Vue.extend(Message);
+
+function showMessage({ type, text, isShow }) {
+  //新建子类VueMessage的组件实例
+  const messageDOM = new VueMessage({
+    data() {
+      return {
+        type: type,
+        text: text,
+        isShow: isShow
+      };
+    }
+  });
+  //将组件实例挂载的DOM添加到文档
+  document.body.appendChild(messageDOM.$mount().$el);
+}
+
+export default showMessage;
+```
+
+组件
+
+```html
+<template>
+  <div id="app">
+    App
+    <button @click="handleClick">点击</button>
+  </div>
+</template>
+
+<script>
+import Message from "@/api/extends/globalMessage";
+
+export default {
+  name: "App",
+  methods: {
+    handleClick() {
+      Message({ type: "error", text: "我是小可爱", isShow: true });
+    }
+  }
+};
+</script>
+```
+
+#### ② Vue.component(name.options)
+
+自定义组件
+
+```html
+<template>
+  <input v-model="value" />
+</template>
+
+<script>
+export default {
+  name: "Home",
+  data() {
+    return {
+      value: "我是小可爱"
+    };
+  }
+};
+</script>
+```
+
+全局注册子组件
+
+```js
+import Vue from "vue";
+import Home from "@/views/Home";
+
+Vue.component("Home", Home);
+```
+
+父组件
+
+```html
+<template>
+  <div id="app">
+    <Home></Home>
+  </div>
+</template>
+
+<script>
+import "@/api/components/globalComponent";
+
+export default {
+  name: "App",
+  data() {
+    return {};
+  }
+};
+</script>
+```
+
+#### ③ Vue.mixin(options)
+
+全局注册的混入，任意组件都可以引用后使用
+
+混入用来分发组件的可复用功能，混入可以包含任意组件选项，组件引用混入时，混入的所有选项将被混合进该组件本身的选项
+
+* 混入的生命周期钩子和组件的生命周期钩子将被合并为一个数组，因此都将被调用，但是混入的生命周期钩子在组件`之前`调用
+* 混入的其他选项将和组件的选项合并，发生同名冲突时`以组件优先`
+
+```js
+import Vue from "vue";
+import Home from "@/views/Home";
+
+Vue.mixin({
+  components: {
+    Home
+  },
+  data() {
+    return {
+      mixinTitle: "mixin"
+    };
+  },
+  computed: {
+    mixinComputed() {
+      return this.mixinTitle + " mixinComputed";
+    }
+  },
+  methods: {
+    init() {
+      console.log("mixin hello");
+    }
+  },
+  beforeCreate() {
+    console.log("mixin beforeCreate");
+  },
+  created() {
+    console.log("mixin created");
+  },
+  beforeMount() {
+    console.log("mixin beforeMount");
+  },
+  mounted() {
+    console.log("mixin mounted");
+  },
+  beforeUpdate() {
+    console.log("mixin beforeUpdate");
+  },
+  updated() {
+    console.log("mixin updated");
+  },
+  beforeDestroy() {
+    console.log("mixin beforeDestroy");
+  },
+  destroyed() {
+    console.log("mixin destroyed");
+  }
+});
+```
+
+组件
+
+```html
+<template>
+  <div class="about">
+    {{ new Date() }}
+    <Home></Home>
+  </div>
+</template>
+
+<script>
+import "@/api/mixins/overMixin";
+
+export default {
+  components: {},
+  data() {
+    return {
+      aboutTitle: "about"
+    };
+  },
+  computed: {
+    aboutComputed() {
+      return this.aboutTitle + " aboutComputed";
+    }
+  },
+  methods: {
+    init() {
+      console.log("about hello");
+      console.log(this.aboutTitle);
+      console.log(this.mixinTitle);
+      console.log(this.aboutComputed);
+      console.log(this.mixinComputed);
+    }
+  },
+  beforeCreate() {
+    console.log("about beforeCreate");
+  },
+  created() {
+    console.log("about created");
+  },
+  beforeMount() {
+    console.log("about beforeMount");
+  },
+  mounted() {
+    console.log("about mounted");
+    this.$nextTick(() => {
+      this.init();
+    });
+  },
+  beforeUpdate() {
+    console.log("about beforeUpdate");
+  },
+  updated() {
+    console.log("about updated");
+  },
+  beforeDestroy() {
+    console.log("about beforeDestroy");
+  },
+  destroyed() {
+    console.log("about destroyed");
+  }
+};
+</script>
+
+//输出：mixin beforeCreate
+//     about beforeCreate
+//     mixin created
+//     about created
+//     mixin beforeMount
+//     about beforeMount
+//     mixin mounted
+//     about mounted
+//     about hello
+//     about
+//     mixin
+//     about aboutComputed
+//     mixin mixinComputed
+```
+
+#### ④ Vue.filter(name,cb)
+
+全局注册的过滤器，任意组件都可以引用后使用
+
+过滤器可以用在`双花括号 {{}} 插值`和 `v-bind 表达式`，过滤器的作用一般是文本格式化
+
+```js
+import Vue from "vue";
+
+Vue.filter("formateDate", function(date) {
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  let second = date.getSeconds();
+
+  month = month < 10 ? "0" + month : month;
+  day = day < 10 ? "0" + day : day;
+  hour = hour < 10 ? "0" + hour : hour;
+  minute = minute < 10 ? "0" + minute : minute;
+  second = second < 10 ? "0" + second : second;
+
+  return (
+    year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
+  );
+});
+```
+
+组件
+
+```html
+<template>
+  <div id="app">
+    当前时间：{{ date | formateDate }}
+    <div :time="date | formateDate">aaa</div>
+  </div>
+</template>
+
+<script>
+import "@/api/utils/filters";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      date: new Date()
+    };
+  }
+};
+</script>
+```
+
+![filters](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/filters.png)
+
+#### ⑤ Vue.directive(name,options)
+
+全局注册的自定义指令，任意组件都可以引用后使用
+
+```js
+import Vue from 'vue'
+
+Vue.directive("v-focus", {
+  //指令绑定到元素时
+  bind: function(el, binding, vnode) {
+    console.log(el);                 //指令绑定的元素
+    console.log(binding);            //指令的属性对象
+    console.log(binding.name);       //指令名
+    console.log(binding.expression); //指令表达式
+    console.log(binding.value);      //指令绑定的当前值
+    console.log(binding.oldValue);   //指令绑定的前一个值
+    console.log(binding.arg);        //指令参数
+    console.log(binding.modifiers);  //修饰符对象
+  },
+  //绑定元素插入父节点时(仅保证父节点存在,不一定插入文档)
+  inserted: function(el, binding, vnode) {
+    el.focus();
+  },
+  //所在组件的VNode更新时(可能发生在子VNode更新前)
+  update: function(el, binding, vnode, oldVnode) {
+    console.log(vnode);    //当前VNode
+    console.log(oldVnode); //上一个VNode
+  },
+  //所在组件的VNode及其子VNode全部更新时
+  componentUpdated: function(el, binding, vnode, oldVnode) {},
+  //指令与元素解绑时
+  unbind: function(el, binding, vnode) {}
+});
+```
+
+组件
+
+```html
+<template>
+  <div id="app">
+    <input v-focus v-model="value" />
+  </div>
+</template>
+
+<script>
+import "@/api/utils/directives"; //引入全局注册的自定义指令
+
+export default {
+  name: "App",
+  data() {
+    return {
+      value: "aaa"
+    };
+  }
+};
+</script>
+```
+
+### (2) 数据 API
+
+```js
+Vue.nextTick(cb)                   //下次DOM更新循环结束后执行回调cb
+Vue.set(target,propName/index,val) //向响应式对象target添加/修改propName/index
+Vue.delete(target,propName/index)  //向响应式对象target删除propName/index
+```
+
+### (3) 其他 API
+
+```js
+Vue.version           //Vue安装版本号
+Vue.use(plugin)       //安装插件plugin
+Vue.observable(obj)   //令对象obj可响应(在Vuex中详解)
+Vue.compile(template) //将字符串模板template编译为render函数
+```
+
+#### ① Vue.use
+
+Vue.use(plugin) 用于安装 Vue 插件，插件的 install 方法调用时，会将 Vue 作为参数传入
+
+* 如果插件是对象，必须提供 install 方法
+* 如果插件是函数，自身会被作为 install 方法
+
+```js
+//打印插件
+
+const Print = function(dom, options){
+ //...
+}
+Print.prototype = {
+  init(){},
+  getHtml(){},
+  //...
+}
+
+//插件定义
+const MyPlugin = {}
+MyPlugin.install = function(Vue, options){
+  Vue.prototyoe.$print = Print
+}
+export default MyPlugin
+```
+
+main.js
+
+```js
+import Vue from "vue";
+import axios from "axios";
+import "./plugins/element.js";
+
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+
+import Print from '@/api/utils/print'
+
+Vue.prototype.$axios = axios;
+Vue.config.productionTip = false;
+
+Vue.use(Print)
+
+new Vue({
+  el: "#app",
+  router,
+  store,
+  render: h => h(App)
+});
 ```

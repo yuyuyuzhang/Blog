@@ -7,16 +7,18 @@
 </template>
 
 <script>
-// 不带选项的局部异步组件
-const treeTest = () => import('../treeTest/index.vue')
+import { defineAsyncComponent } from 'vue'
 
-// 带选项的局部异步组件
-const treeTestWithOptions = () => ({
-  component: import('../treeTest/index.vue'),
+// 不带选项的异步组件
+const treeTest = defineAsyncComponent(() => import('../treeTest/index.vue'))
+
+// 带选项的异步组件
+const treeTestWithOptions = defineAsyncComponent({
+  loader: () => import('../treeTest/index.vue'),
   delay: 200,
   timeout: 3000,
-  error: null,
-  loading: null
+  errorComponent: null,
+  loadingComponent: null
 })
 
 export default ({

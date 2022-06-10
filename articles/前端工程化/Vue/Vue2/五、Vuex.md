@@ -1,4 +1,4 @@
-# 六、Vuex
+# 五、Vuex
 
 ## 1. Vuex
 

@@ -1,6 +1,30 @@
-# 二、Vue API
+# 二、Vue 组件
 
-## 1. Vue 组件生命周期
+## 1. Vue 应用
+
+一个 Vue 应用由一个通过 new Vue 创建的根 Vue 实例，以及可选的、嵌套的、可复用的组件树组成
+
+## 2. Vue 组件
+
+Vue 组件非常类似于自定义元素，Vue 组件是 Web 组件规范的一部分，实现了 Slot API 和 is attribute
+
+不同框架对于组件的定义和实现各不相同，但可以用一句话来概括组件的定义：`组件就是基于视图的模块`，组件的核心任务就是将数据渲染到视图并监听用户在视图上的操作
+
+### (1) Vue 实例
+
+单页面应用程序 SPA 中只有一个 Vue 实例
+
+### (2) VueComponent 实例
+
+Vue 组件是 VueComponent 实例，VueComponent 实例是 Vue 实例的扩展
+
+### (3) 父子组件间的单向数据流
+
+* 数据自上而下流 `prop、provide/inject`
+
+* 事件自下而上走 `this.$emit(e,...args)`
+
+## 3. Vue 组件生命周期
 
 ### (1) 生命周期方法
 
@@ -105,485 +129,7 @@ const vm = new Vue({
 </script>
 ```
 
-## 2. Vue 全局 API
-
-### (1) 资源 API
-
-全局注册往往是不够理想的，因为如果使用 Webpack 构建系统，即使全局注册的内容不再被使用，也都会包含在最终的构建结果中，这会造成用户下载的 JS 代码的无谓增加
-
-```js
-Vue.extend(options)        //全局注册一个扩展,返回一个Vue子类
-Vue.component(name,define) //全局注册一个组件,父组件引用后使用
-Vue.mixin(mixin)           //全局注册一个混入,组件引用后使用
-Vue.filter(name,cb)        //全局注册一个过滤器,组件引用后使用
-Vue.directive(name,define) //全局注册一个指令,组件引用后使用
-```
-
-#### ① Vue.extend(options)
-
-Vue.extend 基于 Vue 基础实例构造器（new Vue），生成一个 Vue 扩展实例构造器，参数是一个包含组件选项的对象
-
-Vue.component 的原理就是`自动调用`实例构造器生成组件实例，然后将组件实例挂载到`自定义元素`上
-
-Vue.extend 比起 Vue.component 的优势是用于实现某些特殊需求，组件实例并不一定必须要挂载到某个 DOM 元素上，Vue.extend 可以实现组件实例动态插入到文档中，例如 `document.body.appendChild(组件实例.$el)`
-
-* 扩展组件的生命周期钩子和组件的生命周期钩子将被合并为一个数组，因此都将被调用，但是扩展组件的生命周期钩子在组件`之前`调用
-* 扩展组件的其他选项将和组件的选项合并，发生同名冲突时`以组件优先`
-
-```html
-<template>
-  <div class="message" :class="type" v-show="isShow">
-    <i class="icon"></i>
-    <span class="text">{{ text }}</span>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'Message'
-}
-</script>
-
-<style scoped>
-.info {
-  background-color: "#00aaee";
-}
-.success {
-  background-color: "#00ee6b";
-}
-.warning {
-  background-color: "#eea300";
-}
-.danger {
-  background-color: "#ee000c";
-}
-</style>
-```
-
-全局注册扩展
-
-```js
-import Vue from "vue";
-import Message from "@/views/Message";
-
-//子类VueMessage继承自Vue类
-const VueMessage = Vue.extend(Message);
-
-function showMessage({ type, text, isShow }) {
-  //新建子类VueMessage的组件实例
-  const messageDOM = new VueMessage({
-    data() {
-      return {
-        type: type,
-        text: text,
-        isShow: isShow
-      };
-    }
-  });
-  //将组件实例挂载的DOM添加到文档
-  document.body.appendChild(messageDOM.$mount().$el);
-}
-
-export default showMessage;
-```
-
-组件
-
-```html
-<template>
-  <div id="app">
-    App
-    <button @click="handleClick">点击</button>
-  </div>
-</template>
-
-<script>
-import Message from "@/api/extends/globalMessage";
-
-export default {
-  name: "App",
-  methods: {
-    handleClick() {
-      Message({ type: "error", text: "我是小可爱", isShow: true });
-    }
-  }
-};
-</script>
-```
-
-#### ② Vue.component(name.options)
-
-自定义组件
-
-```html
-<template>
-  <input v-model="value" />
-</template>
-
-<script>
-export default {
-  name: "Home",
-  data() {
-    return {
-      value: "我是小可爱"
-    };
-  }
-};
-</script>
-```
-
-全局注册子组件
-
-```js
-import Vue from "vue";
-import Home from "@/views/Home";
-
-Vue.component("Home", Home);
-```
-
-父组件
-
-```html
-<template>
-  <div id="app">
-    <Home></Home>
-  </div>
-</template>
-
-<script>
-import "@/api/components/globalComponent";
-
-export default {
-  name: "App",
-  data() {
-    return {};
-  }
-};
-</script>
-```
-
-#### ③ Vue.mixin(options)
-
-全局注册的混入，任意组件都可以引用后使用
-
-混入用来分发组件的可复用功能，混入可以包含任意组件选项，组件引用混入时，混入的所有选项将被混合进该组件本身的选项
-
-* 混入的生命周期钩子和组件的生命周期钩子将被合并为一个数组，因此都将被调用，但是混入的生命周期钩子在组件`之前`调用
-* 混入的其他选项将和组件的选项合并，发生同名冲突时`以组件优先`
-
-```js
-import Vue from "vue";
-import Home from "@/views/Home";
-
-Vue.mixin({
-  components: {
-    Home
-  },
-  data() {
-    return {
-      mixinTitle: "mixin"
-    };
-  },
-  computed: {
-    mixinComputed() {
-      return this.mixinTitle + " mixinComputed";
-    }
-  },
-  methods: {
-    init() {
-      console.log("mixin hello");
-    }
-  },
-  beforeCreate() {
-    console.log("mixin beforeCreate");
-  },
-  created() {
-    console.log("mixin created");
-  },
-  beforeMount() {
-    console.log("mixin beforeMount");
-  },
-  mounted() {
-    console.log("mixin mounted");
-  },
-  beforeUpdate() {
-    console.log("mixin beforeUpdate");
-  },
-  updated() {
-    console.log("mixin updated");
-  },
-  beforeDestroy() {
-    console.log("mixin beforeDestroy");
-  },
-  destroyed() {
-    console.log("mixin destroyed");
-  }
-});
-```
-
-组件
-
-```html
-<template>
-  <div class="about">
-    {{ new Date() }}
-    <Home></Home>
-  </div>
-</template>
-
-<script>
-import "@/api/mixins/overMixin";
-
-export default {
-  components: {},
-  data() {
-    return {
-      aboutTitle: "about"
-    };
-  },
-  computed: {
-    aboutComputed() {
-      return this.aboutTitle + " aboutComputed";
-    }
-  },
-  methods: {
-    init() {
-      console.log("about hello");
-      console.log(this.aboutTitle);
-      console.log(this.mixinTitle);
-      console.log(this.aboutComputed);
-      console.log(this.mixinComputed);
-    }
-  },
-  beforeCreate() {
-    console.log("about beforeCreate");
-  },
-  created() {
-    console.log("about created");
-  },
-  beforeMount() {
-    console.log("about beforeMount");
-  },
-  mounted() {
-    console.log("about mounted");
-    this.$nextTick(() => {
-      this.init();
-    });
-  },
-  beforeUpdate() {
-    console.log("about beforeUpdate");
-  },
-  updated() {
-    console.log("about updated");
-  },
-  beforeDestroy() {
-    console.log("about beforeDestroy");
-  },
-  destroyed() {
-    console.log("about destroyed");
-  }
-};
-</script>
-
-//输出：mixin beforeCreate
-//     about beforeCreate
-//     mixin created
-//     about created
-//     mixin beforeMount
-//     about beforeMount
-//     mixin mounted
-//     about mounted
-//     about hello
-//     about
-//     mixin
-//     about aboutComputed
-//     mixin mixinComputed
-```
-
-#### ④ Vue.filter(name,cb)
-
-全局注册的过滤器，任意组件都可以引用后使用
-
-过滤器可以用在`双花括号 {{}} 插值`和 `v-bind 表达式`，过滤器的作用一般是文本格式化
-
-```js
-import Vue from "vue";
-
-Vue.filter("formateDate", function(date) {
-  const year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-  let hour = date.getHours();
-  let minute = date.getMinutes();
-  let second = date.getSeconds();
-
-  month = month < 10 ? "0" + month : month;
-  day = day < 10 ? "0" + day : day;
-  hour = hour < 10 ? "0" + hour : hour;
-  minute = minute < 10 ? "0" + minute : minute;
-  second = second < 10 ? "0" + second : second;
-
-  return (
-    year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
-  );
-});
-```
-
-组件
-
-```html
-<template>
-  <div id="app">
-    当前时间：{{ date | formateDate }}
-    <div :time="date | formateDate">aaa</div>
-  </div>
-</template>
-
-<script>
-import "@/api/utils/filters";
-
-export default {
-  name: "App",
-  data() {
-    return {
-      date: new Date()
-    };
-  }
-};
-</script>
-```
-
-![filters](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/filters.png)
-
-#### ⑤ Vue.directive(name,options)
-
-全局注册的自定义指令，任意组件都可以引用后使用
-
-```js
-import Vue from 'vue'
-
-Vue.directive("v-focus", {
-  //指令绑定到元素时
-  bind: function(el, binding, vnode) {
-    console.log(el);                 //指令绑定的元素
-    console.log(binding);            //指令的属性对象
-    console.log(binding.name);       //指令名
-    console.log(binding.expression); //指令表达式
-    console.log(binding.value);      //指令绑定的当前值
-    console.log(binding.oldValue);   //指令绑定的前一个值
-    console.log(binding.arg);        //指令参数
-    console.log(binding.modifiers);  //修饰符对象
-  },
-  //绑定元素插入父节点时(仅保证父节点存在,不一定插入文档)
-  inserted: function(el, binding, vnode) {
-    el.focus();
-  },
-  //所在组件的VNode更新时(可能发生在子VNode更新前)
-  update: function(el, binding, vnode, oldVnode) {
-    console.log(vnode);    //当前VNode
-    console.log(oldVnode); //上一个VNode
-  },
-  //所在组件的VNode及其子VNode全部更新时
-  componentUpdated: function(el, binding, vnode, oldVnode) {},
-  //指令与元素解绑时
-  unbind: function(el, binding, vnode) {}
-});
-```
-
-组件
-
-```html
-<template>
-  <div id="app">
-    <input v-focus v-model="value" />
-  </div>
-</template>
-
-<script>
-import "@/api/utils/directives"; //引入全局注册的自定义指令
-
-export default {
-  name: "App",
-  data() {
-    return {
-      value: "aaa"
-    };
-  }
-};
-</script>
-```
-
-### (2) 数据 API
-
-```js
-Vue.nextTick(cb)                   //下次DOM更新循环结束后执行回调cb
-Vue.set(target,propName/index,val) //向响应式对象target添加/修改propName/index
-Vue.delete(target,propName/index)  //向响应式对象target删除propName/index
-```
-
-### (3) 其他 API
-
-```js
-Vue.version           //Vue安装版本号
-Vue.use(plugin)       //安装插件plugin
-Vue.observable(obj)   //令对象obj可响应(在Vuex中详解)
-Vue.compile(template) //将字符串模板template编译为render函数
-```
-
-#### ① Vue.use
-
-Vue.use(plugin) 用于安装 Vue 插件，插件的 install 方法调用时，会将 Vue 作为参数传入
-
-* 如果插件是对象，必须提供 install 方法
-* 如果插件是函数，自身会被作为 install 方法
-
-```js
-//打印插件
-
-const Print = function(dom, options){
- //...
-}
-Print.prototype = {
-  init(){},
-  getHtml(){},
-  //...
-}
-
-//插件定义
-const MyPlugin = {}
-MyPlugin.install = function(Vue, options){
-  Vue.prototyoe.$print = Print
-}
-export default MyPlugin
-```
-
-main.js
-
-```js
-import Vue from "vue";
-import axios from "axios";
-import "./plugins/element.js";
-
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-
-import Print from '@/api/utils/print'
-
-Vue.prototype.$axios = axios;
-Vue.config.productionTip = false;
-
-Vue.use(Print)
-
-new Vue({
-  el: "#app",
-  router,
-  store,
-  render: h => h(App)
-});
-```
-
-## 3. Vue 组件选项
+## 4. Vue 组件选项
 
 ### (1) DOM 选项
 
@@ -1108,7 +654,7 @@ model        //当前组件自定义v-model指令的prop、event,默认将表单
 functional   //当前组件作为函数式组件
 ```
 
-## 4. Vue 组件属性和方法
+## 5. Vue 组件属性和方法
 
 ### (1) Vue 组件属性
 
@@ -1299,3 +845,272 @@ export default {
 };
 </script>
 ```
+
+## 6. Vue 动态组件
+
+**动态组件**：多个组件使用同一个挂载点，动态进行切换，这就是动态组件
+
+正常情况下，切换组件调用时会`销毁`组件实例，而使用 `<keep-alive>` 包裹动态组件时，就不会销毁，而是缓存不活动的组件实例，下一次使用的时候直接从缓存中加载，主要用于保存组件状态，避免反复重新渲染导致的性能问题
+
+`<keep-alive>` 标签自身不会渲染一个 DOM 元素，也不会出现在组件的父组件链中
+
+组件在 `<keep-alive>` 标签内切换时，组件的 `activated` 和 `deactivated` 生命周期钩子函数将会被对应执行
+
+`<keep-alive>` 标签的属性
+
+* include：字符串或正则表达式，只有名称匹配的组件会被缓存
+* exclude：字符串或正则表达式，任意名称匹配的组件都不会被缓存
+* max：数字，最多可缓存多少个组件实例
+
+```html
+<!-- 多个条件判断的子组件缓存状态,不销毁 -->
+<keep-alive>
+  <comp-a v-if="a > 1"></comp-a>
+  <comp-b v-else></comp-b>
+</keep-alive>
+
+<!-- 逗号分隔字符串 -->
+<keep-alive include="a,b">
+  <component :is="view"></component>
+</keep-alive>
+
+<!-- 正则表达式 (使用 `v-bind`) -->
+<keep-alive :include="/a|b/">
+  <component :is="view"></component>
+</keep-alive>
+
+<!-- 数组 (使用 `v-bind`) -->
+<keep-alive :include="['a', 'b']">
+  <component :is="view"></component>
+</keep-alive>
+```
+
+父组件
+
+```html
+<template>
+  <div id="app">
+    <button @click="is = 'About'">About</button>
+    <button @click="is = 'Home'">Home</button>
+
+    <keep-alive>
+      <template v-if="is === 'About'">
+        <About></About>
+      </template>
+
+      <template v-else>
+        <Home></Home>
+      </template>
+    </keep-alive>
+  </div>
+</template>
+
+<script>
+import About from "@/views/About";
+import Home from "@/views/Home";
+
+export default {
+  name: "App",
+  components: {
+    About,
+    Home
+  },
+  data() {
+    return {
+      is: "About"
+    };
+  },
+};
+</script>
+```
+
+子组件
+
+```html
+<template>
+  <div class="Home">
+    <button @click="count++">HomeBtn</button>
+    {{ count }}
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Home",
+  data() {
+    return {
+      count: 0
+    };
+  },
+};
+</script>
+```
+
+## 7. Vue 异步组件
+
+### (1) import 函数
+
+ES2020 提案引入 import(path) 函数，支持动态加载模块，返回一个 `Promise 实例`
+
+#### ① 异步加载
+
+ES6 的 import() 方法类似于 Node 的 require() 方法，区别主要是 import() 是异步加载，require() 是同步加载
+
+import() 方法返回一个 `Promise 实例`
+
+```js
+const main = document.querySelector('main');
+
+//JS引擎线程执行import()函数,并通知网络进程异步加载模块资源,
+//import()函数交出执行权,JS引擎线程继续执行后续代码,模块加载
+//完成后,事件触发线程将import()函数返回的Promise实例的then
+//方法的参数函数放入JS引擎线程的微任务队列,JS引擎线程空闲时
+//执行then方法的参数函数
+import(`./section-modules/${someVariable}.js`)
+  .then(module => {
+    module.loadPageInto(main);
+  })
+  .catch(err => {
+    main.textContent = err.message;
+  });
+```
+
+#### ② 按需加载
+
+import(path) 函数可以用在任何地方，不仅仅是模块，非模块的脚本也可以使用，`运行到这一行代码时`才会加载指定的模块
+
+```js
+//<button @click="handleClick">点击</button>
+const btn = document.getElementById('btn')
+btn.addEventListener('click', function(){
+  import('./module')
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+})
+```
+
+#### ③ 条件加载
+
+可以放在 if 代码块，根据不同的情况，加载不同的模块，
+
+```js
+//main.js
+if(flag){
+  import('./module1')
+    .then(res => {})
+    .catch(err => console.log(err));
+} else{
+  import('./module2')
+    .then(res => {})
+    .catch(err => console.log(err));
+}
+```
+
+#### ④ 动态的模块路径
+
+允许模块路径动态生成
+
+```js
+const f = (name) => return './' + name + '.js';
+import(f())
+  .then(res => {})
+  .catch(err => console.log(err));
+```
+
+#### ⑤ 模块作为对象
+
+import(path) 加载成功后的模块会作为一个`对象`，成为返回的 Promise 实例的 then 方法的参数函数的参数
+
+```js
+//person.js
+export { person1, person2}
+
+//main.js
+import('./person')
+  .then(res => console.log(res.default)) //可以直接获取默认输出default接口
+  .catch(err => console.log(err));
+
+import('./person')
+  .then({ person1, person2 } => {}) //对象可以使用解构赋值
+  .catch(err => console.log(err));
+```
+
+#### ⑥ 同时动态加载多个模块
+
+使用 `Promise.all()` 实现同时加载多个模块
+
+```js
+Promise.all([
+  import('./module1'),
+  import('./module2'),
+  import('./module3')
+])
+  .then(([module1, module2, module3]) => {})
+  .catch(err => console.log(err));
+```
+
+#### ⑦ 用在 async 函数 await 命令后
+
+import(path) 函数返回一个 Promise 实例，因而可以用在 async 函数的 await 命令后
+
+```js
+//main.js
+async f(){
+  const { export1, export2 } = await import('./module1');
+  const [module2, nodule3] = await Promise.all([
+    import('./module2'),
+    import('./module3')
+  ])
+}
+f();
+```
+
+### (2) 异步组件
+
+#### ① 全局异步组件
+
+```js
+Vue.component(
+  'async-webpack-example',
+  () => import('./my-async-component')
+)
+```
+
+#### ② 局部异步组件
+
+```vue
+<template>
+  <div>
+    tableTest
+    <treeTest></treeTest>
+    <treeTestWithOptions></treeTestWithOptions>
+  </div> 
+</template>
+
+<script>
+// 不带选项的局部异步组件
+const treeTest = () => import('../treeTest/index.vue')
+
+// 带选项的局部异步组件
+const treeTestWithOptions = () => ({
+  component: import('../treeTest/index.vue'),
+  delay: 200,
+  timeout: 3000,
+  error: null,
+  loading: null
+})
+
+export default ({
+  name: 'tableTest',
+  components: {
+    treeTest,
+    treeTestWithOptions
+  },
+  data() {
+    return {}
+  }
+})
+</script>
+```
+
+![vue2局部异步组件]()

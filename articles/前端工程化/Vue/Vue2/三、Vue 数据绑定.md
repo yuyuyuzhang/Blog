@@ -1,4 +1,4 @@
-# 四、数据绑定
+# 三、数据绑定
 
 ## 1. Vue 数据链
 
@@ -35,7 +35,7 @@ console.log(f) //19
 console.log(g) //9
 ```
 
-### (3) Vue 数据链 ( Computed )
+### (3) Vue 数据链（Computed）
 
 通过数据链和函数式编程，Vue 实现 computed 计算属性以供开发者生成衍生数据，
 

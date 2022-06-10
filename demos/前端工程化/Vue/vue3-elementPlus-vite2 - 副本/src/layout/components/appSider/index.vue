@@ -51,7 +51,7 @@ export default ({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .layout-sider {
   height: 100%;
   border-right: 1px solid #e6e6e6;
