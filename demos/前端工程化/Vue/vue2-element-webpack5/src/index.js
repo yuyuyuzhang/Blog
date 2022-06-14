@@ -21,6 +21,9 @@ import './directive/index.js';
 // 注册全局自定义过滤器
 import './filter/index.js'
 
+// 注册扩展
+import './extend/index.js'
+
 new Vue({
   el: '#app',
   router,

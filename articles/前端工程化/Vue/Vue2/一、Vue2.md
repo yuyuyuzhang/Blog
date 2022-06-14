@@ -976,6 +976,30 @@ Vue.extend(options)        //全局注册一个扩展,返回一个 Vue 子类
 * **vnode**：当前虚拟节点
 * **oldVnode**：上一个虚拟节点
 
+全局自定义指令
+
+```js
+Vue.directive('xxx', {
+  inserted: (el, binding, vnode, oldVnode) => {
+    //...
+  }
+  ...
+})
+```
+
+局部自定义指令
+
+```js
+directives: {
+  xxx: {
+    inserted: (el, binding, vnode, oldVnode) => {
+      //...
+    }
+    ...
+  }
+}
+```
+
 src/directive/adaptive.js
 
 ```js
@@ -1060,253 +1084,517 @@ src/views/person/index.vue
 
 ### (5) 过滤 filters
 
-自定义过滤器用于常见的`文本格式化`，过滤器可以用在`双花括号插值`和 `v-bind` 表达式
-
-
-```html
-<template>
-  <div class="about">
-    当前时间：{{ time | formateDate }}
-    <div :time="time | formateDate">aaa</div>
-  </div>
-</template>
-
-<script>
-export default {
-  props: {},
-  data() {
-    return {
-      time: new Date()
-    };
-  },
-  filters: {
-    formateDate: function(date) {
-      const year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
-
-      month = month < 10 ? "0" + month : month;
-      day = day < 10 ? "0" + day : day;
-      hour = hour < 10 ? "0" + hour : hour;
-      minute = minute < 10 ? "0" + minute : minute;
-      second = second < 10 ? "0" + second : second;
-
-      return (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
-    }
-  }
-};
-</script>
-```
-
-### (4) 混入 mixins
-
-混入用于`分发组件的可复用功能`，混入可以包含任意组件选项，组件使用混入时，所有混入的选项都将混合进入组件本身的选项
-
-* 值为对象的选项将合并为同一个`对象`，键名发生冲突时以`组件`优先（directives、filters、components、extends、data、methods）
-* 生命周期钩子函数同名则合并为`数组`，因此都将被调用，`混入钩子在组件钩子之前调用`
+自定义过滤器用于常见的`文本格式化`，只能用在`双花括号插值`和 `v-bind` 属性绑定表达式，通过`管道符 |` 调用，多个过滤器可以`链式调用`，前一个过滤器的返回结果作为参数传递到下一个过滤器
 
 ```js
-import Home from "@/views/Home";
+<!-- 双花括号插值：msg 作为参数传到过滤器 filterA，过滤器 filterA 的返回结果作为参数传到过滤器 filterB -->
+{{ msg | filterA | filterB }}
 
-export default {
-  components: {
-    Home
-  },
-  data() {
-    return {
-      mixinTitle: "mixin"
-    };
-  },
-  computed: {
-    mixinComputed() {
-      return this.mixinTitle + " mixinComputed";
-    }
-  },
-  methods: {
-    init() {
-      console.log("mixin hello");
-    }
-  },
-  beforeCreate() {
-    console.log("mixin beforeCreate");
-  },
-  created() {
-    console.log("mixin created");
-  },
-  beforeMount() {
-    console.log("mixin beforeMount");
-  },
-  mounted() {
-    console.log("mixin mounted");
-  },
-  beforeUpdate() {
-    console.log("mixin beforeUpdate");
-  },
-  updated() {
-    console.log("mixin updated");
-  },
-  beforeDestroy() {
-    console.log("mixin beforeDestroy");
-  },
-  destroyed() {
-    console.log("mixin destroyed");
-  }
-};
+<!-- v-bind 属性绑定： -->
+<div v-bind:id="msg | filterA | filterB"></div>
 ```
 
-组件
+全局自定义过滤器
 
-```html
-<template>
-  <div class="about">
-    {{ new Date() }}
-    <Home></Home>
-  </div>
-</template>
-
-<script>
-import mixin from "@/api/mixins/mixin";
-
-export default {
-  components: {},
-  mixins: [mixin],
-  data() {
-    return {
-      aboutTitle: "about"
-    };
-  },
-  computed: {
-    aboutComputed() {
-      return this.aboutTitle + " aboutComputed";
-    }
-  },
-  methods: {
-    init() {
-      console.log("about hello");
-      console.log(this.aboutTitle);
-      console.log(this.mixinTitle);
-      console.log(this.aboutComputed);
-      console.log(this.mixinComputed);
-    }
-  },
-  beforeCreate() {
-    console.log("about beforeCreate");
-  },
-  created() {
-    console.log("about created");
-  },
-  beforeMount() {
-    console.log("about beforeMount");
-  },
-  mounted() {
-    console.log("about mounted");
-    this.$nextTick(() => {
-      this.init();
-    });
-  },
-  beforeUpdate() {
-    console.log("about beforeUpdate");
-  },
-  updated() {
-    console.log("about updated");
-  },
-  beforeDestroy() {
-    console.log("about beforeDestroy");
-  },
-  destroyed() {
-    console.log("about destroyed");
-  }
-};
-</script>
-
-//输出：mixin beforeCreate
-//     about beforeCreate
-//     mixin created
-//     about created
-//     mixin beforeMount
-//     about beforeMount
-//     mixin mounted
-//     about mounted
-//     about hello
-//     about
-//     mixin
-//     about aboutComputed
-//     mixin mixinComputed
+```js
+Vue.filter('xxx', val => {
+  //...
+  return value
+})
 ```
 
-### (3) 扩展 extends
+局部自定义过滤器
 
-extends 选项可以在当前组件局部注册`扩展`，即当前组件`继承`扩展组件
+```js
+filters: {
+  xxx: val => {
+    //...
+    return value
+  }
+}
+```
 
-扩展组件
+src/filter/formateDate.js
 
-```html
+```js
+import Vue from 'vue'
+
+Vue.filter('formatDate', date => {
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+    hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+
+    return (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+})
+```
+
+src/filter/index.js
+
+```js
+import './formatDate.js'
+```
+
+src/index.js
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router/index.js'
+import store from './store/index.js'
+
+// 全局样式
+import './assets/style/index.scss'
+
+// api
+import Api from './api/request.js'
+Vue.use(Api)
+
+// element-ui 组件库
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
+
+// 注册全局自定义指令
+import './directive/index.js';
+
+// 注册全局自定义过滤器
+import './filter/index.js'
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
+})
+```
+
+src/views/test/resource/index.vue
+
+```vue
 <template>
-  <div class="message" :class="type" v-show="isShow">
-    <i class="icon"></i>
-    <span class="text">{{ text }}</span>
-  </div>
+  <section class="resource">
+    自定义全局过滤器
+    <div class="resource-filter">
+      <div>{{ new Date() }}</div>
+      <div>{{ new Date() | formatDate }}</div>
+    </div>
+  </section>
 </template>
 
 <script>
 export default {
-  name: "Message",
-  data() {
-    return {};
-  },
-  methods: {
-    parentClick() {
-      console.log("parent");
-    }
-  }
+  name: 'resource',
 };
 </script>
 
-<style scoped>
-.info {
-  background-color: "#00aaee";
-}
-.success {
-  background-color: "#00ee6b";
-}
-.warning {
-  background-color: "#eea300";
-}
-.danger {
-  background-color: "#ee000c";
+<style lang="scss" scoped>
+.resource {
+  box-sizing: border-box;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  h2 {
+    margin-top: 0;
+  }
+  &-filter {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid black;
+  }
 }
 </style>
 ```
 
-子组件
+![自定义全局过滤器]()
 
-```html
+### (4) 混入 mixins
+
+混入用于`分发组件的可复用功能`，混入可以包含任意组件选项，组件使用混入时，所有混入的选项都将混合进入组件本身的选项，混入主要用于复用`业务逻辑`
+
+* 值为对象的选项将合并为同一个`对象`，键名发生冲突时以`组件`优先（directives、filters、components、extends、data、methods）
+* 生命周期钩子函数同名则合并为`数组`，因此都将被调用，`混入钩子在组件钩子之前调用`
+
+src/mixin/cat.js
+
+```js
+export default {
+    name: 'resource',
+    data() {
+        return {
+            tableData: []
+        }
+    },
+    methods: {
+        getTableData() {
+            this.tableData = [
+                { name: '三胖', gender: 'male', age: 2, weight: 17 },
+                { name: '四旁', gander: 'female', age: 1.5, weight: 9 }
+            ]
+        }
+    }
+};
+```
+
+src/views/test/resource/index.vue
+
+```vue
 <template>
-  <div id="app">
-    <button @click="handleClick">点击</button>
-  </div>
+  <section class="resource">
+    自定义全局过滤器
+    <div class="resource-filter">
+      <div>{{ new Date() }}</div>
+      <div>{{ new Date() | formatDate }}</div>
+    </div>
+
+    自定义混入
+    <div class="resource-mixin">
+      <el-table :data="tableData">
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="gender" label="性别">
+          <template slot-scope="{ row }">
+            {{ row.gender === 'male' ? '公' : '母' }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="age" label="年龄"></el-table-column>
+        <el-table-column prop="weight" label="体重">
+          <template slot-scope="{ row }">
+            {{ row.weight + ' 斤' }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+  </section>
 </template>
 
 <script>
-import Message from "@/api/extends/Message";
+import catMixin from '@/mixin/catMixin.js'
 
 export default {
-  name: "App",
-  extends: Message, //当前组件继承扩展组件,
+  name: 'resource',
+  mixins: [
+    catMixin
+  ],
+  created() {
+    this.getTableData()
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.resource {
+  box-sizing: border-box;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  h2 {
+    margin-top: 0;
+  }
+  &-filter,
+  &-mixin {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid black;
+  }
+}
+</style>
+```
+
+![mixin]()
+
+### (3) 扩展 extends
+
+扩展就是使用基础 Vue 构造器创建一个`子类构造器`，之后再使用子类构造器创建一个`实例`，并将实例挂载到`任意指定节点`，常用于`开发者自己构建一个复杂弹窗`
+
+```js
+// 创建扩展构造器
+const Profile = Vue.extend({
+  template: '<div></div>',
+  data() {
+    return {}
+  },
+  methods: {}
+})
+
+// 实例化扩展构造器并挂载到指定节点
+new Profile().$mount('#mount-point')
+```
+
+src/extend/MessageBox/Confirm.vue
+
+```vue
+<template>
+  <section v-if="flag" id="confirm" class="shade">
+    <div class="content">
+      <div class="content-top">
+        {{ options.title }}
+      </div>
+      <div class="content-center">
+        {{ options.msg }}
+      </div>
+      <div class="content-bottom">
+        <button class="content-bottom-left" @click="btn_ok_cb">
+          {{ options.btn_ok_name }}
+        </button>
+        <button class="content-bottom-right" @click="btn_no_cb">
+          {{ options.btn_no_name }}
+        </button>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'cat',
+  data() {
+    return {
+      flag: true,
+      options: {
+        title: '标题',
+        msg: '确定要 xxx 吗？',
+        btn_ok_name: '确定',
+        btn_no_name: '取消',
+        ok_cb: null,
+        no_cb: null
+      }
+    }
+  },
   methods: {
-    childClick() {
-      console.log("child");
+    async btn_ok_cb() {
+      this.options.ok_cb && (await this.options.ok_cb())
+      this.flag = false
     },
-    handleClick() {
-      this.parentClick(); //'parent'
+    async btn_no_cb() {
+      this.options.no_cb && (await this.options.no_cb())
+      this.flag = false
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.shade {
+  position:fixed;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,0.3);   
+  .content {
+    width:250px;
+    height:180px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    background-color:#fff;
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin-top:-90px;
+    margin-left:-125px;
+    &-top {
+      width:100%;
+      height:40px;
+      border-bottom:1px solid #ccc;
+      text-align: center;
+      font-size:20px;
+      font-weight: 700;
+      line-height:40px;
+    }
+    &-center {
+      width:90%;
+      height:80px;
+      margin:5px auto;
+    }
+    &-bottom {
+      width:85%;
+      height:40px;
+      margin:0 auto;
+      position:relative;
+    }
+  }
+}
+</style>
 ```
+
+src/extend/MessageBox/index.js
+
+```js
+import Vue from 'vue'
+import Confirm from './Confirm.vue'
+
+// 创建子类构造器
+const confirmStructor = Vue.extend(Confirm)  
+
+const theConfirm = options => {
+  // 实例化子类构造器并挂载到指定节点
+  const confirmDom = new confirmStructor({
+    el: document.createElement('div')
+  })
+  document.body.appendChild(confirmDom.$el)
+
+  // 初始化组件参数
+  options.title && (confirmDom.options.title = options.title)
+  options.msg && (confirmDom.options.msg = options.msg)
+  options.btn_ok_name && (confirmDom.options.btn_ok_name = options.btn_ok_name)
+  options.btn_no_name && (confirmDom.options.btn_no_name = options.btn_no_name)
+  confirmDom.options.ok_cb = options.ok_cb
+  confirmDom.options.no_cb = options.no_cb
+}
+
+export default theConfirm
+```
+
+src/extend/index.js
+
+```js
+import Vue from 'vue'
+import theConfirm from './MessageBox/index.js'
+
+Vue.prototype.$confirm_custom = theConfirm
+```
+
+src/index.js
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router/index.js'
+import store from './store/index.js'
+
+// 全局样式
+import './assets/style/index.scss'
+
+// api
+import Api from './api/request.js'
+Vue.use(Api)
+
+// element-ui 组件库
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
+
+// 注册全局自定义指令
+import './directive/index.js';
+
+// 注册全局自定义过滤器
+import './filter/index.js'
+
+// 注册扩展
+import './extend/index.js'
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
+})
+```
+
+src/views/test/resource/index.vue
+
+```vue
+<template>
+  <section class="resource">
+    自定义全局过滤器
+    <div class="resource-filter">
+      <div>{{ new Date() }}</div>
+      <div>{{ new Date() | formatDate }}</div>
+    </div>
+
+    自定义混入
+    <div class="resource-mixin">
+      <el-table :data="tableData">
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="gender" label="性别">
+          <template slot-scope="{ row }">
+            {{ row.gender === 'male' ? '公' : '母' }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="age" label="年龄"></el-table-column>
+        <el-table-column prop="weight" label="体重">
+          <template slot-scope="{ row }">
+            {{ row.weight + ' 斤' }}
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+
+    混入
+    <div class="resource-mixin">
+      <el-button @click="handleDel">删除</el-button>
+    </div>
+  </section>
+</template>
+
+<script>
+import catMixin from '@/mixin/catMixin.js'
+
+export default {
+  name: 'resource',
+  mixins: [
+    catMixin
+  ],
+  created() {
+    this.getTableData()
+  },
+  methods: {
+    handleDel() {
+      this.$confirm_custom({
+        title: '删除',
+        msg: '你确定要删除当前数据吗？',
+        btn_ok_name: '确定',
+        btn_no_name: '取消',
+        ok_cb: () => {
+          new Promise((resolve1, reject) => {
+            Promise.resolve().then(res => {
+              console.log('ok')
+              resolve1()
+            })
+          })
+        },
+        no_cb: () => {
+          new Promise((resolve1, reject) => {
+            Promise.resolve().then(res => {
+              console.log('no')
+              resolve1()
+            })
+          })
+        }
+      })
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.resource {
+  box-sizing: border-box;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  h2 {
+    margin-top: 0;
+  }
+  &-filter,
+  &-mixin {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid black;
+  }
+}
+</style>
+```
+
+![extend]()
 
 ## 7. Vue 组件其他选项
 
@@ -1668,13 +1956,16 @@ import './assets/style/index.scss'
 import Api from './api/request.js'
 Vue.use(Api)
 
-// element-u 组件库
+// element-ui 组件库
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
 
 // 注册全局自定义指令
 import './directive/index.js';
+
+// 注册全局自定义过滤器
+import './filter/index.js'
 
 new Vue({
   el: '#app',
