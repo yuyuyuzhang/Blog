@@ -30,6 +30,31 @@ const constantRoutes = [
     ],
   },
   {
+    path: '/test',
+    name: '测试',
+    component: Layout,
+    children: [
+      {
+        path: 'dom',
+        name: 'Vue 组件 DOM 选项',
+        meta: { title: 'dom', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/test/dom/index.vue'),
+      },
+      {
+        path: 'data',
+        name: 'Vue 组件数据选项',
+        meta: { title: 'data', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/test/data/index.vue'),
+      },
+      {
+        path: 'life',
+        name: 'Vue 组件生命周期选项',
+        meta: { title: 'life', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/test/life/index.vue'),
+      }
+    ],
+  },
+  {
     path: '/component',
     name: '组件',
     component: Layout,
@@ -47,6 +72,19 @@ const constantRoutes = [
         component: () => import('@/views/components/treeTest/index.vue'),
       },
     ]
+  },
+  {
+    path: '/person',
+    name: '人员信息',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '人员信息',
+        meta: { title: 'person', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/person/index.vue'),
+      }
+    ],
   }
 ]
 

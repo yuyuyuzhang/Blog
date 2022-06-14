@@ -32,3 +32,24 @@ html, body, #app {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+::-webkit-scrollbar-track-piece {
+  background: #d3dce6;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #99a9bf;
+  border-radius: 20px;
+}
+
+.table-page {
+  width: 100%;
+  text-align: right;
+  box-sizing: border-box;
+  height: 50px;
+  padding: 11px 0!important;
+}

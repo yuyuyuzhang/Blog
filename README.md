@@ -281,11 +281,10 @@ CSS 系列之 SASS 已完成
 ## 前端工程化系列之 Vue2
 
 1. [Vue 模板](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%B8%80%E3%80%81Vue%20%E6%A8%A1%E6%9D%BF.md)
-2. [Vue API](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%BA%8C%E3%80%81Vue%20API.md)
-3. [Vue 组件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%B8%89%E3%80%81Vue%20%E7%BB%84%E4%BB%B6.md)
-4. [数据绑定](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A.md)
-5. [Vue Router](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%BA%94%E3%80%81Vue%20Router.md)
-6. [Vuex](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E5%85%AD%E3%80%81Vuex.md)
+2. [Vue 组件](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%BA%8C%E3%80%81Vue%20%E7%BB%84%E4%BB%B6.md)
+3. [Vue 数据绑定](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%B8%89%E3%80%81Vue%20%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A.md)
+4. [Vue Router](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E5%9B%9B%E3%80%81Vue%20Router.md)
+5. [Vuex](https://github.com/yuyuyuzhang/Blog/blob/master/articles/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%BA%94%E3%80%81Vuex.md)
 
 ## 前端工程化系列之 Vue3
 

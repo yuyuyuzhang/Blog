@@ -1,0 +1,1 @@
+import './adaptive.js'

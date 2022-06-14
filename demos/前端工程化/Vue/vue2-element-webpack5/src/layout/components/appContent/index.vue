@@ -27,7 +27,6 @@ export default ({
   position: relative;
   overflow: hidden;
   flex: 1;
-  padding: 20px;
   border-top: 1px solid #e8e8e8;
   border-bottom: 1px solid #e8e8e8;
 }

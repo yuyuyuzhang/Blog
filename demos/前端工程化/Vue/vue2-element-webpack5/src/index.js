@@ -15,6 +15,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
 
+// 注册全局自定义指令
+import './directive/index.js';
+
 new Vue({
   el: '#app',
   router,
