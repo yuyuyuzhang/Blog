@@ -51,6 +51,18 @@ const constantRoutes = [
         name: 'Vue 组件生命周期选项',
         meta: { title: 'life', icon: '', noCache: true, affix: true },
         component: () => import('@/views/test/life/index.vue'),
+      },
+      {
+        path: 'dynamicComponents',
+        name: 'Vue 动态组件',
+        meta: { title: 'dynamicComponents', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/test/dynamicComponents/index.vue'),
+      },
+      {
+        path: 'asyncComponents',
+        name: 'Vue 异步组件',
+        meta: { title: 'asyncComponents', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/test/asyncComponents/index.vue'),
       }
     ],
   },

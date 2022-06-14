@@ -260,29 +260,283 @@ v-once 用于只渲染元素或组件一次，随后的重新渲染将被跳过�
 
 #### ⑨ v-slot
 
-插槽的作用就是`向子组件传递内容`
+插槽的作用就是`父组件向子组件指定位置插入 HTML 结构`，是一种仅适用于父组件到子组件的组件间通信方式，父组件使用 `v-slot` 指令分发内容，子组件使用 `<slot>` 元素承载分发内容
 
-```vue
-<template>
-  <navigation-link>
-    context
-  </navigation-link>
-</template>
-```
-
-v-slot 仅限用于`模板 <template>` 和`组件`，设计灵感来自于 Web Components API，使用 `<slot>` 元素承载分发内容
-
-* **插槽具名**：有时父组件内需要多个插槽承载不同的内容，为了识别不同插槽，父组件通过 `v-slot` 指令唯一标识某个插槽，子组件通过 `slot 元素的 name 属性`唯一标识某个插槽的承载内容
-* **插槽作用域**：父组件中所有内容都是在`父级作用域`中编译的，子组件中所有内容都是在`子级作用域`中编译的，父组件插槽中使用数据只能访问父组件的数据，而不能访问子组件的数据，然而子组件可以在 `slot 元素上通过属性绑定`传值给父组件，父组件在 `v-slot 指令上通过插槽 prop` 访问子组件传递的数据
+* **插槽具名**：有时父组件需要多个插槽承载子组件中不同内容，为了识别不同插槽，父组件通过 `v-slot:name` 中 name 属性唯一标识某个插槽，子组件通过 `<slot name=""></slot>` 中 name 属性唯一标识某个插槽的承载内容
+* **插槽作用域**：父组件中所有内容都是在`父级作用域`中编译的，子组件中所有内容都是在`子级作用域`中编译的，父组件插槽只能访问父组件数据而不能访问子组件数据，然而子组件可以在 `<slot :a="a"></slot>` 通过属性绑定传值给父组件，父组件在 `v-slot:name="{ a }"` 通过插槽 prop 访问子组件传递的数据
 
 ### (7) 实例
 
-```vue
+src/views/test/dom/index.vue
 
+```vue
+<template>
+  <section class="dom">
+    <h2>Vue 组件 DOM 选项</h2>
+    
+    template
+    <div class="dom-template">
+      <h3>{{ title }}</h3>
+    </div>
+
+    v-text、v-html、v-pre
+    <div class="dom-directive">
+      <div>
+        v-text
+        <span v-text="text"></span>
+        <span>{{ text }}</span>
+      </div>
+
+      <div>
+        v-html
+        <span v-html="html"></span>
+      </div>
+
+      <div>
+        v-pre 
+        <span v-pre>{{ html }}</span>
+      </div>
+    </div>
+
+    v-if、v-show
+    <div class="dom-directive">
+      <div>
+        <el-radio-group v-model="isShowA">
+          <el-radio :label="true">显示</el-radio>
+          <el-radio :label="false">不显示</el-radio>
+        </el-radio-group>
+        <div v-show="isShowA">I am A</div>
+      </div>
+
+      <div>
+        <el-radio-group v-model="isRenderB">
+          <el-radio :label="true">渲染</el-radio>
+          <el-radio :label="false">不渲染</el-radio>
+        </el-radio-group>
+        <div v-if="isRenderB">bbb</div>
+      </div>
+    </div>
+
+    v-for
+    <div class="dom-directive">
+      <ul>
+        <li v-for="item in people" :key="item.name">{{ item.name + ' ' + item.age }}</li>
+      </ul>
+    </div>
+
+    v-model
+    <div class="dom-directive">
+      trim: <input v-model.trim="name" @input="handleInputName" />
+    </div>
+
+    v-bind
+    <div class="dom-directive">
+      <div :class="[ 'red', { 'big': isBig } ]" :style="{ backgroundColor: 'gray' }">
+        class、style 绑定
+      </div>
+
+      <div>
+        attribute、property 区分
+        <input id="block" data-a="a" value="111" />
+      </div>
+
+      <div>
+        .prop 修饰符
+        <input :data="data1" @keyup="handlePrintData1($event)" />
+        <input :data.prop="data2" @keyup="handlePrintData2($event)" />
+      </div>  
+
+      <div>
+        .sync 修饰符
+        <child :childTitle.sync="childTitle"></child>
+      </div>
+    </div>
+
+    v-on
+    <div class="dom-directive">
+      .self 修饰符
+      <ul @click.self="handleSelf">
+        <li v-for="item in lis" :key="item">{{ item }}</li>
+      </ul>
+
+      .stop 修饰符
+      <ul @click="handleStop">
+        <li v-for="item in lis" :key="item" @click.stop="">{{ item }}</li>
+      </ul>
+
+      .prevent 修饰符<a href="https://fanyi.baidu.com/?aldtype=16047#en/zh" @click.prevent="">百度翻译</a>
+      .passive 修饰符<a href="https://fanyi.baidu.com/?aldtype=16047#en/zh" @click.passive="">百度翻译</a>
+
+      .capture 修饰符
+      <!-- 情况1：3 2 1 -->
+      <div @click="handle1">
+        <div @click="handle2">
+          <div @click="handle3">aaa</div>
+        </div>
+      </div>
+
+      <!-- 情况2：1 3 2 -->
+      <div @click.capture="handle1">
+        <div @click="handle2">
+          <div @click="handle3">aaa</div>
+        </div>
+      </div>
+
+      <!-- 情况3：2 3 1 -->
+      <div @click="handle1">
+        <div @click.capture="handle2">
+          <div @click="handle3">aaa</div>
+        </div>
+      </div>
+
+      <!-- 情况4：1 2 3 -->
+      <div @click.capture="handle1">
+        <div @click.capture="handle2">
+          <div @click="handle3">aaa</div>
+        </div>
+      </div>
+    </div>
+
+    v-once
+    <div class="dom-directive">
+      <div v-once>{{ txt }}</div>
+      <input v-model="txt" />
+    </div>
+
+    v-slot
+    <div class="dom-directive">
+      <context>
+        <template v-slot:img>
+          <img :src="img_cat"/>
+        </template>
+        <template v-slot:desc="{ desc }">
+          <ul>
+            <li>{{ desc.name }}</li>
+            <li>{{ desc.age }}</li>
+          </ul>
+        </template>
+      </context>
+    </div>
+  </section>
+</template>
+
+<script>
+import child from './components/child.vue'
+import context from './components/context.vue'
+import img_cat from '@/assets/img/cat.jpg'
+
+export default {
+  name: 'dom',
+  components: {
+    child,
+    context,
+  },
+  data() {
+    return {
+      title: '我是小可爱',
+      text: '我是大可爱',
+      html: '<h1>我是大可爱</h1>',
+      isShowA: true,
+      isRenderB: true,
+      people: [
+        { name: '张三', age: 26 },
+        { name: '李四', age: 30 }
+      ],
+      name: '',
+      isBig: true,
+      data1: 'aaa',
+      data2: 'bbb',
+      childTitle: '你是大可爱',
+      lis: [ 'a', 'b', 'c' ],
+      txt: '哈哈',
+      img_cat: img_cat
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const div = document.querySelector('#block')
+      console.log(div.attributes) // NamedNodeMap { 0: data-v-ff66debc, 1: id, 2: data-a, 3: value, length: 4 }
+      div.addEventListener('keyup', function(e) {
+        console.log(e.target.attributes[3])  // attribute, 始终输出 value="111"
+        console.log(e.target.value)          // property, 不断输出最新值
+      })
+    })
+  },
+  methods: {
+    handleInputName() {
+      console.log('name-input:', this.name)
+    },
+    handlePrintData1(e){
+      console.log(e.target.data) //undefined
+      console.log(e.target.attributes[1]) //data="aaa"
+    },
+    handlePrintData2(e){
+      console.log(e.target.data) //'bbb'
+    },
+    handleSelf(){
+      console.log('self')
+    },
+    handleStop(){
+      console.log('stop')
+    },
+    handle1(){
+      console.log('1')
+    },
+    handle2(){
+      console.log('2')
+    },
+    handle3(){
+      console.log('3')
+    },
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.dom {
+  box-sizing: border-box;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  h2 {
+    margin-top: 0;
+  }
+  &-template,
+  &-directive {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid black;
+  }
+}
+</style>
+```
+
+src/views/test/dom/components/context.vue
+
+```vue
+<template>
+  <section class="context">
+    <h2>我是子组件</h2>
+
+    <slot name="img"></slot>
+    <slot name="desc" :desc="{ name, age }"></slot>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'context',
+  data() {
+    return {
+      name: '花花',
+      age: '1 岁'
+    }
+  }
+};
+</script>
 ```
 
 ![Vue组件DOM选项]()
-
 
 ## 4. Vue 组件数据选项
 
@@ -678,11 +932,11 @@ export default {
 ### (1) Vue 组件资源选项
 
 ```js
-extends    //当前组件局部注册引用的扩展(当前组件继承扩展组件)
-components //当前组件局部注册引用的所有子组件
-mixins     //当前组件局部注册引用的所有混入
-filters    //当前组件局部注册引用的所有过滤器
 directives //当前组件局部注册引用的所有指令
+filters    //当前组件局部注册引用的所有过滤器
+mixins     //当前组件局部注册引用的所有混入
+components //当前组件局部注册引用的所有子组件
+extends    //当前组件局部注册引用的扩展(当前组件继承扩展组件)
 ```
 
 ### (2) Vue 全局资源 API
@@ -690,78 +944,154 @@ directives //当前组件局部注册引用的所有指令
 全局注册往往是不够理想的，因为如果使用 Webpack 构建系统，即使全局注册的内容不再被使用，也都会包含在最终的构建结果中，这会造成用户下载的 JS 代码的无谓增加
 
 ```js
-Vue.extend(options)        //全局注册一个扩展,返回一个 Vue 子类
-Vue.component(name,define) //全局注册一个组件,父组件引用后使用
-Vue.mixin(mixin)           //全局注册一个混入,组件引用后使用
-Vue.filter(name,cb)        //全局注册一个过滤器,组件引用后使用
 Vue.directive(name,define) //全局注册一个指令,组件引用后使用
+Vue.filter(name,cb)        //全局注册一个过滤器,组件引用后使用
+Vue.mixin(mixin)           //全局注册一个混入,组件引用后使用
+Vue.component(name,define) //全局注册一个组件,父组件引用后使用
+Vue.extend(options)        //全局注册一个扩展,返回一个 Vue 子类
 ```
 
-### (3) 扩展 extends
+### (6) 指令 directives
 
-extends 选项可以在当前组件局部注册`扩展`，即当前组件`继承`扩展组件
+自定义指令用于对普通 DOM 元素进行底层操作
 
-扩展组件
+自定义指令定义对象具备以下几个钩子函数
 
-```html
-<template>
-  <div class="message" :class="type" v-show="isShow">
-    <i class="icon"></i>
-    <span class="text">{{ text }}</span>
-  </div>
-</template>
+* **bind**：指令第一次绑定到元素时调用
+* **inserted**：被绑定元素插入父节点时调用
+* **update**：被绑定元素所在组件 VNode 更新时调用
+* **componentUpdated**：被绑定元素所在组件 VNode 及其子 VNode 全部更新后调用
+* **unbind**：指令与元素解绑时调用
 
-<script>
-export default {
-  name: "Message",
-  data() {
-    return {};
-  },
-  methods: {
-    parentClick() {
-      console.log("parent");
+自定义指令定义对象钩子函数参数
+
+* **el**：被绑定元素
+* **binding**
+  * **name**：指令名称
+  * **value**：指令绑定值
+  * **oldValue**：指令绑定的前一个值
+  * **expression**：指令表达式
+  * **arg**：指令接收到的参数
+  * **modifiers**：指令的修饰符对象
+* **vnode**：当前虚拟节点
+* **oldVnode**：上一个虚拟节点
+
+src/directive/adaptive.js
+
+```js
+import Vue from 'vue'
+import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event'
+
+const doResize = (el, binding, vnode) => {
+    const { componentInstance: $table } = vnode
+
+    if (!$table) return
+  
+    if (!$table.height) {
+      throw new Error(`el-$table must set the height. Such as height='100px'`)
     }
-  }
-};
-</script>
 
-<style scoped>
-.info {
-  background-color: "#00aaee";
+    const { value } = binding
+    const bottomOffset = (value && value.bottomOffset) || 30
+    // 需要减去 layout-footer 高度 50
+    const height = window.innerHeight - el.getBoundingClientRect().top - 50 - bottomOffset
+    $table.layout.setHeight(height)
+    $table.doLayout()
 }
-.success {
-  background-color: "#00ee6b";
-}
-.warning {
-  background-color: "#eea300";
-}
-.danger {
-  background-color: "#ee000c";
-}
-</style>
+
+Vue.directive('table-height-adaptive', {
+    bind(el, binding, vnode) {
+        el.resizeListener = () => {
+          doResize(el, binding, vnode)
+        }
+        addResizeListener(el, el.resizeListener)
+    },
+    inserted(el, binding, vnode) {
+        doResize(el, binding, vnode)
+    },
+    unbind(el) {
+        removeResizeListener(el, el.resizeListener)
+    }
+})
 ```
 
-子组件
+src/directive/index.js
+
+```js
+import './adaptive.js'
+```
+
+src/index.js
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router/index.js'
+import store from './store/index.js'
+
+// 全局样式
+import './assets/style/index.scss'
+
+// api
+import Api from './api/request.js'
+Vue.use(Api)
+
+// element 组件库
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
+
+// 注册全局自定义指令
+import './directive/index.js';
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
+})
+```
+
+![adaptive1]()
+
+![adaptive2]()
+
+### (5) 过滤 filters
+
+filters 选项可以在当前组件局部注册`过滤器`
 
 ```html
 <template>
-  <div id="app">
-    <button @click="handleClick">点击</button>
+  <div class="about">
+    当前时间：{{ time | formateDate }}
+    <div :time="time | formateDate">aaa</div>
   </div>
 </template>
 
 <script>
-import Message from "@/api/extends/Message";
-
 export default {
-  name: "App",
-  extends: Message, //当前组件继承扩展组件,
-  methods: {
-    childClick() {
-      console.log("child");
-    },
-    handleClick() {
-      this.parentClick(); //'parent'
+  props: {},
+  data() {
+    return {
+      time: new Date()
+    };
+  },
+  filters: {
+    formateDate: function(date) {
+      const year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
+
+      month = month < 10 ? "0" + month : month;
+      day = day < 10 ? "0" + day : day;
+      hour = hour < 10 ? "0" + hour : hour;
+      minute = minute < 10 ? "0" + minute : minute;
+      second = second < 10 ? "0" + second : second;
+
+      return (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
     }
   }
 };
@@ -901,153 +1231,76 @@ export default {
 //     mixin mixinComputed
 ```
 
-### (5) 过滤 filters
+### (3) 扩展 extends
 
-filters 选项可以在当前组件局部注册`过滤器`
+extends 选项可以在当前组件局部注册`扩展`，即当前组件`继承`扩展组件
+
+扩展组件
 
 ```html
 <template>
-  <div class="about">
-    当前时间：{{ time | formateDate }}
-    <div :time="time | formateDate">aaa</div>
+  <div class="message" :class="type" v-show="isShow">
+    <i class="icon"></i>
+    <span class="text">{{ text }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  props: {},
+  name: "Message",
   data() {
-    return {
-      time: new Date()
-    };
+    return {};
   },
-  filters: {
-    formateDate: function(date) {
-      const year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      let second = date.getSeconds();
+  methods: {
+    parentClick() {
+      console.log("parent");
+    }
+  }
+};
+</script>
 
-      month = month < 10 ? "0" + month : month;
-      day = day < 10 ? "0" + day : day;
-      hour = hour < 10 ? "0" + hour : hour;
-      minute = minute < 10 ? "0" + minute : minute;
-      second = second < 10 ? "0" + second : second;
+<style scoped>
+.info {
+  background-color: "#00aaee";
+}
+.success {
+  background-color: "#00ee6b";
+}
+.warning {
+  background-color: "#eea300";
+}
+.danger {
+  background-color: "#ee000c";
+}
+</style>
+```
 
-      return (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+子组件
+
+```html
+<template>
+  <div id="app">
+    <button @click="handleClick">点击</button>
+  </div>
+</template>
+
+<script>
+import Message from "@/api/extends/Message";
+
+export default {
+  name: "App",
+  extends: Message, //当前组件继承扩展组件,
+  methods: {
+    childClick() {
+      console.log("child");
+    },
+    handleClick() {
+      this.parentClick(); //'parent'
     }
   }
 };
 </script>
 ```
-
-### (6) 指令 directives
-
-自定义指令用于对普通 DOM 元素进行底层操作
-
-自定义指令定义对象具备以下几个钩子函数
-
-* **bind**：指令第一次绑定到元素时调用
-* **inserted**：被绑定元素插入父节点时调用
-* **update**：被绑定元素所在组件 VNode 更新时调用
-* **componentUpdated**：被绑定元素所在组件 VNode 及其子 VNode 全部更新后调用
-* **unbind**：指令与元素解绑时调用
-
-自定义指令定义对象钩子函数参数
-
-* **el**：被绑定元素
-* **binding**
-  * **name**：指令名称
-  * **value**：指令绑定值
-  * **oldValue**：指令绑定的前一个值
-  * **expression**：指令表达式
-  * **arg**：指令接收到的参数
-  * **modifiers**：指令的修饰符对象
-* **vnode**：当前虚拟节点
-* **oldVnode**：上一个虚拟节点
-
-src/directive/adaptive.js
-
-```js
-import Vue from 'vue'
-import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event'
-
-const doResize = (el, binding, vnode) => {
-    const { componentInstance: $table } = vnode
-
-    if (!$table) return
-  
-    if (!$table.height) {
-      throw new Error(`el-$table must set the height. Such as height='100px'`)
-    }
-
-    const { value } = binding
-    const bottomOffset = (value && value.bottomOffset) || 30
-    // 需要减去 layout-footer 高度 50
-    const height = window.innerHeight - el.getBoundingClientRect().top - 50 - bottomOffset
-    $table.layout.setHeight(height)
-    $table.doLayout()
-}
-
-Vue.directive('table-height-adaptive', {
-    bind(el, binding, vnode) {
-        el.resizeListener = () => {
-          doResize(el, binding, vnode)
-        }
-        addResizeListener(el, el.resizeListener)
-    },
-    inserted(el, binding, vnode) {
-        doResize(el, binding, vnode)
-    },
-    unbind(el) {
-        removeResizeListener(el, el.resizeListener)
-    }
-})
-```
-
-src/directive/index.js
-
-```js
-import './adaptive.js'
-```
-
-src/index.js
-
-```js
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router/index.js'
-import store from './store/index.js'
-
-// 全局样式
-import './assets/style/index.scss'
-
-// api
-import Api from './api/request.js'
-Vue.use(Api)
-
-// element 组件库
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI)
-
-// 注册全局自定义指令
-import './directive/index.js';
-
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
-```
-
-![adaptive1]()
-
-![adaptive2]()
-
 
 ## 7. Vue 组件其他选项
 
@@ -1060,7 +1313,7 @@ model        //当前组件自定义 v-model 指令的 prop、event,默认将表
 functional   //当前组件作为函数式组件
 ```
 
-## 9. Vue 组件属性、方法、事件
+## 8. Vue 组件属性、方法、事件
 
 ### (1) Vue 组件属性
 
@@ -1113,15 +1366,18 @@ this.$off(e,cb)       //移除当前组件上的自定义事件 e
 this.$emit(e,...args) //触发当前组件上的自定义事件 e,附加参数 ...args 传给事件回调函数
 ```
 
-## 10. Vue 动态组件
+## 9. Vue 动态组件
 
-**动态组件**：多个组件使用同一个挂载点，动态进行切换，这就是动态组件
+### (1) componnet
 
-正常情况下，切换组件调用时会`销毁`组件实例，而使用 `<keep-alive>` 包裹动态组件时，就不会销毁，而是缓存不活动的组件实例，下一次使用的时候直接从缓存中加载，主要用于保存组件状态，避免反复重新渲染导致的性能问题
+动态组件就是通过 `<component :is="compName"></component>` 标签的 is 属性，动态绑定多个组件到同一个挂载点，通过改变 is 属性绑定值，切换渲染哪个组件
 
-`<keep-alive>` 标签自身不会渲染一个 DOM 元素，也不会出现在组件的父组件链中
+### (2) keep-alive
 
-组件在 `<keep-alive>` 标签内切换时，组件的 `activated` 和 `deactivated` 生命周期钩子函数将会被对应执行
+正常情况下切换组件调用时会`销毁`组件实例，而使用 `<keep-alive>` 标签包裹动态组件时就不会销毁，而是`缓存`不活动的组件实例，下一次使用的时候直接从缓存中加载，主要用于保存组件状态，避免反复重新渲染导致的性能问题
+
+* `<keep-alive>` 标签自身不会渲染一个 DOM 元素，也不会出现在组件的父组件链中
+* 组件在 `<keep-alive>` 标签内切换时，组件的 `activated` 和 `deactivated` 生命周期钩子函数将会被对应执行
 
 `<keep-alive>` 标签的属性
 
@@ -1129,212 +1385,103 @@ this.$emit(e,...args) //触发当前组件上的自定义事件 e,附加参数 .
 * exclude：字符串或正则表达式，任意名称匹配的组件都不会被缓存
 * max：数字，最多可缓存多少个组件实例
 
-```html
-<!-- 多个条件判断的子组件缓存状态,不销毁 -->
-<keep-alive>
-  <comp-a v-if="a > 1"></comp-a>
-  <comp-b v-else></comp-b>
-</keep-alive>
+### (3) 实例
 
-<!-- 逗号分隔字符串 -->
-<keep-alive include="a,b">
-  <component :is="view"></component>
-</keep-alive>
+src/views/test/dynamicComponents/index.vue
 
-<!-- 正则表达式 (使用 `v-bind`) -->
-<keep-alive :include="/a|b/">
-  <component :is="view"></component>
-</keep-alive>
-
-<!-- 数组 (使用 `v-bind`) -->
-<keep-alive :include="['a', 'b']">
-  <component :is="view"></component>
-</keep-alive>
-```
-
-父组件
-
-```html
+```vue
 <template>
-  <div id="app">
-    <button @click="is = 'About'">About</button>
-    <button @click="is = 'Home'">Home</button>
+  <section class="dynamicComponents">
+    <h2>Vue 动态组件</h2>
 
+    <el-radio-group v-model="compName">
+        <el-radio label="Cat">猫咪</el-radio>
+        <el-radio label="Dog">狗狗</el-radio>
+    </el-radio-group>
     <keep-alive>
-      <template v-if="is === 'About'">
-        <About></About>
-      </template>
-
-      <template v-else>
-        <Home></Home>
-      </template>
+        <component :is="compName"></component>
     </keep-alive>
-  </div>
+  </section>
 </template>
 
 <script>
-import About from "@/views/About";
-import Home from "@/views/Home";
+import Cat from './components/cat.vue'
+import Dog from './components/dog.vue'
 
 export default {
-  name: "App",
+  name: 'dynamicComponents',
   components: {
-    About,
-    Home
+    Cat,
+    Dog,
   },
   data() {
     return {
-      is: "About"
-    };
-  },
+      compName: 'Cat',
+    }
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+.dynamicComponents {
+  box-sizing: border-box;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  h2 {
+    margin-top: 0;
+  }
+}
+</style>
 ```
 
-子组件
+src/views/test/dynamicComponents/component/cat.vue
 
-```html
+```vue
 <template>
-  <div class="Home">
-    <button @click="count++">HomeBtn</button>
-    {{ count }}
-  </div>
+  <section class="cat">
+    <el-tabs tab-position="left">
+      <el-tab-pane label="布偶">布偶</el-tab-pane>
+      <el-tab-pane label="缅因">缅因</el-tab-pane>
+      <el-tab-pane label="橘猫">橘猫</el-tab-pane>
+    </el-tabs>
+  </section>
 </template>
 
 <script>
 export default {
-  name: "Home",
-  data() {
-    return {
-      count: 0
-    };
-  },
+  name: 'cat',
 };
 </script>
 ```
 
-## 11. Vue 异步组件
+src/views/test/dynamicComponents/component/dog.vue
 
-### (1) import 函数
+```vue
+<template>
+  <section class="cat">
+    <el-tabs tab-position="left" style="height: 200px;">
+      <el-tab-pane label="柯基">柯基</el-tab-pane>
+      <el-tab-pane label="金毛">金毛</el-tab-pane>
+      <el-tab-pane label="萨摩">萨摩</el-tab-pane>
+    </el-tabs>
+  </section>
+</template>
 
-ES2020 提案引入 import(path) 函数，支持动态加载模块，返回一个 `Promise 实例`
-
-#### ① 异步加载
-
-ES6 的 import() 方法类似于 Node 的 require() 方法，区别主要是 import() 是异步加载，require() 是同步加载
-
-import() 方法返回一个 `Promise 实例`
-
-```js
-const main = document.querySelector('main');
-
-//JS引擎线程执行import()函数,并通知网络进程异步加载模块资源,
-//import()函数交出执行权,JS引擎线程继续执行后续代码,模块加载
-//完成后,事件触发线程将import()函数返回的Promise实例的then
-//方法的参数函数放入JS引擎线程的微任务队列,JS引擎线程空闲时
-//执行then方法的参数函数
-import(`./section-modules/${someVariable}.js`)
-  .then(module => {
-    module.loadPageInto(main);
-  })
-  .catch(err => {
-    main.textContent = err.message;
-  });
+<script>
+export default {
+  name: 'cat',
+};
+</script>
 ```
 
-#### ② 按需加载
+![未使用keep_alive]()
 
-import(path) 函数可以用在任何地方，不仅仅是模块，非模块的脚本也可以使用，`运行到这一行代码时`才会加载指定的模块
+![使用keep_alive]()
 
-```js
-//<button @click="handleClick">点击</button>
-const btn = document.getElementById('btn')
-btn.addEventListener('click', function(){
-  import('./module')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-})
-```
+## 10. Vue 异步组件
 
-#### ③ 条件加载
-
-可以放在 if 代码块，根据不同的情况，加载不同的模块，
-
-```js
-//main.js
-if(flag){
-  import('./module1')
-    .then(res => {})
-    .catch(err => console.log(err));
-} else{
-  import('./module2')
-    .then(res => {})
-    .catch(err => console.log(err));
-}
-```
-
-#### ④ 动态的模块路径
-
-允许模块路径动态生成
-
-```js
-const f = (name) => return './' + name + '.js';
-import(f())
-  .then(res => {})
-  .catch(err => console.log(err));
-```
-
-#### ⑤ 模块作为对象
-
-import(path) 加载成功后的模块会作为一个`对象`，成为返回的 Promise 实例的 then 方法的参数函数的参数
-
-```js
-//person.js
-export { person1, person2}
-
-//main.js
-import('./person')
-  .then(res => console.log(res.default)) //可以直接获取默认输出default接口
-  .catch(err => console.log(err));
-
-import('./person')
-  .then({ person1, person2 } => {}) //对象可以使用解构赋值
-  .catch(err => console.log(err));
-```
-
-#### ⑥ 同时动态加载多个模块
-
-使用 `Promise.all()` 实现同时加载多个模块
-
-```js
-Promise.all([
-  import('./module1'),
-  import('./module2'),
-  import('./module3')
-])
-  .then(([module1, module2, module3]) => {})
-  .catch(err => console.log(err));
-```
-
-#### ⑦ 用在 async 函数 await 命令后
-
-import(path) 函数返回一个 Promise 实例，因而可以用在 async 函数的 await 命令后
-
-```js
-//main.js
-async f(){
-  const { export1, export2 } = await import('./module1');
-  const [module2, nodule3] = await Promise.all([
-    import('./module2'),
-    import('./module3')
-  ])
-}
-f();
-```
-
-### (2) 异步组件
-
-#### ① 全局异步组件
+### (1) 全局异步组件
 
 ```js
 Vue.component(
@@ -1343,41 +1490,190 @@ Vue.component(
 )
 ```
 
-#### ② 局部异步组件
+### (2) 局部异步组件
+
+大型应用中可能需要将应用分割成一些小的代码块，只在需要的时候才从服务器加载，这就需要使用 ES6 引入的 `import()` 函数，支持动态加载模块，返回一个 `Promise 实例`
+
+src/views/test/asyncComponents/index.vue
 
 ```vue
-<template>
-  <div>
-    tableTest
-    <treeTest></treeTest>
-    <treeTestWithOptions></treeTestWithOptions>
-  </div> 
-</template>
 
-<script>
-// 不带选项的局部异步组件
-const treeTest = () => import('../treeTest/index.vue')
+```
 
-// 带选项的局部异步组件
-const treeTestWithOptions = () => ({
-  component: import('../treeTest/index.vue'),
-  delay: 200,
-  timeout: 3000,
-  error: null,
-  loading: null
-})
+src/views/test/dynamicComponents/component/child.vue
 
-export default ({
-  name: 'tableTest',
-  components: {
-    treeTest,
-    treeTestWithOptions
-  },
-  data() {
-    return {}
-  }
-})
-</script>
+```vue
+
+```
+
+src/views/test/dynamicComponents/component/loading.vue
+
+```vue
+
+```
+
+src/views/test/dynamicComponents/component/error.vue
+
+```vue
+
 ```
 
 ![vue2局部异步组件]()
+
+## 11. Vue 过渡
+
+Vue 提供了 `<transition></transition>`，可以在以下情形给任何元素和组件添加进入/离开过渡效果
+
+* 条件渲染（v-if）
+* 条件展示（v-show）
+* 动态组件
+* 组件根节点
+
+## 12. Vue 插件
+
+### (1) 开发 Vue 插件
+
+Vue 插件通常用于添加`全局功能`，例如 vue-router、element-ui 等都算是 Vue 插件
+
+开发一个 Vue 插件必须暴露一个 `install(Vue, options)` 方法用于安装插件，第一个参数是 Vue 构造器，第二个参数是选项对象
+
+```js
+const requestInstance = {
+  //...
+}
+
+export default {
+  install(Vue, options) {
+    // 注入全局资源：扩展、混入、过滤、指令等
+
+    // 添加全局属性/方法
+    Vue.globalF = globalF;
+
+    // 添加实例属性/方法
+    Vue.prototype.$instanceF = instanceF;
+  }
+};
+```
+
+### (2) 使用 Vue 插件
+
+在 new Vue() 创建 Vue 根实例之前通过 Vue.use() 使用插件，如下所示
+
+```js
+import MyPlugin from ''
+
+Vue.use(MyPlugin, options)
+
+new Vue({
+  //...
+})
+```
+
+### (3) 实例
+
+src/api/request.js
+
+```js
+import axios from 'axios'
+
+// 创建 axios 实例
+const instance = axios.create({
+    baseURL: '/api', 
+    timeout: 5000
+})
+
+// 请求拦截器
+instance.interceptors.request.use(
+    config => {
+        config.headers.post['Content-Type'] = 'application/json';
+        return config;
+    },
+    error => {
+        console.log(error);
+        Promise.reject(error);
+    }
+)
+
+// 响应拦截器
+instance.interceptors.response.use(
+    response => {
+        const { code, data, message } = response.data;
+
+        if (code !== 200) {
+            this.$message.error({
+                content: message || 'request error',
+                duration: 5 * 1000
+            })
+
+            // 50008: 非法 token，50012: 其他客户端登录，50014: Token 过期
+            if (code === 50008 || code === 50012 || code === 50014) {
+                this.$confirm({
+                    content: '你已被登出，可以取消继续留在该页面，或者重新登录',
+                    okText: '重新登录',
+                    cancelText: '取消',
+                }).then(() => {
+                    location.reload()
+                })
+            }
+
+            return Promise.reject('error')
+        } else {
+            return data
+        }
+    },
+    error => {
+        console.log('err' + error);
+        this.$message.error({
+            content: error.message,
+            duration: 5 * 1000
+        })
+        return Promise.reject(error)
+    }
+)
+
+const requestInstance = result => {
+    const { url, method, data, config } = result;
+
+    if (!method) return instance.all(result);
+
+    const params = method === 'post' ? data : { params: data };
+    return instance[method](url, params, config || {});
+}
+
+export default {
+    install(Vue) {
+        Vue.prototype.$http = requestInstance;
+    }
+};
+```
+
+src/index.js
+
+```js
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router/index.js'
+import store from './store/index.js'
+
+// 全局样式
+import './assets/style/index.scss'
+
+// api
+import Api from './api/request.js'
+Vue.use(Api)
+
+// element-u 组件库
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
+
+// 注册全局自定义指令
+import './directive/index.js';
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
+})
+```

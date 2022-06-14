@@ -9,9 +9,6 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
     config => {
-        // if (store.getters.token) {
-        //     config.headers['X-Token'] = getToken();
-        // }
         config.headers.post['Content-Type'] = 'application/json';
         return config;
     },
@@ -68,7 +65,7 @@ const requestInstance = result => {
 }
 
 export default {
-    install(vm) {
-        vm.prototype.$http = requestInstance;
+    install(Vue) {
+        Vue.prototype.$http = requestInstance;
     }
 };

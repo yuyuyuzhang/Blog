@@ -133,28 +133,31 @@
 
     v-slot
     <div class="dom-directive">
-      <context1 v-slot="{ context1Title }">
-        {{ 'hello, ' + context1Title }}
-      </context1>
-      
-      <context2 v-slot="{ context2Title }">
-        {{ 'hello, ' + context2Title }}
-      </context2>
+      <context>
+        <template v-slot:img>
+          <img :src="img_cat"/>
+        </template>
+        <template v-slot:desc="{ desc }">
+          <ul>
+            <li>{{ desc.name }}</li>
+            <li>{{ desc.age }}</li>
+          </ul>
+        </template>
+      </context>
     </div>
   </section>
 </template>
 
 <script>
 import child from './components/child.vue'
-import context1 from './components/context1.vue'
-import context2 from './components/context2.vue'
+import context from './components/context.vue'
+import img_cat from '@/assets/img/cat.jpg'
 
 export default {
   name: 'dom',
   components: {
     child,
-    context1,
-    context2
+    context,
   },
   data() {
     return {
@@ -173,7 +176,8 @@ export default {
       data2: 'bbb',
       childTitle: '你是大可爱',
       lis: [ 'a', 'b', 'c' ],
-      txt: '哈哈'
+      txt: '哈哈',
+      img_cat: img_cat
     }
   },
   mounted() {

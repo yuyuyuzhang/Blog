@@ -10,7 +10,7 @@ import './assets/style/index.scss'
 import Api from './api/request.js'
 Vue.use(Api)
 
-// element 组件库
+// element-ui 组件库
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
