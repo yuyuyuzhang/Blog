@@ -1,5 +1,5 @@
 <template>
-  <section class="person">
+  <section class="people">
     <el-form 
       ref="searchForm" 
       :model="searchForm" 
@@ -35,7 +35,7 @@
     </el-form>
 
     <el-table 
-      ref="personTable"
+      ref="peopleTable"
       v-loading="isTableLoading"
       height="100px"
       v-table-height-adaptive="{ bottomOffset: 50 }"
@@ -86,7 +86,7 @@
     <el-dialog 
       title="编辑" 
       :visible.sync="editDialogVisiable"
-      class="person-dialog">
+      class="people-dialog">
       <el-form 
         ref="editDialogForm" 
         :model="editDialogForm" 
@@ -94,7 +94,7 @@
         :inline="true"
         label-width="100px"
         size="small"
-        class="person-dialog-form">
+        class="people-dialog-form">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="editDialogForm.name" clearable></el-input>
         </el-form-item>
@@ -129,8 +129,7 @@
 
 <script>
 export default ({
-  name: 'person',
-  components: {},
+  name: 'people',
   data() {
     return {
       searchForm: {
@@ -168,7 +167,7 @@ export default ({
       this.isTableLoading = true
       return new Promise((resolve, reject) => {
         // this.$http({
-        //   url: '/person/data',
+        //   url: '/people/data',
         //   method: 'post',
         //   data: this.searchForm
         // })
@@ -248,7 +247,7 @@ export default ({
     handleEditDialogFormSubmit() {
       this.isEditDialogFormLoading = true
       this.$http({
-        url: '/person/edit',
+        url: '/people/edit',
         method: 'post',
         data: this.editDialogForm
       })
@@ -273,7 +272,7 @@ export default ({
       // })
       row.isDelLoading = true
       this.$http({
-        url: '/person/del',
+        url: '/people/del',
         method: 'post',
         data: {
           id: row.id
@@ -312,7 +311,7 @@ export default ({
 </script>
 
 <style lang="scss" scoped>
-.person {
+.people {
   position: relative;
   height: 100%;
   &-dialog {

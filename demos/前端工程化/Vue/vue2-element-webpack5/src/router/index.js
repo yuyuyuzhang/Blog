@@ -53,6 +53,12 @@ const constantRoutes = [
         component: () => import('@/views/test/life/index.vue'),
       },
       {
+        path: 'resource',
+        name: 'Vue 组件资源选项',
+        meta: { title: 'resource', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/test/resource/index.vue'),
+      },
+      {
         path: 'dynamicComponents',
         name: 'Vue 动态组件',
         meta: { title: 'dynamicComponents', icon: '', noCache: true, affix: true },
@@ -86,15 +92,15 @@ const constantRoutes = [
     ]
   },
   {
-    path: '/person',
+    path: '/people',
     name: '人员信息',
     component: Layout,
     children: [
       {
         path: 'index',
         name: '人员信息',
-        meta: { title: 'person', icon: '', noCache: true, affix: true },
-        component: () => import('@/views/person/index.vue'),
+        meta: { title: 'people', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/people/index.vue'),
       }
     ],
   }

@@ -953,9 +953,9 @@ Vue.extend(options)        //全局注册一个扩展,返回一个 Vue 子类
 
 ### (6) 指令 directives
 
-自定义指令用于对普通 DOM 元素进行底层操作
+自定义指令用于`对普通 DOM 元素进行底层操作`
 
-自定义指令定义对象具备以下几个钩子函数
+指令定义对象提供以下几个钩子函数
 
 * **bind**：指令第一次绑定到元素时调用
 * **inserted**：被绑定元素插入父节点时调用
@@ -963,7 +963,7 @@ Vue.extend(options)        //全局注册一个扩展,返回一个 Vue 子类
 * **componentUpdated**：被绑定元素所在组件 VNode 及其子 VNode 全部更新后调用
 * **unbind**：指令与元素解绑时调用
 
-自定义指令定义对象钩子函数参数
+指令定义对象的钩子函数参数
 
 * **el**：被绑定元素
 * **binding**
@@ -1052,13 +1052,16 @@ new Vue({
 })
 ```
 
+src/views/person/index.vue
+
 ![adaptive1]()
 
 ![adaptive2]()
 
 ### (5) 过滤 filters
 
-filters 选项可以在当前组件局部注册`过滤器`
+自定义过滤器用于常见的`文本格式化`，过滤器可以用在`双花括号插值`和 `v-bind` 表达式
+
 
 ```html
 <template>
@@ -1100,7 +1103,10 @@ export default {
 
 ### (4) 混入 mixins
 
-mixin 选项可以在当前组件局部注册`混入`
+混入用于`分发组件的可复用功能`，混入可以包含任意组件选项，组件使用混入时，所有混入的选项都将混合进入组件本身的选项
+
+* 值为对象的选项将合并为同一个`对象`，键名发生冲突时以`组件`优先（directives、filters、components、extends、data、methods）
+* 生命周期钩子函数同名则合并为`数组`，因此都将被调用，`混入钩子在组件钩子之前调用`
 
 ```js
 import Home from "@/views/Home";

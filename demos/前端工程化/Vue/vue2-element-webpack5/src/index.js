@@ -18,6 +18,9 @@ Vue.use(ElementUI)
 // 注册全局自定义指令
 import './directive/index.js';
 
+// 注册全局自定义过滤器
+import './filter/index.js'
+
 new Vue({
   el: '#app',
   router,
