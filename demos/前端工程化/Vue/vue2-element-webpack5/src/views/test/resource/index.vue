@@ -1,12 +1,14 @@
 <template>
   <section class="resource">
-    自定义全局过滤器
+    <h2>Vue 组件资源选项</h2>
+    
+    自定义全局过滤器 filter
     <div class="resource-filter">
       <div>{{ new Date() }}</div>
       <div>{{ new Date() | formatDate }}</div>
     </div>
 
-    自定义混入
+    混入 mixin
     <div class="resource-mixin">
       <el-table :data="tableData">
         <el-table-column prop="name" label="姓名"></el-table-column>
@@ -24,7 +26,7 @@
       </el-table>
     </div>
 
-    混入
+    扩展 extend
     <div class="resource-mixin">
       <el-button @click="handleDel">删除</el-button>
     </div>

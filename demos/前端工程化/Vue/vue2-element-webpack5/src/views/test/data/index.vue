@@ -1,6 +1,21 @@
 <template>
   <section class="data">
     <h2>Vue 组件数据选项</h2>
+
+    data
+    <div class="data-data">
+      person: {{ person }}
+      <el-button size="mini" @click="handleObj1('del')">删除对象属性</el-button>
+      <el-button size="mini" @click="handleObj1('add')">添加对象属性</el-button>
+      <el-button size="mini" @click="handleObj2('del')">删除对象属性-响应式</el-button>
+      <el-button size="mini" @click="handleObj2('add')">添加对象属性-响应式</el-button>
+
+      people: {{ people }}
+      <el-button size="mini" @click="handleArr1('edit')">索引修改数组项</el-button>
+      <el-button size="mini" @click="handleArr1('add')">索引添加数组项</el-button>
+      <el-button size="mini" @click="handleArr2('edit')">修改数组项-响应式</el-button>
+      <el-button size="mini" @click="handleArr2('add')">添加数组项-响应式</el-button>
+    </div>
     
     computed
     <div class="data-computed">
@@ -100,6 +115,34 @@ export default {
     }
   },
   methods: {
+    handleObj1(type) {
+      if(type === 'del') {
+        Reflect.deleteProperty(this.person, 'name')
+      } else {
+        this.person.job = 'doctor'
+      }
+    },
+    handleObj2(type) {
+      if(type === 'del') {
+        this.$set(this.person, 'name', undefined)
+      } else {
+        this.$set(this.person, 'job', 'doctor')
+      }
+    },
+    handleArr1(type) {
+      if(type === 'edit') {
+        this.people[0] = { name: '张哈哈', age: 26 }
+      } else {
+        this.people[2] = { name: '王五', age: 40 }
+      }
+    },
+    handleArr2(type) {
+      if(type === 'edit') {
+        this.$set(this.people, 0, { name: '张哈哈', age: 26 })
+      } else {
+        this.$set(this.people, 2, { name: '王五', age: '40' })
+      }
+    },
     changeChildTitle(val) {
       this.childTitle = val
     },
@@ -119,6 +162,7 @@ export default {
   h2 {
     margin-top: 0;
   }
+  &-data,
   &-computed,
   &-watch,
   &-props,
@@ -126,6 +170,12 @@ export default {
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid black;
+  }
+  &-data {
+    .el-button {
+      display: block;
+      margin-left: 0;
+    }
   }
 }
 </style>

@@ -1,4 +1,4 @@
-# 二、Vue 组件
+# 二、Vue
 
 ## 1. Vue 应用
 
@@ -90,7 +90,7 @@ export default {
 </div>
 ```
 
-![真实DOM](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E7%9C%9F%E5%AE%9EDOM.png)
+![真实DOM](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue/%E7%9C%9F%E5%AE%9EDOM.png)
 
 ### (5) 虚拟 DOM
 
@@ -113,7 +113,7 @@ render 渲染函数的参数函数 `createElement` 返回的并不是一个实�
 
 #### ③ diff 比较过程（v-for key 原理）
 
-![diff比较](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/diff%E6%AF%94%E8%BE%83.jpg)
+![diff比较](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue/diff%E6%AF%94%E8%BE%83.jpg)
 
 diff 比较过程
 
@@ -135,9 +135,9 @@ v-for key 原理
 
 * 最大化利用节点，diff 比较时减少性能消耗，如下图，所有 Vnode tag 相同
 * 不加 kay 属性时，diff 比较如下
-  ![不加key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E4%B8%8D%E5%8A%A0key.jpg)
+  ![不加key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue/%E4%B8%8D%E5%8A%A0key.jpg)
 * 加上 key 属性时，diff 比较如下
-  ![加上key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue2/%E5%8A%A0%E4%B8%8Akey.jpg)
+  ![加上key](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue/%E5%8A%A0%E4%B8%8Akey.jpg)
 
 #### ④ 文档片段
 
@@ -538,9 +538,9 @@ export default {
 
 ![Vue组件DOM选项]()
 
-## 4. Vue 组件数据选项
+## 4. Vue 组件数据选项（双向数据绑定）
 
-### (1) Vue 组件数据选项
+### (1) Vue 组件数据选项（双向数据绑定）
 
 Vue 会递归地将 data 选项中的数据加入响应式系统，但这些数据应该是声明时即存在的
 
@@ -553,27 +553,98 @@ props          //当前组件接收到的父组件数据
 provide/inject //祖先组件向所有子孙组件注入一个依赖,无论层次有多深,类似于 prop
 ```
 
-#### ① computed
+#### ① data（双向数据绑定）
+
+Vue data 选项返回对象中的数据都具有`双向数据绑定`，双向数据绑定的原理如下
+
+Vue 遍历 data 选项返回的 JS 对象的属性，并使用 `Object.defineProperty()` 将其全部转换为`对象属性的 getter/setter`，从而实现双向数据绑定，通过以下实例模拟 Vue 双向数据绑定
+
+```html
+<input id="edit" />
+
+<script>
+const edit = document.querySelector('#edit')
+const obj = {
+  profile: 'aaa'
+}
+const store = {} // 暂存 obj 的改动,避免栈溢出
+Object.defineProperty(obj, 'profile', {
+  get() {
+    return store.profile
+  },
+  set(val) {
+    store.profile = val
+    edit.value = val
+  }
+})
+edit.addEventListener('keyup', () => {
+  obj.profile = this.value
+  console.log(obj.profile)
+})
+</script>
+```
+
+由于 ES5 本身的限制，使用 getter/setter 实现的双向数据绑定无法检测对象和数组的变化
+
+* Vue 不能检测以下`对象`的变动
+  * 对象属性的添加
+  * 对象属性的删除
+  * 可以使用 `this.set(obj, propName, value)` 方法为对象添加响应式 property
+* Vue 不能检测以下`数组`的变动
+  * 修改数组的长度 length 属性
+  * 利用索引直接修改/添加一个数组项
+  * 可以使用 `this.set(arr, index, value)` 方法为数组添加响应式数组项
+
+#### ② computed
+
+**数据链**：数据链在学术上被定义为连通数据的链路，数据链上有一到多个数据起点（`元数据`），并通过数据起点不断衍生扩展新的数据节点（`衍生数据`），形成一个庞大的网状数据结构，修改元数据时，数据链上的所有衍生数据都将同步更新
+
+![数据链](https://github.com/yuyuyuzhang/Blog/blob/master/images/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/Vue/Vue/%E6%95%B0%E6%8D%AE%E9%93%BE.png)
+
+**函数式编程**：函数式编程的核心是根据元数据生成新的衍生数据，提供`唯一确定的输入`，函数将返回`唯一确定的输出`
+  
+  * 函数式编程不会修改原变量的值
+  * 函数式编程的函数体只能包含运算过程，并且必须带返回值
+
+  通过函数式编程实现衍生数据，可以保证`衍生数据的值只依赖元数据且不允许被外界修改`
+
+  ```js
+  const a = 3, b = 4
+
+  const c = (a => a*2+2)(a)
+  const d = ((a, b) => a+b*2)(a, b)
+  const e = (b => b/2)(b)
+  const f = ((c, d) => c+d)(c, d)
+  const g = ((d, e) => d-e)(d, e)
+
+  console.log(c) //8
+  console.log(d) //11
+  console.log(e) //2
+  console.log(f) //19
+  console.log(g) //9
+  ```
+
+Vue 通过`数据链和函数式编程`实现 computed 选项以供开发者生成 data 选项的衍生数据，通过修改 data 选项的值来触发一系列 computed 衍生数据的更新
 
 computed 选项的计算属性结果会被`缓存`，只有计算属性依赖的响应式 property 发生变化时计算属性才会重新计算
 
 * 组件触发重新渲染时，如果计算属性依赖的响应式 property 没有发生变化，那么计算属性会使用缓存值而不是重新计算
 * 相比之下，methods 选项的方法始终会重新调用
 
-#### ② watch
+#### ③ watch
 
 watch 选项是一个`观察器`，可以观察当前组件的 data 选项的变量的值变化，组件的 `this.$watch(target,cb,options)` 方法作用同 watch 选项一样
 
 * **deep**：深度监听,可监听到对象属性和数组项的变化
 * **immediate**：立即触发一次回调
 
-#### ③ props
+#### ④ props
 
 * 父组件通过`属性绑定`向子组件传递数据，子组件通过 `props` 选项接收父组件传递的数据
 * 为了避免数据混乱，子组件不能直接修改 props，可以通过计算属性 `computed` 接收 props 并修改
 * **单向数据流**：props 使得父子组件间形成了一个单向下行绑定，父组件 prop 的更新会向下流动到子组件，反过来则不行，这是为了避免子组件意外变更父组件的状态，从而导致应用数据流难以理解
 
-#### ④ provide/inject
+#### ⑤ provide/inject
 
 祖先组件使用 `provide` 选项暴露自身的数据，子孙组件使用 `inject` 选项注入祖先组件暴露的数据，无论组件层次有多深
 
@@ -586,11 +657,26 @@ src/views/test/data/index.vue
 
 ```vue
 <template>
-  <section class="test">
-    <h2>test</h2>
+  <section class="data">
+    <h2>Vue 组件数据选项</h2>
+
+    data
+    <div class="data-data">
+      person: {{ person }}
+      <el-button size="mini" @click="handleObj1('del')">删除对象属性</el-button>
+      <el-button size="mini" @click="handleObj1('add')">添加对象属性</el-button>
+      <el-button size="mini" @click="handleObj2('del')">删除对象属性-响应式</el-button>
+      <el-button size="mini" @click="handleObj2('add')">添加对象属性-响应式</el-button>
+
+      people: {{ people }}
+      <el-button size="mini" @click="handleArr1('edit')">索引修改数组项</el-button>
+      <el-button size="mini" @click="handleArr1('add')">索引添加数组项</el-button>
+      <el-button size="mini" @click="handleArr2('edit')">修改数组项-响应式</el-button>
+      <el-button size="mini" @click="handleArr2('add')">添加数组项-响应式</el-button>
+    </div>
     
     computed
-    <div class="test-computed">
+    <div class="data-computed">
       <div>a: <input v-model="a" /></div>
       <div>b: {{ b }}</div>
       <div>personName: <input v-model="personName" /></div>
@@ -599,20 +685,20 @@ src/views/test/data/index.vue
     </div>
 
     watch
-    <div class="test-watch">
+    <div class="data-watch">
       <div>{{ title }} <input v-model="title" /></div>
       <div>{{ person.name }}<input v-model="person.name" /></div>
       <div>{{ people[0].name }}<input v-model="people[0].name" /></div>
     </div>
 
     props
-    <div class="test-props">
+    <div class="data-props">
       index: {{ childTitle }}
       <child :childTitle="childTitle" @changeChildTitle="changeChildTitle"></child>
     </div>
 
     provide/inject
-    <div class="test-inject">
+    <div class="data-inject">
       index: {{ grandTitle }}
       <son @changeGrandTitle="changeGrandTitle"></son>
     </div>
@@ -624,7 +710,7 @@ import child from './components/child.vue'
 import son from './components/son.vue'
 
 export default {
-  name: 'test',
+  name: 'data',
   components: {
     child,
     son
@@ -687,6 +773,34 @@ export default {
     }
   },
   methods: {
+    handleObj1(type) {
+      if(type === 'del') {
+        Reflect.deleteProperty(this.person, 'name')
+      } else {
+        this.person.job = 'doctor'
+      }
+    },
+    handleObj2(type) {
+      if(type === 'del') {
+        this.$set(this.person, 'name', undefined)
+      } else {
+        this.$set(this.person, 'job', 'doctor')
+      }
+    },
+    handleArr1(type) {
+      if(type === 'edit') {
+        this.people[0] = { name: '张哈哈', age: 26 }
+      } else {
+        this.people[2] = { name: '王五', age: 40 }
+      }
+    },
+    handleArr2(type) {
+      if(type === 'edit') {
+        this.$set(this.people, 0, { name: '张哈哈', age: 26 })
+      } else {
+        this.$set(this.people, 2, { name: '王五', age: '40' })
+      }
+    },
     changeChildTitle(val) {
       this.childTitle = val
     },
@@ -698,7 +812,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.test {
+.data {
   box-sizing: border-box;
   padding: 20px;
   height: 100%;
@@ -706,6 +820,7 @@ export default {
   h2 {
     margin-top: 0;
   }
+  &-data,
   &-computed,
   &-watch,
   &-props,
@@ -713,6 +828,12 @@ export default {
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid black;
+  }
+  &-data {
+    .el-button {
+      display: block;
+      margin-left: 0;
+    }
   }
 }
 </style>
@@ -951,7 +1072,7 @@ Vue.component(name,define) //全局注册一个组件,父组件引用后使用
 Vue.extend(options)        //全局注册一个扩展,返回一个 Vue 子类
 ```
 
-### (6) 指令 directives
+### (3) Vue 指令 directives
 
 自定义指令用于`对普通 DOM 元素进行底层操作`
 
@@ -1082,7 +1203,7 @@ src/views/person/index.vue
 
 ![adaptive2]()
 
-### (5) 过滤 filters
+### (4) Vue 过滤 filters
 
 自定义过滤器用于常见的`文本格式化`，只能用在`双花括号插值`和 `v-bind` 属性绑定表达式，通过`管道符 |` 调用，多个过滤器可以`链式调用`，前一个过滤器的返回结果作为参数传递到下一个过滤器
 
@@ -1216,7 +1337,7 @@ export default {
 
 ![自定义全局过滤器]()
 
-### (4) 混入 mixins
+### (5) Vue 混入 mixins
 
 混入用于`分发组件的可复用功能`，混入可以包含任意组件选项，组件使用混入时，所有混入的选项都将混合进入组件本身的选项，混入主要用于复用`业务逻辑`
 
@@ -1310,7 +1431,7 @@ export default {
 
 ![mixin]()
 
-### (3) 扩展 extends
+### (6) Vue 扩展 extends
 
 扩展就是使用基础 Vue 构造器创建一个`子类构造器`，之后再使用子类构造器创建一个`实例`，并将实例挂载到`任意指定节点`，常用于`开发者自己构建一个复杂弹窗`
 
@@ -1816,12 +1937,53 @@ src/views/test/dynamicComponents/component/error.vue
 
 ## 11. Vue 过渡
 
-Vue 提供了 `<transition></transition>`，可以在以下情形给任何元素和组件添加进入/离开过渡效果
+### (1) 单元素/组件的过渡
+
+Vue 提供 `<transition></transition>` 的封装组件，可以在以下情形给任何元素和组件添加`进入/离开`过渡效果
 
 * 条件渲染（v-if）
 * 条件展示（v-show）
 * 动态组件
 * 组件根节点
+
+进入/离开过渡有以下 6 个 CSS class 切换，如果使用没有名字的 `<transition>`，v- 是类名的默认前缀，如果使用有名字的 `<transition name="xxx">`，xxx- 是类名前缀，例如 xxx-enter
+
+```js
+v-enter         //进入过渡的开始状态
+v-enter-active  //进入过渡的生效状态
+v-enter-to      //进入过渡的结束状态
+
+v-appear        //
+v-appear-active //
+v-appear-to     //
+
+v-leave         //离开过渡的开始状态
+v-leave-active  //离开过渡的生效状态
+v-leave-to      //离开过渡的结束状态
+```
+
+![过渡类名]()
+
+进入/离开过渡有以下 8 个 JS 钩子事件
+
+```js
+@before-enter     //
+@enter            //
+@after-enter      //
+@enter-cancelled  //
+
+@before-appear    //
+@appear           //
+@after-appear     //
+@appear-cancelled //
+
+@before-leave     //
+@leave            //
+@after-leave      //
+@leave-cancelled  //
+```
+
+### (2) 多元素/组件的过渡
 
 ## 12. Vue 插件
 
@@ -1966,6 +2128,9 @@ import './directive/index.js';
 
 // 注册全局自定义过滤器
 import './filter/index.js'
+
+// 注册扩展
+import './extend/index.js'
 
 new Vue({
   el: '#app',

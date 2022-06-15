@@ -69,7 +69,13 @@ const constantRoutes = [
         name: 'Vue 异步组件',
         meta: { title: 'asyncComponents', icon: '', noCache: true, affix: true },
         component: () => import('@/views/test/asyncComponents/index.vue'),
-      }
+      },
+      {
+        path: 'transit',
+        name: 'Vue 过渡',
+        meta: { title: 'transit', icon: '', noCache: true, affix: true },
+        component: () => import('@/views/test/transit/index.vue'),
+      },
     ],
   },
   {
