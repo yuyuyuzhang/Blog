@@ -1,4 +1,4 @@
-# 二、Vue
+# 一、Vue3
 
 ## 1. Vue 应用
 
@@ -10,49 +10,57 @@
 
 ### (2) Vue 应用实例
 
-单页面应用程序 SPA 中只有一个根 Vue 应用实例，通过 `new Vue()`创建
+单页面应用程序 SPA 中只有一个 Vue 应用实例，通过 `Vue.createApp()`创建
 
 ```js
 import App from './App.vue'
+import { createApp } from 'vue'
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+const app = createApp(App)
+
+app.use(router)
+  .use(store)
+  .use(ElementPlus)
+  .mount('#app')
 ```
 
 ![Vue实例]()
 
-### (3) Vue 全局 API
+### (3) Vue 应用 API
 
 全局注册往往是不够理想的，因为如果使用 Webpack 构建系统，即使全局注册的内容不再被使用，也都会包含在最终的构建结果中，这会造成用户下载的 JS 代码的无谓增加
 
 ```js
-全局 DOM API
-Vue.compile(template)                //将模板字符串 template 编译成渲染函数 render
+应用 DOM API：
+app.mount(dom)              //将当前 Vue 应用实例的根组件挂载到指定 DOM 元素
+app.unmount(dom, delay)     //将当前 Vue 应用实例的根组件从指定 DOM 元素卸载
 
-全局数据 API
-Vue.observable(obj)                  //让一个对象可响应,该对象可直接用于渲染函数和计算属性内,并在变更时触发相应更新
+应用资源 API：
+app.directive(name, define) //全局注册一个指令
+app.mixin(mixin)            //全局注册一个混入
+app.componnet(name, define) //全局注册一个扩展,返回一个 Vue 构造器子类
 
-全局资源 API：
-Vue.directive(name, define)          //全局注册一个指令
-Vue.filter(name, cb)                 //全局注册一个过滤器
-Vue.mixin(mixin)                     //全局注册一个混入
-Vue.component(name, define)          //全局注册一个组件,常用于定义异步组件
-Vue.extend(options)                  //全局注册一个扩展,返回一个 Vue 构造器子类
-
-全局数据方法：
-Vue.set(target, propName/index, val) //向响应式对象 target 添加/修改 propName/index
-Vue.delete(target, propName/index)   //向响应式对象 target 删除 propName/index
-Vue.nextTick(cb)                     //下次 DOM 更新后调用回调函数 cb
+Vue 配置：
+app.config                  //返回/设置当前 Vue 应用实例的配置对象
+app.provide                 //返回/设置可注入到当前 Vue 应用实例下所有组件的值（适用于 Vue 插件）
 
 Vue 插件：
-Vue.use(plugin, options)             //全局注册 Vue 插件
+app.use(plugin, options)    //全局注册 Vue 插件
+```
 
-其他 API：
-Vue.version                          //返回安装的 Vue 版本号
+### (4) Vue 全局 API
+
+```js
+Vue.createApp()                           //全局注册一个 Vue 应用实例
+Vue.createRenderer(HostNode, HostElement) //全局注册一个渲染器
+Vue.defineComponent(MyComponent)          //全局注册一个同步组件
+Vue.defineAsyncComponent()                //全局注册一个异步组件
+Vue.resolveComponent(name)                //按名称解析组件
+Vue.resolveDynamicComponent(name)         //按名称解析动态组件
+Vue.resolveDirective(name)                //按名称解析指令
+Vue.h(type, props, children)              //返回一个 VNode
+Vue.withDirectives(vnode, directives)     //返回包含指定指令的 VNode，允许将指令应用于 VNode
+Vue.nextTick(cb)                          //下次 DOM 更新后调用回调函数 cb
 ```
 
 ## 2. Vue 组件
@@ -78,10 +86,8 @@ Vue 组件非常类似于`自定义元素`，Vue 组件是 `Web Components API` 
 ### (1) Vue 组件 DOM 选项
 
 ```js
-el          //将当前 Vue 应用实例挂载到一个页面上已存在的 DOM 元素上
 template    //字符串模板,用来替换挂载的 DOM 元素
 render      //渲染函数,用来代替字符串模板
-renderError //render 函数遭遇错误时错误作为第二个参数传递到 renderError(只在开发者环境下工作)
 ```
 
 ### (2) 模板 temlate
@@ -309,286 +315,11 @@ v-once 用于只渲染元素或组件一次，随后的重新渲染将被跳过�
 * **插槽具名**：有时父组件需要多个插槽承载子组件中不同内容，为了识别不同插槽，父组件通过 `v-slot:name` 中 name 属性唯一标识某个插槽，子组件通过 `<slot name=""></slot>` 中 name 属性唯一标识某个插槽的承载内容
 * **插槽作用域**：父组件中所有内容都是在`父级作用域`中编译的，子组件中所有内容都是在`子级作用域`中编译的，父组件插槽只能访问父组件数据而不能访问子组件数据，然而子组件可以在 `<slot :a="a"></slot>` 通过属性绑定传值给父组件，父组件在 `v-slot:name="{ a }"` 通过插槽 prop 访问子组件传递的数据
 
-### (7) 实例
+#### ⑩ v-is（Vue3 新增指令）
 
-src/views/test/dom/index.vue
+## 4. Vue 组件数据选项（Vue3 双向数据绑定）
 
-```vue
-<template>
-  <section class="dom">
-    <h2>Vue 组件 DOM 选项</h2>
-    
-    template
-    <div class="dom-template">
-      <h3>{{ title }}</h3>
-    </div>
-
-    v-text、v-html、v-pre
-    <div class="dom-directive">
-      <div>
-        v-text
-        <span v-text="text"></span>
-        <span>{{ text }}</span>
-      </div>
-
-      <div>
-        v-html
-        <span v-html="html"></span>
-      </div>
-
-      <div>
-        v-pre 
-        <span v-pre>{{ html }}</span>
-      </div>
-    </div>
-
-    v-if、v-show
-    <div class="dom-directive">
-      <div>
-        <el-radio-group v-model="isShowA">
-          <el-radio :label="true">显示</el-radio>
-          <el-radio :label="false">不显示</el-radio>
-        </el-radio-group>
-        <div v-show="isShowA">I am A</div>
-      </div>
-
-      <div>
-        <el-radio-group v-model="isRenderB">
-          <el-radio :label="true">渲染</el-radio>
-          <el-radio :label="false">不渲染</el-radio>
-        </el-radio-group>
-        <div v-if="isRenderB">bbb</div>
-      </div>
-    </div>
-
-    v-for
-    <div class="dom-directive">
-      <ul>
-        <li v-for="item in people" :key="item.name">{{ item.name + ' ' + item.age }}</li>
-      </ul>
-    </div>
-
-    v-model
-    <div class="dom-directive">
-      trim: <input v-model.trim="name" @input="handleInputName" />
-    </div>
-
-    v-bind
-    <div class="dom-directive">
-      <div :class="[ 'red', { 'big': isBig } ]" :style="{ backgroundColor: 'gray' }">
-        class、style 绑定
-      </div>
-
-      <div>
-        attribute、property 区分
-        <input id="block" data-a="a" value="111" />
-      </div>
-
-      <div>
-        .prop 修饰符
-        <input :data="data1" @keyup="handlePrintData1($event)" />
-        <input :data.prop="data2" @keyup="handlePrintData2($event)" />
-      </div>  
-
-      <div>
-        .sync 修饰符
-        <child :childTitle.sync="childTitle"></child>
-      </div>
-    </div>
-
-    v-on
-    <div class="dom-directive">
-      .self 修饰符
-      <ul @click.self="handleSelf">
-        <li v-for="item in lis" :key="item">{{ item }}</li>
-      </ul>
-
-      .stop 修饰符
-      <ul @click="handleStop">
-        <li v-for="item in lis" :key="item" @click.stop="">{{ item }}</li>
-      </ul>
-
-      .prevent 修饰符<a href="https://fanyi.baidu.com/?aldtype=16047#en/zh" @click.prevent="">百度翻译</a>
-      .passive 修饰符<a href="https://fanyi.baidu.com/?aldtype=16047#en/zh" @click.passive="">百度翻译</a>
-
-      .capture 修饰符
-      <!-- 情况1：3 2 1 -->
-      <div @click="handle1">
-        <div @click="handle2">
-          <div @click="handle3">aaa</div>
-        </div>
-      </div>
-
-      <!-- 情况2：1 3 2 -->
-      <div @click.capture="handle1">
-        <div @click="handle2">
-          <div @click="handle3">aaa</div>
-        </div>
-      </div>
-
-      <!-- 情况3：2 3 1 -->
-      <div @click="handle1">
-        <div @click.capture="handle2">
-          <div @click="handle3">aaa</div>
-        </div>
-      </div>
-
-      <!-- 情况4：1 2 3 -->
-      <div @click.capture="handle1">
-        <div @click.capture="handle2">
-          <div @click="handle3">aaa</div>
-        </div>
-      </div>
-    </div>
-
-    v-once
-    <div class="dom-directive">
-      <div v-once>{{ txt }}</div>
-      <input v-model="txt" />
-    </div>
-
-    v-slot
-    <div class="dom-directive">
-      <context>
-        <template v-slot:img>
-          <img :src="img_cat"/>
-        </template>
-        <template v-slot:desc="{ desc }">
-          <ul>
-            <li>{{ desc.name }}</li>
-            <li>{{ desc.age }}</li>
-          </ul>
-        </template>
-      </context>
-    </div>
-  </section>
-</template>
-
-<script>
-import child from './components/child.vue'
-import context from './components/context.vue'
-import img_cat from '@/assets/img/cat.jpg'
-
-export default {
-  name: 'dom',
-  components: {
-    child,
-    context,
-  },
-  data() {
-    return {
-      title: '我是小可爱',
-      text: '我是大可爱',
-      html: '<h1>我是大可爱</h1>',
-      isShowA: true,
-      isRenderB: true,
-      people: [
-        { name: '张三', age: 26 },
-        { name: '李四', age: 30 }
-      ],
-      name: '',
-      isBig: true,
-      data1: 'aaa',
-      data2: 'bbb',
-      childTitle: '你是大可爱',
-      lis: [ 'a', 'b', 'c' ],
-      txt: '哈哈',
-      img_cat: img_cat
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      const div = document.querySelector('#block')
-      console.log(div.attributes) // NamedNodeMap { 0: data-v-ff66debc, 1: id, 2: data-a, 3: value, length: 4 }
-      div.addEventListener('keyup', function(e) {
-        console.log(e.target.attributes[3])  // attribute, 始终输出 value="111"
-        console.log(e.target.value)          // property, 不断输出最新值
-      })
-
-      // 查询插槽
-      console.log('slots:',this.$slots,this.$refs.context.$slots)
-      console.log('scopedSlots:',this.$scopedSlots,this.$refs.context.$scopedSlots)
-    })
-  },
-  methods: {
-    handleInputName() {
-      console.log('name-input:', this.name)
-    },
-    handlePrintData1(e){
-      console.log(e.target.data) //undefined
-      console.log(e.target.attributes[1]) //data="aaa"
-    },
-    handlePrintData2(e){
-      console.log(e.target.data) //'bbb'
-    },
-    handleSelf(){
-      console.log('self')
-    },
-    handleStop(){
-      console.log('stop')
-    },
-    handle1(){
-      console.log('1')
-    },
-    handle2(){
-      console.log('2')
-    },
-    handle3(){
-      console.log('3')
-    },
-  }
-};
-</script>
-
-<style lang="scss" scoped>
-.dom {
-  box-sizing: border-box;
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto;
-  h2 {
-    margin-top: 0;
-  }
-  &-template,
-  &-directive {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid black;
-  }
-}
-</style>
-```
-
-src/views/test/dom/components/context.vue
-
-```vue
-<template>
-  <section class="context">
-    <h2>我是子组件</h2>
-
-    <slot name="img"></slot>
-    <slot name="desc" :desc="{ name, age }"></slot>
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'context',
-  data() {
-    return {
-      name: '花花',
-      age: '1 岁'
-    }
-  }
-};
-</script>
-```
-
-![Vue组件DOM选项]()
-
-## 4. Vue 组件数据选项（Vue2 双向数据绑定）
-
-### (1) Vue 组件数据选项（Vue2 双向数据绑定）
+### (1) Vue 组件数据选项（Vue3 双向数据绑定）
 
 Vue 会递归地将 data 选项中的数据加入响应式系统，但这些数据应该是声明时即存在的
 
@@ -599,11 +330,21 @@ watch          //当前组件的观察器
 methods        //当前组件的方法
 props          //当前组件接收到的父组件数据
 provide/inject //祖先组件向所有子孙组件注入一个依赖,无论层次有多深,类似于 prop
+emits          //当前组件的自定义事件
 ```
 
-#### ① data（Vue2 双向数据绑定）
+#### ① data（Vue3 双向数据绑定）
 
-Vue data 选项返回对象中的数据都具有`双向数据绑定`，原理是 Vue 遍历 data 选项返回的 JS 对象的属性，并使用 `Object.defineProperty()` 将其全部转换为`对象属性的 getter/setter`，从而实现双向数据绑定，模拟如下
+Vue data 选项返回对象中的数据都具有`双向数据绑定`，原理是通过 `Proxy` 实现数据与视图的双向绑定，模拟如下
+
+Vue3 双向数据绑定克服了 Vue2 通过 `getter/setter` 实现的双向数据绑定的以下缺陷
+
+* 不能检测以下`对象`的变动
+  * 对象属性的添加
+  * 对象属性的删除
+* 不能检测以下`数组`的变动
+  * 修改数组的长度 length 属性
+  * 利用索引直接修改/添加一个数组项
 
 ```html
 <input id="edit" />
@@ -613,33 +354,22 @@ const edit = document.querySelector('#edit')
 const obj = {
   profile: 'aaa'
 }
-const store = {} // 暂存 obj 的改动,避免栈溢出
-Object.defineProperty(obj, 'profile', {
-  get() {
-    return store.profile
+const handler = {
+  get(obj, prop, receiver){
+    return Reflect.get(obj, prop)
   },
-  set(val) {
-    store.profile = val
+  set(obj, prop, val, receiver){
+    Reflect.set(obj, prop, val)
     edit.value = val
-  }
-})
-edit.addEventListener('keyup', () => {
-  obj.profile = this.value
+  },
+}
+const objProxy = new Proxy(obj, handler)
+edit.addEventListener('keyup', function(){
+  objProxy.profile = this.value
   console.log(obj.profile)
 })
 </script>
 ```
-
-由于 ES5 本身的限制，使用 getter/setter 实现的双向数据绑定无法检测对象和数组的变化
-
-* Vue 不能检测以下`对象`的变动
-  * 对象属性的添加
-  * 对象属性的删除
-  * 可以使用 `this.set(obj, propName, value)` 方法为对象添加响应式 property
-* Vue 不能检测以下`数组`的变动
-  * 修改数组的长度 length 属性
-  * 利用索引直接修改/添加一个数组项
-  * 可以使用 `this.set(arr, index, value)` 方法为数组添加响应式数组项
 
 #### ② computed
 
@@ -697,392 +427,36 @@ watch 选项是一个`观察器`，可以观察当前组件的 data 选项的变
 * provide/inject 选项设计成数据`非响应式`的，这是为了避免数据混乱，例如子组件不能直接修改 props 一样
 * 如果一定需要 provide/inject 变成响应式的，可以让祖先组件 provide 选项返回一个`函数`，函数内部返回响应式的数据，子孙组件通过计算属性 `computed` 接收 inject 收到的函数
 
+#### ⑥ emits（Vue3 新增）
+
 ### (2) 实例
-
-src/views/test/data/index.vue
-
-```vue
-<template>
-  <section class="data">
-    <h2>Vue 组件数据选项</h2>
-
-    data
-    <div class="data-data">
-      person: {{ person }}
-      <el-button size="mini" @click="handleObj1('del')">删除对象属性</el-button>
-      <el-button size="mini" @click="handleObj1('add')">添加对象属性</el-button>
-      <el-button size="mini" @click="handleObj2('del')">删除对象属性-响应式</el-button>
-      <el-button size="mini" @click="handleObj2('add')">添加对象属性-响应式</el-button>
-
-      people: {{ people }}
-      <el-button size="mini" @click="handleArr1('edit')">索引修改数组项</el-button>
-      <el-button size="mini" @click="handleArr1('add')">索引添加数组项</el-button>
-      <el-button size="mini" @click="handleArr2('edit')">修改数组项-响应式</el-button>
-      <el-button size="mini" @click="handleArr2('add')">添加数组项-响应式</el-button>
-    </div>
-    
-    computed
-    <div class="data-computed">
-      <div>a: <input v-model="a" /></div>
-      <div>b: {{ b }}</div>
-      <div>personName: <input v-model="personName" /></div>
-      <div>name: {{ name }}</div>
-      <button @click="$forceUpdate()">重新渲染</button>
-    </div>
-
-    watch
-    <div class="data-watch">
-      <div>{{ title }} <input v-model="title" /></div>
-      <div>{{ person.name }}<input v-model="person.name" /></div>
-      <div>{{ people[0].name }}<input v-model="people[0].name" /></div>
-    </div>
-
-    props
-    <div class="data-props">
-      index: {{ childTitle }}
-      <child :childTitle="childTitle" @changeChildTitle="changeChildTitle"></child>
-    </div>
-
-    provide/inject
-    <div class="data-inject">
-      index: {{ grandTitle }}
-      <son @changeGrandTitle="changeGrandTitle"></son>
-    </div>
-  </section>
-</template>
-
-<script>
-import child from './components/child.vue'
-import son from './components/son.vue'
-
-export default {
-  name: 'data',
-  components: {
-    child,
-    son
-  },
-  data() {
-    return {
-      a: 3,
-      name: '张三',
-
-      title: '小可爱',
-      person: {
-        name: '王五',
-        age: 40
-      },
-      people: [
-        { name: '张三', age: 26 },
-        { name: '李四', age: 30 }
-      ],
-
-      childTitle: 'I am child',
-      grandTitle: 'I am grandSon'
-    };
-  },
-  provide() {
-    return {
-      // grandTitle: this.grandTitle
-      grandTitle: () => this.grandTitle
-     }
-  },
-  computed: {
-    b() {
-      return this.a * 2;
-    },
-    personName: {
-      get() {
-        return this.name;
-      },
-      set(val) {
-        this.name = val;
-      }
-    }
-  },
-  watch: {
-    title: {
-      handler: function(newVal, oldVal) {
-        console.log("title", newVal, oldVal);
-      }
-    },
-    person: {
-      deep: true,
-      handler: function(newVal, oldVal) {
-        console.log("person", newVal.name, oldVal.name);
-      }
-    },
-    people: {
-      deep: true,
-      handler: function(newVal, oldVal) {
-        console.log('people', newVal, oldVal);
-      }
-    }
-  },
-  methods: {
-    handleObj1(type) {
-      if(type === 'del') {
-        Reflect.deleteProperty(this.person, 'name')
-      } else {
-        this.person.job = 'doctor'
-      }
-    },
-    handleObj2(type) {
-      if(type === 'del') {
-        this.$set(this.person, 'name', undefined)
-      } else {
-        this.$set(this.person, 'job', 'doctor')
-      }
-    },
-    handleArr1(type) {
-      if(type === 'edit') {
-        this.people[0] = { name: '张哈哈', age: 26 }
-      } else {
-        this.people[2] = { name: '王五', age: 40 }
-      }
-    },
-    handleArr2(type) {
-      if(type === 'edit') {
-        this.$set(this.people, 0, { name: '张哈哈', age: 26 })
-      } else {
-        this.$set(this.people, 2, { name: '王五', age: '40' })
-      }
-    },
-    changeChildTitle(val) {
-      this.childTitle = val
-    },
-    changeGrandTitle(val) {
-      this.grandTitle = val
-    }
-  }
-};
-</script>
-
-<style lang="scss" scoped>
-.data {
-  box-sizing: border-box;
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto;
-  h2 {
-    margin-top: 0;
-  }
-  &-data,
-  &-computed,
-  &-watch,
-  &-props,
-  &-inject {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid black;
-  }
-  &-data {
-    .el-button {
-      display: block;
-      margin-left: 0;
-    }
-  }
-}
-</style>
-```
-
-src/views/test/data/componnets/child.vue
-
-```vue
-<template>
-  <section class="child">
-    <div>child: {{ childTitle }}</div>
-
-    <input v-model="childTitleComputed" />
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'child',
-  props: {
-    childTitle: {
-      type: String,
-      required: true
-    }
-  },
-  computed: {
-    childTitleComputed: {
-      get() {
-        return this.childTitle
-      },
-      set(val) {
-        this.$emit('changeChildTitle', val)
-      }
-    }
-  }
-};
-</script>
-```
-
-src/views/test/data/componnets/son.vue
-
-```vue
-<template>
-  <section class="son">
-    <div>son: {{ grandTitle() }}</div>
-
-    <grandSon @changeGrandTitle="changeGrandTitle"></grandSon>
-  </section>
-</template>
-
-<script>
-import grandSon from './grandSon.vue'
-
-export default {
-  name: 'son',
-  components: {
-    grandSon
-  },
-  inject: [
-    'grandTitle'
-  ],
-  methods: {
-    changeGrandTitle(val) {
-      this.$emit('changeGrandTitle', val)
-    }
-  }
-};
-</script>
-```
-
-src/views/test/data/componnets/grandSon.vue
-
-```vue
-<template>
-  <section class="grandSon">
-    <div>grandson: {{ grandTitleComputed }}</div>
-
-    <input v-model="grandTitleComputed"/>
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'grandSon',
-  inject: [
-    'grandTitle'
-  ],
-  computed: {
-    grandTitleComputed: {
-        get() {
-            // return this.grandTitle
-            return this.grandTitle()
-        },
-        set(val) {
-            this.$emit('changeGrandTitle', val)
-        }
-    }
-  }
-};
-</script>
-```
-
-![Vue组件数据选项]()
 
 ## 5. Vue 组件生命周期钩子选项
 
 ### (1) Vue 组件生命周期钩子选项
 
 ```js
-beforeCreate  //组件实例初始化之后,数据观测和事件绑定之前调用
-created       //组件实例初始化完成之后调用
-beforeMount   //组件实例挂载到 DOM 元素之前调用
-mounted       //组件实例挂载到 DOM 元素之后调用,无法保证所有子组件一起被挂载,如果希望等到整个视图都渲染完毕,可以在内部使用 this.$nextTick()
-beforeUpdate  //数据更新时,虚拟 DOM 重新渲染之前调用
-updated       //数据更新时,虚拟 DOM 重新渲染之后调用
-beforeDestroy //组件实例销毁之前调用,此时实例仍然可用
-destroyed     //组件实例销毁之后调用,此时实例不可用
-errorCaptured //捕获一个来自子孙组件的错误时调用
+beforeCreate    //组件实例初始化之后,数据观测和事件绑定之前调用
+created         //组件实例初始化完成之后调用
+beforeMount     //组件实例挂载到 DOM 元素之前调用
+mounted         //组件实例挂载到 DOM 元素之后调用,无法保证所有子组件一起被挂载,如果希望等到整个视图都渲染完毕,可以在内部使用 this.$nextTick()
+beforeUpdate    //数据更新时,虚拟 DOM 重新渲染之前调用
+updated         //数据更新时,虚拟 DOM 重新渲染之后调用
+beforeUnmount   //组件实例卸载前调用（Vue3 新增）
+unmounted       //组件实例卸载后调用（Vue3 新增）
+// beforeDestroy   //组件实例销毁之前调用,此时实例仍然可用（Vue3 废除）
+// destroyed       //组件实例销毁之后调用,此时实例不可用（Vue3 废除）
 
-activated     //被 keep-alive 缓存的组件激活时调用
-deactivated   //被 keep-alive 缓存的组件停用时调用
+activated       //被 keep-alive 缓存的组件激活时调用
+deactivated     //被 keep-alive 缓存的组件停用时调用
+
+errorCaptured   //捕获一个来自子孙组件的错误时调用
+
+renderTracked   //当前组件跟踪虚拟 DOM 重新渲染时调用（Vue3 新增）
+renferTriggered //当前组件跟踪虚拟 DOM 重新渲染为 triggered.Similarly 时调用（Vue3 新增）
 ```
 
 ### (2) 实例
-
-src/views/test/life/index.vue
-
-```vue
-<template>
-  <section class="life">
-    <h2>Vue 组件生命周期选项</h2>
-    
-    <div> {{ title }} </div>
-    <button @click="handleChange">修改</button>
-    <button @click="handleDestroy">销毁实例</button>
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'life',
-  data() {
-    return {
-      title: '小可爱'
-    }
-  },
-  beforeCreate(){
-    console.log('beforeCreate')
-  },
-  created(){
-    console.log('created')
-  },
-  beforeMount(){
-    console.log('beforeMount')
-  },
-  mounted(){
-    console.log('mounted')
-  },
-  beforeUpdate(){
-    console.log('beforeUpdate')
-  },
-  updated(){
-    console.log('updated')
-  },
-  beforeDestroy(){
-    console.log('beforeDestroy', this.$data.title)
-  },
-  destroyed(){
-    console.log('destroyed', this.$data.title)
-  },
-  methods: {
-    handleChange(){
-      console.log('change start')
-      this.title = 'hello world'
-      console.log('change end')
-
-      // 输出：change start    change end    beforeUpdate    updated
-    },
-    handleDestroy(){
-      console.log('destroy start')
-      this.$destroy()
-      console.log('destroy end')
-
-      // 输出：destroy start    beforeDestroy    destroyed    destroy end
-    }
-  }
-};
-</script>
-
-<style lang="scss" scoped>
-.life {
-  box-sizing: border-box;
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto;
-  h2 {
-    margin-top: 0;
-  }
-}
-</style>
-```
-
-![Vue组件生命周期选项]()
 
 ## 6. Vue 组件资源选项
 
@@ -1090,17 +464,18 @@ export default {
 
 ```js
 directives //当前组件局部注册引用的所有指令
-filters    //当前组件局部注册引用的所有过滤器
+// filters    //当前组件局部注册引用的所有过滤器（Vue3 废除）
 mixins     //当前组件局部注册引用的所有混入
 components //当前组件局部注册引用的所有子组件
 extends    //当前组件局部注册引用的扩展(当前组件继承扩展组件)
+setUp      //（Vue3 新增）
 ```
 
 ### (2) Vue 指令 directives
 
 自定义指令用于`对普通 DOM 元素进行底层操作`
 
-指令定义对象提供以下几个钩子函数
+Vue3 指令定义对象具备以下几个钩子函数
 
 * **bind**：指令第一次绑定到元素时调用
 * **inserted**：被绑定元素插入父节点时调用
@@ -1108,7 +483,14 @@ extends    //当前组件局部注册引用的扩展(当前组件继承扩展组
 * **componentUpdated**：被绑定元素所在组件 VNode 及其子 VNode 全部更新后调用
 * **unbind**：指令与元素解绑时调用
 
-指令定义对象的钩子函数参数
+* **beforeMount**：指令第一次绑定到元素并且挂载到父组件之前调用
+* **mounted**：
+* **beforeUpdate**：
+* **updated**：被绑定元素所在组件 VNode 更新时调用
+* **beforeUnmount**：被绑定元素所在组件 VNode 及其子 VNode 全部更新后调用
+* **unmounted**：指令与元素解绑时调用
+
+Vue3 指令定义对象钩子函数参数
 
 * **el**：被绑定元素
 * **binding**
@@ -1227,141 +609,7 @@ src/views/person/index.vue
 
 ![adaptive2]()
 
-### (3) Vue 过滤 filters
-
-自定义过滤器用于常见的`文本格式化`，只能用在`双花括号插值`和 `v-bind` 属性绑定表达式，通过`管道符 |` 调用，多个过滤器可以`链式调用`，前一个过滤器的返回结果作为参数传递到下一个过滤器
-
-```js
-<!-- 双花括号插值：msg 作为参数传到过滤器 filterA，过滤器 filterA 的返回结果作为参数传到过滤器 filterB -->
-{{ msg | filterA | filterB }}
-
-<!-- v-bind 属性绑定： -->
-<div v-bind:id="msg | filterA | filterB"></div>
-```
-
-全局自定义过滤器
-
-```js
-Vue.filter('xxx', val => {
-  //...
-  return value
-})
-```
-
-局部自定义过滤器
-
-```js
-filters: {
-  xxx: val => {
-    //...
-    return value
-  }
-}
-```
-
-src/filter/formateDate.js
-
-```js
-import Vue from 'vue'
-
-Vue.filter('formatDate', date => {
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let second = date.getSeconds();
-
-    month = month < 10 ? "0" + month : month;
-    day = day < 10 ? "0" + day : day;
-    hour = hour < 10 ? "0" + hour : hour;
-    minute = minute < 10 ? "0" + minute : minute;
-    second = second < 10 ? "0" + second : second;
-
-    return (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
-})
-```
-
-src/filter/index.js
-
-```js
-import './formatDate.js'
-```
-
-src/index.js
-
-```js
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router/index.js'
-import store from './store/index.js'
-
-// 全局样式
-import './assets/style/index.scss'
-
-// api
-import Api from './api/request.js'
-Vue.use(Api)
-
-// element-ui 组件库
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI)
-
-// 注册全局自定义指令
-import './directive/index.js';
-
-// 注册全局自定义过滤器
-import './filter/index.js'
-
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
-```
-
-src/views/test/resource/index.vue
-
-```vue
-<template>
-  <section class="resource">
-    自定义全局过滤器
-    <div class="resource-filter">
-      <div>{{ new Date() }}</div>
-      <div>{{ new Date() | formatDate }}</div>
-    </div>
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'resource',
-};
-</script>
-
-<style lang="scss" scoped>
-.resource {
-  box-sizing: border-box;
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto;
-  h2 {
-    margin-top: 0;
-  }
-  &-filter {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid black;
-  }
-}
-</style>
-```
-
-![自定义全局过滤器]()
-
-### (4) Vue 混入 mixins
+### (3) Vue 混入 mixins
 
 混入用于`分发组件的可复用功能`，混入可以包含任意组件选项，组件使用混入时，所有混入的选项都将混合进入组件本身的选项，混入主要用于复用`业务逻辑`
 
@@ -1455,7 +703,7 @@ export default {
 
 ![mixin]()
 
-### (5) Vue 扩展 extends
+### (4) Vue 扩展 extends
 
 扩展就是使用基础 Vue 构造器创建一个`子类构造器`，之后再使用子类构造器创建一个`实例`，并将实例挂载到`任意指定节点`，常用于`开发者自己构建一个复杂弹窗`
 
@@ -1741,15 +989,14 @@ export default {
 
 ![extend]()
 
+### (5) Vue 组合 setUp（Vue 3 新增）
+
 ## 7. Vue 组件其他选项
 
 ```js
 name         //当前组件的名字
 delimiters   //当前组件修改默认的双花括号插值符 {{}}
-comments     //当前组件是否保留渲染 HTML 模板中的注释,默认 false
 inhertiAttrs //当前组件是否将父组件不作为 prop 的 attribute 作为 attribute 绑定到自身根元素,默认 true
-model        //当前组件自定义 v-model 指令的 prop、event,默认将表单控件的 value 作为 prop,input 作为 event
-functional   //当前组件作为函数式组件
 ```
 
 ## 8. Vue 组件属性、方法、事件
@@ -1757,21 +1004,16 @@ functional   //当前组件作为函数式组件
 ### (1) Vue 组件属性
 
 ```js
-this.$isServer    //返回布尔值,当前组件是否运行于服务器
-
 this.$root        //返回当前组件的根 Vue 应用实例
 this.$parent      //返回当前组件的父组件
-this.$children    //返回当前组件的子组件数组
 
 this.$options     //返回一个对象,包含当前组件的初始化选项
 this.$el          //返回当前组件的根 DOM 元素
 this.$data        //返回当前组件的 data 选项
 this.$props       //返回当前组件的 props 选项
 this.$refs        //返回一个对象,包含当前组件内所有注册 ref 的 DOM 元素和组件
-this.$slots       //返回一个对象,包含当前组件内所有插槽(不建议使用)
-this.$scopedSlots //返回一个对象,包含当前组件内所有插槽,每个插槽都是一个函数(建议使用,方便适配 Vue3)
+this.$slots       //返回一个对象,包含当前组件内所有插槽,每个插槽都是一个函数
 this.$attrs       //返回一个对象,包含父组件对当前组件的未作为 prop 识别的 attribute 属性绑定 (class,style除外)
-this.$listeners   //返回一个对象,包含父组件对当前组件的事件监听
 ```
 
 ### (2) Vue 组件方法
@@ -1779,9 +1021,6 @@ this.$listeners   //返回一个对象,包含父组件对当前组件的事件�
 #### ① Vue 组件生命周期方法
 
 ```js
-this.$mount(elem)   //将当前未挂载的 Vue 应用实例手动挂载到指定 elem 元素
-this.$destroy()     //销毁当前组件,清理与其他组件的连接并且解绑全部指令及事件监听,绝大多数情况下不应该调用该方法,而是使用 v-if 指令以数据驱动的方式控制子组件的生命周期
-
 this.$forceUpdate() //强迫当前组件重新渲染,仅影响组件本身和插入插槽内容的子组件,并非所有子组件
 this.$nextTick(cb)  //下次 DOM 更新后调用回调函数 cb
 ```
@@ -1790,8 +1029,6 @@ this.$nextTick(cb)  //下次 DOM 更新后调用回调函数 cb
 
 ```js
 this.$watch(target, cb, { deep, immediate }) //作用同 Vue组件的 watch 选项相同
-this.$set(target ,propName/index, value)     //向当前组件的响应式对象 target 添加
-this.$delete(target, propName/index)         //向当前组件响应式对象 target 删除 propName
 ```
 
 ### (3) Vue 组件事件
@@ -1799,9 +1036,6 @@ this.$delete(target, propName/index)         //向当前组件响应式对象 ta
 以下事件方法仅适用于组件上的`自定义事件`
 
 ```js
-this.$on(e, cb)        //监听当前组件上的自定义事件 e
-this.$once(e, cb)      //监听当前组件上的自定义事件 e(只触发一次,之后监听器立即被移除)
-this.$off(e, cb)       //移除当前组件上的自定义事件 e
 this.$emit(e, ...args) //触发当前组件上的自定义事件 e,附加参数 ...args 传给事件回调函数
 ```
 
@@ -1826,188 +1060,9 @@ this.$emit(e, ...args) //触发当前组件上的自定义事件 e,附加参数 
 
 ### (3) 实例
 
-src/views/test/dynamicComponents/index.vue
-
-```vue
-<template>
-  <section class="dynamicComponents">
-    <h2>Vue 动态组件</h2>
-
-    <el-radio-group v-model="compName">
-        <el-radio label="Cat">猫咪</el-radio>
-        <el-radio label="Dog">狗狗</el-radio>
-    </el-radio-group>
-    <keep-alive>
-        <component :is="compName"></component>
-    </keep-alive>
-  </section>
-</template>
-
-<script>
-import Cat from './components/cat.vue'
-import Dog from './components/dog.vue'
-
-export default {
-  name: 'dynamicComponents',
-  components: {
-    Cat,
-    Dog,
-  },
-  data() {
-    return {
-      compName: 'Cat',
-    }
-  }
-};
-</script>
-
-<style lang="scss" scoped>
-.dynamicComponents {
-  box-sizing: border-box;
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto;
-  h2 {
-    margin-top: 0;
-  }
-}
-</style>
-```
-
-src/views/test/dynamicComponents/component/cat.vue
-
-```vue
-<template>
-  <section class="cat">
-    <el-tabs tab-position="left">
-      <el-tab-pane label="布偶">布偶</el-tab-pane>
-      <el-tab-pane label="缅因">缅因</el-tab-pane>
-      <el-tab-pane label="橘猫">橘猫</el-tab-pane>
-    </el-tabs>
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'cat',
-};
-</script>
-```
-
-src/views/test/dynamicComponents/component/dog.vue
-
-```vue
-<template>
-  <section class="cat">
-    <el-tabs tab-position="left" style="height: 200px;">
-      <el-tab-pane label="柯基">柯基</el-tab-pane>
-      <el-tab-pane label="金毛">金毛</el-tab-pane>
-      <el-tab-pane label="萨摩">萨摩</el-tab-pane>
-    </el-tabs>
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'cat',
-};
-</script>
-```
-
-![未使用keep_alive]()
-
-![使用keep_alive]()
-
 ## 10. Vue 异步组件
 
-### (1) 全局异步组件
-
-```js
-Vue.component(
-  'async-webpack-example',
-  () => import('./my-async-component')
-)
-```
-
-### (2) 局部异步组件
-
-大型应用中可能需要将应用分割成一些小的代码块，只在需要的时候才从服务器加载，这就需要使用 ES6 引入的 `import()` 函数，支持动态加载模块，返回一个 `Promise 实例`
-
-src/views/test/asyncComponents/index.vue
-
-```vue
-
-```
-
-src/views/test/dynamicComponents/component/child.vue
-
-```vue
-
-```
-
-src/views/test/dynamicComponents/component/loading.vue
-
-```vue
-
-```
-
-src/views/test/dynamicComponents/component/error.vue
-
-```vue
-
-```
-
-![vue2局部异步组件]()
-
 ## 11. Vue 过渡
-
-### (1) 单元素/组件的过渡
-
-Vue 提供 `<transition></transition>` 的封装组件，可以在以下情形给任何元素和组件添加`进入/离开`过渡效果
-
-* 条件渲染（v-if）
-* 条件展示（v-show）
-* 动态组件
-* 组件根节点
-
-进入/离开过渡有以下 6 个 CSS class 切换，如果使用没有名字的 `<transition>`，v- 是类名的默认前缀，如果使用有名字的 `<transition name="xxx">`，xxx- 是类名前缀，例如 xxx-enter
-
-```js
-v-enter         //进入过渡的开始状态
-v-enter-active  //进入过渡的生效状态
-v-enter-to      //进入过渡的结束状态
-
-v-appear        //
-v-appear-active //
-v-appear-to     //
-
-v-leave         //离开过渡的开始状态
-v-leave-active  //离开过渡的生效状态
-v-leave-to      //离开过渡的结束状态
-```
-
-![过渡类名]()
-
-进入/离开过渡有以下 8 个 JS 钩子事件
-
-```js
-@before-enter     //
-@enter            //
-@after-enter      //
-@enter-cancelled  //
-
-@before-appear    //
-@appear           //
-@after-appear     //
-@appear-cancelled //
-
-@before-leave     //
-@leave            //
-@after-leave      //
-@leave-cancelled  //
-```
-
-### (2) 多元素/组件的过渡
 
 ## 12. Vue 插件
 
@@ -2050,116 +1105,3 @@ new Vue({
 ```
 
 ### (3) 实例
-
-src/api/request.js
-
-```js
-import axios from 'axios'
-
-// 创建 axios 实例
-const instance = axios.create({
-    baseURL: '/api', 
-    timeout: 5000
-})
-
-// 请求拦截器
-instance.interceptors.request.use(
-    config => {
-        config.headers.post['Content-Type'] = 'application/json';
-        return config;
-    },
-    error => {
-        console.log(error);
-        Promise.reject(error);
-    }
-)
-
-// 响应拦截器
-instance.interceptors.response.use(
-    response => {
-        const { code, data, message } = response.data;
-
-        if (code !== 200) {
-            this.$message.error({
-                content: message || 'request error',
-                duration: 5 * 1000
-            })
-
-            // 50008: 非法 token，50012: 其他客户端登录，50014: Token 过期
-            if (code === 50008 || code === 50012 || code === 50014) {
-                this.$confirm({
-                    content: '你已被登出，可以取消继续留在该页面，或者重新登录',
-                    okText: '重新登录',
-                    cancelText: '取消',
-                }).then(() => {
-                    location.reload()
-                })
-            }
-
-            return Promise.reject('error')
-        } else {
-            return data
-        }
-    },
-    error => {
-        console.log('err' + error);
-        this.$message.error({
-            content: error.message,
-            duration: 5 * 1000
-        })
-        return Promise.reject(error)
-    }
-)
-
-const requestInstance = result => {
-    const { url, method, data, config } = result;
-
-    if (!method) return instance.all(result);
-
-    const params = method === 'post' ? data : { params: data };
-    return instance[method](url, params, config || {});
-}
-
-export default {
-    install(Vue) {
-        Vue.prototype.$http = requestInstance;
-    }
-};
-```
-
-src/index.js
-
-```js
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router/index.js'
-import store from './store/index.js'
-
-// 全局样式
-import './assets/style/index.scss'
-
-// api
-import Api from './api/request.js'
-Vue.use(Api)
-
-// element-ui 组件库
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI)
-
-// 注册全局自定义指令
-import './directive/index.js';
-
-// 注册全局自定义过滤器
-import './filter/index.js'
-
-// 注册扩展
-import './extend/index.js'
-
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
-```

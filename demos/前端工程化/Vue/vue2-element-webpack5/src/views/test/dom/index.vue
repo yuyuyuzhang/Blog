@@ -133,7 +133,7 @@
 
     v-slot
     <div class="dom-directive">
-      <context>
+      <context ref="context">
         <template v-slot:img>
           <img :src="img_cat"/>
         </template>
@@ -188,6 +188,10 @@ export default {
         console.log(e.target.attributes[3])  // attribute, 始终输出 value="111"
         console.log(e.target.value)          // property, 不断输出最新值
       })
+
+      // 查询插槽
+      console.log('slots:',this.$slots,this.$refs.context.$slots)
+      console.log('scopedSlots:',this.$scopedSlots,this.$refs.context.$scopedSlots)
     })
   },
   methods: {
